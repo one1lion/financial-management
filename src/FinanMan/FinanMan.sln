@@ -17,23 +17,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor Server Only", "Blazo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor Web Assembly", "Blazor Web Assembly", "{3803EF81-A3A0-45F1-8AED-0C18827095DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.ServerOnly", "FinanMan.ServerOnly\FinanMan.ServerOnly.csproj", "{8B6B6408-DC13-4EC2-A648-3969229D9BB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.ServerOnly", "FinanMan.ServerOnly\FinanMan.ServerOnly.csproj", "{8B6B6408-DC13-4EC2-A648-3969229D9BB6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{A8A1062F-A60C-497C-AF12-B63116026552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Database", "FinanMan.Database\FinanMan.Database.csproj", "{3EFFA14A-3A15-489E-AC4A-4A542BAD6F6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Database", "FinanMan.Database\FinanMan.Database.csproj", "{3EFFA14A-3A15-489E-AC4A-4A542BAD6F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Database.Models", "FinanMan.Database.Models\FinanMan.Database.Models.csproj", "{D4EA5C3D-1C33-4B58-AEB6-F9636C69F995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Database.Models", "FinanMan.Database.Models\FinanMan.Database.Models.csproj", "{D4EA5C3D-1C33-4B58-AEB6-F9636C69F995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Database.Migrations", "FinanMan.Database.Migrations\FinanMan.Database.Migrations.csproj", "{666F4DB2-0D20-43DB-A254-471DEBD067B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Database.Migrations", "FinanMan.Database.Migrations\FinanMan.Database.Migrations.csproj", "{666F4DB2-0D20-43DB-A254-471DEBD067B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.BlazorUi", "FinanMan.BlazorUi\FinanMan.BlazorUi.csproj", "{AE62EB62-91C2-410B-90F0-8861A033F32B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.BlazorUi", "FinanMan.BlazorUi\FinanMan.BlazorUi.csproj", "{AE62EB62-91C2-410B-90F0-8861A033F32B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{17D01C8A-BCE5-4935-A694-9A57CBFEC702}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.SharedServer", "FinanMan.SharedServer\FinanMan.SharedServer.csproj", "{1CF3B596-E54E-4EA1-9B8C-7294F9C6A096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.SharedServer", "FinanMan.SharedServer\FinanMan.SharedServer.csproj", "{1CF3B596-E54E-4EA1-9B8C-7294F9C6A096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Tests", "FinanMan.Tests\FinanMan.Tests.csproj", "{EE9C5039-B833-43AA-B33E-D194F4D17569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Tests", "FinanMan.Tests\FinanMan.Tests.csproj", "{EE9C5039-B833-43AA-B33E-D194F4D17569}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{096AB470-2560-48F5-AFFB-9BCF4B080F28}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\README.md = ..\..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
