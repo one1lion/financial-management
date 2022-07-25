@@ -7,7 +7,7 @@ public partial class TransactionDetail
     public int LineItemTypeId { get; set; }
     public string? Description { get; set; }
     public double Amount { get; set; }
-    
+
     public virtual Transaction Transaction { get; set; } = default!;
     public virtual LuLineItemType LineItemType { get; set; } = default!;
 }

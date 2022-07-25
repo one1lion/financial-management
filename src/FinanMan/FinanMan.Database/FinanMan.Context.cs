@@ -1,4 +1,5 @@
-﻿using FinanMan.Database.Models.Tables;
+﻿using FinanMan.Database.Data;
+using FinanMan.Database.Models.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanMan.Database;
@@ -31,5 +32,70 @@ public class FinanManContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Account>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(120)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
+        modelBuilder.Entity<LuAccountType>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
+        modelBuilder.Entity<LuCategory>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
+        modelBuilder.Entity<LuRecurrenceType>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+            
+            entity.Property(e => e.DisplayText)
+                .HasMaxLength(20)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+
+        modelBuilder.Entity<Payee>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(120)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.Property(e => e.Memo)
+                .HasMaxLength(255)
+                .IsRequired();
+        });
+        
+        modelBuilder.Entity<TransactionDetail>(entity =>
+        {
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .IsRequired();
+        });
+
+        modelBuilder.Seed();
     }
 }

@@ -1,4 +1,4 @@
-﻿using FinanMan.Database.Models.Shared;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.Database.Models.Tables;
 
