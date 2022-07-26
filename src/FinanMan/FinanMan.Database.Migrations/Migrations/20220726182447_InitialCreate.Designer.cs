@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanMan.Database.Migrations.Migrations
 {
     [DbContext(typeof(FinanManContext))]
-    [Migration("20220725183308_InitialCreate")]
+    [Migration("20220726182447_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -545,17 +545,18 @@ namespace FinanMan.Database.Migrations.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("FromTransactionId")
+                    b.Property<int>("TargetAccountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ToTransactionId")
+                    b.Property<int>("TransactionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromTransactionId");
+                    b.HasIndex("TargetAccountId");
 
-                    b.HasIndex("ToTransactionId");
+                    b.HasIndex("TransactionId")
+                        .IsUnique();
 
                     b.ToTable("Transfers");
                 });
@@ -653,21 +654,21 @@ namespace FinanMan.Database.Migrations.Migrations
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.Transfer", b =>
                 {
-                    b.HasOne("FinanMan.Database.Models.Tables.Transaction", "FromTransaction")
-                        .WithMany()
-                        .HasForeignKey("FromTransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("FinanMan.Database.Models.Tables.Account", "TargetAccount")
+                        .WithMany("Transfers")
+                        .HasForeignKey("TargetAccountId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("FinanMan.Database.Models.Tables.Transaction", "ToTransaction")
-                        .WithMany()
-                        .HasForeignKey("ToTransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("FinanMan.Database.Models.Tables.Transaction", "Transaction")
+                        .WithOne("Transfer")
+                        .HasForeignKey("FinanMan.Database.Models.Tables.Transfer", "TransactionId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("FromTransaction");
+                    b.Navigation("TargetAccount");
 
-                    b.Navigation("ToTransaction");
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("LuCategoryPayee", b =>
@@ -690,6 +691,8 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.Navigation("ScheduledTransactions");
 
                     b.Navigation("Transactions");
+
+                    b.Navigation("Transfers");
                 });
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.LuLineItemType", b =>
@@ -712,6 +715,8 @@ namespace FinanMan.Database.Migrations.Migrations
             modelBuilder.Entity("FinanMan.Database.Models.Tables.Transaction", b =>
                 {
                     b.Navigation("TransactionDetails");
+
+                    b.Navigation("Transfer");
                 });
 #pragma warning restore 612, 618
         }

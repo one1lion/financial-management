@@ -1,4 +1,6 @@
-﻿namespace FinanMan.Database.Models.Tables;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FinanMan.Database.Models.Tables;
 
 public partial class Transaction
 {
@@ -10,8 +12,12 @@ public partial class Transaction
     public DateTime? PostingDate { get; set; }
     public string? Memo { get; set; }
 
+    [NotMapped]
+    public bool IsTransfer => Transfer is not null;
+
     public virtual Account Account { get; set; } = default!;
     public virtual Payee Payee { get; set; } = default!;
     public virtual ICollection<TransactionDetail> TransactionDetails { get; set; } = new HashSet<TransactionDetail>();
+    public virtual Transfer? Transfer { get; set; }
     
 }

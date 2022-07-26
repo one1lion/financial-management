@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database.Data;
+using FinanMan.Database.Models.Shared;
 using FinanMan.Database.Models.Tables;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,6 @@ public class FinanManContext : DbContext
 
     protected FinanManContext() { }
 
-    // TODO: Take a look at the syntax: 
-    //   public DbSet<Account> Accounts => Set<Account>();
-    //   and compare it to the approach below
     #region Tables
     public virtual DbSet<Account> Accounts { get; set; } = default!;
     public virtual DbSet<Payee> Payees { get; set; } = default!;
@@ -41,7 +39,7 @@ public class FinanManContext : DbContext
 
             entity.HasIndex(e => e.Name);
         });
-        
+
         modelBuilder.Entity<LuAccountType>(entity =>
         {
             entity.Property(e => e.Name)
@@ -50,7 +48,7 @@ public class FinanManContext : DbContext
 
             entity.HasIndex(e => e.Name);
         });
-        
+
         modelBuilder.Entity<LuCategory>(entity =>
         {
             entity.Property(e => e.Name)
@@ -59,13 +57,13 @@ public class FinanManContext : DbContext
 
             entity.HasIndex(e => e.Name);
         });
-        
+
         modelBuilder.Entity<LuRecurrenceType>(entity =>
         {
             entity.Property(e => e.Name)
                 .HasMaxLength(80)
                 .IsRequired();
-            
+
             entity.Property(e => e.DisplayText)
                 .HasMaxLength(20)
                 .IsRequired();
@@ -81,14 +79,14 @@ public class FinanManContext : DbContext
 
             entity.HasIndex(e => e.Name);
         });
-        
+
         modelBuilder.Entity<Transaction>(entity =>
         {
             entity.Property(e => e.Memo)
                 .HasMaxLength(255)
                 .IsRequired();
         });
-        
+
         modelBuilder.Entity<TransactionDetail>(entity =>
         {
             entity.Property(e => e.Description)
@@ -96,6 +94,61 @@ public class FinanManContext : DbContext
                 .IsRequired();
         });
 
+        modelBuilder.Entity<Transfer>(entity =>
+        {
+            entity.HasOne(e => e.Transaction)
+                .WithOne(e => e.Transfer)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            entity.HasOne(e => e.TargetAccount)
+                .WithMany(e => e.Transfers)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+
         modelBuilder.Seed();
+    }
+
+    /// <summary>  
+    /// Overriding Save Changes to update the LastUpdated field for entities 
+    /// that implement <see cref="ILookupItem"/>
+    /// </summary>  
+    /// <returns></returns>  
+    public override int SaveChanges()
+    {
+        UpdateLastUpdated();
+        return base.SaveChanges();
+    }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        UpdateLastUpdated();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        UpdateLastUpdated();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        UpdateLastUpdated();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    // Adapted from: 
+    // https://www.c-sharpcorner.com/UploadFile/d87001/overriding-savechanges-in-entity-framework/
+    private void UpdateLastUpdated()
+    {
+        var selectedEntityList = ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified)
+            .Select(x => x.Entity)
+            .OfType<ILookupItem>();
+
+        foreach (var entity in selectedEntityList)
+        {
+            entity.LastUpdated = DateTime.UtcNow;
+        }
     }
 }

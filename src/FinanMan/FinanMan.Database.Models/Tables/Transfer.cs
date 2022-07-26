@@ -1,11 +1,13 @@
-﻿namespace FinanMan.Database.Models.Tables;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FinanMan.Database.Models.Tables;
 
 public partial class Transfer
 {
     public int Id { get; set; }
-    public int FromTransactionId { get; set; }
-    public int ToTransactionId { get; set; }
+    public int TransactionId { get; set; }
+    public int TargetAccountId { get; set; }
 
-    public virtual Transaction FromTransaction { get; set; } = default!;
-    public virtual Transaction ToTransaction { get; set; } = default!;
+    public virtual Transaction Transaction { get; set; } = default!;
+    public virtual Account TargetAccount { get; set; } = default!;
 }

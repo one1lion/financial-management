@@ -228,24 +228,22 @@ public partial class InitialCreate : Migration
             {
                 Id = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                FromTransactionId = table.Column<int>(type: "int", nullable: false),
-                ToTransactionId = table.Column<int>(type: "int", nullable: false)
+                TransactionId = table.Column<int>(type: "int", nullable: false),
+                TargetAccountId = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Transfers", x => x.Id);
                 table.ForeignKey(
-                    name: "FK_Transfers_Transactions_FromTransactionId",
-                    column: x => x.FromTransactionId,
-                    principalTable: "Transactions",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.Cascade);
+                    name: "FK_Transfers_Accounts_TargetAccountId",
+                    column: x => x.TargetAccountId,
+                    principalTable: "Accounts",
+                    principalColumn: "Id");
                 table.ForeignKey(
-                    name: "FK_Transfers_Transactions_ToTransactionId",
-                    column: x => x.ToTransactionId,
+                    name: "FK_Transfers_Transactions_TransactionId",
+                    column: x => x.TransactionId,
                     principalTable: "Transactions",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.Cascade);
+                    principalColumn: "Id");
             });
 
         migrationBuilder.InsertData(
@@ -376,14 +374,15 @@ public partial class InitialCreate : Migration
             column: "PayeeId");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Transfers_FromTransactionId",
+            name: "IX_Transfers_TargetAccountId",
             table: "Transfers",
-            column: "FromTransactionId");
+            column: "TargetAccountId");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Transfers_ToTransactionId",
+            name: "IX_Transfers_TransactionId",
             table: "Transfers",
-            column: "ToTransactionId");
+            column: "TransactionId",
+            unique: true);
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)

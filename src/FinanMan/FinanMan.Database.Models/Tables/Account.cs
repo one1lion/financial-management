@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FinanMan.Database.Models.Tables;
+﻿namespace FinanMan.Database.Models.Tables;
 
 public partial class Account
 {
@@ -11,4 +9,5 @@ public partial class Account
     public virtual LuAccountType AccountType { get; set; } = default!;
     public virtual ICollection<ScheduledTransaction> ScheduledTransactions { get; set; } = new HashSet<ScheduledTransaction>();
     public virtual ICollection<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
+    public virtual ICollection<Transfer> Transfers { get; set; } = new HashSet<Transfer>();
 }
