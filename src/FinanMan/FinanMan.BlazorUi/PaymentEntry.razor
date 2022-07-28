@@ -1,0 +1,163 @@
+﻿@page "/payments"
+@using FinanMan.Database.Models.Shared
+@using FinanMan.Database.Models.Tables
+@using FinanMan.Shared.DataEntryModels
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="page-content">
+    <h1>Enter Payment Details</h1>
+
+    <EditForm Model=_newPayment>
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>Transaction Date</label>
+            <InputDate @bind-Value=_newPayment.TransactionDate />
+        </div>
+
+        <div class="form-group">
+            <label>Payee</label>
+            <InputSelect @bind-Value=_newPayment.PayeeId>
+                <option value="">--Select Payee--</option>
+                @if (_payees is not null)
+                {
+                    foreach (var curLiType in _payees)
+                    {
+                        <option value="@curLiType.Id">@curLiType.Name</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <label>Memo</label>
+            <InputText @bind-Value=_newPayment.Memo />
+        </div>
+
+        <div class="detail-entry">
+            <div class="form-group">
+                <label>Line Item Type</label>
+                <InputSelect @bind-Value=_newLineItem.LineItemTypeId>
+                    <option value="">--Select Line Item Type--</option>
+                    @if (_lineItemTypes is not null)
+                    {
+                        foreach (var curLiType in _lineItemTypes)
+                        {
+                            <option value="@curLiType.Id">@curLiType.Name</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="form-group">
+                <label>Detail</label>
+                <InputText @bind-Value=_newLineItem.Detail />
+            </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" step=".01" @bind=_newLineItem.Amount />
+            </div>
+            <div class="form-group">
+                <button type="button" @onclick=HandleAddDetailClicked>Add</button>
+            </div>
+        </div>
+
+        <div class="transaction-details">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Line Item Type</th>
+                        <th>Detail</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!(_newPayment.LineItems?.Any() ?? false))
+                    {
+                        <tr>
+                            <td colspan="3">No items added</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var curLi in _newPayment.LineItems)
+                        {
+                            <tr>
+                                <td>@(_lineItemTypes!.Single(x => x.Id == curLi.LineItemTypeId.Value).Name)</td>
+                                <td>@curLi.Detail</td>
+                                <td>@curLi.Amount</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <label>Total:</label> <strong>@_newPayment.Total</strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+
+        <div class="form-group">
+            <label>Posted Date</label>
+            <InputDate @bind-Value=_newPayment.PostedDate />
+        </div>
+
+        <div class="form-group">
+            <label>Account</label>
+            <InputSelect @bind-Value=_newPayment.AccountId>
+                <option value="">--Select Account--</option>
+                @if (_accounts is not null)
+                {
+                    foreach (var curAccount in _accounts)
+                    {
+                        <option value="@curAccount.Id">@curAccount.Name</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        <button type="submit">Submit</button>
+    </EditForm>
+</div>
+
+@code {
+    private PaymentEntryViewModel _newPayment = new();
+    private LineItemViewModel _newLineItem = new();
+
+    private List<Account>? _accounts;
+    private List<LuLineItemType>? _lineItemTypes;
+    private List<Payee>? _payees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        _accounts = new()
+        {
+            new() { Id = 1, Name = "Checking" },
+            new() { Id = 2, Name = "Savings" },
+            new() { Id = 3, Name = "Cheese" },
+            new() { Id = 4, Name = "Coffee" }
+        };
+        _payees = new()
+        {
+            new() { Id = 1, Name = "Vindy's" },
+            new() { Id = 2, Name = "My Favourite Groucerie Stoure" },
+            new() { Id = 3, Name = "Tacho Bear" }
+        };
+        _lineItemTypes = new()
+        {
+            new() { Id = 1, Name = "Sub Total", SortOrder = 0 },
+            new() { Id = 2, Name = "Tax", SortOrder = 1 },
+            new() { Id = 3, Name = "Tip", SortOrder = 2 }
+        };
+    }
+
+    private void HandleAddDetailClicked()
+    {
+        _newPayment.LineItems.Add(_newLineItem);
+        _newLineItem = new();
+    }
+}
