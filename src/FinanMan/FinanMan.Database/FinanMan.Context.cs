@@ -13,7 +13,9 @@ public class FinanManContext : DbContext
 
     #region Tables
     public virtual DbSet<Account> Accounts { get; set; } = default!;
+    public virtual DbSet<Deposit> Deposits { get; set; } = default!;
     public virtual DbSet<Payee> Payees { get; set; } = default!;
+    public virtual DbSet<Payment> Payments { get; set; } = default!;
     public virtual DbSet<ScheduledTransaction> ScheduledTransactions { get; set; } = default!;
     public virtual DbSet<Transaction> Transactions { get; set; } = default!;
     public virtual DbSet<TransactionDetail> TransactionDetails { get; set; } = default!;
@@ -22,6 +24,7 @@ public class FinanManContext : DbContext
     #region Lookups
     public virtual DbSet<LuAccountType> AccountTypes { get; set; } = default!;
     public virtual DbSet<LuCategory> Categories { get; set; } = default!;
+    public virtual DbSet<LuDepositReason> DepositReasons { get; set; } = default!;
     public virtual DbSet<LuLineItemType> LineItemTypes { get; set; } = default!;
     public virtual DbSet<LuRecurrenceType> RecurrenceTypes { get; set; } = default!;
     #endregion Lookups
@@ -40,44 +43,26 @@ public class FinanManContext : DbContext
             entity.HasIndex(e => e.Name);
         });
 
-        modelBuilder.Entity<LuAccountType>(entity =>
+        // Loop through all classes in the current assembly that inherit from LookupItemBase and configure the Name property to have a max length and be an index
+        foreach (var curObj in typeof(LookupItemBase).Assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(LookupItemBase))))
         {
-            entity.Property(e => e.Name)
-                .HasMaxLength(80)
-                .IsRequired();
+            var curType = curObj.GetType();
+            var curTableName = curType.Name;
+            var curTable = modelBuilder.Entity(curTableName, b =>
+            {
+                b.Property(nameof(ILookupItem.Name))
+                    .HasMaxLength(80)
+                    .IsRequired();
 
-            entity.HasIndex(e => e.Name);
-        });
-
-        modelBuilder.Entity<LuCategory>(entity =>
-        {
-            entity.Property(e => e.Name)
-                .HasMaxLength(80)
-                .IsRequired();
-
-            entity.HasIndex(e => e.Name);
-        });
+                b.HasIndex(nameof(ILookupItem.Name));
+            });
+        }
 
         modelBuilder.Entity<LuRecurrenceType>(entity =>
         {
-            entity.Property(e => e.Name)
-                .HasMaxLength(80)
-                .IsRequired();
-
             entity.Property(e => e.DisplayText)
                 .HasMaxLength(20)
                 .IsRequired();
-
-            entity.HasIndex(e => e.Name);
-        });
-
-        modelBuilder.Entity<Payee>(entity =>
-        {
-            entity.Property(e => e.Name)
-                .HasMaxLength(120)
-                .IsRequired();
-
-            entity.HasIndex(e => e.Name);
         });
 
         modelBuilder.Entity<Transaction>(entity =>
