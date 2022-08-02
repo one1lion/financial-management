@@ -13,7 +13,9 @@ public class FinanManContext : DbContext
 
     #region Tables
     public virtual DbSet<Account> Accounts { get; set; } = default!;
+    public virtual DbSet<Deposit> Deposits { get; set; } = default!;
     public virtual DbSet<Payee> Payees { get; set; } = default!;
+    public virtual DbSet<Payment> Payments { get; set; } = default!;
     public virtual DbSet<ScheduledTransaction> ScheduledTransactions { get; set; } = default!;
     public virtual DbSet<Transaction> Transactions { get; set; } = default!;
     public virtual DbSet<TransactionDetail> TransactionDetails { get; set; } = default!;
@@ -22,6 +24,7 @@ public class FinanManContext : DbContext
     #region Lookups
     public virtual DbSet<LuAccountType> AccountTypes { get; set; } = default!;
     public virtual DbSet<LuCategory> Categories { get; set; } = default!;
+    public virtual DbSet<LuDepositReason> DepositReasons { get; set; } = default!;
     public virtual DbSet<LuLineItemType> LineItemTypes { get; set; } = default!;
     public virtual DbSet<LuRecurrenceType> RecurrenceTypes { get; set; } = default!;
     #endregion Lookups
@@ -57,6 +60,25 @@ public class FinanManContext : DbContext
 
             entity.HasIndex(e => e.Name);
         });
+        
+        modelBuilder.Entity<LuDepositReason>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+
+        modelBuilder.Entity<LuLineItemType>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
 
         modelBuilder.Entity<LuRecurrenceType>(entity =>
         {
