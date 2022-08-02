@@ -9,5 +9,5 @@ public class PaymentEntryViewModel
     public DateTime? PostedDate { get; set; }
     public DateTime? TransactionDate { get; set; }
 
-    public double Total => LineItems.Where(x => x.Amount.HasValue).Sum(x => x.Amount!.Value);
+    public double Total => Math.Round(LineItems.Where(x => x.Amount.HasValue).Sum(x => x.Amount!.Value), 2);
 }

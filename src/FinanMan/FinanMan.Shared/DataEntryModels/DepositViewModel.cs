@@ -2,7 +2,10 @@
 
 public class DepositViewModel
 {
-    public DateTime? DepositDate { get; set; }
+    public DateTime? TransactionDate { get; set; }
+    public DateTime? PostedDate { get; set; }
     public int? TargetAccountId { get; set; }
-    public int MyProperty { get; set; }
+    public int? DepositReasonId { get; set; }
+    public string? Memo { get; set; }
+    public double? Amount { get; set; }
 }
