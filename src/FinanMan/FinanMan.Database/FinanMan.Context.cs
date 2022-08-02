@@ -43,26 +43,63 @@ public class FinanManContext : DbContext
             entity.HasIndex(e => e.Name);
         });
 
-        // Loop through all classes in the current assembly that inherit from LookupItemBase and configure the Name property to have a max length and be an index
-        foreach (var curObj in typeof(LookupItemBase).Assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(LookupItemBase))))
+        modelBuilder.Entity<LuAccountType>(entity =>
         {
-            var curType = curObj.GetType();
-            var curTableName = curType.Name;
-            var curTable = modelBuilder.Entity(curTableName, b =>
-            {
-                b.Property(nameof(ILookupItem.Name))
-                    .HasMaxLength(80)
-                    .IsRequired();
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
 
-                b.HasIndex(nameof(ILookupItem.Name));
-            });
-        }
+            entity.HasIndex(e => e.Name);
+        });
+
+        modelBuilder.Entity<LuCategory>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
+        modelBuilder.Entity<LuDepositReason>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+
+        modelBuilder.Entity<LuLineItemType>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+        
 
         modelBuilder.Entity<LuRecurrenceType>(entity =>
         {
+            entity.Property(e => e.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+
             entity.Property(e => e.DisplayText)
                 .HasMaxLength(20)
                 .IsRequired();
+
+            entity.HasIndex(e => e.Name);
+        });
+
+        modelBuilder.Entity<Payee>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(120)
+                .IsRequired();
+
+            entity.HasIndex(e => e.Name);
         });
 
         modelBuilder.Entity<Transaction>(entity =>
