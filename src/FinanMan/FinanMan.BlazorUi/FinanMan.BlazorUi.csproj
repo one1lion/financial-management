@@ -6,6 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -18,6 +26,10 @@
   <ItemGroup>
     <ProjectReference Include="..\FInanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
     <ProjectReference Include="..\FinanMan.Shared\FinanMan.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

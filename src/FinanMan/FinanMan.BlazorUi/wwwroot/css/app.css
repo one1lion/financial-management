@@ -1,1 +1,12 @@
-﻿
+﻿:root {
+  --primary-text-color: #f0f3f0;
+  --topbar-height: 3.3rem;
+  --topbar-background-color: #020305;
+  --topbar-text-color: var(--primary-text-color);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

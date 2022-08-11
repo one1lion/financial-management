@@ -8,9 +8,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanMan.Database.Models\FinanMan.Database.Models.csproj" />
+    <ProjectReference Include="..\FinanMan.Interfaces\FinanMan.Interfaces.csproj" />
+    <ProjectReference Include="..\FinanMan.SharedLocalization\FinanMan.SharedLocalization.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resource\Localization\Enums\" />
   </ItemGroup>
 </Project>
