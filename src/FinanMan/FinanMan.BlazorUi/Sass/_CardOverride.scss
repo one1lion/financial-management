@@ -1,0 +1,8 @@
+﻿.card {
+    color: var(--card-foreground-color) !important;
+    background-color: var(--card-background-color) !important;
+
+    .card-header, .card-footer {
+        border-color: var(--primary-background-color) !important;
+    }
+}

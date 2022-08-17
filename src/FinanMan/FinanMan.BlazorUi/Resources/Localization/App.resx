@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="LogIn" xml:space="preserve">
-    <value>Log In</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Update</value>
+  <data name="NothingAtAddress" xml:space="preserve">
+    <value>Sorry, there's nothing at this address.</value>
   </data>
 </root>

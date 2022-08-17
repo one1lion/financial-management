@@ -1,17 +1,19 @@
 ﻿@page "/"
-@using Microsoft.Extensions.Localization
+@using FinanMan.Shared.DataEntryModels
+@using System.Globalization
+@using FinanMan.SharedLocalization.Extensions
 
 <PageTitle>Index</PageTitle>
 
-<div class="hero">
-
-</div>
+<article class="page hero">
+    <LoginForm />
+</article>
 
 @code {
     [Inject] private IStringLocalizer<Index> Localizer { get; set; } = default!;
-    [Inject] private IStringLocalizer SharedLocalizer { get; set; } = default!;
 
-    protected override void OnInitialized()
-    {
-    }
+    private DepositViewModel _hold = new();
+    private EditContext _editContext = default!;
+
+    private DateTime _someDate = DateTime.UtcNow;
 }

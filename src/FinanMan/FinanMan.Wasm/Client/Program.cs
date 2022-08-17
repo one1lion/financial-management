@@ -1,8 +1,7 @@
-using FinanMan.Client;
+using FinanMan.BlazorUi;
+using FinanMan.Shared.Extensions;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
-using FinanMan.Shared.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
