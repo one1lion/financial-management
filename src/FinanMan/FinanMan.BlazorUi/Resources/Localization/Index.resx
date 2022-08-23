@@ -117,10 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Her is meh hedder" xml:space="preserve">
-    <value>Her is meh hedder</value>
+  <data name="GetStartedButtonText" xml:space="preserve">
+    <value>Get Started</value>
   </data>
-  <data name="Text" xml:space="preserve">
-    <value>Text {0} </value>
+  <data name="HeroSubtitle" xml:space="preserve">
+    <value>The Cool Way</value>
+  </data>
+  <data name="HeroTitle" xml:space="preserve">
+    <value>Manage Your Financials</value>
+  </data>
+  <data name="IndexTitle" xml:space="preserve">
+    <value>Financial Management Tracker</value>
+  </data>
+  <data name="PlanBodyContent" xml:space="preserve">
+    <value>Plan your savings for future spending</value>
+  </data>
+  <data name="PlanHeader" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="TrackBodyContent" xml:space="preserve">
+    <value>Track your financial 
+accounts and the related transactions and 
+balances</value>
+  </data>
+  <data name="TrackHeader" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="WatchBodyContent" xml:space="preserve">
+    <value>Watch your money grow (or shrink if you don’t manage it well...which you should since you’re using this app!)</value>
+  </data>
+  <data name="WatchHeader" xml:space="preserve">
+    <value>Watch</value>
   </data>
 </root>

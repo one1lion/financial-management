@@ -1,0 +1,42 @@
+﻿.login-form-wrapper {
+    ::deep {
+        .card {
+            width: 30ch;
+
+            .card-header, .card-footer, .card-text {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .card-header {
+                font-size: 2.2rem;
+            }
+
+            .card-body {
+                .card-text {
+                    .form-group {
+                        &:last-of-type {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+            
+            .card-footer {
+                padding-top: 0;
+
+                button {
+                    width: 100%;
+                    font-size: 1.4rem;
+                }
+
+                .extra-links {
+                    display: grid;
+                    font-size: .8em;
+                    grid-gap: .4em;
+                    margin-top: 1em;
+                }
+            }
+        }
+    }
+}

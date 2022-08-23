@@ -1,1 +1,1 @@
-﻿.dukasoft-content-wrapper{display:grid;grid-template-areas:"tb" "m";grid-template-rows:auto 1fr;height:100vh;width:100vw;overflow:hidden;}.dukasoft-content-wrapper ::deep .topbar{grid-area:tb;}.dukasoft-content-wrapper main.content{grid-area:m;}
+﻿.dukasoft-content-wrapper{display:grid;grid-template-areas:"tb" "m";grid-template-rows:auto 1fr;height:100vh;width:100vw;overflow:hidden;}.dukasoft-content-wrapper ::deep .topbar{grid-area:tb;}.dukasoft-content-wrapper main.content{grid-area:m;overflow:auto;}

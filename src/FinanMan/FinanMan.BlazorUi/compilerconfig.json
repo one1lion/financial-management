@@ -14,5 +14,13 @@
   {
     "outputFile": "Shared/TopBar.razor.css",
     "inputFile": "Shared/TopBar.razor.scss"
+  },
+  {
+    "outputFile": "Shared/LoginForm.razor.css",
+    "inputFile": "Shared/LoginForm.razor.scss"
+  },
+  {
+    "outputFile": "Index.razor.css",
+    "inputFile": "Index.razor.scss"
   }
 ]

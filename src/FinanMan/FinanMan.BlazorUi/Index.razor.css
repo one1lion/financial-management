@@ -1,0 +1,88 @@
+﻿.index-page {
+  height: 100%;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.index-page .hero {
+  background-image: url("/_content/FinanMan.BlazorUi/imgs/piggy-bank.jpg");
+  background-size: 3084px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--default-border-color);
+  background-position: center;
+  position: relative;
+  width: 100%;
+}
+.index-page .hero .hero-filter {
+  position: absolute;
+  background-color: rgba(29, 41, 51, 0.38);
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+.index-page .hero .content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem 4rem 4rem 4rem;
+  z-index: 2;
+}
+.index-page .hero .content .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  font-size: 4rem;
+  height: 100%;
+  z-index: 2;
+}
+.index-page .hero .content .title .sub-title {
+  align-self: flex-end;
+  font-size: 1.5rem;
+}
+.index-page .hero .content ::deep .login-form-wrapper {
+  z-index: 2;
+}
+.index-page .content {
+  padding: 2.4rem;
+}
+.index-page .content .card-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 auto;
+}
+.index-page .content .card-wrapper ::deep .card {
+  border-radius: 0.6rem;
+  width: 25ch;
+  box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+  border-color: var(--primary-text-color);
+}
+.index-page .content .card-wrapper ::deep .card .card-header, .index-page .content .card-wrapper ::deep .card .card-text, .index-page .content .card-wrapper ::deep .card .card-footer {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+.index-page .content .card-wrapper ::deep .card .card-header {
+  font-size: 2rem;
+  padding-top: 0.8rem;
+}
+.index-page .content .card-wrapper ::deep .card .card-footer {
+  display: flex;
+  padding: 0.6rem 1.6rem;
+}
+.index-page .content .card-wrapper ::deep .card .card-footer button {
+  padding: 0.6rem 0;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.index-page footer {
+  display: flex;
+  gap: 2rem;
+  padding: 1.6rem;
+  background-color: var(--footer-background-color);
+  border-top: 1px solid var(--default-border-color);
+  font-size: 1.2rem;
+  color: var(--default-text-color);
+}

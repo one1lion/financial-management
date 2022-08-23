@@ -11,4 +11,5 @@
 }
 .dukasoft-content-wrapper main.content {
   grid-area: m;
+  overflow: auto;
 }

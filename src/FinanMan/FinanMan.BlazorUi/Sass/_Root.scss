@@ -1,10 +1,27 @@
 ﻿:root {
-    --primary-text-color: #f0f3f0;
+    --light: #f0f3f0;
+    --primary-text-color: #CBCECB;
     --primary-background-color: #03060A;
+    --font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif, serif;
+    --default-border-color: #D7F5FA;
+    --link-color: #D7F5FA;
     --topbar-height: 3.3rem;
     --topbar-background-color: #020305;
     --topbar-text-color: var(--primary-text-color);
     --card-background-color: var(--primary-background-color);
     --card-foreground-color: var(--primary-text-color);
-    --card-border-color: var(---primary-background-color);
+    --card-border-color: var(--primary-background-color);
+    --input-border-color: var(--default-border-color);
+    --input-border-style: 1px solid var(--input-border-color);
+    --input-background-color: #03000A;
+    --button-foreground-color: var(--primary-background-color);
+    --button-background-color: var(--light);
+    --button-hover-foreground-color: var(--light);
+    --button-hover-background-color: var(--primary-background-color);
+    --button-border-color: var(--default-border-color);
+    --button-border-style: 1px solid var(--button-border-color);
+    --button-outline-style: 2px solid var(--default-border-color);
+    --button-border-radius: .2rem;
+    --button-padding: .3em 1em;
+    --footer-background-color: #1D2933;
 }

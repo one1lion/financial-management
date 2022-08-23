@@ -1,6 +1,6 @@
 ﻿.dukasoft-content-wrapper {
     display: grid;
-    grid-template-areas: 'tb' 'm';
+    grid-template-areas:'tb' 'm';
     grid-template-rows: auto 1fr;
     height: 100vh;
     width: 100vw;
@@ -14,5 +14,6 @@
 
     main.content {
         grid-area: m;
+        overflow: auto;
     }
 }

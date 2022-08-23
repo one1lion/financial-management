@@ -1,0 +1,26 @@
+﻿.login-form-wrapper ::deep .card {
+  width: 30ch;
+}
+.login-form-wrapper ::deep .card .card-header, .login-form-wrapper ::deep .card .card-footer, .login-form-wrapper ::deep .card .card-text {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.login-form-wrapper ::deep .card .card-header {
+  font-size: 2.2rem;
+}
+.login-form-wrapper ::deep .card .card-body .card-text .form-group:last-of-type {
+  margin-bottom: 0;
+}
+.login-form-wrapper ::deep .card .card-footer {
+  padding-top: 0;
+}
+.login-form-wrapper ::deep .card .card-footer button {
+  width: 100%;
+  font-size: 1.4rem;
+}
+.login-form-wrapper ::deep .card .card-footer .extra-links {
+  display: grid;
+  font-size: 0.8em;
+  grid-gap: 0.4em;
+  margin-top: 1em;
+}
