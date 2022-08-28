@@ -1,0 +1,68 @@
+﻿@using FinanMan.Database.Models.Tables
+@using FinanMan.Shared.DataEntryModels
+
+<EditForm Model=_newTransfer id="transferEntryForm" class="data-entry-form">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Date</label>
+        <InputDate @bind-Value=_newTransfer.TransactionDate />
+    </div>
+
+    <div class="form-group">
+        <label>Memo</label>
+        <InputText @bind-Value=_newTransfer.Memo />
+    </div>
+
+    <div class="form-group">
+        <label>From Account</label>
+        <InputSelect @bind-Value=_newTransfer.SourceAccountId>
+            <option value="">--Select Account--</option>
+            @if (_accounts is not null)
+            {
+                foreach (var curAccount in _accounts)
+                {
+                    <option value="@curAccount.Id">@curAccount.Name</option>
+                }
+            }
+        </InputSelect>
+        <span>@_newTransfer.SourceAccountId</span>
+    </div>
+    <div class="form-group">
+        <label>To Account</label>
+        <InputSelect @bind-Value=_newTransfer.TargetAccountId>
+            <option value="">--Select Account--</option>
+            @if (_accounts is not null)
+            {
+                foreach (var curAccount in _accounts.Where(x => x.Id != _newTransfer.SourceAccountId))
+                {
+                    <option value="@curAccount.Id">@curAccount.Name</option>
+                }
+            }
+        </InputSelect>
+        <span>@_newTransfer.TargetAccountId</span>
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        <InputNumber step=".01" @bind-Value=_newTransfer.Amount />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private TransferViewModel _newTransfer = new();
+
+    private List<Account>? _accounts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        _accounts = new()
+        {
+            new() { Id = 1, Name = "Checking" },
+            new() { Id = 2, Name = "Savings" },
+            new() { Id = 3, Name = "Cheese" },
+            new() { Id = 4, Name = "Coffee" }
+        };
+    }
+}

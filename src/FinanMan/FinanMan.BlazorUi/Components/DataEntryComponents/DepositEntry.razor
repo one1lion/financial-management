@@ -1,0 +1,50 @@
+﻿@using FinanMan.Database.Models.Tables
+@using FinanMan.Shared.DataEntryModels
+
+<EditForm Model=_newDeposit id="depositEntryForm" class="data-entry-form">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Date</label>
+        <InputDate @bind-Value=_newDeposit.TransactionDate />
+    </div>
+    <div class="form-group">
+        <label>To Account</label>
+        <InputSelect @bind-Value=_newDeposit.TargetAccountId>
+            <option value="">--Select Account--</option>
+            @if (_accounts is not null)
+            {
+                foreach (var curAccount in _accounts)
+                {
+                    <option value="@curAccount.Id">@curAccount.Name</option>
+                }
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label>Deposit Reason</label>
+        <InputSelect @bind-Value=_newDeposit.DepositReasonId>
+            <option value="">--Select Deposit--</option>
+            @if (_depositReasons is not null)
+            {
+                foreach (var curDeposit in _depositReasons)
+                {
+                    <option value="@curDeposit.Id">@curDeposit.Name</option>
+                }
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label>Memo</label>
+        <InputText @bind-Value=_newDeposit.Memo />
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        <InputNumber step=".01" @bind-Value=_newDeposit.Amount />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+

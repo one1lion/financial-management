@@ -1,6 +1,8 @@
-﻿namespace FinanMan.Shared.DataEntryModels;
+﻿using FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
 
-public class LineItemViewModel
+namespace FinanMan.Shared.DataEntryModels;
+
+public class LineItemViewModel : ILineItemViewModel
 {
     public int? LineItemTypeId { get; set; }
     public string? Detail { get; set; }

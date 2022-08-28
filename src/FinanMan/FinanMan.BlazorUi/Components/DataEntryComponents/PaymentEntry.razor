@@ -1,19 +1,15 @@
-﻿@page "/payments"
-@using FinanMan.Database.Models.Shared
-@using FinanMan.Database.Models.Tables
+﻿@using FinanMan.Database.Models.Tables
 @using FinanMan.Shared.DataEntryModels
 
-<div class="page-content">
-    <h1>Enter Payment Details</h1>
-
-    <EditForm Model=_newPayment>
+<div class="payment-entry-wrapper">
+    <EditForm Model=_newPayment id="paymentEntryForm" class="data-entry-form">
         <DataAnnotationsValidator />
-        <div class="form-group">
+        <div id="transDate" class="form-group">
             <label>Transaction Date</label>
             <InputDate @bind-Value=_newPayment.TransactionDate />
         </div>
 
-        <div class="form-group">
+        <div id="payee" class="form-group">
             <label>Payee</label>
             <InputSelect @bind-Value=_newPayment.PayeeId>
                 <option value="">--Select Payee--</option>
@@ -27,42 +23,43 @@
             </InputSelect>
         </div>
 
-        <div class="form-group">
+        <div id="memo" class="form-group">
             <label>Memo</label>
             <InputText @bind-Value=_newPayment.Memo />
         </div>
 
-        <div class="detail-entry">
-            <div class="form-group">
-                <label>Line Item Type</label>
-                <InputSelect @bind-Value=_newLineItem.LineItemTypeId>
-                    <option value="">--Select Line Item Type--</option>
-                    @if (_lineItemTypes is not null)
+        <div id="lineItemType" class="form-group">
+            <label>Line Item Type</label>
+            <InputSelect @bind-Value=_newLineItem.LineItemTypeId>
+                <option value="">--Select Line Item Type--</option>
+                @if (_lineItemTypes is not null)
+                {
+                    foreach (var curLiType in _lineItemTypes)
                     {
-                        foreach (var curLiType in _lineItemTypes)
-                        {
-                            <option value="@curLiType.Id">@curLiType.Name</option>
-                        }
+                        <option value="@curLiType.Id">@curLiType.Name</option>
                     }
-                </InputSelect>
-            </div>
-
-            <div class="form-group">
-                <label>Detail</label>
-                <InputText @bind-Value=_newLineItem.Detail />
-            </div>
-
-            <div class="form-group">
-                <label>Amount</label>
-                <input type="number" step=".01" @bind=_newLineItem.Amount />
-            </div>
-            <div class="form-group">
-                <button type="button" @onclick=HandleAddDetailClicked>Add</button>
-            </div>
+                }
+            </InputSelect>
         </div>
 
-        <div class="transaction-details">
+        <div id="lineItemDetail" class="form-group">
+            <label>Detail</label>
+            <InputText @bind-Value=_newLineItem.Detail />
+        </div>
+
+        <div id="lineItemAmount" class="form-group">
+            <label>Amount</label>
+            <input type="number" step=".01" @bind=_newLineItem.Amount />
+        </div>
+        <div id="addLineItemButton" class="form-group">
+            <button type="button" @onclick=HandleAddDetailClicked>Add</button>
+        </div>
+
+        <div id="transactionDetails" class="transaction-details">
             <table>
+                <colgroup id="lit" />
+                <colgroup id="lid" />
+                <colgroup id="lia" />
                 <thead>
                     <tr>
                         <th>Line Item Type</th>
@@ -82,7 +79,7 @@
                         foreach (var curLi in _newPayment.LineItems)
                         {
                             <tr>
-                                <td>@(_lineItemTypes!.Single(x => x.Id == curLi.LineItemTypeId.Value).Name)</td>
+                                <td>@(_lineItemTypes!.Single(x => x.Id == (curLi.LineItemTypeId ?? 0)).Name)</td>
                                 <td>@curLi.Detail</td>
                                 <td>@curLi.Amount</td>
                             </tr>
@@ -100,12 +97,12 @@
 
         </div>
 
-        <div class="form-group">
+        <div id="postedDate" class="form-group">
             <label>Posted Date</label>
             <InputDate @bind-Value=_newPayment.PostedDate />
         </div>
 
-        <div class="form-group">
+        <div id="account" class="form-group">
             <label>Account</label>
             <InputSelect @bind-Value=_newPayment.AccountId>
                 <option value="">--Select Account--</option>
@@ -118,7 +115,9 @@
                 }
             </InputSelect>
         </div>
-        <button type="submit">Submit</button>
+        <div id="saveButton" class="form-group">
+            <button type="submit">Submit</button>
+        </div>
     </EditForm>
 </div>
 

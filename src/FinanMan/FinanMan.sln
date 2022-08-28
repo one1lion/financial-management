@@ -44,9 +44,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor Web", "Blazor Web", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.BlazorUi.SharedComponents", "FInanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj", "{23514906-4572-43F9-8E90-3B4256C289EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Interfaces", "FinanMan.Interfaces\FinanMan.Interfaces.csproj", "{3E64E094-E549-4BAF-AA59-A90F4562B667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.SharedLocalization", "FinanMan.SharedLocalization\FinanMan.SharedLocalization.csproj", "{51C2D8C5-987B-49EB-AA37-D398EDBF1241}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.SharedLocalization", "FinanMan.SharedLocalization\FinanMan.SharedLocalization.csproj", "{51C2D8C5-987B-49EB-AA37-D398EDBF1241}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Abstractions", "FinanMan.Abstractions\FinanMan.Abstractions.csproj", "{BE907530-101A-4F99-A333-0F45B0557172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,14 +98,14 @@ Global
 		{23514906-4572-43F9-8E90-3B4256C289EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23514906-4572-43F9-8E90-3B4256C289EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23514906-4572-43F9-8E90-3B4256C289EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E64E094-E549-4BAF-AA59-A90F4562B667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E64E094-E549-4BAF-AA59-A90F4562B667}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E64E094-E549-4BAF-AA59-A90F4562B667}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E64E094-E549-4BAF-AA59-A90F4562B667}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51C2D8C5-987B-49EB-AA37-D398EDBF1241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51C2D8C5-987B-49EB-AA37-D398EDBF1241}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51C2D8C5-987B-49EB-AA37-D398EDBF1241}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51C2D8C5-987B-49EB-AA37-D398EDBF1241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE907530-101A-4F99-A333-0F45B0557172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE907530-101A-4F99-A333-0F45B0557172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE907530-101A-4F99-A333-0F45B0557172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE907530-101A-4F99-A333-0F45B0557172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,8 +124,8 @@ Global
 		{1CF3B596-E54E-4EA1-9B8C-7294F9C6A096} = {2516A676-3CC0-4AD8-AFDD-520F078E1DF1}
 		{EE9C5039-B833-43AA-B33E-D194F4D17569} = {17D01C8A-BCE5-4935-A694-9A57CBFEC702}
 		{23514906-4572-43F9-8E90-3B4256C289EC} = {9A11796C-A829-41E4-9EE5-1AF80D1E0DFA}
-		{3E64E094-E549-4BAF-AA59-A90F4562B667} = {2516A676-3CC0-4AD8-AFDD-520F078E1DF1}
 		{51C2D8C5-987B-49EB-AA37-D398EDBF1241} = {2516A676-3CC0-4AD8-AFDD-520F078E1DF1}
+		{BE907530-101A-4F99-A333-0F45B0557172} = {2516A676-3CC0-4AD8-AFDD-520F078E1DF1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BC5E62D-A8CB-4DD4-B4A6-0F41B8EB1C16}

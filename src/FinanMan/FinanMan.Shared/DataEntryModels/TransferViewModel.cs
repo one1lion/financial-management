@@ -1,6 +1,8 @@
-﻿namespace FinanMan.Shared.DataEntryModels;
+﻿using FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
 
-public class TransferViewModel
+namespace FinanMan.Shared.DataEntryModels;
+
+public class TransferViewModel : ITransferViewModel
 {
     private int? _sourceAccountId;
     public int? SourceAccountId

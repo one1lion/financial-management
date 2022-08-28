@@ -26,4 +26,8 @@
     <None Include="compilerconfig.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FinanMan.Abstractions\FinanMan.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

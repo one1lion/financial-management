@@ -22,5 +22,9 @@
   {
     "outputFile": "Index.razor.css",
     "inputFile": "Index.razor.scss"
+  },
+  {
+    "outputFile": "DataEntry.razor.css",
+    "inputFile": "DataEntry.razor.scss"
   }
 ]

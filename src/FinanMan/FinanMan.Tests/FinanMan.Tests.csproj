@@ -35,6 +35,11 @@
 	  <ProjectReference Include="..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="BusinessLogicTesting\" />
+	  <Folder Include="UiTesting\" />
+	</ItemGroup>
+
 
 
 </Project>
