@@ -1,0 +1,65 @@
+﻿.data-entry-wrapper ::deep #paymentEntryForm {
+  grid-template-areas: "td  td  pt  pt  pt  pt" "m   m   m   m   m   m" "li  li  d   d   a   ab" "lid lid lid lid lid lid" "pd  pd  ac  ac  ac  ac" "sub sub .   .   .   .";
+  grid-template-columns: 12ch 2ch 10ch 8ch 8ch;
+  width: calc(40ch + 4rem);
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transDate {
+  grid-area: td;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #payee {
+  grid-area: pt;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #memo {
+  grid-area: m;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #lineItemType {
+  grid-area: li;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #lineItemDetail {
+  grid-area: d;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #lineItemAmount {
+  grid-area: a;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #addLineItemButton {
+  grid-area: ab;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails {
+  grid-area: lid;
+  justify-self: stretch;
+  align-self: stretch;
+  height: 20ch;
+  position: relative;
+  overflow: auto;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table {
+  width: 100%;
+  height: 100%;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table thead {
+  position: sticky;
+  top: 0;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table thead tr {
+  background-color: var(--table-header-background-color);
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table tr {
+  vertical-align: top;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table tr td, .data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table tr th {
+  padding: 0.5rem;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #transactionDetails table tfoot {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--table-footer-background-color);
+}
+.data-entry-wrapper ::deep #paymentEntryForm #postedDate {
+  grid-area: pd;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #account {
+  grid-area: ac;
+}
+.data-entry-wrapper ::deep #paymentEntryForm #saveButton {
+  grid-area: sub;
+}

@@ -1,0 +1,105 @@
+﻿@using FinanMan.Database.Models.Tables
+
+<section class="transaction-history">
+    <table>
+        <colgroup id="pendingCol" />
+        <colgroup id="transDateCol" />
+        <colgroup id="accountCol" />
+        <colgroup id="payeeCol" />
+        <colgroup id="memoCol" />
+        <colgroup id="amountCol" />
+        <thead>
+            <tr>
+                <td colspan="6">
+                    Sort Info:
+                    @if (!_sortColumns.Any())
+                    {
+                        <span>No Sort</span>
+                    }
+                    else
+                    {
+                        <span>@string.Join(", ", _sortColumns.Select(x => $"{x.Column} {(x.Descending ? "Desc": "Asc")}"))</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                @foreach (var curCol in Enum.GetValues<ColumnName>())
+                {
+                    var sortCol = _sortColumns.FirstOrDefault(x => x.Column == curCol);
+
+                    <th scope="col" @onclick="_ => HandleColumnHeaderClicked(curCol)">
+                        <div class="header-content">
+                            <span class="header-text">@curCol.GetDisplayText()</span>
+                            <span class="sort-dir">
+                                @if (sortCol is not null)
+                                {
+                                    @(sortCol.Descending ? "v" : "^") <sub>@(_sortColumns.IndexOf(sortCol))</sub>
+                                }
+                            </span>
+                            <div class="filter-button" @onclick:stopPropagation=true>
+                                <span class="icon" tabindex="0">\|/</span>
+                                <ul class="context-menu filter-menu" tabindex="0">
+                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.Asc ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.Asc)">Sort Ascending</li>
+                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.Desc ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.Desc)">Sort Descending</li>
+                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.None ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.None)">Clear Sort</li>
+                                    <li class="divider"><hr /></li>
+                                    <li class="menu-item">Filter</li>
+                                    <li class="menu-item">Clear Filter</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="resize-handle">
+                        </div>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (_transactions is null)
+            {
+                <tr>
+                    <td colspan="6">@Localizer["Loading"]</td>
+                </tr>
+            }
+            else if (!_transactions.Any())
+            {
+                <tr>
+                    <td colspan="6">@Localizer["NoTransactionsMessage"]</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var curTransaction in SortedTransactions!)
+                {
+                    <tr>
+                        <td>
+                            @if (!curTransaction.PostingDate.HasValue)
+                            {
+                                <span>😒</span>
+                            }
+                        </td>
+                        <td>@curTransaction.TransactionDate.ToLocalTime().ToShortDateString()</td>
+                        <td>@curTransaction.Account.Name</td>
+                        <td>
+                            @if (curTransaction.IsPayment)
+                            {
+                                <span>@curTransaction.Payment!.Payee.Name</span>
+                            }
+                            else if (curTransaction.IsTransfer)
+                            {
+                                <span>@curTransaction.Transfer!.TargetAccount.Name</span>
+                            }
+                            else
+                            {
+                                <span>&nbsp;</span>
+                            }
+                        </td>
+                        <td>@curTransaction.Memo</td>
+                        <td>@curTransaction.TransactionDetails.Sum(x => x.Amount)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>

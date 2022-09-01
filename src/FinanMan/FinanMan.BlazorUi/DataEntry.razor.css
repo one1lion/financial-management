@@ -1,39 +1,41 @@
-﻿#paymentPage {
+﻿#dataEntryPage {
   display: grid;
 }
-#paymentPage header {
+#dataEntryPage header {
   padding: 1rem 1.4rem;
 }
-#paymentPage header .data-entry-tabs {
+#dataEntryPage header .data-entry-tabs {
   display: flex;
   gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
-#paymentPage header .data-entry-tabs button {
+#dataEntryPage header .data-entry-tabs button {
   border: none;
   padding: 0.6rem;
   width: 15ch;
   box-shadow: 2px 2px 6px rgba(255, 255, 255, 0.3), -4px -4px 6px rgba(255, 255, 255, 0.1);
 }
-#paymentPage header .data-entry-tabs button.active {
+#dataEntryPage header .data-entry-tabs button.active {
   background-color: var(--active-tab-button-background-color);
   color: var(--active-tab-button-foreground-color);
 }
-#paymentPage section.data-entry {
+#dataEntryPage section.data-entry-section {
   padding: 1rem 1.4rem;
 }
-#paymentPage section.data-entry .title {
+#dataEntryPage section.data-entry-section .title {
   display: block;
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
-#paymentPage section.data-entry ::deep .data-entry-form {
+#dataEntryPage section.data-entry-section ::deep .data-entry-wrapper .data-entry-form {
   display: grid;
+  grid-template-columns: repeat(6, 7ch);
   align-items: flex-end;
   gap: 1rem;
+  width: calc(42ch + 5rem);
 }
 
 .grid {

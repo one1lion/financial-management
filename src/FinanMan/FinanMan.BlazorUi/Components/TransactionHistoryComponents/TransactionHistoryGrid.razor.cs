@@ -1,0 +1,269 @@
+using FinanMan.Database.Models.Tables;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
+
+namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
+
+public partial class TransactionHistoryGrid
+{
+    [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
+
+    private List<Transaction>? _transactions;
+    private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate getting data from the server
+        var randDates = Enumerable.Range(0, 4).Select(x => DateTime.UtcNow.AddDays(-Random.Shared.Next(1, 30))).ToArray();
+        await Task.Delay(Random.Shared.Next(500, 2000));
+        _transactions = new List<Transaction>()
+        {
+            new()
+            {
+                Account = new() { Name = "Credit Card"},
+                Payment = new() { Payee = new() { Name = "Taco Bell"} },
+                Memo = string.Empty,
+                TransactionDate = randDates[0],
+                PostingDate = randDates[0],
+                TransactionDetails = new List<TransactionDetail>()
+                {
+                    new()
+                    {
+                        LineItemType = new() { Name = "Sub Total"},
+                        Amount = 4.99
+                    },
+                    new()
+                    {
+                        LineItemType = new() { Name = "Sales Tax"},
+                        Amount = .24
+                    },
+                }
+            },
+            new()
+            {
+                Account = new() { Name = "Credit Card"},
+                Payment = new() { Payee = new() { Name = "My Favorite Grocery Store That Delivers"} },
+                Memo = string.Empty,
+                TransactionDate = randDates[1],
+                PostingDate = randDates[1],
+                TransactionDetails = new List<TransactionDetail>()
+                {
+                    new()
+                    {
+                        LineItemType = new() { Name = "Sub Total"},
+                        Amount = 128.32
+                    },
+                    new()
+                    {
+                        LineItemType = new() { Name = "Sales Tax"},
+                        Amount = 4.24
+                    },
+                    new()
+                    {
+                        LineItemType = new() { Name = "Fee"},
+                        Description = "Delivery Fee",
+                        Amount = 4.24},
+                    new()
+                    {
+                        LineItemType = new() { Name = "Fee"},
+                        Description = "Service Fee",
+                        Amount = 6.57},
+                    new()
+                    {
+                        LineItemType = new() { Name = "Discount"},
+                        Description = "Promotion",
+                        Amount = -4.24
+                    },
+                    new()
+                    {
+                        LineItemType = new() { Name = "Tip"},
+                        Amount = 12.83
+                    }}
+            },
+            new()
+            {
+                Account = new() { Name = "Checking"},
+                Deposit = new()
+                {
+                    DepositReason = new() { Name = "Paycheck" }
+                },
+                Memo = "With 30 hours OT",
+                TransactionDate = randDates[2],
+                PostingDate = randDates[2],
+                TransactionDetails = new List<TransactionDetail>()
+                {
+                    new()
+                    {
+                        LineItemType = new() { Name = "Net Pay"},
+                        Amount = 5000
+                    }
+                }
+            },
+            new()
+            {
+                Account = new() { Name = "Checking"},
+                Transfer = new() { TargetAccount = new() { Name = "Credit Card"} },
+                TransactionDate = randDates[3],
+                TransactionDetails = new List<TransactionDetail>()
+                {
+                    new()
+                    {
+                        LineItemType = new() { Name = "Payment"},
+                        Amount = 2345
+                    }
+                }
+            }
+        };
+    }
+
+    /// <summary>
+    /// Tracks the list of columns being sorted (Keys) and whether they are 
+    /// sorted descending or not (Values).
+    /// </summary>
+    private readonly List<SortColumn> _sortColumns = new();
+
+    private Task HandleColumnHeaderClicked(ColumnName columnName)
+    {
+        if (_sortColumns.Any(x => x.Column != columnName)) { _sortColumns.Clear(); }
+
+        var sortCol = _sortColumns.FirstOrDefault(x => x.Column == columnName);
+        if (sortCol is null)
+        {
+            //_sortColumns.Insert(0, new SortColumn() { Column = columnName, Descending = false });
+            _sortColumns.Add(new SortColumn() { Column = columnName, Descending = false });
+        }
+        else if (!sortCol.Descending)
+        {
+            sortCol.Descending = !sortCol.Descending;
+        }
+        else
+        {
+            _sortColumns.Remove(sortCol);
+        }
+        return InvokeAsync(StateHasChanged);
+    }
+    
+    private Task SortByColumn(ColumnName columnName, SortDir dir)
+    {
+        if (_sortColumns.Any(x => x.Column != columnName)) { _sortColumns.Clear(); }
+
+        var sortCol = _sortColumns.FirstOrDefault(x => x.Column == columnName);
+        var alreadyApplied = 
+            // The column is not sorted and we are trying to sort to none
+            (sortCol is null && dir == SortDir.None)
+            // Or the column is already sorted by the request direction
+            || (sortCol is not null
+                && ((sortCol.Descending && dir == SortDir.Desc)
+                    || (!sortCol.Descending && dir == SortDir.Asc)));
+        if (alreadyApplied) 
+        {
+            return Task.CompletedTask;
+        }
+
+        if (sortCol is null)
+        {
+            sortCol = new SortColumn() { Column = columnName, Descending = dir == SortDir.Desc };
+            _sortColumns.Add(sortCol);
+            return InvokeAsync(StateHasChanged);
+        }
+        else if(dir == SortDir.None)
+        {
+            _sortColumns.Remove(sortCol);
+            return InvokeAsync(StateHasChanged);
+        }
+        
+        sortCol.Descending = dir == SortDir.Desc;
+
+        return InvokeAsync(StateHasChanged);
+    }
+
+    private SortDir GetSortedDir(ColumnName curCol) =>
+        _sortColumns.FirstOrDefault(x => x.Column == curCol)?.Descending switch
+        {
+            null => SortDir.None,
+            true => SortDir.Desc,
+            false => SortDir.Asc
+        };
+
+    private IEnumerable<Transaction>? GetSortedTransactions()
+    {
+        if (_transactions is null) { return default; }
+
+        if (!_sortColumns.Any()) { return _transactions.OrderByDescending(x => x.TransactionDate); }
+
+        var sortedTrans = _transactions.OrderBy(x => 1);
+
+        foreach (var curSort in _sortColumns)
+        {
+            Func<Transaction, object?> sortColProp = default!;
+
+            switch (curSort.Column)
+            {
+                case ColumnName.PendingColumn:
+                    sortColProp = x => x.PostingDate ?? DateTime.MinValue;
+                    break;
+                case ColumnName.TransDateColumn:
+                    sortColProp = x => x.TransactionDate;
+                    break;
+                case ColumnName.AccountColumn:
+                    sortColProp = x => x.Account.Name;
+                    break;
+                case ColumnName.PayeeColumn:
+                    sortColProp = x =>
+                        x.IsPayment
+                        ? x.Payment?.Payee.Name
+                        : x.IsTransfer
+                          ? x.Transfer?.TargetAccount.Name
+                          : default;
+                    break;
+                case ColumnName.MemoColumn:
+                    sortColProp = x => x.Memo;
+                    break;
+                case ColumnName.AmountColumn:
+                    sortColProp = x => x.TransactionDetails.Sum(x => x.Amount);
+                    break;
+            }
+
+            if (curSort.Descending)
+            {
+                sortedTrans = sortedTrans.ThenByDescending(sortColProp);
+            }
+            else
+            {
+                sortedTrans = sortedTrans.ThenBy(sortColProp);
+            }
+        }
+
+        _transactions = sortedTrans.ToList();
+        return sortedTrans;
+    }
+}
+
+public class SortColumn
+{
+    public ColumnName Column { get; init; }
+    public bool Descending { get; set; }
+}
+
+public enum ColumnName
+{
+    [Display(Name = "Pending")]
+    PendingColumn,
+    [Display(Name = "Trans Date")]
+    TransDateColumn,
+    [Display(Name = "Account")]
+    AccountColumn,
+    [Display(Name = "Payee")]
+    PayeeColumn,
+    [Display(Name = "Memo")]
+    MemoColumn,
+    [Display(Name = "Amount")]
+    AmountColumn
+}
+
+public enum SortDir
+{
+    None,
+    Asc,
+    Desc
+}

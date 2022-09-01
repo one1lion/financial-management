@@ -3,7 +3,7 @@
 
 @using FinanMan.BlazorUi.Components.DataEntryComponents
 
-<div id="paymentPage" class="page-content">
+<div id="dataEntryPage" class="page-content">
     <header>
         <ul class="data-entry-tabs">
             <li><button type="button" class="tab-button invert@(_entryType == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">Payments</button></li>
@@ -11,7 +11,7 @@
             <li><button type="button" class="tab-button invert@(_entryType == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">Transfers</button></li>
         </ul>
     </header>
-    <section class="data-entry">
+    <section class="data-entry-section">
         <span class="title">@_entryType.GetDisplayText()</span>
 
         @switch (_entryType)

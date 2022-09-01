@@ -1,0 +1,108 @@
+﻿.transaction-history {
+    table {
+        tr {
+            td {
+                padding: 0 .4rem;
+            }
+        }
+
+        thead {
+            tr {
+                th {
+                    position: relative;
+                    white-space: nowrap;
+                    padding-left: .4rem;
+
+                    .header-content {
+                        display: flex;
+                        cursor: default;
+                        align-items: center;
+                        height: 1.6rem;
+                        margin-right: .4rem;
+
+                        &:hover {
+                            text-shadow: 0 0 1px var(--primary-text-color);
+                            background-color: var(--table-header-background-hover-color);
+                        }
+
+                        .header-text {
+                        }
+
+                        .sort-dir {
+                            width: 1.2ch;
+                            margin-right: 1rem;
+                        }
+
+                        .filter-button {
+                            position: relative;
+                            display: inline;
+                            cursor: pointer;
+
+                            .icon {
+                                &:hover {
+                                    background-color: var(--table-header-background-hover-color);
+                                }
+                            }
+
+                            &:not(:focus-within) {
+                                .filter-menu {
+                                    display: none;
+                                }
+                            }
+
+                            .filter-menu {
+                                background-color: var(--primary-background-color);
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                list-style: none;
+                                padding: 0;
+                                margin: 0;
+                                text-align: left;
+                                border: 1px solid var(--default-border-color);
+                                border-radius: 0 .4rem .4rem .4rem;
+                                z-index: 1;
+
+                                li {
+                                    padding: .4rem .6rem;
+
+                                    &.disabled {
+                                        opacity: .6;
+                                        cursor: not-allowed;
+                                    }
+
+                                    &.divider {
+                                        padding-top: .1rem;
+                                        padding-bottom: .1rem;
+                                        cursor: default;
+                                    }
+
+                                    &:not(.divider):not(.sorted):hover {
+                                        background-color: var(--table-header-background-hover-color);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .resize-handle {
+                        position: absolute;
+                        top: 0;
+                        left: 100%;
+                        transform: translateX(-50%);
+                        cursor: ew-resize;
+                        width: .4rem;
+                        height: 100%;
+                        background-color: rgba(255, 255, 255, .2);
+                        opacity: 0;
+                        transition: opacity linear .2s;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

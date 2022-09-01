@@ -2,6 +2,9 @@
 
 namespace FinanMan.Shared.DataEntryModels;
 
+/// <summary>
+/// The view model that holds deposit information
+/// </summary>
 public class DepositViewModel : IDepositViewModel
 {
     public DateTime? TransactionDate { get; set; }

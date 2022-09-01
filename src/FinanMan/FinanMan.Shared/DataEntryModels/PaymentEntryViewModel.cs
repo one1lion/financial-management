@@ -2,10 +2,10 @@
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public class PaymentEntryViewModel : IPaymentEntryViewModel<LineItemViewModel>
+public class PaymentEntryViewModel : IPaymentEntryViewModel
 {
     public int? AccountId { get;set; }
-    public ICollection<LineItemViewModel> LineItems { get; init; } = new List<LineItemViewModel>();
+    public ICollection<ILineItemViewModel> LineItems { get; init; } = new List<ILineItemViewModel>();
     public string? Memo { get; set; }
     public int? PayeeId { get; set; }
     public DateTime? PostedDate { get; set; }

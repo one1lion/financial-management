@@ -1,9 +1,9 @@
 ﻿namespace FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
 
-public interface IPaymentEntryViewModel<TLineItemViewModel> where TLineItemViewModel : class, ILineItemViewModel
+public interface IPaymentEntryViewModel
 {
     int? AccountId { get; set; }
-    ICollection<TLineItemViewModel> LineItems { get; init; }
+    ICollection<ILineItemViewModel> LineItems { get; init; }
     string? Memo { get; set; }
     int? PayeeId { get; set; }
     DateTime? PostedDate { get; set; }

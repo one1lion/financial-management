@@ -1,9 +1,15 @@
-﻿.payment-entry-wrapper {
+﻿.data-entry-wrapper {
     ::deep {
         #paymentEntryForm {
             grid-template-areas:
-                'td  td  pt  pt  pt' 'm   m   m   m   m' 'li  d   d   a   ab' 'lid lid lid lid lid' 'pd  pd  ac  ac  sub';
+                'td  td  pt  pt  pt  pt' 
+                'm   m   m   m   m   m' 
+                'li  li  d   d   a   ab' 
+                'lid lid lid lid lid lid' 
+                'pd  pd  ac  ac  ac  ac'
+                'sub sub .   .   .   .';
             grid-template-columns: 12ch 2ch 10ch 8ch 8ch;
+            width: calc(40ch + 4rem);
 
             #transDate {
                 grid-area: td;
@@ -78,7 +84,7 @@
                 grid-area: ac;
             }
 
-            #submit {
+            #saveButton {
                 grid-area: sub;
             }
         }

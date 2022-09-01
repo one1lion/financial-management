@@ -1,4 +1,4 @@
-﻿#paymentPage {
+﻿#dataEntryPage {
     display: grid;
 
     header {
@@ -26,7 +26,7 @@
     }
 
     section {
-        &.data-entry {
+        &.data-entry-section {
             padding: 1rem 1.4rem;
 
             .title {
@@ -37,10 +37,14 @@
             }
 
             ::deep {
-                .data-entry-form {
-                    display: grid;
-                    align-items: flex-end;
-                    gap: 1rem;
+                .data-entry-wrapper {
+                    .data-entry-form {
+                        display: grid;
+                        grid-template-columns: repeat(6, 7ch);
+                        align-items: flex-end;
+                        gap: 1rem;
+                        width: calc(42ch + 5rem);
+                    }
                 }
             }
         }

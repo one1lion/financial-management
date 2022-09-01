@@ -1,7 +1,7 @@
 ﻿@using FinanMan.Database.Models.Tables
 @using FinanMan.Shared.DataEntryModels
 
-<div class="payment-entry-wrapper">
+<div class="data-entry-wrapper">
     <EditForm Model=_newPayment id="paymentEntryForm" class="data-entry-form">
         <DataAnnotationsValidator />
         <div id="transDate" class="form-group">
@@ -62,9 +62,9 @@
                 <colgroup id="lia" />
                 <thead>
                     <tr>
-                        <th>Line Item Type</th>
-                        <th>Detail</th>
-                        <th>Amount</th>
+                        <th scope="col">Line Item Type</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">Amount</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,42 +120,3 @@
         </div>
     </EditForm>
 </div>
-
-@code {
-    private PaymentEntryViewModel _newPayment = new();
-    private LineItemViewModel _newLineItem = new();
-
-    private List<Account>? _accounts;
-    private List<LuLineItemType>? _lineItemTypes;
-    private List<Payee>? _payees;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(2000);
-        _accounts = new()
-        {
-            new() { Id = 1, Name = "Checking" },
-            new() { Id = 2, Name = "Savings" },
-            new() { Id = 3, Name = "Cheese" },
-            new() { Id = 4, Name = "Coffee" }
-        };
-        _payees = new()
-        {
-            new() { Id = 1, Name = "Vindy's" },
-            new() { Id = 2, Name = "My Favourite Groucerie Stoure" },
-            new() { Id = 3, Name = "Tacho Bear" }
-        };
-        _lineItemTypes = new()
-        {
-            new() { Id = 1, Name = "Sub Total", SortOrder = 0 },
-            new() { Id = 2, Name = "Tax", SortOrder = 1 },
-            new() { Id = 3, Name = "Tip", SortOrder = 2 }
-        };
-    }
-
-    private void HandleAddDetailClicked()
-    {
-        _newPayment.LineItems.Add(_newLineItem);
-        _newLineItem = new();
-    }
-}

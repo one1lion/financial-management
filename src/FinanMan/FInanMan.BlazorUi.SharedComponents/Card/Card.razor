@@ -2,9 +2,4 @@
     @ChildContent
 </div>
 
-@code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public string? AdditionalCssClasses { get; set; }
-    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? Attributes { get; set; }
-    private string CssClasses => $"card{(string.IsNullOrWhiteSpace(AdditionalCssClasses) ? string.Empty : $" {AdditionalCssClasses}")}";
-}
+

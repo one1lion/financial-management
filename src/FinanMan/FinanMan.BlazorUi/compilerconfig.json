@@ -26,5 +26,21 @@
   {
     "outputFile": "DataEntry.razor.css",
     "inputFile": "DataEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/PaymentEntry.razor.css",
+    "inputFile": "Components/DataEntryComponents/PaymentEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/TransferEntry.razor.css",
+    "inputFile": "Components/DataEntryComponents/TransferEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/DepositEntry.razor.css",
+    "inputFile": "Components/DataEntryComponents/DepositEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/TransactionHistoryComponents/TransactionHistoryGrid.razor.css",
+    "inputFile": "Components/TransactionHistoryComponents/TransactionHistoryGrid.razor.scss"
   }
 ]
