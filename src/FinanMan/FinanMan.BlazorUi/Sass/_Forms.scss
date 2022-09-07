@@ -1,0 +1,19 @@
+﻿.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    label {
+        margin-bottom: .4em;
+    }
+}
+
+input, select {
+    &:not([type="checkbox"]):not([type="radio"]) {
+        padding: .4em;
+        border: none;
+        border-radius: .2rem .2rem 0 0;
+        border-bottom: var(--input-border-style);
+        background-color: var(--input-background-color);
+        color: var(--primary-text-color);
+    }
+}

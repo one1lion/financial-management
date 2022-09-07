@@ -1,0 +1,21 @@
+﻿.data-entry-wrapper ::deep #transferEntryForm {
+  grid-template-areas: "td  td  a   a   . ." "fac fac fac fac . ." "tac tac tac tac . ." "m   m   m   m   m m" "sub sub .   .   . .";
+}
+.data-entry-wrapper ::deep #transferEntryForm #transferDate {
+  grid-area: td;
+}
+.data-entry-wrapper ::deep #transferEntryForm #memo {
+  grid-area: m;
+}
+.data-entry-wrapper ::deep #transferEntryForm #fromAccount {
+  grid-area: fac;
+}
+.data-entry-wrapper ::deep #transferEntryForm #toAccount {
+  grid-area: tac;
+}
+.data-entry-wrapper ::deep #transferEntryForm #amount {
+  grid-area: a;
+}
+.data-entry-wrapper ::deep #transferEntryForm #saveButton {
+  grid-area: sub;
+}

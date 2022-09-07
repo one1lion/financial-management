@@ -1,0 +1,133 @@
+﻿@using FinanMan.Database.Models.Tables
+@using FinanMan.Shared.DataEntryModels
+
+<div class="data-entry-wrapper">
+    <EditForm Model=_newLineItem Context="newLineItem" @ref=_lineItemEntryEditForm>
+        <EditForm Model=_newPayment Context="paymentDataEntryItem" id="paymentEntryForm" class="data-entry-form" @ref=_paymentEntryEditForm>
+            <DataAnnotationsValidator />
+            <div id="transDate" class="form-group">
+                <label>Transaction Date</label>
+                <InputDate @bind-Value=_newPayment.TransactionDate />
+                <ValidationMessage For="() => _newPayment.TransactionDate" />
+            </div>
+
+            <div id="payee" class="form-group">
+                <label>Payee</label>
+                <InputSelect @bind-Value=_newPayment.PayeeId>
+                    <option value="">--Select Payee--</option>
+                    @if (_payees is not null)
+                    {
+                        foreach (var curLiType in _payees)
+                        {
+                            <option value="@curLiType.Id">@curLiType.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => _newPayment.PayeeId" />
+            </div>
+
+            <div id="memo" class="form-group">
+                <label>Memo</label>
+                <InputText @bind-Value=_newPayment.Memo />
+                <ValidationMessage For="() => _newPayment.Memo" />
+            </div>
+
+            <div id="lineItemType" class="form-group">
+                <label>Line Item Type</label>
+                <InputSelect @bind-Value=_newLineItem.LineItemTypeId>
+                    <option value="">--Select Line Item Type--</option>
+                    @if (_lineItemTypes is not null)
+                    {
+                        foreach (var curLiType in _lineItemTypes)
+                        {
+                            <option value="@curLiType.Id">@curLiType.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => _newLineItem.LineItemTypeId" />
+            </div>
+
+            <div id="lineItemDetail" class="form-group">
+                <label>Detail</label>
+                <InputText @bind-Value=_newLineItem.Detail />
+                <ValidationMessage For="() => _newLineItem.Detail" />
+            </div>
+
+            <div id="lineItemAmount" class="form-group">
+                <label>Amount</label>
+                <input type="number" step=".01" @bind=_newLineItem.Amount />
+                <ValidationMessage For="() => _newLineItem.Amount" />
+            </div>
+
+            <div id="addLineItemButton" class="form-group">
+                <button type="button" @onclick=HandleLineItemSubmitted>Add</button>
+            </div>
+            
+            <div id="transactionDetails" class="transaction-details">
+                <table>
+                    <colgroup id="lit" />
+                    <colgroup id="lid" />
+                    <colgroup id="lia" />
+                    <thead>
+                        <tr>
+                            <th scope="col">Line Item Type</th>
+                            <th scope="col">Detail</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!(_newPayment.LineItems?.Any() ?? false))
+                        {
+                            <tr>
+                                <td colspan="3">No items added</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var curLi in _newPayment.LineItems)
+                            {
+                                <tr>
+                                    <td>@(_lineItemTypes!.Single(x => x.Id == (curLi.LineItemTypeId ?? 0)).Name)</td>
+                                    <td>@curLi.Detail</td>
+                                    <td>@curLi.Amount</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                <label>Total:</label> <strong>@_newPayment.Total</strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+            <div id="postedDate" class="form-group">
+                <label>Posted Date</label>
+                <InputDate @bind-Value=_newPayment.PostedDate />
+                <ValidationMessage For="() => _newPayment.PostedDate" />
+            </div>
+
+            <div id="account" class="form-group">
+                <label>Account</label>
+                <InputSelect @bind-Value=_newPayment.AccountId>
+                    <option value="">--Select Account--</option>
+                    @if (_accounts is not null)
+                    {
+                        foreach (var curAccount in _accounts)
+                        {
+                            <option value="@curAccount.Id">@curAccount.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => _newPayment.PostedDate" />
+            </div>
+            <div id="saveButton" class="form-group">
+                <button type="button" @onclick=HandlePaymentSubmitted>Submit</button>
+            </div>
+        </EditForm>
+    </EditForm>
+</div>

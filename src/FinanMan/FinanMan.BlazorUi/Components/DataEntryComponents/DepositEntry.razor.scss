@@ -1,0 +1,35 @@
+﻿.data-entry-wrapper {
+    ::deep {
+        #depositEntryForm {
+            grid-template-areas:
+                'td  td  ac ac ac ac' 
+                'dr  dr  dr dr dr a' 
+                'm   m   m  m  m  m'
+                'sub sub .  .  .  .';
+
+            #transDate {
+                grid-area: td;
+            }
+
+            #account {
+                grid-area: ac;
+            }
+
+            #reason {
+                grid-area: dr;
+            }
+
+            #memo {
+                grid-area: m;
+            }
+
+            #amount {
+                grid-area: a;
+            }
+
+            #saveButton {
+                grid-area: sub;
+            }
+        }
+    }
+}

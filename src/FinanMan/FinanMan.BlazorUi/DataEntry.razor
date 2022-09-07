@@ -1,0 +1,48 @@
+﻿@page "/data-entry"
+@page "/data-entry/{EntType}"
+
+@using FinanMan.BlazorUi.Components.DataEntryComponents
+
+<div id="dataEntryPage" class="page-content">
+    <header>
+        <ul class="data-entry-tabs">
+            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">Payments</button></li>
+            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)">Deposits</button></li>
+            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">Transfers</button></li>
+        </ul>
+    </header>
+    <section class="data-entry-section">
+        <span class="title">@_entryType.GetDisplayText()</span>
+
+        @switch (_entryType)
+        {
+            case EntryType.Deposits:
+                <DepositEntry />
+                break;
+            case EntryType.Transfers:
+                <TransferEntry />
+                break;
+            default:
+                <PaymentEntry />
+                break;
+        }
+    </section>
+    <TransactionHistory />
+</div>
+
+@code {
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+    [Parameter] 
+    public string EntType 
+    {
+        get => _entryType.ToString();
+        set => _entryType = Enum.TryParse<EntryType>(value, out var et) ? et : EntryType.Payments; 
+    }
+    private EntryType _entryType  = EntryType.Payments;
+
+    private void HandleEntryTabClicked(EntryType entryType)
+    {
+        if(_entryType == entryType) { return; }
+        NavigationManager.NavigateTo($"data-entry/{entryType}");
+    }
+}

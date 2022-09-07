@@ -1,0 +1,99 @@
+﻿@page "/"
+@using FinanMan.Abstractions.ServiceInterfaces
+@using FinanMan.Shared.DataEntryModels
+@using System.Globalization
+@using FinanMan.SharedLocalization.Extensions
+
+<PageTitle>@Localizer["IndexTitle"]</PageTitle>
+
+<article class="page index-page">
+    <header class="hero">
+        <div class="hero-filter"></div>
+        <div class="content">
+            <div class="title">
+                @Localizer["HeroTitle"]
+                <span class="sub-title">@Localizer["HeroSubtitle"]</span>
+            </div>
+            <LoginForm />
+        </div>
+    </header>
+    <section class="content">
+        <div class="card-wrapper">
+            <Card>
+                <CardHeader>
+                    @Localizer["TrackHeader"]
+                </CardHeader>
+                <CardBody>
+                    <CardText>
+                        @Localizer["TrackBodyContent"]
+                    </CardText>
+                </CardBody>
+                <CardFooter>
+                    <button type="button">
+                        @Localizer["GetStartedButtonText"]
+                    </button>
+                </CardFooter>
+            </Card>
+            <Card>
+                <CardHeader>
+                    @Localizer["WatchHeader"]
+                </CardHeader>
+                <CardBody>
+                    <CardText>
+                        @Localizer["WatchBodyContent"]
+                    </CardText>
+                </CardBody>
+                <CardFooter>
+                    <button type="button">
+                        @Localizer["GetStartedButtonText"]
+                    </button>
+                </CardFooter>
+            </Card>
+            <Card>
+                <CardHeader>
+                    @Localizer["PlanHeader"]
+                </CardHeader>
+                <CardBody>
+                    <CardText>
+                        @Localizer["PlanBodyContent"]
+                    </CardText>
+                </CardBody>
+                <CardFooter>
+                    <button type="button">
+                        @Localizer["GetStartedButtonText"]
+                    </button>
+                </CardFooter>
+            </Card>
+        </div>
+    </section>
+    <footer>
+        <section>
+            <span class="header">
+                <a href="data-entry">
+                    Data Entry
+                </a>
+            </span>
+            <ul>
+                <li>Payment</li>
+                <li>Deposit</li>
+                <li>Transfer</li>
+            </ul>
+        </section>
+        <section>
+            <span class="header">About</span>
+            <ul>
+                <li>About Automated Realms</li>
+                <li>Core Values</li>
+                <li>Contact Us</li>
+            </ul>
+        </section>
+    </footer>
+</article>
+
+@code {
+    [Inject] private IStringLocalizer<Index> Localizer { get; set; } = default!;
+
+    private DepositViewModel _newDeposit = new();
+    private EditContext _editContext = default!;
+
+}

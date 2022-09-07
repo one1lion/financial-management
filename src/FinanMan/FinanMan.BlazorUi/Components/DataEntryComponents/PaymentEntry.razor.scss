@@ -1,0 +1,92 @@
+﻿.data-entry-wrapper {
+    ::deep {
+        #paymentEntryForm {
+            grid-template-areas:
+                'td  td  pt  pt  pt  pt' 
+                'm   m   m   m   m   m' 
+                'li  li  d   d   a   ab' 
+                'lid lid lid lid lid lid' 
+                'pd  pd  ac  ac  ac  ac'
+                'sub sub .   .   .   .';
+            grid-template-columns: 12ch 2ch 10ch 8ch 8ch;
+            width: calc(40ch + 4rem);
+
+            #transDate {
+                grid-area: td;
+            }
+
+            #payee {
+                grid-area: pt;
+            }
+
+            #memo {
+                grid-area: m;
+            }
+
+            #lineItemType {
+                grid-area: li;
+            }
+
+            #lineItemDetail {
+                grid-area: d;
+            }
+
+            #lineItemAmount {
+                grid-area: a;
+            }
+
+            #addLineItemButton {
+                grid-area: ab;
+            }
+
+            #transactionDetails {
+                grid-area: lid;
+                justify-self: stretch;
+                align-self: stretch;
+                height: 20ch;
+                position: relative;
+                overflow: auto;
+
+                table {
+                    width: 100%;
+                    height: 100%;
+
+                    thead {
+                        position: sticky;
+                        top: 0;
+
+                        tr {
+                            background-color: var(--table-header-background-color);
+                        }
+                    }
+
+                    tr {
+                        vertical-align: top;
+
+                        td, th {
+                            padding: .5rem;
+                        }
+                    }
+
+                    tfoot {
+                        position: sticky;
+                        bottom: 0;
+                        background-color: var(--table-footer-background-color);
+                    }
+                }
+            }
+
+            #postedDate {
+                grid-area: pd;
+            }
+
+            #account {
+                grid-area: ac;
+            }
+
+            #saveButton {
+                grid-area: sub;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "FinanMan.Database.Models": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:18970;http://localhost:18971"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "Sass/App.scss"
+  },
+  {
+    "outputFile": "Shared/MainLayout.razor.css",
+    "inputFile": "Shared/MainLayout.razor.scss"
+  },
+  {
+    "outputFile": "Shared/NavMenu.razor.css",
+    "inputFile": "Shared/NavMenu.razor.scss"
+  },
+  {
+    "outputFile": "Shared/TopBar.razor.css",
+    "inputFile": "Shared/TopBar.razor.scss"
+  },
+  {
+    "outputFile": "Shared/LoginForm.razor.css",
+    "inputFile": "Shared/LoginForm.razor.scss"
+  },
+  {
+    "outputFile": "Index.razor.css",
+    "inputFile": "Index.razor.scss"
+  },
+  {
+    "outputFile": "DataEntry.razor.css",
+    "inputFile": "DataEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/PaymentEntry.razor.css",
+    "inputFile": "Components/DataEntryComponents/PaymentEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/TransferEntry.razor.css",
+    "inputFile": "Components/DataEntryComponents/TransferEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/DepositEntry.razor.css",
+    "inputFile": "Components/DataEntryComponents/DepositEntry.razor.scss"
+  },
+  {
+    "outputFile": "Components/TransactionHistoryComponents/TransactionHistoryGrid.razor.css",
+    "inputFile": "Components/TransactionHistoryComponents/TransactionHistoryGrid.razor.scss"
+  }
+]

@@ -1,0 +1,9 @@
+﻿<div class="@CssClasses">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? AdditionalCssClasses { get; set; }
+    private string CssClasses => $"card-footer{(string.IsNullOrWhiteSpace(AdditionalCssClasses) ? string.Empty : $" {AdditionalCssClasses}")}";
+}
