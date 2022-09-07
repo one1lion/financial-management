@@ -1,4 +1,5 @@
 ﻿using FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.Shared.DataEntryModels;
 

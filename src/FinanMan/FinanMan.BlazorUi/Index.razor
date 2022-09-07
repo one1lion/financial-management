@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using FinanMan.Abstractions.ServiceInterfaces
 @using FinanMan.Shared.DataEntryModels
 @using System.Globalization
 @using FinanMan.SharedLocalization.Extensions
@@ -92,8 +93,7 @@
 @code {
     [Inject] private IStringLocalizer<Index> Localizer { get; set; } = default!;
 
-    private DepositViewModel _hold = new();
+    private DepositViewModel _newDeposit = new();
     private EditContext _editContext = default!;
 
-    private DateTime _someDate = DateTime.UtcNow;
 }

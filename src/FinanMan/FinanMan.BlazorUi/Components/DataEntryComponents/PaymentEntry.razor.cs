@@ -1,5 +1,6 @@
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 
@@ -10,6 +11,9 @@ public partial class PaymentEntry
     private List<Account>? _accounts;
     private List<LuLineItemType>? _lineItemTypes;
     private List<Payee>? _payees;
+
+    private EditForm? _paymentEntryEditForm;
+    private EditForm? _lineItemEntryEditForm;
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,9 +39,26 @@ public partial class PaymentEntry
         };
     }
 
-    private void HandleAddDetailClicked()
+    private Task HandlePaymentSubmitted()
     {
+        if(_paymentEntryEditForm?.EditContext is null) { return Task.CompletedTask; }
+        if(!_paymentEntryEditForm.EditContext.Validate())
+        {
+            
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task HandleLineItemSubmitted()
+    {
+        if(_lineItemEntryEditForm?.EditContext is null) { return Task.CompletedTask; }
+        if (!_lineItemEntryEditForm.EditContext.Validate())
+        {
+            return Task.CompletedTask;
+        }
         _newPayment.LineItems.Add(_newLineItem);
         _newLineItem = new();
+        return Task.CompletedTask;
     }
 }
