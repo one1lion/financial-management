@@ -11,7 +11,7 @@
         
         <div id="account" class="form-group">
             <label>To Account</label>
-            <InputSelect @bind-Value=_newDeposit.TargetAccountId>
+            <InputSelect @bind-Value=_newDeposit.TargetAccountValueText>
                 <option value="">--Select Account--</option>
                 @if (_accounts is not null)
                 {
@@ -25,7 +25,7 @@
 
         <div id="reason" class="form-group">
             <label>Deposit Reason</label>
-            <InputSelect @bind-Value=_newDeposit.DepositReasonId>
+            <InputSelect @bind-Value=_newDeposit.DepositReasonValueText>
                 <option value="">--Select Deposit--</option>
                 @if (_depositReasons is not null)
                 {

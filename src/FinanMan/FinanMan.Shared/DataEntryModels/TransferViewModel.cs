@@ -4,18 +4,18 @@ namespace FinanMan.Shared.DataEntryModels;
 
 public class TransferViewModel : ITransferViewModel
 {
-    private int? _sourceAccountId;
-    public int? SourceAccountId
+    private string? _sourceAccountValueText;
+    public string? SourceAccountValueText
     {
-        get => _sourceAccountId;
+        get => _sourceAccountValueText;
         set
         {
-            if (_sourceAccountId == value) { return; }
-            _sourceAccountId = value;
-            if(TargetAccountId == value) { TargetAccountId = null; }
+            if (_sourceAccountValueText == value) { return; }
+            _sourceAccountValueText = value;
+            if(TargetAccountValueText == value) { TargetAccountValueText = null; }
         }
     }
-    public int? TargetAccountId { get; set; }
+    public string? TargetAccountValueText { get; set; }
     public string? Memo { get; set; }
     public double? Amount { get; set; }
     public DateTime? TransactionDate { get; set; }
