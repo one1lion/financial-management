@@ -17,7 +17,7 @@
                 {
                     foreach (var curAccount in _accounts)
                     {
-                        <option value="@curAccount.Id">@curAccount.Name</option>
+                        <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
                     }
                 }
             </InputSelect>
@@ -31,7 +31,7 @@
                 {
                     foreach (var curDeposit in _depositReasons)
                     {
-                        <option value="@curDeposit.Id">@curDeposit.Name</option>
+                        <option value="@curDeposit.ValueText">@curDeposit.DisplayText</option>
                     }
                 }
             </InputSelect>
