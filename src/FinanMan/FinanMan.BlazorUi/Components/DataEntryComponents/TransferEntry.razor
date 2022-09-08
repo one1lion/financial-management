@@ -16,32 +16,32 @@
 
         <div id="fromAccount" class="form-group">
             <label>From Account</label>
-            <InputSelect @bind-Value=_newTransfer.SourceAccountId>
+            <InputSelect @bind-Value=_newTransfer.SourceAccountValueText>
                 <option value="">--Select Account--</option>
                 @if (_accounts is not null)
                 {
                     foreach (var curAccount in _accounts)
                     {
-                        <option value="@curAccount.Id">@curAccount.Name</option>
+                        <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
                     }
                 }
             </InputSelect>
-            <span>@_newTransfer.SourceAccountId</span>
+            <span>@_newTransfer.SourceAccountValueText</span>
         </div>
 
         <div id="toAccount" class="form-group">
             <label>To Account</label>
-            <InputSelect @bind-Value=_newTransfer.TargetAccountId>
+            <InputSelect @bind-Value=_newTransfer.TargetAccountValueText>
                 <option value="">--Select Account--</option>
                 @if (_accounts is not null)
                 {
-                    foreach (var curAccount in _accounts.Where(x => x.Id != _newTransfer.SourceAccountId))
+                    foreach (var curAccount in _accounts.Where(x => x.ValueText != _newTransfer.SourceAccountValueText))
                     {
-                        <option value="@curAccount.Id">@curAccount.Name</option>
+                        <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
                     }
                 }
             </InputSelect>
-            <span>@_newTransfer.TargetAccountId</span>
+            <span>@_newTransfer.TargetAccountValueText</span>
         </div>
 
         <div id="memo" class="form-group">

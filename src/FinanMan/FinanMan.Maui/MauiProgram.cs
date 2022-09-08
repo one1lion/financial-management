@@ -1,4 +1,5 @@
-﻿using FinanMan.Shared.Extensions;
+﻿using FinanMan.BlazorUi.Extensions;
+using FinanMan.Shared.Extensions;
 
 namespace FinanMan.Maui;
 
@@ -20,6 +21,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddFinanManLocalization();
+        builder.Services.AddStateManagement();
 
         return builder.Build();
     }

@@ -2,10 +2,10 @@
 
 public interface IPaymentEntryViewModel
 {
-    int? AccountId { get; set; }
+    string? AccountValueText { get; set; }
     ICollection<ILineItemViewModel> LineItems { get; init; }
     string? Memo { get; set; }
-    int? PayeeId { get; set; }
+    string? PayeeValueText { get; set; }
     DateTime? PostedDate { get; set; }
     DateTime? TransactionDate { get; set; }
 
