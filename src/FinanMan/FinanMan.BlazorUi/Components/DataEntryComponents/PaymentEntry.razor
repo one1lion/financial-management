@@ -13,17 +13,17 @@
 
             <div id="payee" class="form-group">
                 <label>Payee</label>
-                <InputSelect @bind-Value=_newPayment.PayeeId>
+                <InputSelect @bind-Value=_newPayment.PayeeValueText>
                     <option value="">--Select Payee--</option>
                     @if (_payees is not null)
                     {
                         foreach (var curLiType in _payees)
                         {
-                            <option value="@curLiType.Id">@curLiType.Name</option>
+                            <option value="@curLiType.ValueText">@curLiType.DisplayText</option>
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="() => _newPayment.PayeeId" />
+                <ValidationMessage For="() => _newPayment.PayeeValueText" />
             </div>
 
             <div id="memo" class="form-group">
@@ -34,17 +34,17 @@
 
             <div id="lineItemType" class="form-group">
                 <label>Line Item Type</label>
-                <InputSelect @bind-Value=_newLineItem.LineItemTypeId>
+                <InputSelect @bind-Value=_newLineItem.LineItemTypeValueText>
                     <option value="">--Select Line Item Type--</option>
                     @if (_lineItemTypes is not null)
                     {
                         foreach (var curLiType in _lineItemTypes)
                         {
-                            <option value="@curLiType.Id">@curLiType.Name</option>
+                            <option value="@curLiType.ValueText">@curLiType.DisplayText</option>
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="() => _newLineItem.LineItemTypeId" />
+                <ValidationMessage For="() => _newLineItem.LineItemTypeValueText" />
             </div>
 
             <div id="lineItemDetail" class="form-group">
@@ -87,7 +87,7 @@
                             foreach (var curLi in _newPayment.LineItems)
                             {
                                 <tr>
-                                    <td>@(_lineItemTypes!.Single(x => x.Id == (curLi.LineItemTypeId ?? 0)).Name)</td>
+                                    <td>@(_lineItemTypes!.First(x => x.ValueText == curLi.LineItemTypeValueText).DisplayText)</td>
                                     <td>@curLi.Detail</td>
                                     <td>@curLi.Amount</td>
                                 </tr>
@@ -113,13 +113,13 @@
 
             <div id="account" class="form-group">
                 <label>Account</label>
-                <InputSelect @bind-Value=_newPayment.AccountId>
+                <InputSelect @bind-Value=_newPayment.AccountValueText>
                     <option value="">--Select Account--</option>
                     @if (_accounts is not null)
                     {
                         foreach (var curAccount in _accounts)
                         {
-                            <option value="@curAccount.Id">@curAccount.Name</option>
+                            <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
                         }
                     }
                 </InputSelect>

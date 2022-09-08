@@ -2,7 +2,7 @@
 
 public interface ILineItemViewModel
 {
-    int? LineItemTypeId { get; set; }
+    string? LineItemTypeValueText { get; set; }
     string? Detail { get; set; }
     double? Amount { get; set; }
 }

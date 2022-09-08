@@ -1,14 +1,13 @@
 ﻿using FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.Shared.DataEntryModels;
 
 public class PaymentEntryViewModel : IPaymentEntryViewModel
 {
-    public int? AccountId { get;set; }
+    public string? AccountValueText { get; set; }
     public ICollection<ILineItemViewModel> LineItems { get; init; } = new List<ILineItemViewModel>();
     public string? Memo { get; set; }
-    public int? PayeeId { get; set; }
+    public string? PayeeValueText { get; set; }
     public DateTime? PostedDate { get; set; }
     public DateTime? TransactionDate { get; set; }
 

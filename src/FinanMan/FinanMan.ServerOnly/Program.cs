@@ -1,3 +1,4 @@
+using FinanMan.BlazorUi.Extensions;
 using FinanMan.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddFinanManLocalization();
+builder.Services.AddStateManagement();
 
 var app = builder.Build();
 
