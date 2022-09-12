@@ -1,9 +1,8 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.IdentityModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.Shared.IdentityModels;
 
-public class LoginModel : ILogin
+public class LoginModel
 {
     [Required]
     public string? Username { get; set; }

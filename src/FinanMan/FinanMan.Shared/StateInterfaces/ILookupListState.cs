@@ -1,6 +1,6 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.LookupModels;
+﻿using FinanMan.Shared.LookupModels;
 
-namespace FinanMan.Abstractions.StateInterfaces;
+namespace FinanMan.Shared.StateInterfaces;
 
 public interface ILookupListState
 {

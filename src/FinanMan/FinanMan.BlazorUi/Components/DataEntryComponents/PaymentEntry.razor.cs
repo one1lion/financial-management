@@ -1,8 +1,7 @@
-using FinanMan.Abstractions.ModelInterfaces.LookupModels;
-using FinanMan.Abstractions.StateInterfaces;
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.LookupModels;
+using FinanMan.Shared.StateInterfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 

@@ -1,4 +1,4 @@
-﻿namespace FinanMan.Abstractions.ModelInterfaces.LookupModels;
+﻿namespace FinanMan.Shared.LookupModels;
 
 public interface ILookupItemViewModel
 {

@@ -1,11 +1,13 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
+﻿using FinanMan.Shared.Enums;
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public class PaymentEntryViewModel : IPaymentEntryViewModel
+public class PaymentEntryViewModel : ITransactionDataEntryViewModel
 {
+    public TransactionType TransactionType => TransactionType.Payment;
+    
     public string? AccountValueText { get; set; }
-    public ICollection<ILineItemViewModel> LineItems { get; init; } = new List<ILineItemViewModel>();
+    public ICollection<LineItemViewModel> LineItems { get; init; } = new List<LineItemViewModel>();
     public string? Memo { get; set; }
     public string? PayeeValueText { get; set; }
     public DateTime? PostedDate { get; set; }
