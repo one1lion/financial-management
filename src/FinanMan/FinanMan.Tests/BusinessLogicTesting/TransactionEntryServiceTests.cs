@@ -22,9 +22,9 @@ public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntry
         var dbConext = MockOf<IDbContextFactory<FinanManContext>>();
         var mockDb = new Mock<FinanManContext>();           // I tend to pass context in here so wouldn't usally have to do a seperate mock
         dbConext.Setup(e => e.CreateDbContextAsync(ct))
-            .ReturnsAsync(mockDb.Object);
+            .ReturnsAsync(mockDb.Object);                   // would normall pass the dbconext in not IDbContextFactory so this wouldn't be required would move to static func
 
-        var mockDbSet = new List<Transaction>().AsQueryable().BuildMockDbSet();
+        var mockDbSet = new List<Transaction>().AsQueryable().BuildMockDbSet();             // will need this to mock ef
         mockDb.Setup(e => e.Transactions)
             .Returns(mockDbSet.Object);
 
