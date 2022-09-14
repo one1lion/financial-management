@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.ServiceInterfaces;
@@ -17,7 +18,8 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _dbContextFactory = dbContextFactory;
     }
 
-    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionData(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public async Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionData(int startRecord = 0,
+        int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
@@ -27,12 +29,26 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         throw new NotImplementedException();
     }
 
-    public async Task<ResponseModelBase<int>> AddTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> AddTransactionData(TDataEntryViewModel dataEntryViewModel,
+        CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        // simple implemenation as example
+        // obviously this is not really doubt you creat dbcontext on every call etc and not even model you want but will give the idea
+        var context = await _dbContextFactory.CreateDbContextAsync(ct);
+        context.Transactions.Add(new Transaction
+        {
+            Id = 532,
+            Account = new Account
+            {
+                Name = "WhatEver"
+            }
+        });
+        await context.SaveChangesAsync(ct);
+        return default;
     }
 
-    public Task<ResponseModelBase<int>> UpdateTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> UpdateTransactionData(TDataEntryViewModel dataEntryViewModel,
+        CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

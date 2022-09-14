@@ -11,7 +11,7 @@ public static class ServiceExtensions
 {
     public static IServiceCollection SetupDbContext(this IServiceCollection services, IConfiguration config) =>
         services.AddDbContextFactory<FinanManContext>(options =>
-            options.UseSqlServer(config.GetConnectionString("DbContext");
+            options.UseSqlServer(config.GetConnectionString("DbContext")));
 
     public static IServiceCollection AddServerServices(this IServiceCollection services) =>
         services
