@@ -15,7 +15,7 @@ namespace FinanMan.Tests.BusinessLogicTesting;
 public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntryService<DepositEntryViewModel>>
 {
     [Fact]
-    public async Task Ensure_with_verify_great_if_you_only_need_test_a_few_things()
+    public async Task Example1_Ensure_with_verify_great_if_you_only_need_test_a_few_things()
     {
         CancellationToken ct = new CancellationToken();
         var dbConext = MockOf<IDbContextFactory<FinanManContext>>();
@@ -31,7 +31,7 @@ public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntry
 
         var result = await Sut.AddTransactionData(new DepositEntryViewModel(), ct);
 
-        // you can test mappings etc
+        // you can test mappings etc as don't know what your going to use and from sound neither do you hehehehe
 
         // this is if there only a few
         mockDbSet.Verify(e =>
@@ -41,7 +41,7 @@ public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntry
     }
 
     [Fact]
-    public async Task Ensure_with_call_back_great_if_you_need_what_was_added_back()
+    public async Task Example2_Ensure_with_call_back_great_if_you_need_what_was_added_back()
     {
         // with this we get a call back to get the entire model. . verify above great but can get messy if checking 100's of things
         CancellationToken ct = new CancellationToken();
@@ -62,7 +62,7 @@ public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntry
 
         var result = await Sut.AddTransactionData(new DepositEntryViewModel(), ct);
 
-        // you can test mappings etc
+        // you can test mappings etc as don't know what your going to use and from sound neither do you hehehehe
 
         // this is if there only a few
         Assert.Equal(532, transaction.Id);
