@@ -3,20 +3,19 @@ using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.ServiceInterfaces;
 using FinanMan.SharedServer.Extensions;
 using FinanMan.SharedServer.Services;
+using FinanMan.Tests.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using System.Threading.Tasks;
 
 namespace FinanMan.Tests.BusinessLogicTesting;
 
-public class TransactionEntryServiceTests
+public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntryService<DepositEntryViewModel>>
 {
     private readonly ITransactionEntryService<DepositEntryViewModel> _depositsService;
-    private readonly ITransactionEntryService<PaymentEntryViewModel> _paymentsService;
-    private readonly ITransactionEntryService<TransferEntryViewModel> _transfersService;
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
 
-    public TransactionEntryServiceTests()
+    public DepositTransactionEntryServiceTests()
     {
         var services = new ServiceCollection();
         services.AddScoped<ITransactionEntryService<DepositEntryViewModel>, TransactionEntryService<DepositEntryViewModel>>();
@@ -28,8 +27,6 @@ public class TransactionEntryServiceTests
         var serviceProvider = services.BuildServiceProvider();
         
         _depositsService = serviceProvider!.GetRequiredService<ITransactionEntryService<DepositEntryViewModel>>()!;
-        _paymentsService = serviceProvider!.GetRequiredService<ITransactionEntryService<PaymentEntryViewModel>>()!;
-        _transfersService = serviceProvider!.GetRequiredService<ITransactionEntryService<TransferEntryViewModel>>()!;
         _dbContextFactory = serviceProvider!.GetRequiredService<IDbContextFactory<FinanManContext>>()!;
     }
 
@@ -37,10 +34,12 @@ public class TransactionEntryServiceTests
     public async Task GetAllDepositEntries_ReturnsAllDepositEntries()
     {
         // Arrange
-        var depositsService = new TransactionEntryService<DepositEntryViewModel>();
+        // Call the Adds
+
 
         // Act
         var result = await _depositsService.GetTransactionData();
+        
 
         // Assert
 
@@ -57,4 +56,20 @@ public class TransactionEntryServiceTests
     {
 
     }
+
+
+    [Fact]
+    public async Task AddDeposit_Works()
+    {
+        // Arrange
+        var newTrans = new DepositEntryViewModel() { };
+
+        // Act
+        var result = await _depositsService.AddTransactionData(newTrans);
+
+
+        // Assert
+
+    }
+
 }
