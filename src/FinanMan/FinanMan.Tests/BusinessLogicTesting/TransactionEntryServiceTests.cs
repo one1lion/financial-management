@@ -43,6 +43,7 @@ public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntry
     [Fact]
     public async Task Ensure_with_call_back_great_if_you_need_what_was_added_back()
     {
+        // with this we get a call back to get the entire model. . verify above great but can get messy if checking 100's of things
         CancellationToken ct = new CancellationToken();
         var dbConext = MockOf<IDbContextFactory<FinanManContext>>();
         var mockDb =
