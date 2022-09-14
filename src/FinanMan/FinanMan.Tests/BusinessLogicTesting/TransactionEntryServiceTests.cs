@@ -20,7 +20,7 @@ public class TransactionEntryServiceDepositEntry : ClassContext<TransactionEntry
     {
         CancellationToken ct = new CancellationToken();
         var dbConext = MockOf<IDbContextFactory<FinanManContext>>();
-        var mockDb = new Mock<FinanManContext>();
+        var mockDb = new Mock<FinanManContext>();           // I tend to pass context in here so wouldn't usally have to do a seperate mock
         dbConext.Setup(e => e.CreateDbContextAsync(ct))
             .ReturnsAsync(mockDb.Object);
 
