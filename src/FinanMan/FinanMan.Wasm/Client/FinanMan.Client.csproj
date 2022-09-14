@@ -14,14 +14,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\FinanMan.BlazorUi\FinanMan.BlazorUi.csproj" />
+    <ProjectReference Include="..\..\FinanMan.SharedClient\FinanMan.SharedClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

@@ -1,22 +1,12 @@
-﻿using FinanMan.Database;
-using FinanMan.Shared.DataEntryModels;
+﻿using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.ServiceInterfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
-namespace FinanMan.SharedServer.Services;
+namespace FinanMan.SharedClient.Services;
 
 public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntryService<TDataEntryViewModel>
-    where TDataEntryViewModel : class, ITransactionDataEntryViewModel
+        where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
-    private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
-
-    public TransactionEntryService(IDbContextFactory<FinanManContext> dbContextFactory)
-    {
-        _dbContextFactory = dbContextFactory;
-    }
-
     public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionData(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         throw new NotImplementedException();
@@ -27,7 +17,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         throw new NotImplementedException();
     }
 
-    public async Task<ResponseModelBase<int>> AddTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> AddTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

@@ -3,7 +3,11 @@ using FinanMan.Shared.General;
 
 namespace FinanMan.Shared.ServiceInterfaces;
 
-public interface ITransactionEntryService<TDataEntryViewModel>
+public interface ITransactionEntryService
+{
+    
+}
+public interface ITransactionEntryService<TDataEntryViewModel> : ITransactionEntryService
     where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
     Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionData(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default);

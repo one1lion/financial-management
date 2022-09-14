@@ -1,11 +1,15 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using FinanMan.SharedServer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.SetupDbContext(config);
+
+builder.Services.AddServerServices();
 
 var app = builder.Build();
 
