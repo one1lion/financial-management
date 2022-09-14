@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FinanMan.Abstractions.Enums;
+namespace FinanMan.Shared.Enums;
 
 public enum EntryType
 {

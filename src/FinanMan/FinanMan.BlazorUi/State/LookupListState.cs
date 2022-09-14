@@ -1,7 +1,6 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.LookupModels;
-using FinanMan.Abstractions.StateInterfaces;
-using FinanMan.Database.Models.Tables;
+﻿using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.LookupModels;
+using FinanMan.Shared.StateInterfaces;
 
 namespace FinanMan.BlazorUi.State;
 

@@ -1,6 +1,4 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.LookupModels;
-
-namespace FinanMan.Shared.LookupModels;
+﻿namespace FinanMan.Shared.LookupModels;
 
 public class LookupItemViewModel<TItem> : LookupItemViewModel<int, TItem> { }
 

@@ -1,9 +1,11 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.DataEntryModels;
+﻿using FinanMan.Shared.Enums;
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public class TransferViewModel : ITransferViewModel
+public class TransferEntryViewModel : ITransactionDataEntryViewModel
 {
+    public TransactionType TransactionType => TransactionType.Transfer;
+    
     private string? _sourceAccountValueText;
     public string? SourceAccountValueText
     {

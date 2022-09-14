@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Resources;
 
-namespace FinanMan.Abstractions.Extensions;
+namespace FinanMan.Shared.Extensions;
 
 public static class EnumExtensions
 {

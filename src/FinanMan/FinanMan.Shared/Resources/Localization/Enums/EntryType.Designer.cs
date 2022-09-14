@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FinanMan.Abstractions.Resources.Localization.Enums {
+namespace FinanMan.Shared.Resources.Localization.Enums {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace FinanMan.Abstractions.Resources.Localization.Enums {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FinanMan.Abstractions.Resources.Localization.Enums.EntryType", typeof(EntryType).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FinanMan.Shared.Resources.Localization.Enums.EntryType", typeof(EntryType).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
