@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanMan.Tests.Helpers;
 
-public class ClassContext<T> where T : class
+public abstract class ClassContext<T> where T : class
 {
-    private readonly Dictionary<Type, BuiltMocks> _mocks = new Dictionary<Type, BuiltMocks>();
+    private readonly Dictionary<Type, BuiltMocks> _mocks = new();
 
     private T? _sut = null;
     protected T? Sut => _sut ??= Resolve(_mocks);
@@ -18,7 +16,7 @@ public class ClassContext<T> where T : class
     private class BuiltMocks
     {
         public object Mock { get; set; } = default!;
-        public object? MockValue { get; set; } 
+        public object? MockValue { get; set; }
     }
 
     protected Mock<TE> MockOf<TE>() where TE : class
