@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Components;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -11,7 +12,9 @@ public class ResponseModelBase
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public List<Exception>? Exceptions { get; set; }
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public bool WasError => (ErrorMessages?.Any() ?? false) || (Exceptions?.Any() ?? false);
+    public List<ValidationFailure>? ValidationFailures { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public bool WasError => (ErrorMessages?.Any() ?? false) || (Exceptions?.Any() ?? false) || (ValidationFailures?.Any() ?? false);
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int RecordCount { get; set; }
 
@@ -49,6 +52,24 @@ public class ResponseModelBase
                 builder.OpenElement(curElem++, "pre");
                 builder.AddAttribute(curElem++, "class", "stack-trace");
                 builder.AddContent(curElem++, curEx.StackTrace);
+                builder.CloseElement();
+
+                builder.CloseElement();
+            }
+        }
+
+        if (ValidationFailures?.Any() ?? false)
+        {
+            var curExInd = 0;
+            foreach (var curEx in ValidationFailures)
+            {
+                builder.OpenElement(curElem++, "div");
+                builder.AddAttribute(curElem++, "id", $"ex-{curExInd++}");
+                builder.AddAttribute(curElem++, "class", "exception-block");
+
+                builder.OpenElement(curElem++, "p");
+                builder.AddAttribute(curElem++, "class", "exception-message");
+                builder.AddContent(curElem++, curEx.ErrorMessage);
                 builder.CloseElement();
 
                 builder.CloseElement();
@@ -115,6 +136,12 @@ public class ResponseModelBase
         Exceptions.AddRange(exceptions);
     }
 
+    public void AddErrors(List<ValidationFailure>? messages)
+    {
+        if (!(messages?.Any() ?? false)) { return; }
+        if (ValidationFailures is null) { ValidationFailures = new List<ValidationFailure>(); }
+        ValidationFailures.AddRange(messages);
+    }
 }
 
 // ResponseModelBase`1.cs or ResponseModelBase-TKey.cs

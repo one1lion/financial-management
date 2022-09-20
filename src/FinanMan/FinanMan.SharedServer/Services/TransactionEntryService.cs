@@ -1,7 +1,9 @@
 ﻿using FinanMan.Database;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.ServiceInterfaces;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -11,15 +13,16 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
+    private readonly Lazy<IValidator<TDataEntryViewModel>> _modelValidator;
 
-    public TransactionEntryService(IDbContextFactory<FinanManContext> dbContextFactory)
+    public TransactionEntryService(IDbContextFactory<FinanManContext> dbContextFactory, Lazy<IValidator<TDataEntryViewModel>> modelValidator)
     {
         _dbContextFactory = dbContextFactory;
+        _modelValidator = modelValidator;
     }
 
     public async Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionData(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
-
         throw new NotImplementedException();
     }
 
@@ -31,10 +34,16 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     public async Task<ResponseModelBase<int>> AddTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         var retResp = new ResponseModelBase<int>();
-        // TODO: Validate the view model
-        // if viewmodel is not valid, then add an error to retResp and return
 
-        // Otherwise
+        // Validate the view model
+        var validResult = await _modelValidator.Value.ValidateAsync(dataEntryViewModel, ct);
+        if (!validResult.IsValid)
+        {
+            retResp.AddErrors(validResult.Errors);
+            return retResp;
+        }
+
+        // Otherwise, perform the add
         FinanManContext context = default!;
         IDbContextTransaction? trans = null;
 
@@ -44,8 +53,33 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             context = await _dbContextFactory.CreateDbContextAsync(ct);
             trans = await context.Database.BeginTransactionAsync(ct);
 
+            var newTransaction = new Transaction()
+            {
+                TransactionDate = dataEntryViewModel.TransactionDate!.Value,
+                AccountId = dataEntryViewModel.AccountId!.Value,
+                Memo = dataEntryViewModel.Memo,
+                PostingDate = dataEntryViewModel.PostedDate,
+                DateEntered = DateTime.UtcNow
+            };
 
-            await context.SaveChangesAsync(ct);
+            switch (dataEntryViewModel)
+            {
+                case DepositEntryViewModel depositEntryViewModel:
+                    newTransaction.Deposit = new Deposit()
+                    {
+                        DepositReasonId = depositEntryViewModel.DepositReasonId!.Value
+                    };
+                    break;
+                case PaymentEntryViewModel paymentEntryViewModel:
+                    break;
+                case TransferEntryViewModel transferEntryViewModel:
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            await context.Transactions.AddAsync(newTransaction, ct);
+            retResp.RecordId = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
         }
         catch (Exception ex)

@@ -51,6 +51,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FinanMan.BlazorUi\FinanMan.BlazorUi.csproj" />
+      <ProjectReference Include="..\FinanMan.SharedClient\FinanMan.SharedClient.csproj" />
       <ProjectReference Include="..\FinanMan.SharedLocalization\FinanMan.SharedLocalization.csproj" />
     </ItemGroup>
 
