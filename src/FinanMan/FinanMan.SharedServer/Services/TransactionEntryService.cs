@@ -3,7 +3,6 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.ServiceInterfaces;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -13,9 +12,10 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
-    private readonly Lazy<IValidator<TDataEntryViewModel>> _modelValidator;
+    //private readonly Lazy<TransactionViewModelValidator<TDataEntryViewModel>> _modelValidator;
+    private readonly TransactionViewModelValidator<TDataEntryViewModel> _modelValidator;
 
-    public TransactionEntryService(IDbContextFactory<FinanManContext> dbContextFactory, Lazy<IValidator<TDataEntryViewModel>> modelValidator)
+    public TransactionEntryService(IDbContextFactory<FinanManContext> dbContextFactory, TransactionViewModelValidator<TDataEntryViewModel> modelValidator) //Lazy<TransactionViewModelValidator<TDataEntryViewModel>> modelValidator)
     {
         _dbContextFactory = dbContextFactory;
         _modelValidator = modelValidator;
@@ -36,7 +36,8 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         var retResp = new ResponseModelBase<int>();
 
         // Validate the view model
-        var validResult = await _modelValidator.Value.ValidateAsync(dataEntryViewModel, ct);
+        //var validResult = await _modelValidator.Value.ValidateAsync(dataEntryViewModel, ct);
+        var validResult = await _modelValidator.ValidateAsync(dataEntryViewModel, ct);
         if (!validResult.IsValid)
         {
             retResp.AddErrors(validResult.Errors);
@@ -67,7 +68,8 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 case DepositEntryViewModel depositEntryViewModel:
                     newTransaction.Deposit = new Deposit()
                     {
-                        DepositReasonId = depositEntryViewModel.DepositReasonId!.Value
+                        DepositReasonId = depositEntryViewModel.DepositReasonId!.Value,
+                        Amount = depositEntryViewModel.Amount!.Value
                     };
                     break;
                 case PaymentEntryViewModel paymentEntryViewModel:
@@ -84,10 +86,10 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
         catch (Exception ex)
         {
-            if(trans is not null) { await trans.RollbackAsync(); }
+            if (trans is not null) { await trans.RollbackAsync(); }
             // TODO: Add an error to the return response
             retResp.AddError(ex switch
-            { 
+            {
                 TaskCanceledException _ => "The task to save the deposit was canceled",
                 OperationCanceledException _ => "The task to save the deposit was canceled",
                 _ => "An unexpected error occurred while saving the deposit"
@@ -95,7 +97,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
         finally
         {
-            if(trans is not null) { await trans.DisposeAsync(); }
+            if (trans is not null) { await trans.DisposeAsync(); }
         }
 
         return retResp;

@@ -15,5 +15,5 @@ public static class ServiceExtensions
 
     public static IServiceCollection AddFluentValidation(this IServiceCollection services) =>
         services
-            .AddTransient(typeof(IValidator<>), typeof(TransactionViewModelValidator<>));
+            .AddTransient<TransactionViewModelValidator<DepositEntryViewModel>, DepositEntryViewModelValidator>();
 }

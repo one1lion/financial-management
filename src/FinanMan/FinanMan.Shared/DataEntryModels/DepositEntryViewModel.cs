@@ -15,6 +15,8 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
     [Required]
     public DateTime? TransactionDate { get; set; }
     public DateTime? PostedDate { get; set; }
+
+    public int? AccountId { get; set; }
     [Required]
     public string? TargetAccountValueText {
         get => AccountId?.ToString(); 
@@ -33,8 +35,6 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
     public int? TargetAccountId => int.TryParse(TargetAccountValueText ?? string.Empty, out var taid) ? taid : default;
     [JsonIgnore]
     public int? DepositReasonId => int.TryParse(DepositReasonValueText ?? string.Empty, out var drid) ? drid : default;
-
-    public int? AccountId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }
 
 public abstract class TransactionViewModelValidator<TDataEntryViewModel> : AbstractValidator<TDataEntryViewModel>

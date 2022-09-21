@@ -5,6 +5,7 @@ using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.ServiceInterfaces;
 using FinanMan.SharedServer.Services;
 using FinanMan.Tests.Helpers;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using MockQueryable.Moq;
@@ -28,10 +29,17 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
     {
         // Arrange
         using var cts = new CancellationTokenSource();
-        
-        var dbConextFactory = MockOf<IDbContextFactory<FinanManContext>>();
 
+        // Mock the FluentValidation validator for the Deposit Entry View Model
+        var modelValidatorLazyLoader = MockOf<Lazy<TransactionViewModelValidator<DepositEntryViewModel>>>();
+        var modelValidator = MockOf<TransactionViewModelValidator<DepositEntryViewModel>>();
+        //TransactionViewModelValidator<DepositEntryViewModel> modelValidatorMock = new DepositEntryViewModelValidator();
+        //modelValidatorLazyLoader.SetupGet(x => x.Value).Returns(modelValidatorMock);
+
+        // Mock the DB Context
+        var dbConextFactory = MockOf<IDbContextFactory<FinanManContext>>();
         var dbContextMock = new Mock<FinanManContext>();
+
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateDepositTransactions(1, 20);
         var deposits = transactions.Select(t => t.Deposit).ToList();
@@ -52,8 +60,6 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
         var mockAccountDbSet = new List<Account>().AsQueryable().BuildMockDbSet();
         dbContextMock.Setup(e => e.Accounts).Returns(mockAccountDbSet.Object);
 
-        // I would normally pass the DBContext in instead of IDbContextFactory
-        // so this wouldn't be required. I would move to static func
         cts.CancelAfter(5000);
         var ct = cts.Token;
 
@@ -68,6 +74,8 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
             Amount = 239184
         };
 
+        modelValidator.Setup(x => x.Validate(toAdd)).Returns(new DepositEntryViewModelValidator().Validate(toAdd));
+
         // Act
         var result = await Sut.AddTransactionData(toAdd, ct);
 
@@ -80,9 +88,10 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
             e.AddAsync(
                 It.Is<Transaction>(e => 
                     e.AccountId == 1 
-                    && e.TransactionDate == new DateTime(2022, 1, 1) 
+                    && e.TransactionDate == toAdd.TransactionDate
+                    && e.Deposit != null
                     && e.Deposit.DepositReasonId == 1
-                    && e.TransactionDetails.First().Amount == 239184), ct), Times.Once());
+                    && e.Deposit.Amount == toAdd.Amount), ct), Times.Once());
 
         Assert.False(result.WasError);
         dbContextMock.Verify(e => e.SaveChangesAsync(ct), Times.Once);
