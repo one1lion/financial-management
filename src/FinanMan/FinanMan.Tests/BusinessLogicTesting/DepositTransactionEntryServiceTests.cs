@@ -77,11 +77,12 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
         // this is if there only a few
         Assert.NotNull(result);
         mockTransactionDbSet.Verify(e =>
-            e.Add(
+            e.AddAsync(
                 It.Is<Transaction>(e => 
                     e.AccountId == 1 
                     && e.TransactionDate == new DateTime(2022, 1, 1) 
-                    && e.Deposit.DepositReasonId == 1)), Times.Once());
+                    && e.Deposit.DepositReasonId == 1
+                    && e.TransactionDetails.First().Amount == 239184), ct), Times.Once());
 
         Assert.False(result.WasError);
         dbContextMock.Verify(e => e.SaveChangesAsync(ct), Times.Once);
