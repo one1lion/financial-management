@@ -81,8 +81,9 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             }
 
             await context.Transactions.AddAsync(newTransaction, ct);
-            retResp.RecordId = await context.SaveChangesAsync(ct);
+            retResp.RecordCount = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
+            retResp.RecordId = newTransaction.Id;
         }
         catch (Exception ex)
         {

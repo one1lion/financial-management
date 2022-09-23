@@ -8,6 +8,9 @@ using FinanMan.Tests.Helpers;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using MockQueryable.Moq;
 using Moq;
 using System;
@@ -29,43 +32,25 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
     {
         // Arrange
         using var cts = new CancellationTokenSource();
-
-        // Mock the FluentValidation validator for the Deposit Entry View Model
-        var modelValidatorLazyLoader = MockOf<Lazy<TransactionViewModelValidator<DepositEntryViewModel>>>();
-        var modelValidator = MockOf<TransactionViewModelValidator<DepositEntryViewModel>>();
-        //TransactionViewModelValidator<DepositEntryViewModel> modelValidatorMock = new DepositEntryViewModelValidator();
-        //modelValidatorLazyLoader.SetupGet(x => x.Value).Returns(modelValidatorMock);
+        var ct = cts.Token;
 
         // Mock the DB Context
         var dbConextFactory = MockOf<IDbContextFactory<FinanManContext>>();
-        var dbContextMock = new Mock<FinanManContext>();
 
-        // Mock the primary tables/entities that is going to be used by the service
-        var transactions = MockDataHelpers.GenerateDepositTransactions(1, 20);
-        var deposits = transactions.Select(t => t.Deposit).ToList();
-        transactions.ForEach(t => t.Deposit = null);
-        var transDetails = transactions.SelectMany(t => t.TransactionDetails).ToList();
-        
-        var mockDepositDbSet = deposits.AsQueryable().BuildMockDbSet();
-        dbContextMock.Setup(e => e.Deposits).Returns(mockDepositDbSet.Object);
-
-        var mockTransactionDbSet = new List<Transaction>().AsQueryable().BuildMockDbSet();
-        dbContextMock.Setup(e => e.Transactions).Returns(mockTransactionDbSet.Object);
+        // Mock the FluentValidation validator for the Deposit Entry View Model
+        var options = new DbContextOptionsBuilder<FinanManContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+                  .Options;
+        var context = new FinanManContext(options);
+        dbConextFactory.Setup(e => e.CreateDbContextAsync(ct))
+            .ReturnsAsync(context);
 
         // Mock the DbSets used by the tests using Seed Data for lookup tables
         var mockDepositReasonDbSet = DataHelper.GetSeedData<LuDepositReason>().AsQueryable().BuildMockDbSet();
-        dbContextMock.SetupLookupTables();
+        //dbContextMock.SetupLookupTables();
 
-        // Use Mock Data for Accounts
-        var mockAccountDbSet = new List<Account>().AsQueryable().BuildMockDbSet();
-        dbContextMock.Setup(e => e.Accounts).Returns(mockAccountDbSet.Object);
-
-        cts.CancelAfter(5000);
-        var ct = cts.Token;
-
-        dbConextFactory.Setup(e => e.CreateDbContextAsync(ct))
-            .ReturnsAsync(dbContextMock.Object);
-
+        // Prepare the data to be added
         var toAdd = new DepositEntryViewModel()
         {
             TransactionDate = new DateTime(2022, 1, 1),
@@ -74,65 +59,42 @@ public class DepositTransactionEntryServiceTests : ClassContext<TransactionEntry
             Amount = 239184
         };
 
-        modelValidator.Setup(x => x.Validate(toAdd)).Returns(new DepositEntryViewModelValidator().Validate(toAdd));
+        // Prepare a new Deposit Entry Service instance
+        var sut = new TransactionEntryService<DepositEntryViewModel>(dbConextFactory.Object, new DepositEntryViewModelValidator());
 
         // Act
-        var result = await Sut.AddTransactionData(toAdd, ct);
-
-        // you can test mappings etc as don't know what your going to use and from sound neither do you hehehehe
+        var result = await sut.AddTransactionData(toAdd, ct);
 
         // Assert
         // this is if there only a few
         Assert.NotNull(result);
-        mockTransactionDbSet.Verify(e =>
-            e.AddAsync(
-                It.Is<Transaction>(e => 
-                    e.AccountId == 1 
-                    && e.TransactionDate == toAdd.TransactionDate
-                    && e.Deposit != null
-                    && e.Deposit.DepositReasonId == 1
-                    && e.Deposit.Amount == toAdd.Amount), ct), Times.Once());
-
         Assert.False(result.WasError);
-        dbContextMock.Verify(e => e.SaveChangesAsync(ct), Times.Once);
-    }
 
-    [Fact]
-    public async Task Example2_Ensure_with_call_back_great_if_you_need_what_was_added_back()
-    {
-        // with this we get a call back to get the entire model. . verify above great but can get messy if checking 100's of things
-        var ct = new CancellationToken();
-        var dbConext = MockOf<IDbContextFactory<FinanManContext>>();
-        var mockDb = new Mock<FinanManContext>(); // I tend to pass context in here so wouldn't usally have to do a seperate mock
-        // would normall pass the dbconext in not IDbContextFactory so this wouldn't be required would move to static func
-        dbConext
-            .Setup(e => e.CreateDbContextAsync(ct))
-            .ReturnsAsync(mockDb.Object); 
+        // Get the new record back from in-memory db
+        var newDeposit = context.Transactions.Include(e => e.Deposit).FirstOrDefault(e => e.Id == result.RecordId);
 
-        var mockDbSet = new List<Transaction>().AsQueryable().BuildMockDbSet(); // will need this to mock ef
-        mockDb.Setup(e => e.Transactions)
-            .Returns(mockDbSet.Object);
+        // The records (Transaction and Deposit) exists in the database
+        Assert.NotNull(newDeposit);
+        Assert.NotNull(newDeposit.Deposit)                         ;
 
-        Transaction? transaction = null;
-        mockDbSet.Setup(e => e.Add(It.IsAny<Transaction>()))
-            .Callback((Transaction e) => { transaction = e; });
-
-        var result = await Sut.AddTransactionData(new DepositEntryViewModel(), ct);
-
-        // you can test mappings etc as don't know what your going to use and from sound neither do you hehehehe
-
-        // this is if there only a few
-        Assert.Equal(532, transaction.Id);
-        Assert.Equal("WhatEver", transaction.Account.Name);
-        mockDbSet.Verify(e => e.Add(It.IsAny<Transaction>()), Times.Once());
-
-        mockDb.Verify(e => e.SaveChangesAsync(ct), Times.Once);
+        Assert.Equal(toAdd.TransactionDate, newDeposit.TransactionDate);
+        Assert.Equal(toAdd.Memo, newDeposit.Memo);
+        Assert.Equal(toAdd.DepositReasonId, newDeposit.Deposit.DepositReasonId);
+        Assert.Equal(toAdd.Amount, newDeposit.Deposit.Amount);
     }
 
     [Fact]
     public async Task GetAllDepositEntries_ReturnsAllDepositEntries()
     {
         // Arrange
+
+
+        // Mock the primary tables/entities that is going to be used by the service
+        var transactions = MockDataHelpers.GenerateDepositTransactions(1, 20);
+        var deposits = transactions.Select(t => t.Deposit).ToList();
+        transactions.ForEach(t => t.Deposit = null);
+        var transDetails = transactions.SelectMany(t => t.TransactionDetails).ToList();
+
         // Call the Adds
 
 

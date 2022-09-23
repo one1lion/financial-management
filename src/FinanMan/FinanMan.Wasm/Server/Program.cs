@@ -1,3 +1,4 @@
+using FinanMan.Shared.Extensions;
 using FinanMan.SharedServer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,9 +8,10 @@ var config = builder.Configuration;
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.SetupDbContext(config);
-
-builder.Services.AddServerServices();
+builder.Services
+    .SetupDbContext(config)
+    .AddServerServices()
+    .AddFluentValidation();
 
 var app = builder.Build();
 

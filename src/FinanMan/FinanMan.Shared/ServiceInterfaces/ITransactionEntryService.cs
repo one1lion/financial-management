@@ -3,10 +3,8 @@ using FinanMan.Shared.General;
 
 namespace FinanMan.Shared.ServiceInterfaces;
 
-public interface ITransactionEntryService
-{
-    
-}
+public interface ITransactionEntryService { }
+
 public interface ITransactionEntryService<TDataEntryViewModel> : ITransactionEntryService
     where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {

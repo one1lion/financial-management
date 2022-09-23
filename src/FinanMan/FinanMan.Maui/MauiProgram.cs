@@ -1,5 +1,4 @@
 ﻿using FinanMan.BlazorUi.Extensions;
-using FinanMan.Shared.Extensions;
 using FinanMan.SharedClient.Extensions;
 
 namespace FinanMan.Maui;

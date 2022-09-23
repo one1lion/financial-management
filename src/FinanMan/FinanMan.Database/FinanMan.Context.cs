@@ -106,7 +106,7 @@ public class FinanManContext : DbContext
         {
             entity.Property(e => e.Memo)
                 .HasMaxLength(255)
-                .IsRequired();
+                .IsRequired(false);
         });
 
         modelBuilder.Entity<TransactionDetail>(entity =>

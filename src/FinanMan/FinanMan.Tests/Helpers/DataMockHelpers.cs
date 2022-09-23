@@ -29,6 +29,22 @@ public static class MockDataHelpers
 
         return dbContextMock;
     }
+    
+    //public static Mock<FinanManContext> SetupLookupTables(this Mock<FinanManContext> dbContextMock)
+    //{
+    //    dbContextMock.Setup(e => e.AccountTypes)
+    //        .Returns(DataHelper.GetSeedData<LuAccountType>().AsQueryable().BuildMockDbSet().Object);
+    //    dbContextMock.Setup(e => e.Categories)
+    //        .Returns(DataHelper.GetSeedData<LuCategory>().AsQueryable().BuildMockDbSet().Object);
+    //    dbContextMock.Setup(e => e.DepositReasons)
+    //        .Returns(DataHelper.GetSeedData<LuDepositReason>().AsQueryable().BuildMockDbSet().Object);
+    //    dbContextMock.Setup(e => e.LineItemTypes)
+    //        .Returns(DataHelper.GetSeedData<LuLineItemType>().AsQueryable().BuildMockDbSet().Object);
+    //    dbContextMock.Setup(e => e.RecurrenceTypes)
+    //        .Returns(DataHelper.GetSeedData<LuRecurrenceType>().AsQueryable().BuildMockDbSet().Object);
+
+    //    return dbContextMock;
+    //}
 
     public static List<Transaction> GenerateDepositTransactions(int startId, int count = 1) =>
         Enumerable.Range(0, count - 1)

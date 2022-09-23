@@ -16,8 +16,4 @@
 		<ProjectReference Include="..\Client\FinanMan.Client.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	</ItemGroup>
-
 </Project>
