@@ -53,31 +53,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             context = await _dbContextFactory.CreateDbContextAsync(ct);
             trans = await context.Database.BeginTransactionAsync(ct);
 
-            var newTransaction = new Transaction()
-            {
-                TransactionDate = dataEntryViewModel.TransactionDate!.Value,
-                AccountId = dataEntryViewModel.AccountId!.Value,
-                Memo = dataEntryViewModel.Memo,
-                PostingDate = dataEntryViewModel.PostedDate,
-                DateEntered = DateTime.UtcNow
-            };
-
-            switch (dataEntryViewModel)
-            {
-                case DepositEntryViewModel depositEntryViewModel:
-                    newTransaction.Deposit = new Deposit()
-                    {
-                        DepositReasonId = depositEntryViewModel.DepositReasonId!.Value,
-                        Amount = depositEntryViewModel.Amount!.Value
-                    };
-                    break;
-                case PaymentEntryViewModel paymentEntryViewModel:
-                    break;
-                case TransferEntryViewModel transferEntryViewModel:
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+            var newTransaction = dataEntryViewModel.ToEntityModel();
 
             await context.Transactions.AddAsync(newTransaction, ct);
             retResp.RecordCount = await context.SaveChangesAsync(ct);
