@@ -36,7 +36,6 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         var retResp = new ResponseModelBase<int>();
 
         // Validate the view model
-        //var validResult = await _modelValidator.Value.ValidateAsync(dataEntryViewModel, ct);
         var validResult = await _modelValidator.ValidateAsync(dataEntryViewModel, ct);
         if (!validResult.IsValid)
         {

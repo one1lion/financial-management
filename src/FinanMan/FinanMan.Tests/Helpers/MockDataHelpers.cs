@@ -1,16 +1,26 @@
 ﻿using FinanMan.Database;
 using FinanMan.Database.Data;
 using FinanMan.Database.Models.Tables;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace FinanMan.Tests.Helpers;
 
 public static class MockDataHelpers
 {
+    public static DbContextOptions<FinanManContext> FinanManContextOptions { get; } = new DbContextOptionsBuilder<FinanManContext>()
+        .UseInMemoryDatabase(Guid.NewGuid().ToString())
+        .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+        .Options;
+
+    public static FinanManContext FinanManContext => new(FinanManContextOptions);
+
     private static readonly DateTime _earliestDate = new(2019, 1, 1);
     private static readonly DateTime _latestDate = DateTime.UtcNow.AddDays(10);
 
@@ -29,7 +39,7 @@ public static class MockDataHelpers
 
         return dbContextMock;
     }
-    
+
     //public static Mock<FinanManContext> SetupLookupTables(this Mock<FinanManContext> dbContextMock)
     //{
     //    dbContextMock.Setup(e => e.AccountTypes)
@@ -59,29 +69,34 @@ public static class MockDataHelpers
                 {
                     Id = startId + e,
                     DepositReasonId = 1,
-                    TransactionId = startId + e
-                },
-                TransactionDetails = new List<TransactionDetail>() 
-                { 
-                    new ()
-                    {
-                        Id = (startId + e) * 100 + 1,
-                        Amount = Random.Shared.NextDouble() * 23415.23 + 1,
-                        Description = Random.Shared.NextDouble() < .2 ? Guid.NewGuid().ToString() : null,
-                        LineItemTypeId = 1,
-                        TransactionId = startId + e
-                    }
+                    TransactionId = startId + e,
+                    Amount = Random.Shared.NextDouble() * 23415.23 + 1,
                 }
             })
             .ToList();
 
     public static DateTime GenerateRandomDate(DateTime? earliestDate = null, DateTime? latestDate = null)
     {
-        if(!earliestDate.HasValue) { earliestDate = _earliestDate; }
-        if(!latestDate.HasValue) { latestDate = _latestDate; }
+        if (!earliestDate.HasValue) { earliestDate = _earliestDate; }
+        if (!latestDate.HasValue) { latestDate = _latestDate; }
         var randomTest = new Random();
         var timeSpan = latestDate - earliestDate;
         var newSpan = new TimeSpan(0, randomTest.Next(0, (int)timeSpan.Value.TotalMinutes), 0);
         return earliestDate.Value + newSpan;
     }
+
+
+    public static (Mock<IDbContextFactory<FinanManContext>> dbContextFactory, FinanManContext context) PrepareDbContext(CancellationToken ct)
+    {
+        // Mock the DB Context
+        var dbContextFactory = new Mock<IDbContextFactory<FinanManContext>>();
+
+        // Mock the FluentValidation validator for the Deposit Entry View Model
+        var context = MockDataHelpers.FinanManContext;
+        dbContextFactory.Setup(e => e.CreateDbContextAsync(ct))
+            .ReturnsAsync(context);
+
+        return (dbContextFactory, context);
+    }
+
 }
