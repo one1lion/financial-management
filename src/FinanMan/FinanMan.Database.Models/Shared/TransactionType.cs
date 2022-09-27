@@ -1,4 +1,4 @@
-﻿namespace FinanMan.Shared.Enums;
+﻿namespace FinanMan.Database.Models.Shared;
 
 public enum TransactionType
 {

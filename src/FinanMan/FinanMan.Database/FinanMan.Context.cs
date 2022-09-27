@@ -18,7 +18,7 @@ public class FinanManContext : DbContext
     public virtual DbSet<Payment> Payments { get; set; } = default!;
     public virtual DbSet<ScheduledTransaction> ScheduledTransactions { get; set; } = default!;
     public virtual DbSet<Transaction> Transactions { get; set; } = default!;
-    public virtual DbSet<TransactionDetail> TransactionDetails { get; set; } = default!;
+    public virtual DbSet<PaymentDetail> TransactionDetails { get; set; } = default!;
     public virtual DbSet<Transfer> Transfers { get; set; } = default!;
 
     #region Lookups
@@ -78,7 +78,6 @@ public class FinanManContext : DbContext
 
             entity.HasIndex(e => e.Name);
         });
-        
 
         modelBuilder.Entity<LuRecurrenceType>(entity =>
         {
@@ -109,9 +108,9 @@ public class FinanManContext : DbContext
                 .IsRequired(false);
         });
 
-        modelBuilder.Entity<TransactionDetail>(entity =>
+        modelBuilder.Entity<PaymentDetail>(entity =>
         {
-            entity.Property(e => e.Description)
+            entity.Property(e => e.Detail)
                 .HasMaxLength(255)
                 .IsRequired();
         });

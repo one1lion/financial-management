@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using FinanMan.Database.Models.Shared;
 
 namespace FinanMan.Database.Models.Tables;
 
@@ -12,18 +13,12 @@ public partial class Transaction
     public string? Memo { get; set; }
 
     [NotMapped]
-    public bool IsDeposit => Deposit is not null;
-    
-    [NotMapped]
-    public bool IsPayment => Payment is not null;
-    
-    [NotMapped]
-    public bool IsTransfer => Transfer is not null;
+    public TransactionType TransactionType => Deposit is not null ? TransactionType.Deposit
+        : Payment is not null ? TransactionType.Payment
+        : TransactionType.Transfer;
 
     public virtual Account Account { get; set; } = default!;
     public virtual Deposit? Deposit { get; set; }
     public virtual Payment? Payment { get; set; }
-    public virtual ICollection<TransactionDetail> TransactionDetails { get; set; } = new HashSet<TransactionDetail>();
     public virtual Transfer? Transfer { get; set; }
-    
 }

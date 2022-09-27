@@ -1,4 +1,4 @@
-﻿using FinanMan.Shared.Enums;
+﻿using FinanMan.Database.Models.Shared;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -25,11 +25,15 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
             AccountId = int.TryParse(value ?? string.Empty, out var taid) ? taid : default;
         }
     }
+    public string? AccountName { get; set; }
     [Required]
     public string? DepositReasonValueText { get; set; }
     public string? Memo { get; set; }
     [Required]
     public double? Amount { get; set; }
+
+    [JsonIgnore]
+    public double Total => Amount ?? 0;
 
     [JsonIgnore]
     public int? TargetAccountId => int.TryParse(TargetAccountValueText ?? string.Empty, out var taid) ? taid : default;

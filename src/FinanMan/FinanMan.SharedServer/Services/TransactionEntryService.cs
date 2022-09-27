@@ -1,6 +1,7 @@
 ﻿using FinanMan.Database;
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
+using FinanMan.Shared.Extensions;
 using FinanMan.Shared.General;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;

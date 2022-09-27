@@ -1,4 +1,5 @@
-﻿using FinanMan.Shared.Enums;
+﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Shared.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -18,10 +19,13 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
             AccountId = int.TryParse(value ?? string.Empty, out var taid) ? taid : default;
         }
     }
-    public ICollection<LineItemViewModel> LineItems { get; init; } = new List<LineItemViewModel>();
+    public string? AccountName { get; set; }
+    public ICollection<PaymentDetailViewModel> LineItems { get; init; } = new List<PaymentDetailViewModel>();
     public string? Memo { get; set; }
     [Required]
     public string? PayeeValueText { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public string? PayeeName { get; set; }
     public DateTime? PostedDate { get; set; }
     [Required]
     public DateTime? TransactionDate { get; set; }

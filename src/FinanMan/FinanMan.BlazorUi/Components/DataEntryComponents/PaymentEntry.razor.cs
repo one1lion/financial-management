@@ -12,7 +12,7 @@ public partial class PaymentEntry
     [Inject] private ILookupListState LookupListState { get; set; } = default!;
 
     private PaymentEntryViewModel _newPayment = new();
-    private LineItemViewModel _newLineItem = new();
+    private PaymentDetailViewModel _newLineItem = new();
     private List<ILookupItemViewModel<int, AccountViewModel>>? _accounts;
     private List<ILookupItemViewModel<int, LuLineItemType>>? _lineItemTypes;
     private List<ILookupItemViewModel<int, PayeeViewModel>>? _payees;

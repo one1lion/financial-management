@@ -1,5 +1,4 @@
-﻿using FinanMan.Database.Models.Tables;
-using FinanMan.Shared.Enums;
+﻿using FinanMan.Database.Models.Shared;
 using System.Text.Json.Serialization;
 
 namespace FinanMan.Shared.DataEntryModels;
@@ -18,12 +17,17 @@ public class TransferEntryViewModel : ITransactionDataEntryViewModel
             if (TargetAccountValueText == value) { TargetAccountValueText = null; }
         }
     }
+    public string? AccountName { get; set; }
     public string? TargetAccountValueText { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public string? TargetAccountName { get; set; }
     public string? Memo { get; set; }
     public double? Amount { get; set; }
     public DateTime? TransactionDate { get; set; }
     public DateTime? PostedDate { get; set; }
-
+    
+    [JsonIgnore]
+    public double Total => Amount ?? 0;
     [JsonIgnore]
     public int? SourceAccountId => int.TryParse(SourceAccountValueText ?? string.Empty, out var aid) ? aid : default;
     [JsonIgnore]

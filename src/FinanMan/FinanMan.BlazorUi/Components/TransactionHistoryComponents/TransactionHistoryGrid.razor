@@ -1,4 +1,5 @@
 ﻿@using FinanMan.Database.Models.Tables
+@using FinanMan.Shared.DataEntryModels
 
 <section class="transaction-history">
     <table>
@@ -70,33 +71,34 @@
             }
             else
             {
-                foreach (var curTransaction in SortedTransactions!)
+                // Since _transactions is not null here, neither is SortedTransactions
+                foreach (var curTransaction in SortedTransactions!.ToViewModel())
                 {
                     <tr>
                         <td>
-                            @if (!curTransaction.PostingDate.HasValue)
+                            @if (!curTransaction.PostedDate.HasValue)
                             {
                                 <span>😒</span>
                             }
                         </td>
-                        <td>@curTransaction.TransactionDate.ToLocalTime().ToShortDateString()</td>
-                        <td>@curTransaction.Account.Name</td>
+                        <td>@curTransaction.TransactionDate?.ToLocalTime().ToShortDateString()</td>
+                        <td>@curTransaction.AccountName</td>
                         <td>
-                            @if (curTransaction.IsPayment)
+                            @switch(curTransaction)
                             {
-                                <span>@curTransaction.Payment!.Payee.Name</span>
-                            }
-                            else if (curTransaction.IsTransfer)
-                            {
-                                <span>@curTransaction.Transfer!.TargetAccount.Name</span>
-                            }
-                            else
-                            {
-                                <span>&nbsp;</span>
+                                case PaymentEntryViewModel payment:
+                                    <span>@payment.PayeeName</span>
+                                    break;
+                                case TransferEntryViewModel transfer:
+                                    <span>@transfer.TargetAccountName</span>
+                                    break;
+                                default:
+                                    <span>&nbsp;</span>
+                                    break;
                             }
                         </td>
                         <td>@curTransaction.Memo</td>
-                        <td>@curTransaction.TransactionDetails.Sum(x => x.Amount)</td>
+                        <td>@curTransaction.Total</td>
                     </tr>
                 }
             }

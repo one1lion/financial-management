@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public class LineItemViewModel
+public class PaymentDetailViewModel
 {
     [Required]
     public string? LineItemTypeValueText { get; set; }

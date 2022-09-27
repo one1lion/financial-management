@@ -31,6 +31,11 @@
   --table-footer-background-color: #1D2933;
 }
 
+.light-theme {
+  --primary-text-color: #03060A;
+  --primary-background-color: #f0f3f0;
+}
+
 .card {
   color: var(--card-foreground-color) !important;
   background-color: var(--card-background-color) !important;

@@ -11,7 +11,7 @@ public class DepositEntryViewModelValidator : TransactionViewModelValidator<Depo
             RuleFor(x => x.PostedDate)
                 .NotNull()
                 .GreaterThanOrEqualTo(x => x.TransactionDate)
-                .WithMessage("The posted date must be on or after the Transaction Date.");
+                .WithMessage("The posted date must be on or after the Payment Date.");
         });
     }
 }
