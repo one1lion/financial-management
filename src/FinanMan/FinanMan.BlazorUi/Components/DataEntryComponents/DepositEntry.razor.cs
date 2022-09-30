@@ -32,7 +32,7 @@ public partial class DepositEntry
     {
         _currentResponse = default;
         _submitting = true;
-        _currentResponse = await DepositEntryService.AddTransactionData(_newDeposit);
+        _currentResponse = await DepositEntryService.AddTransactionDataAsync(_newDeposit);
         _submitting = false;
     }
 }

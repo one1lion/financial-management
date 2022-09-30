@@ -1,5 +1,4 @@
 ﻿using FinanMan.Database;
-using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.General;
@@ -13,7 +12,6 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
-    //private readonly Lazy<TransactionViewModelValidator<TDataEntryViewModel>> _modelValidator;
     private readonly TransactionViewModelValidator<TDataEntryViewModel> _modelValidator;
 
     public TransactionEntryService(IDbContextFactory<FinanManContext> dbContextFactory, TransactionViewModelValidator<TDataEntryViewModel> modelValidator) //Lazy<TransactionViewModelValidator<TDataEntryViewModel>> modelValidator)
@@ -22,17 +20,17 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _modelValidator = modelValidator;
     }
 
-    public async Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionData(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionDataAsync(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModel<TDataEntryViewModel>> GetTransactionData(int id, CancellationToken ct = default)
+    public Task<ResponseModel<TDataEntryViewModel>> GetTransactionDataAsync(int id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<ResponseModelBase<int>> AddTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> AddTransactionDataAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         var retResp = new ResponseModelBase<int>();
 
@@ -80,12 +78,12 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         return retResp;
     }
 
-    public Task<ResponseModelBase<int>> UpdateTransactionData(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> UpdateTransactionDataAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> DeleteTransactionData(int id, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> DeleteTransactionDataAsync(int id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

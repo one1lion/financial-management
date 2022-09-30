@@ -40,15 +40,14 @@ public partial class PaymentEntry
         return Task.CompletedTask;
     }
 
-    private Task HandleLineItemSubmitted()
+    private void HandleLineItemSubmitted()
     {
-        if (_lineItemEntryEditForm?.EditContext is null) { return Task.CompletedTask; }
+        if (_lineItemEntryEditForm?.EditContext is null) { return; }
         if (!_lineItemEntryEditForm.EditContext.Validate())
         {
-            return Task.CompletedTask;
+            return;
         }
         _newPayment.LineItems.Add(_newLineItem);
         _newLineItem = new();
-        return Task.CompletedTask;
     }
 }

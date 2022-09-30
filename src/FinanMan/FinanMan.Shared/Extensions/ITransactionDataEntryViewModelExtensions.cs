@@ -89,6 +89,9 @@ public static class ITransactionDataEntryViewModelExtensions
 
     public static IEnumerable<ITransactionDataEntryViewModel> ToViewModel(this IEnumerable<Transaction> model) => 
         model.Select(x => x.ToViewModel());
+    public static IEnumerable<TViewModel> ToViewModel<TViewModel>(this IEnumerable<Transaction> model)
+        where TViewModel : ITransactionDataEntryViewModel => 
+        model.ToViewModel().OfType<TViewModel>();
 }
 
 public static class LineItemViewModelExtensions

@@ -13,6 +13,7 @@ builder.Services.SetupDbContext(config);
 
 builder.Services.AddFinanManLocalization();
 builder.Services.AddStateManagement();
+builder.Services.AddServerServices();
 
 var app = builder.Build();
 

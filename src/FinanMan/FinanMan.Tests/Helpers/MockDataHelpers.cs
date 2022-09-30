@@ -1,6 +1,7 @@
 ﻿using FinanMan.Database;
 using FinanMan.Database.Data;
 using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.DataEntryModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MockQueryable.Moq;
@@ -40,22 +41,6 @@ public static class MockDataHelpers
         return dbContextMock;
     }
 
-    //public static Mock<FinanManContext> SetupLookupTables(this Mock<FinanManContext> dbContextMock)
-    //{
-    //    dbContextMock.Setup(e => e.AccountTypes)
-    //        .Returns(DataHelper.GetSeedData<LuAccountType>().AsQueryable().BuildMockDbSet().Object);
-    //    dbContextMock.Setup(e => e.Categories)
-    //        .Returns(DataHelper.GetSeedData<LuCategory>().AsQueryable().BuildMockDbSet().Object);
-    //    dbContextMock.Setup(e => e.DepositReasons)
-    //        .Returns(DataHelper.GetSeedData<LuDepositReason>().AsQueryable().BuildMockDbSet().Object);
-    //    dbContextMock.Setup(e => e.LineItemTypes)
-    //        .Returns(DataHelper.GetSeedData<LuLineItemType>().AsQueryable().BuildMockDbSet().Object);
-    //    dbContextMock.Setup(e => e.RecurrenceTypes)
-    //        .Returns(DataHelper.GetSeedData<LuRecurrenceType>().AsQueryable().BuildMockDbSet().Object);
-
-    //    return dbContextMock;
-    //}
-
     public static List<Transaction> GenerateDepositTransactions(int startId, int count = 1) =>
         Enumerable.Range(0, count - 1)
             .Select(e => new Transaction()
@@ -72,6 +57,51 @@ public static class MockDataHelpers
                     TransactionId = startId + e,
                     Amount = Random.Shared.NextDouble() * 23415.23 + 1,
                 }
+            })
+            .ToList();
+
+    public static List<Transaction> GenerateTransactions<TViewModel>(int startId, int count = 1)
+        where TViewModel : ITransactionDataEntryViewModel =>
+        Enumerable.Range(0, count - 1)
+            .Select(e => new Transaction()
+            {
+                Id = startId + e,
+                TransactionDate = GenerateRandomDate(),
+                DateEntered = DateTime.UtcNow,
+                PostingDate = Random.Shared.NextDouble() < .5 ? DateTime.UtcNow : null,
+                Memo = Random.Shared.NextDouble() < .2 ? Guid.NewGuid().ToString() : null,
+                AccountId = 1,
+                Deposit = typeof(TViewModel) == typeof(DepositEntryViewModel) ? new Deposit()
+                {
+                    Id = startId + e,
+                    TransactionId = startId + e,
+                    DepositReasonId = 1,
+                    Amount = Random.Shared.NextDouble() * 23415.23 + 1,
+                } : null,
+                Payment = typeof(TViewModel) == typeof(PaymentEntryViewModel) ? new Payment()
+                {
+                    Id = startId + e,
+                    TransactionId = startId + e,
+                    PaymentDetails = new List<PaymentDetail>() {
+                        new() {
+                            Id = (startId + e) * 100 + 1,
+                            Amount = Random.Shared.NextDouble() * 23415.23 + 1 ,
+                            LineItemTypeId = 1
+                        },
+                        new() {
+                            Id = (startId + e) * 100 + 2,
+                            Amount = Random.Shared.NextDouble() * 23415.23 + 1 ,
+                            LineItemTypeId = 2
+                        }
+                    }
+                } : null,
+                Transfer = typeof(TViewModel) == typeof(TransferEntryViewModel) ? new Transfer()
+                {
+                    Id = startId + e,
+                    TransactionId = startId + e,
+                    TargetAccountId = 2,
+                    Amount = Random.Shared.NextDouble() * 23415.23 + 1,
+                } : null
             })
             .ToList();
 
@@ -92,7 +122,7 @@ public static class MockDataHelpers
         var dbContextFactory = new Mock<IDbContextFactory<FinanManContext>>();
 
         // Mock the FluentValidation validator for the Deposit Entry View Model
-        var context = MockDataHelpers.FinanManContext;
+        var context = FinanManContext;
         dbContextFactory.Setup(e => e.CreateDbContextAsync(ct))
             .ReturnsAsync(context);
 

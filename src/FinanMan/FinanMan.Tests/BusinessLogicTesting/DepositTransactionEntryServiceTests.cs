@@ -1,12 +1,10 @@
 ﻿using FinanMan.Database;
 using FinanMan.Shared.DataEntryModels;
-using FinanMan.Shared.ServiceInterfaces;
+using FinanMan.Shared.Extensions;
 using FinanMan.SharedServer.Services;
 using FinanMan.Tests.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Internal;
 using Moq;
 using System;
 using System.Linq;
@@ -50,10 +48,9 @@ public class DepositTransactionEntryServiceTests
         };
 
         // Act
-        var result = await sut.AddTransactionData(toAdd, ct);
+        var result = await sut.AddTransactionDataAsync(toAdd, ct);
 
         // Assert
-        // this is if there only a few
         Assert.NotNull(result);
         Assert.False(result.WasError);
 
@@ -80,17 +77,32 @@ public class DepositTransactionEntryServiceTests
         var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
 
         // Mock the primary tables/entities that is going to be used by the service
-        var transactions = MockDataHelpers.GenerateDepositTransactions(1, 20);
+        var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 20);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-        
+
         var deposits = transactions.Select(t => t.Deposit).ToList();
         transactions.ForEach(t => t.Deposit = null);
-
-        // Act
-        var result = await sut.GetTransactionData(ct: ct);
+        var expectedViewModels = transactions.ToViewModel<DepositEntryViewModel>().ToList();
         
-        // Assert
+        // Act
+        var result = await sut.GetTransactionDataAsync(ct: ct);
 
+        // Assert
+        Assert.NotNull(result);
+        Assert.False(result.WasError);
+
+        Assert.NotNull(result.ReturnObject);
+        Assert.NotEmpty(result.ReturnObject);
+
+        var returnedViewModels = result.ReturnObject.ToList();
+        Assert.Equal(expectedViewModels.Count, returnedViewModels.Count);
+        Assert.All(expectedViewModels, evm =>
+            Assert.NotNull(returnedViewModels.FirstOrDefault(rvm => 
+                evm.TransactionDate == rvm.TransactionDate
+                && evm.Memo == rvm.Memo
+                && evm.DepositReasonId == rvm.DepositReasonId
+                && evm.Amount == rvm.Amount))
+        );
     }
 }
