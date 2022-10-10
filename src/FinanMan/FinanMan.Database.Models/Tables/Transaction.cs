@@ -11,6 +11,7 @@ public partial class Transaction
     public DateTime TransactionDate { get; set; }
     public DateTime? PostingDate { get; set; }
     public string? Memo { get; set; }
+    public DateTime? PurgeDate { get; set; }
 
     [NotMapped]
     public TransactionType TransactionType => Deposit is not null ? TransactionType.Deposit
