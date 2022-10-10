@@ -15,15 +15,16 @@ namespace FinanMan.Tests.BusinessLogicTesting;
 
 public class DepositTransactionEntryServiceTests
 {
-    private readonly DepositEntryViewModelValidator _dataEntryValidator = new DepositEntryViewModelValidator();
+    private readonly DepositEntryViewModelValidator _dataEntryValidator = new();
 
     #region Helpers
     private (Mock<IDbContextFactory<FinanManContext>> DbContextFactory, FinanManContext Context, TransactionEntryService<DepositEntryViewModel> Sut) PrepareServiceUnderTest(CancellationToken ct)
     {
         var (dbContextFactory, context) = MockDataHelpers.PrepareDbContext(ct);
-
+        var loggerFactory = MockDataHelpers.GetLoggerFactory();
+        
         // Prepare a new Deposit Entry Service instance
-        var sut = new TransactionEntryService<DepositEntryViewModel>(dbContextFactory.Object, _dataEntryValidator);
+        var sut = new TransactionEntryService<DepositEntryViewModel>(dbContextFactory.Object, _dataEntryValidator, loggerFactory.Object);
 
         return (dbContextFactory, context, sut);
     }
@@ -37,7 +38,8 @@ public class DepositTransactionEntryServiceTests
         var ct = cts.Token;
 
         var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
-
+        var loggerFactory = MockDataHelpers.GetLoggerFactory();
+        
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 20);
         await context.Transactions.AddRangeAsync(transactions);

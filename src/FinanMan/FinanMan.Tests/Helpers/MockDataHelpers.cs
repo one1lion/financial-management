@@ -1,9 +1,11 @@
-﻿using FinanMan.Database;
+﻿using AngleSharp.Dom;
+using FinanMan.Database;
 using FinanMan.Database.Data;
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 using MockQueryable.Moq;
 using Moq;
 using System;
@@ -129,4 +131,13 @@ public static class MockDataHelpers
         return (dbContextFactory, context);
     }
 
+    public static Mock<ILoggerFactory> GetLoggerFactory()
+    {
+        var loggerFactory = new Mock<ILoggerFactory>();
+        var logger = new Mock<ILogger>();
+        loggerFactory.Setup(e => e.CreateLogger(It.IsAny<string>()))
+            .Returns(logger.Object);
+        //logger.Setup(e => e.LogError(It.IsAny<Exception>(), It.IsAny<string>(), new[] { It.IsAny<object>() }));
+        return loggerFactory;
+    }
 }
