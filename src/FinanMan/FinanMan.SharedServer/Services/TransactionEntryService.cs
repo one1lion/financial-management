@@ -20,17 +20,17 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _modelValidator = modelValidator;
     }
 
-    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionDataAsync(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModel<TDataEntryViewModel>> GetTransactionDataAsync(int id, CancellationToken ct = default)
+    public Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<ResponseModelBase<int>> AddTransactionDataAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> AddTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         var retResp = new ResponseModelBase<int>();
 
@@ -78,12 +78,12 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         return retResp;
     }
 
-    public Task<ResponseModelBase<int>> UpdateTransactionDataAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> UpdateTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> DeleteTransactionDataAsync(int id, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> DeleteTransactionAsync(int id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

@@ -18,5 +18,5 @@ public class DepositsController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> AddTransactionData(DepositEntryViewModel deposit) =>
-        Ok(await _transactionEntryService.AddTransactionDataAsync(deposit));
+        Ok(await _transactionEntryService.AddTransactionAsync(deposit));
 }
