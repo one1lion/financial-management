@@ -67,7 +67,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
         catch (Exception ex)
         {
-            retResp.AddError("An error occurred while trying to get the list of transactions.");
+            retResp.AddError("An error occurred while trying to get the list of transaction.");
 
             var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
             logger.LogError(ex, "An error occurred while trying to get the list of {transType}.", typeof(TDataEntryViewModel));
@@ -76,9 +76,31 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         return retResp;
     }
 
-    public Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)
+    public async Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var retResp = new ResponseModel<TDataEntryViewModel>();
+
+        try
+        {
+            using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+
+            var transaction = await context.Transactions.AsNoTracking()
+                .Include(x => x.Deposit)
+                .Include(x => x.Payment)
+                .Include(x => x.Transfer)
+                .FirstOrDefaultAsync(x => x.Id == id, ct);
+
+            retResp.ReturnObject = (TDataEntryViewModel?)transaction?.ToViewModel();
+        }
+        catch (Exception ex)
+        {
+            retResp.AddError("An error occurred while trying to get the specified transaction.");
+
+            var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
+            logger.LogError(ex, "An error occurred while trying to get the {transType} with ID {id}.", typeof(TDataEntryViewModel), id);
+        }
+
+        return retResp;
     }
 
     public async Task<ResponseModelBase<int>> AddTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
