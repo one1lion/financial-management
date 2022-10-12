@@ -8,7 +8,7 @@ public interface ITransactionEntryService { }
 public interface ITransactionEntryService<TDataEntryViewModel> : ITransactionEntryService
     where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
-    Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default);
+    Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default);
     Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default);
     Task<ResponseModelBase<int>> AddTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default);
     Task<ResponseModelBase<int>> UpdateTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default);

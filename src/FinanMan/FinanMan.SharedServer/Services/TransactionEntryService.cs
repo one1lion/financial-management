@@ -1,10 +1,10 @@
 ﻿using FinanMan.Database;
+using FinanMan.Database.Models.Shared;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.General;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
 namespace FinanMan.SharedServer.Services;
@@ -15,20 +15,65 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
     private readonly TransactionViewModelValidator<TDataEntryViewModel> _modelValidator;
     private readonly ILoggerFactory _loggerFactory;
+    private readonly TransactionType _transactionType;
 
     public TransactionEntryService(
-        IDbContextFactory<FinanManContext> dbContextFactory, 
+        IDbContextFactory<FinanManContext> dbContextFactory,
         TransactionViewModelValidator<TDataEntryViewModel> modelValidator,
         ILoggerFactory loggerFactory)
     {
         _dbContextFactory = dbContextFactory;
         _modelValidator = modelValidator;
         _loggerFactory = loggerFactory;
+        var dummyModel = Activator.CreateInstance<TDataEntryViewModel>();
+        dummyModel.TransactionDate = DateTime.UtcNow;
+        dummyModel.AccountId = 0;
+        _transactionType = dummyModel.ToEntityModel().TransactionType;
     }
 
-    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public async Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        pageSize = Math.Clamp(pageSize, (ushort)5, (ushort)500);
+        var retResp = new ResponseModel<List<TDataEntryViewModel>>();
+
+        try
+        {
+            using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+
+            var transactions = context.Transactions.AsNoTracking()
+                .Include(x => x.Deposit)
+                .Include(x => x.Payment)
+                .Include(x => x.Transfer)
+                .Where(x =>
+                    _transactionType == TransactionType.Deposit && x.Deposit != null
+                    || _transactionType == TransactionType.Payment && x.Payment != null
+                    || _transactionType == TransactionType.Transfer &&  x.Transfer != null)
+                .AsQueryable();
+
+            if (asOfDate.HasValue)
+            {
+                transactions = transactions.Where(x => x.TransactionDate <= asOfDate.Value);
+            }
+
+            var pagedResult = await transactions
+                .OrderByDescending(x => x.TransactionDate)
+                .Skip(startRecord)
+                .Take(pageSize)
+                .ToListAsync(ct);
+
+            retResp.ReturnObject = pagedResult.Select(x => x.ToViewModel())
+                .OfType<TDataEntryViewModel>()
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            retResp.AddError("An error occurred while trying to get the list of transactions.");
+
+            var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
+            logger.LogError(ex, "An error occurred while trying to get the list of {transType}.", typeof(TDataEntryViewModel));
+        }
+
+        return retResp;
     }
 
     public Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)
@@ -49,14 +94,11 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
 
         // Otherwise, perform the add
-        FinanManContext context = default!;
-        IDbContextTransaction? trans = null;
-
         try
         {
             ct.ThrowIfCancellationRequested();
-            context = await _dbContextFactory.CreateDbContextAsync(ct);
-            trans = await context.Database.BeginTransactionAsync(ct);
+            using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+            using var trans = await context.Database.BeginTransactionAsync(ct);
 
             var newTransaction = dataEntryViewModel.ToEntityModel();
 
@@ -67,18 +109,17 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
         catch (Exception ex)
         {
-            if (trans is not null) { await trans.RollbackAsync(); }
             // Add an error to the return response
-            retResp.AddError(ex switch
+            var msg = ex switch
             {
                 TaskCanceledException _ => "The task to save the deposit was canceled",
                 OperationCanceledException _ => "The task to save the deposit was canceled",
                 _ => "An unexpected error occurred while saving the deposit"
-            });
-        }
-        finally
-        {
-            if (trans is not null) { await trans.DisposeAsync(); }
+            };
+            retResp.AddError(msg);
+
+            var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
+            logger.LogError(ex, "An error occurred while trying to add a new {transType}: {msg}", typeof(TDataEntryViewModel), msg);
         }
 
         return retResp;
@@ -93,20 +134,19 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     {
         var retResp = new ResponseModelBase<int>() { RecordId = id };
 
-        FinanManContext? context;
-        IDbContextTransaction? trans = null;
         try
         {
-            context = await _dbContextFactory.CreateDbContextAsync(ct);
+            using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
-            var toDelete = await context.Transactions.FirstOrDefaultAsync(x => x.Id == id);
-            if(toDelete is null)
+            var toDelete = await context.Transactions.FirstOrDefaultAsync(x => x.Id == id, cancellationToken: ct);
+            if (toDelete is null)
             {
                 retResp.AddError("The transaction to delete was not found");
                 return retResp;
             }
 
-            trans = await context.Database.BeginTransactionAsync(ct);
+            using var trans = await context.Database.BeginTransactionAsync(ct);
+
             // TODO: Set purge lifetime in application options
             toDelete.PurgeDate = DateTime.UtcNow.AddDays(15);
             retResp.RecordCount = await context.SaveChangesAsync(ct);
@@ -114,14 +154,9 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
         catch (Exception ex)
         {
-            if(trans is not null) { await trans.RollbackAsync(); }
             retResp.AddError("The transaction could not be deleted.");
             var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
             logger.LogError(ex, "An error occurred while deleting transaction {id}", id);
-        }
-        finally
-        {
-            if(trans is not null) { await trans.DisposeAsync(); }
         }
 
         return retResp;

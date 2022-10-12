@@ -17,7 +17,7 @@ namespace FinanMan.Tests.Helpers;
 
 public static class MockDataHelpers
 {
-    public static DbContextOptions<FinanManContext> FinanManContextOptions { get; } = new DbContextOptionsBuilder<FinanManContext>()
+    public static DbContextOptions<FinanManContext> FinanManContextOptions => new DbContextOptionsBuilder<FinanManContext>()
         .UseInMemoryDatabase(Guid.NewGuid().ToString())
         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
         .Options;

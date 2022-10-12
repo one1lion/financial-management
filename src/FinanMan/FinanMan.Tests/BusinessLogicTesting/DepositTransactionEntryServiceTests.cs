@@ -210,5 +210,4 @@ public class DepositTransactionEntryServiceTests
 
         Assert.Equal(idCheck, deletedDeposit.Id);
     }
-
 }

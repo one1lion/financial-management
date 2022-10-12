@@ -22,8 +22,8 @@ public static class ITransactionDataEntryViewModelExtensions
             case DepositEntryViewModel depositEntryViewModel:
                 transaction.Deposit = new()
                 {
-                    DepositReasonId = depositEntryViewModel.DepositReasonId!.Value,
-                    Amount = depositEntryViewModel.Amount!.Value
+                    DepositReasonId = depositEntryViewModel.DepositReasonId ?? 0,
+                    Amount = depositEntryViewModel.Amount ?? 0
                 };
                 break;
             case PaymentEntryViewModel paymentEntryViewModel:
@@ -87,10 +87,10 @@ public static class ITransactionDataEntryViewModelExtensions
         return viewModel;
     }
 
-    public static IEnumerable<ITransactionDataEntryViewModel> ToViewModel(this IEnumerable<Transaction> model) => 
+    public static IEnumerable<ITransactionDataEntryViewModel> ToViewModel(this IEnumerable<Transaction> model) =>
         model.Select(x => x.ToViewModel());
     public static IEnumerable<TViewModel> ToViewModel<TViewModel>(this IEnumerable<Transaction> model)
-        where TViewModel : ITransactionDataEntryViewModel => 
+        where TViewModel : ITransactionDataEntryViewModel =>
         model.ToViewModel().OfType<TViewModel>();
 }
 
@@ -113,4 +113,3 @@ public static class LineItemViewModelExtensions
     public static IEnumerable<PaymentDetailViewModel> ToViewModel(this IEnumerable<PaymentDetail> model) =>
         model.Select(x => x.ToViewModel());
 }
-    
