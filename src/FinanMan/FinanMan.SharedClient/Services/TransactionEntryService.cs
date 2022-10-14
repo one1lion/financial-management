@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 namespace FinanMan.SharedClient.Services;
 
 public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntryService<TDataEntryViewModel>
-        where TDataEntryViewModel : class, ITransactionDataEntryViewModel
+    where TDataEntryViewModel : class, ITransactionDataEntryViewModel
 {
     private readonly HttpClient _httpClient;
 
@@ -15,7 +15,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _httpClient = httpClient;
     }
 
-    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
