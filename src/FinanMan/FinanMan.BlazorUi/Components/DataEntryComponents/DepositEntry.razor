@@ -13,7 +13,7 @@
         
         <div id="transDate" class="form-group">
             <label>Date</label>
-            <InputDate @bind-Value=_newDeposit.TransactionDate />
+            <InputDate @bind-Value=_newDeposit.TransactionDate @ref=_transDateInput />
             <p>
                 <ValidationMessage For="() => _newDeposit.TransactionDate" class="text-danger" />
             </p>

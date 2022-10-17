@@ -1,11 +1,18 @@
 ﻿using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.LookupModels;
+using FinanMan.Shared.ServiceInterfaces;
 using FinanMan.Shared.StateInterfaces;
 
 namespace FinanMan.BlazorUi.State;
 
 public class LookupListState : ILookupListState
 {
+    private readonly ILookupItemService _lookupService;
+    public LookupListState(ILookupItemService lookupService)
+    {
+        _lookupService = lookupService;
+    }
+
     public List<ILookupItemViewModel> LookupItemCache { get; } = new();
 
     private bool _initialized;
@@ -27,10 +34,10 @@ public class LookupListState : ILookupListState
         };
         List<LuDepositReason> _depositReasons = new()
         {
-            new() {Id = 1, Name = "Regular Paycheck"},
-            new() {Id = 2, Name = "State Income Tax Return"},
-            new() {Id = 3, Name = "Federal Income Tax Return"},
-            new() {Id = 4, Name = "Just Because"}
+            new() {Id = 5, SortOrder = 1, Name = "Regular Paycheck"},
+            new() {Id = 2, SortOrder = 2, Name = "State Income Tax Return"},
+            new() {Id = 3, SortOrder = 3, Name = "Federal Income Tax Return"},
+            new() {Id = 4, SortOrder = 4, Name = "Just Because"}
         };
         List<LuLineItemType> _lineItemTypes = new()
         {

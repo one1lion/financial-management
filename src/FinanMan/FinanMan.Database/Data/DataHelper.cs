@@ -14,12 +14,10 @@ public static class DataHelper
 
         modelBuilder.Entity<LuCategory>().HasData(
             GetSeedData<LuCategory>()
-
         );
 
         modelBuilder.Entity<LuLineItemType>().HasData(
             GetSeedData<LuLineItemType>()
-
         );
 
         modelBuilder.Entity<LuRecurrenceType>().HasData(
@@ -50,7 +48,8 @@ public static class DataHelper
                     new() { Id = sortOrder, Name = "Apothecary", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },
                     new() { Id = sortOrder, Name = "Clothing", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) }
                 }.OfType<TEntity>(),
-            var t when t == typeof(LuLineItemType) => new List<LuLineItemType>() {
+            var t when t == typeof(LuLineItemType) => new List<LuLineItemType>()
+                {
                     new() { Id = sortOrder, Name = "Sub Total", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },
                     new() { Id = sortOrder, Name = "Tax", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },
                     new() { Id = sortOrder, Name = "Fee", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },

@@ -17,7 +17,9 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
 
     public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var asOfDateQs = asOfDate.HasValue ? $"&aod={asOfDate.Value:yyyy-MM-dd}" : string.Empty;
+        return _httpClient.GetFromJsonAsync<ResponseModel<List<TDataEntryViewModel>>>($"api/Deposits?sr={startRecord}&ps={pageSize}{asOfDateQs}", ct) 
+            ?? Task.FromResult(new ResponseModel<List<TDataEntryViewModel>>());
     }
 
     public Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)

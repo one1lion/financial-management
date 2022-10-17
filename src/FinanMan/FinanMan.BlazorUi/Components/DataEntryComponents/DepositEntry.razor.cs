@@ -20,10 +20,11 @@ public partial class DepositEntry
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
 
+    private InputDate<DateTime?>? _transDateInput;
+
     protected override async Task OnInitializedAsync()
     {
         await LookupListState.Initialize();
-        await Task.Delay(2000);
         _accounts = LookupListState.GetLookupItems<int, AccountViewModel>().ToList();
         _depositReasons = LookupListState.GetLookupItems<int, LuDepositReason>().ToList();
     }
@@ -33,6 +34,14 @@ public partial class DepositEntry
         _currentResponse = default;
         _submitting = true;
         _currentResponse = await DepositEntryService.AddTransactionAsync(_newDeposit);
+        if (!_currentResponse.WasError)
+        {
+            _newDeposit = new();
+            if (_transDateInput is not null && _transDateInput.Element.HasValue)
+            {
+                await _transDateInput.Element.Value.FocusAsync();
+            }
+        }
         _submitting = false;
     }
 }

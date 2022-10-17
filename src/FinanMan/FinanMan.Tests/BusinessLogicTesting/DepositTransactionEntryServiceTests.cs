@@ -54,10 +54,10 @@ public class DepositTransactionEntryServiceTests
         Assert.NotNull(result);
         Assert.False(result.WasError);
 
-        Assert.NotNull(result.ReturnObject);
-        Assert.NotEmpty(result.ReturnObject);
+        Assert.NotNull(result.Data);
+        Assert.NotEmpty(result.Data);
 
-        var returnedViewModels = result.ReturnObject.ToList();
+        var returnedViewModels = result.Data.ToList();
         Assert.Equal(expectedViewModels.Count, returnedViewModels.Count);
         Assert.All(expectedViewModels, evm =>
             Assert.NotNull(returnedViewModels.FirstOrDefault(rvm =>
@@ -92,9 +92,9 @@ public class DepositTransactionEntryServiceTests
         Assert.NotNull(result);
         Assert.False(result.WasError);
 
-        Assert.NotNull(result.ReturnObject);
+        Assert.NotNull(result.Data);
 
-        var returnedViewModel = result.ReturnObject;
+        var returnedViewModel = result.Data;
         Assert.Equal(expectedViewModel.AccountId, returnedViewModel.AccountId);
         Assert.Equal(expectedViewModel.TransactionDate, returnedViewModel.TransactionDate);
         Assert.Equal(expectedViewModel.Memo, returnedViewModel.Memo);

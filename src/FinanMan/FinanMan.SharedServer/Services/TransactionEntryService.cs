@@ -61,7 +61,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 .Take(pageSize)
                 .ToListAsync(ct);
 
-            retResp.ReturnObject = pagedResult.Select(x => x.ToViewModel())
+            retResp.Data = pagedResult.Select(x => x.ToViewModel())
                 .OfType<TDataEntryViewModel>()
                 .ToList();
         }
@@ -90,7 +90,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 .Include(x => x.Transfer)
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
-            retResp.ReturnObject = (TDataEntryViewModel?)transaction?.ToViewModel();
+            retResp.Data = (TDataEntryViewModel?)transaction?.ToViewModel();
         }
         catch (Exception ex)
         {

@@ -16,6 +16,12 @@ public class DepositsController : ControllerBase
         _transactionEntryService = transactionEntryService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetTransactionsAsync(ushort sr = 0, ushort ps = 100, DateTime? aod = null, CancellationToken ct = default)
+    {
+        return Ok(await _transactionEntryService.GetTransactionsAsync(sr, ps, aod, ct));
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddTransactionData(DepositEntryViewModel deposit) =>
         Ok(await _transactionEntryService.AddTransactionAsync(deposit));

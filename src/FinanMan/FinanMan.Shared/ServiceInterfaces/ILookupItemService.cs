@@ -12,3 +12,17 @@ public interface ILookupItemService<TLookupItemViewModel>
     Task<ResponseModelBase<int>> UpdateLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default);
     Task<ResponseModelBase<int>> DeleteLookupItem(int id, CancellationToken ct = default);
 }
+
+public interface ILookupItemService
+{
+    Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItems<TLookupItemViewModel>(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel;
+    Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel;
+    Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel;
+    Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel;
+    Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel;
+}

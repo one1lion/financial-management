@@ -9,30 +9,34 @@ using System.Threading.Tasks;
 
 namespace FinanMan.SharedServer.Services;
 
-public class LookupItemService<TLookupItemViewModel> : ILookupItemService<TLookupItemViewModel>
-    where TLookupItemViewModel : class, ILookupItemViewModel
+public class LookupItemService : ILookupItemService
 {
-    public Task<ResponseModel<TLookupItemViewModel>> GetLookupItem(int id, CancellationToken ct = default)
+    public Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItems(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItems<TLookupItemViewModel>(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> AddLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> UpdateLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> DeleteLookupItem(int id, CancellationToken ct = default)
+    public Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel
     {
         throw new NotImplementedException();
     }

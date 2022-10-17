@@ -1,5 +1,8 @@
 using FinanMan.Database.Models.Shared;
 using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.DataEntryModels;
+using FinanMan.Shared.Extensions;
+using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -8,16 +11,29 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 
 public partial class TransactionHistoryGrid
 {
+    [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositTransactionService { get; set; } = default!;
     [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
 
+    private List<DepositEntryViewModel>? _deposits;
     private List<Transaction>? _transactions;
     private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
     protected override async Task OnInitializedAsync()
     {
         // Simulate getting data from the server
         var randDates = Enumerable.Range(0, 4).Select(x => DateTime.UtcNow.AddDays(-Random.Shared.Next(1, 30))).ToArray();
-        await Task.Delay(Random.Shared.Next(500, 2000));
-        _transactions = new List<Transaction>()
+        var depResp = await DepositTransactionService.GetTransactionsAsync();
+
+        if (depResp.WasError)
+        {
+            // TODO: Do something special with the error
+        }
+        else
+        {
+            _deposits = depResp.Data;
+            _transactions = _deposits?.ToEntityModel().ToList();
+        }
+
+        var addTrans = new List<Transaction>()
         {
             new()
             {
@@ -89,25 +105,22 @@ public partial class TransactionHistoryGrid
             new()
             {
                 Account = new() { Name = "Checking"},
-                Deposit = new()
-                {
-                    DepositReason = new() { Name = "Paycheck" },
-                    Amount = 5000
-                },
-                Memo = "With 30 hours OT",
-                TransactionDate = randDates[2],
-                PostingDate = randDates[2]
-            },
-            new()
-            {
-                Account = new() { Name = "Checking"},
-                Transfer = new() { 
+                Transfer = new() {
                     TargetAccount = new() { Name = "Credit Card"},
                     Amount = 2345
                 },
                 TransactionDate = randDates[3]
             }
         };
+
+        if(_transactions?.Any() ?? false)
+        {
+            _transactions.AddRange(addTrans);
+        }
+        else
+        {
+            _transactions = addTrans;
+        }
     }
 
     /// <summary>
