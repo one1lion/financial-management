@@ -15,17 +15,14 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _httpClient = httpClient;
     }
 
-    public Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TDataEntryViewModel>>?> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         var asOfDateQs = asOfDate.HasValue ? $"&aod={asOfDate.Value:yyyy-MM-dd}" : string.Empty;
-        return _httpClient.GetFromJsonAsync<ResponseModel<List<TDataEntryViewModel>>>($"api/Deposits?sr={startRecord}&ps={pageSize}{asOfDateQs}", ct) 
-            ?? Task.FromResult(new ResponseModel<List<TDataEntryViewModel>>());
+        return _httpClient.GetFromJsonAsync<ResponseModel<List<TDataEntryViewModel>>>($"api/Deposits?sr={startRecord}&ps={pageSize}{asOfDateQs}", ct);
     }
 
-    public Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<ResponseModel<TDataEntryViewModel>?> GetTransactionAsync(int id, CancellationToken ct = default) =>
+        _httpClient.GetFromJsonAsync<ResponseModel<TDataEntryViewModel>>($"api/Deposits/{id}", ct);
 
     public async Task<ResponseModelBase<int>> AddTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {

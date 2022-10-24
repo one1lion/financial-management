@@ -17,7 +17,12 @@ public partial class TransactionHistoryGrid
     private List<DepositEntryViewModel>? _deposits;
     private List<Transaction>? _transactions;
     private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
+    {
+        return RefreshTransactions();
+    }
+
+    private async Task RefreshTransactions()
     {
         // Simulate getting data from the server
         var randDates = Enumerable.Range(0, 4).Select(x => DateTime.UtcNow.AddDays(-Random.Shared.Next(1, 30))).ToArray();
@@ -37,19 +42,19 @@ public partial class TransactionHistoryGrid
         {
             new()
             {
-                Account = new() { Name = "Credit Card"},
+                Account = new() { Name = "Credit Card" },
                 Payment = new() {
-                    Payee = new() { Name = "Taco Bell"} ,
+                    Payee = new() { Name = "Taco Bell" } ,
                     PaymentDetails = new List<PaymentDetail>()
                     {
                         new()
                         {
-                            LineItemType = new() { Name = "Sub Total"},
+                            LineItemType = new() { Name = "Sub Total" },
                             Amount = 4.99
                         },
                         new()
                         {
-                            LineItemType = new() { Name = "Sales Tax"},
+                            LineItemType = new() { Name = "Sales Tax" },
                             Amount = .24
                         },
                     }
@@ -60,40 +65,40 @@ public partial class TransactionHistoryGrid
             },
             new()
             {
-                Account = new() { Name = "Credit Card"},
+                Account = new() { Name = "Credit Card" },
                 Payment = new() {
-                    Payee = new() { Name = "My Favorite Grocery Store That Delivers"},
+                    Payee = new() { Name = "My Favorite Grocery Store That Delivers" },
                     PaymentDetails = new List<PaymentDetail>()
                     {
                         new()
                         {
-                            LineItemType = new() { Name = "Sub Total"},
+                            LineItemType = new() { Name = "Sub Total" },
                             Amount = 128.32
                         },
                         new()
                         {
-                            LineItemType = new() { Name = "Sales Tax"},
+                            LineItemType = new() { Name = "Sales Tax" },
                             Amount = 4.24
                         },
                         new()
                         {
-                            LineItemType = new() { Name = "Fee"},
+                            LineItemType = new() { Name = "Fee" },
                             Detail = "Delivery Fee",
                             Amount = 4.24},
                         new()
                         {
-                            LineItemType = new() { Name = "Fee"},
+                            LineItemType = new() { Name = "Fee" },
                             Detail = "Service Fee",
                             Amount = 6.57},
                         new()
                         {
-                            LineItemType = new() { Name = "Discount"},
+                            LineItemType = new() { Name = "Discount" },
                             Detail = "Promotion",
                             Amount = -4.24
                         },
                         new()
                         {
-                            LineItemType = new() { Name = "Tip"},
+                            LineItemType = new() { Name = "Tip" },
                             Amount = 12.83
                         }
                     }
@@ -104,16 +109,16 @@ public partial class TransactionHistoryGrid
             },
             new()
             {
-                Account = new() { Name = "Checking"},
+                Account = new() { Name = "Checking" },
                 Transfer = new() {
-                    TargetAccount = new() { Name = "Credit Card"},
+                    TargetAccount = new() { Name = "Credit Card" },
                     Amount = 2345
                 },
                 TransactionDate = randDates[3]
             }
         };
 
-        if(_transactions?.Any() ?? false)
+        if (_transactions?.Any() ?? false)
         {
             _transactions.AddRange(addTrans);
         }

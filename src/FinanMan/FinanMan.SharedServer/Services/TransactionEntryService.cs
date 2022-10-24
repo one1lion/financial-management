@@ -31,7 +31,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _transactionType = dummyModel.ToEntityModel().TransactionType;
     }
 
-    public async Task<ResponseModel<List<TDataEntryViewModel>>> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public async Task<ResponseModel<List<TDataEntryViewModel>>?> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
     {
         pageSize = Math.Clamp(pageSize, (ushort)5, (ushort)500);
         var retResp = new ResponseModel<List<TDataEntryViewModel>>();
@@ -76,7 +76,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         return retResp;
     }
 
-    public async Task<ResponseModel<TDataEntryViewModel>> GetTransactionAsync(int id, CancellationToken ct = default)
+    public async Task<ResponseModel<TDataEntryViewModel>?> GetTransactionAsync(int id, CancellationToken ct = default)
     {
         var retResp = new ResponseModel<TDataEntryViewModel>();
 
