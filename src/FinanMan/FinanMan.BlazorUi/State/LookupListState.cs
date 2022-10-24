@@ -1,11 +1,12 @@
 ﻿using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
 using FinanMan.Shared.StateInterfaces;
 
 namespace FinanMan.BlazorUi.State;
 
-public class LookupListState : ILookupListState
+public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 {
     private readonly ILookupItemService _lookupService;
     public LookupListState(ILookupItemService lookupService)
@@ -18,8 +19,8 @@ public class LookupListState : ILookupListState
     private bool _initialized;
     private bool _initializing;
 
-    public bool Initialized { get => _initialized; set => _initialized = value; }
-    public bool Initializing { get => _initializing; set => _initializing = value; }
+    public bool Initialized { get => _initialized; set => SetField(ref _initialized, value); }
+    public bool Initializing { get => _initializing; set => SetField(ref _initializing, value); }
 
     public Task Initialize()
     {

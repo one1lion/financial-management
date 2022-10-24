@@ -1,3 +1,4 @@
+using FinanMan.BlazorUi.State;
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
@@ -22,11 +23,20 @@ public partial class DepositEntry
 
     private InputDate<DateTime?>? _transDateInput;
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
-        await LookupListState.Initialize();
-        _accounts = LookupListState.GetLookupItems<int, AccountViewModel>().ToList();
-        _depositReasons = LookupListState.GetLookupItems<int, LuDepositReason>().ToList();
+        LookupListState.PropertyChanged += HandleLookupListStateChanged;
+        return LookupListState.Initialize();
+    }
+
+    private void HandleLookupListStateChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ILookupListState.Initialized) && LookupListState.Initialized)
+        {
+            _accounts = LookupListState.GetLookupItems<int, AccountViewModel>().ToList();
+            _depositReasons = LookupListState.GetLookupItems<int, LuDepositReason>().ToList();
+        }
+        InvokeAsync(StateHasChanged);
     }
 
     private async Task HandleDepositSubmitted(EditContext editContext)

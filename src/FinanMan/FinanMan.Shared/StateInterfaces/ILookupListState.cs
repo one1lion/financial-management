@@ -1,8 +1,9 @@
 ﻿using FinanMan.Shared.LookupModels;
+using System.ComponentModel;
 
 namespace FinanMan.Shared.StateInterfaces;
 
-public interface ILookupListState
+public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChanging
 {
     List<ILookupItemViewModel> LookupItemCache { get; }
     bool Initialized { get; set; }
