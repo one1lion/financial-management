@@ -1,0 +1,27 @@
+﻿.flyout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .4);
+    z-index: 2;
+
+    .flyout-content-wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        background: black;
+    } 
+
+    .close-button {
+        position: absolute;
+        top: .4rem;
+        right: .4rem;
+    }
+
+    &:not(.expanded) {
+        display: none;
+    }
+}

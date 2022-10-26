@@ -1,0 +1,35 @@
+﻿@using FinanMan.BlazorUi.SharedComponents.FlyoutComponents
+
+@implements IDisposable
+
+<div class="flyout-content contact-us-flyout">
+    <h1>Contact us</h1>
+    <div>
+        <p>If you can find me</p>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter(Name = "FlyoutParent")] public Flyout? FlyoutParent { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (FlyoutParent is not null)
+        {
+            FlyoutParent.CanClose = CanCloseAsync;
+        }
+    }
+
+    private Task<bool> CanCloseAsync()
+    {
+        return Task.FromResult(true);
+    }
+
+    public void Dispose()
+    {
+        if (FlyoutParent?.CanClose == CanCloseAsync)
+        {
+            FlyoutParent.CanClose = null;
+        }
+    }
+}

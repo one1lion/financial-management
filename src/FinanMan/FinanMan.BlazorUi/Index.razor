@@ -1,7 +1,9 @@
 ﻿@page "/"
+@using FinanMan.BlazorUi.FlyoutContentComponents
 @using FinanMan.Shared.DataEntryModels
 @using System.Globalization
 @using FinanMan.SharedLocalization.Extensions
+@implements IDisposable
 
 <PageTitle>@Localizer["IndexTitle"]</PageTitle>
 
@@ -83,15 +85,36 @@
             <ul>
                 <li>About Automated Realms</li>
                 <li>Core Values</li>
-                <li>Contact Us</li>
+                <li><button type="button" @onclick=HandleContactUsClicked>Contact Us</button></li>
             </ul>
         </section>
     </footer>
 </article>
 
 @code {
+    [Inject] private IUiState UiState { get; set; } = default!;
     [Inject] private IStringLocalizer<Index> Localizer { get; set; } = default!;
 
     private DepositEntryViewModel _newDeposit = new();
     private EditContext _editContext = default!;
+
+    protected override void OnInitialized()
+    {
+    }
+
+    private void HandleContactUsClicked()
+    {
+        UiState.FlyoutVisible = false;
+        UiState.FlyoutContent = (builder) =>
+        {
+            builder.OpenComponent<ContactUsFlyoutContent>(0);
+            builder.CloseComponent();
+        };
+        UiState.FlyoutVisible = true;
+    }
+
+    public void Dispose()
+    {
+
+    }
 }
