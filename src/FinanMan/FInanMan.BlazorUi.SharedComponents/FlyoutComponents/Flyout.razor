@@ -1,5 +1,5 @@
 ﻿<CascadingValue Value=this Name="FlyoutParent">
-    <div class="flyout@(Show ? " expanded" : string.Empty)" @onclick="_ => UpdateShowAsync(false)">
+    <div class="flyout@(_show ? " expanded" : string.Empty)" @onclick="_ => UpdateShowAsync(false)">
         <div class="flyout-content-wrapper" @onclick:stopPropagation=true>
             @if (ChildContent is not null)
             {
@@ -9,30 +9,3 @@
         </div>
     </div>
 </CascadingValue>
-
-@code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public bool Show { get; set; }
-    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
-
-    public Func<Task<bool>>? CanClose { get; set; }
-
-    private bool _show;
-
-    protected override Task OnParametersSetAsync()
-    {
-        if (Show != _show)
-        {
-            return UpdateShowAsync(Show);
-        }
-        return Task.CompletedTask;
-    }
-
-    private Task UpdateShowAsync(bool show)
-    {
-        _show = show;
-        Show = show;
-        StateHasChanged();
-        return ShowChanged.InvokeAsync(show);
-    }
-}
