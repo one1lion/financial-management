@@ -18,15 +18,15 @@ public class DepositTransactionEntryServiceTests
     private readonly DepositEntryViewModelValidator _dataEntryValidator = new();
 
     #region Helpers
-    private (Mock<IDbContextFactory<FinanManContext>> DbContextFactory, FinanManContext Context, TransactionEntryService<DepositEntryViewModel> Sut) PrepareServiceUnderTest(CancellationToken ct)
+    private (Mock<IDbContextFactory<FinanManContext>> DbContextFactory, DbContextOptions<FinanManContext> Context, TransactionEntryService<DepositEntryViewModel> Sut) PrepareServiceUnderTest(CancellationToken ct)
     {
-        var (dbContextFactory, context) = MockDataHelpers.PrepareDbContext(ct);
+        var (dbContextFactory, contextOptions) = MockDataHelpers.PrepareDbContext(ct);
         var loggerFactory = MockDataHelpers.GetLoggerFactory();
         
         // Prepare a new Deposit Entry Service instance
         var sut = new TransactionEntryService<DepositEntryViewModel>(dbContextFactory.Object, _dataEntryValidator, loggerFactory.Object);
 
-        return (dbContextFactory, context, sut);
+        return (dbContextFactory, contextOptions, sut);
     }
     #endregion Helpers
 
@@ -37,11 +37,12 @@ public class DepositTransactionEntryServiceTests
         using var cts = new CancellationTokenSource();
         var ct = cts.Token;
 
-        var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
+        var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
         var loggerFactory = MockDataHelpers.GetLoggerFactory();
         
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 20);
+        var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
 
@@ -75,10 +76,11 @@ public class DepositTransactionEntryServiceTests
         using var cts = new CancellationTokenSource();
         var ct = cts.Token;
 
-        var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
+        var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 20);
+        var context = new FinanManContext(contextOptions); 
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
 
@@ -109,7 +111,7 @@ public class DepositTransactionEntryServiceTests
         using var cts = new CancellationTokenSource();
         var ct = cts.Token;
 
-        var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
+        var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
 
         // Prepare the data to be added
         var toAdd = new DepositEntryViewModel()
@@ -120,6 +122,8 @@ public class DepositTransactionEntryServiceTests
             Amount = 239184
         };
 
+        var context = new FinanManContext(contextOptions);
+
         // Act
         var result = await sut.AddTransactionAsync(toAdd, ct);
 
@@ -128,6 +132,7 @@ public class DepositTransactionEntryServiceTests
         Assert.False(result.WasError);
 
         // Get the new record back from in-memory db
+        context = new FinanManContext(contextOptions); 
         var newDeposit = context.Transactions.Include(e => e.Deposit).FirstOrDefault(e => e.Id == result.RecordId);
 
         // The records (Transaction and Deposit) exists in the database
@@ -147,13 +152,14 @@ public class DepositTransactionEntryServiceTests
         using var cts = new CancellationTokenSource();
         var ct = cts.Token;
 
-        var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
+        var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 10);
+        var context = new FinanManContext(contextOptions); 
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-
+        
         var toUpdate = transactions.First();
         var updateValue = (DepositEntryViewModel)toUpdate.ToViewModel();
         var expectedPostedDate = DateTime.UtcNow;
@@ -167,6 +173,7 @@ public class DepositTransactionEntryServiceTests
         Assert.False(result.WasError);
 
         // Get the new record back from in-memory db
+        context = new FinanManContext(contextOptions);
         var updatedDeposit = context.Transactions.Include(e => e.Deposit).FirstOrDefault(e => e.Id == result.RecordId);
 
         // The records (Transaction and Deposit) exists in the database
@@ -184,13 +191,14 @@ public class DepositTransactionEntryServiceTests
         using var cts = new CancellationTokenSource();
         var ct = cts.Token;
 
-        var (dbContextFactory, context, sut) = PrepareServiceUnderTest(ct);
+        var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 10);
+        var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-
+        
         var idCheck = transactions.First().Id;
         var expectedViewModel = (DepositEntryViewModel)transactions.First().ToViewModel();
 
@@ -202,6 +210,7 @@ public class DepositTransactionEntryServiceTests
         Assert.False(result.WasError);
 
         // Get the new record back from in-memory db
+        context = new FinanManContext(contextOptions);
         var deletedDeposit = context.Transactions.Include(e => e.Deposit).FirstOrDefault(e => e.Id == result.RecordId);
 
         // The records (Transaction and Deposit) exists in the database, but has a Purge Date

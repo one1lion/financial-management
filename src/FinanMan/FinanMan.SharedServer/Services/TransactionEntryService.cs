@@ -147,8 +147,48 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         return retResp;
     }
 
-    public Task<ResponseModelBase<int>> UpdateTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> UpdateTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
+        var retResp = new ResponseModelBase<int>();
+
+        // Validate the view model
+        var validResult = await _modelValidator.ValidateAsync(dataEntryViewModel, ct);
+        if (!validResult.IsValid)
+        {
+            retResp.AddErrors(validResult.Errors);
+            return retResp;
+        }
+
+        // Otherwise, perform the update
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+            using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+            using var trans = await context.Database.BeginTransactionAsync(ct);
+
+            // TODO: Find the matching record in the database
+            // TODO: Update the record
+
+            retResp.RecordCount = await context.SaveChangesAsync(ct);
+            await trans.CommitAsync(ct);
+            //retResp.RecordId = foundRecord.Id;
+        }
+        catch (Exception ex)
+        {
+            // Add an error to the return response
+            var msg = ex switch
+            {
+                TaskCanceledException _ => "The task to save the deposit was canceled",
+                OperationCanceledException _ => "The task to save the deposit was canceled",
+                _ => "An unexpected error occurred while saving the deposit"
+            };
+            retResp.AddError(msg);
+
+            var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
+            logger.LogError(ex, "An error occurred while trying to add a new {transType}: {msg}", typeof(TDataEntryViewModel), msg);
+        }
+
+        return retResp;
         throw new NotImplementedException();
     }
 
@@ -160,14 +200,13 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         {
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
+            using var trans = await context.Database.BeginTransactionAsync(ct);
             var toDelete = await context.Transactions.FirstOrDefaultAsync(x => x.Id == id, cancellationToken: ct);
             if (toDelete is null)
             {
                 retResp.AddError("The transaction to delete was not found");
                 return retResp;
             }
-
-            using var trans = await context.Database.BeginTransactionAsync(ct);
 
             // TODO: Set purge lifetime in application options
             toDelete.PurgeDate = DateTime.UtcNow.AddDays(15);

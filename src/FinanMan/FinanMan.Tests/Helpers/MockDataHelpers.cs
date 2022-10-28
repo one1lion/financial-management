@@ -1,5 +1,4 @@
-﻿using AngleSharp.Dom;
-using FinanMan.Database;
+﻿using FinanMan.Database;
 using FinanMan.Database.Data;
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
@@ -118,17 +117,19 @@ public static class MockDataHelpers
     }
 
 
-    public static (Mock<IDbContextFactory<FinanManContext>> dbContextFactory, FinanManContext context) PrepareDbContext(CancellationToken ct)
+    public static (Mock<IDbContextFactory<FinanManContext>> dbContextFactory, DbContextOptions<FinanManContext> contextOptions) PrepareDbContext(CancellationToken ct)
     {
         // Mock the DB Context
+        var contextOptions = FinanManContextOptions;
         var dbContextFactory = new Mock<IDbContextFactory<FinanManContext>>();
 
-        // Mock the FluentValidation validator for the Deposit Entry View Model
-        var context = FinanManContext;
+        // Setup the DB Context for the sut
+        var context = new FinanManContext(contextOptions);
         dbContextFactory.Setup(e => e.CreateDbContextAsync(ct))
             .ReturnsAsync(context);
 
-        return (dbContextFactory, context);
+        // Setup the DB Context for the test itself
+        return (dbContextFactory, contextOptions);
     }
 
     public static Mock<ILoggerFactory> GetLoggerFactory()
