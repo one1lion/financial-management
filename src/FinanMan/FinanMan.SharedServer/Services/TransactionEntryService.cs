@@ -166,12 +166,20 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
             using var trans = await context.Database.BeginTransactionAsync(ct);
 
-            // TODO: Find the matching record in the database
-            // TODO: Update the record
+            // Find the matching record in the database
+            if (!await context.Transactions.AnyAsync(x => x.Id == dataEntryViewModel.TransactionId, ct))
+            {
+                retResp.AddError("The specified transaction does not exist.");
+                return retResp;
+            }
+
+            var updatedRecord = dataEntryViewModel.ToEntityModel();
+
+            context.Transactions.Update(updatedRecord);
 
             retResp.RecordCount = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
-            //retResp.RecordId = foundRecord.Id;
+            retResp.RecordId = updatedRecord.Id;
         }
         catch (Exception ex)
         {
@@ -189,7 +197,6 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         }
 
         return retResp;
-        throw new NotImplementedException();
     }
 
     public async Task<ResponseModelBase<int>> DeleteTransactionAsync(int id, CancellationToken ct = default)

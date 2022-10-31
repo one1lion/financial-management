@@ -11,6 +11,8 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
 {
     public TransactionType TransactionType => TransactionType.Deposit;
 
+    public int TransactionId { get; set; }
+
     [Required]
     public DateTime? TransactionDate { get; set; }
     public DateTime? PostedDate { get; set; }

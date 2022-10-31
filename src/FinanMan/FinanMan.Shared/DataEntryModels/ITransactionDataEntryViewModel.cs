@@ -4,6 +4,7 @@ namespace FinanMan.Shared.DataEntryModels;
 
 public interface ITransactionDataEntryViewModel
 {
+    int TransactionId { get; set; }
     TransactionType TransactionType { get; }
     public DateTime? TransactionDate { get; set; }
     public DateTime? PostedDate { get; set; }

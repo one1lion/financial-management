@@ -2,16 +2,16 @@
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public class DepositEntryViewModelValidator : TransactionViewModelValidator<DepositEntryViewModel>
+public class PaymentEntryViewModelValidator : TransactionViewModelValidator<PaymentEntryViewModel>
 {
-    public DepositEntryViewModelValidator()
+    public PaymentEntryViewModelValidator()
     {
         When(x => x.PostedDate is not null, () =>
         {
             RuleFor(x => x.PostedDate)
                 .NotNull()
                 .GreaterThanOrEqualTo(x => x.TransactionDate)
-                .WithMessage("The posted date must be on or after the Deposit Date.");
+                .WithMessage("The posted date must be on or after the Payment Date.");
         });
     }
 }

@@ -25,4 +25,12 @@ public class DepositsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddTransactionData(DepositEntryViewModel deposit) =>
         Ok(await _transactionEntryService.AddTransactionAsync(deposit));
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateTransactionData(DepositEntryViewModel deposit) =>
+        Ok(await _transactionEntryService.UpdateTransactionAsync(deposit));
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteTransactionData([FromQuery] int id) =>
+        Ok(await _transactionEntryService.DeleteTransactionAsync(id));
 }

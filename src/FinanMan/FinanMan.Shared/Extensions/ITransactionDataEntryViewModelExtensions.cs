@@ -10,6 +10,7 @@ public static class ITransactionDataEntryViewModelExtensions
     {
         var transaction = new Transaction()
         {
+            Id = model.TransactionId,
             TransactionDate = model.TransactionDate!.Value,
             AccountId = model.AccountId!.Value,
             Memo = model.Memo,
@@ -22,13 +23,26 @@ public static class ITransactionDataEntryViewModelExtensions
             case DepositEntryViewModel depositEntryViewModel:
                 transaction.Deposit = new()
                 {
+                    TransactionId = model.TransactionId,
                     DepositReasonId = depositEntryViewModel.DepositReasonId ?? 0,
                     Amount = depositEntryViewModel.Amount ?? 0
                 };
                 break;
             case PaymentEntryViewModel paymentEntryViewModel:
+                transaction.Payment = new()
+                {
+                    TransactionId = model.TransactionId,
+                    PayeeId = paymentEntryViewModel.PayeeId ?? 0,
+                    PaymentDetails = paymentEntryViewModel.LineItems.ToEntityModel().ToList()
+                };
                 break;
             case TransferEntryViewModel transferEntryViewModel:
+                transaction.Transfer = new()
+                {
+                    TransactionId = model.TransactionId,
+                    TargetAccountId = transferEntryViewModel.TargetAccountId ?? 0,
+                    Amount = transferEntryViewModel.Total
+                };
                 break;
             default:
                 throw new NotImplementedException();
@@ -36,7 +50,7 @@ public static class ITransactionDataEntryViewModelExtensions
 
         return transaction;
     }
-    
+
     public static IEnumerable<Transaction> ToEntityModel(this IEnumerable<ITransactionDataEntryViewModel> model) =>
         model.Select(x => x.ToEntityModel());
 
@@ -49,24 +63,14 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Deposit:
                 viewModel = new DepositEntryViewModel()
                 {
-                    TransactionDate = model.TransactionDate,
-                    PostedDate = model.PostingDate,
-                    AccountId = model.AccountId,
-                    AccountName = model.Account?.Name,
                     DepositReasonValueText = model.Deposit?.DepositReasonId.ToString(),
-                    Memo = model.Memo,
                     Amount = model.Deposit?.Amount
                 };
                 break;
             case TransactionType.Payment:
                 viewModel = new PaymentEntryViewModel()
                 {
-                    TransactionDate = model.TransactionDate,
-                    PostedDate = model.PostingDate,
-                    AccountId = model.AccountId,
-                    AccountName = model.Account?.Name,
                     PayeeName = model.Payment?.Payee?.Name,
-                    Memo = model.Memo,
                     PayeeValueText = model.Payment?.PayeeId.ToString(),
                     LineItems = model.Payment?.PaymentDetails?.ToViewModel()?.ToList() ?? new List<PaymentDetailViewModel>()
                 };
@@ -74,18 +78,21 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Transfer:
                 viewModel = new TransferEntryViewModel()
                 {
-                    TransactionDate = model.TransactionDate,
-                    PostedDate = model.PostingDate,
-                    AccountId = model.AccountId,
-                    AccountName = model.Account?.Name,
                     TargetAccountName = model.Transfer?.TargetAccount?.Name,
-                    Memo = model.Memo,
                     Amount = model.Transfer?.Amount
                 };
                 break;
             default:
                 throw new NotImplementedException();
         }
+
+        // Populate the common properties
+        viewModel.TransactionId = model.Id;
+        viewModel.TransactionDate = model.TransactionDate;
+        viewModel.PostedDate = model.PostingDate;
+        viewModel.AccountId = model.AccountId;
+        viewModel.AccountName = model.Account?.Name;
+        viewModel.Memo = model.Memo;
 
         return viewModel;
     }
@@ -107,6 +114,9 @@ public static class LineItemViewModelExtensions
         Detail = model.Detail,
     };
 
+    public static IEnumerable<PaymentDetail> ToEntityModel(this IEnumerable<PaymentDetailViewModel> model) =>
+        model.Select(x => x.ToEntityModel());
+    
     public static PaymentDetailViewModel ToViewModel(this PaymentDetail model) => new()
     {
         LineItemTypeValueText = model.LineItemTypeId.ToString(),
