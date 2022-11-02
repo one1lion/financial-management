@@ -35,7 +35,7 @@ public class DepositsController : ControllerBase
     public async Task<IActionResult> UpdateTransactionData(DepositEntryViewModel deposit) =>
         Ok(await _transactionEntryService.UpdateTransactionAsync(deposit));
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteTransactionData([FromQuery] int id) =>
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteTransactionData([FromRoute] int id) =>
         Ok(await _transactionEntryService.DeleteTransactionAsync(id));
 }
