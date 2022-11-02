@@ -139,7 +139,10 @@ public class PaymentTransactionEntryServiceTests
 
         // Get the new record back from in-memory db
         context = new FinanManContext(contextOptions); 
-        var newPayment = context.Transactions.Include(e => e.Payment).FirstOrDefault(e => e.Id == result.RecordId);
+        var newPayment = context.Transactions
+            .Include(e => e.Payment)
+            .ThenInclude(e => e.PaymentDetails)
+            .FirstOrDefault(e => e.Id == result.RecordId);
 
         // The records (Transaction and Payment) exists in the database
         Assert.NotNull(newPayment);

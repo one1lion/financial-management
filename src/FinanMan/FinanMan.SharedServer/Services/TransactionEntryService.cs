@@ -43,6 +43,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             var transactions = context.Transactions.AsNoTracking()
                 .Include(x => x.Deposit)
                 .Include(x => x.Payment)
+                .ThenInclude(x => x.PaymentDetails)
                 .Include(x => x.Transfer)
                 .Where(x =>
                     _transactionType == TransactionType.Deposit && x.Deposit != null
@@ -87,6 +88,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             var transaction = await context.Transactions.AsNoTracking()
                 .Include(x => x.Deposit)
                 .Include(x => x.Payment)
+                .ThenInclude(x => x.PaymentDetails)
                 .Include(x => x.Transfer)
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
