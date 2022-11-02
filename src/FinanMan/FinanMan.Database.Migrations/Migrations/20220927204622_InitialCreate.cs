@@ -283,7 +283,7 @@ namespace FinanMan.Database.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TransactionDetails",
+                name: "PaymentDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -451,12 +451,12 @@ namespace FinanMan.Database.Migrations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionDetails_LineItemTypeId",
-                table: "TransactionDetails",
+                table: "PaymentDetails",
                 column: "LineItemTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionDetails_PaymentId",
-                table: "TransactionDetails",
+                table: "PaymentDetails",
                 column: "PaymentId");
 
             migrationBuilder.CreateIndex(
@@ -488,7 +488,7 @@ namespace FinanMan.Database.Migrations.Migrations
                 name: "ScheduledTransactions");
 
             migrationBuilder.DropTable(
-                name: "TransactionDetails");
+                name: "PaymentDetails");
 
             migrationBuilder.DropTable(
                 name: "Transfers");

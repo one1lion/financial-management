@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanMan.Database.Migrations.Migrations
 {
     [DbContext(typeof(FinanManContext))]
-    [Migration("20221010173708_AddedPurgeDateToTrans")]
-    partial class AddedPurgeDateToTrans
+    [Migration("20221031182230_RenameTransDetToPayDet")]
+    partial class RenameTransDetToPayDet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -529,7 +529,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Detail")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -711,7 +710,7 @@ namespace FinanMan.Database.Migrations.Migrations
             modelBuilder.Entity("FinanMan.Database.Models.Tables.PaymentDetail", b =>
                 {
                     b.HasOne("FinanMan.Database.Models.Tables.LuLineItemType", "LineItemType")
-                        .WithMany("PaymentDetails")
+                        .WithMany("TransactionDetails")
                         .HasForeignKey("LineItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -815,7 +814,7 @@ namespace FinanMan.Database.Migrations.Migrations
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.LuLineItemType", b =>
                 {
-                    b.Navigation("PaymentDetails");
+                    b.Navigation("TransactionDetails");
                 });
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.LuRecurrenceType", b =>

@@ -545,7 +545,7 @@ namespace FinanMan.Database.Migrations.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("TransactionDetails");
+                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.ScheduledTransaction", b =>
@@ -708,7 +708,7 @@ namespace FinanMan.Database.Migrations.Migrations
             modelBuilder.Entity("FinanMan.Database.Models.Tables.PaymentDetail", b =>
                 {
                     b.HasOne("FinanMan.Database.Models.Tables.LuLineItemType", "LineItemType")
-                        .WithMany("TransactionDetails")
+                        .WithMany("PaymentDetails")
                         .HasForeignKey("LineItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -812,7 +812,7 @@ namespace FinanMan.Database.Migrations.Migrations
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.LuLineItemType", b =>
                 {
-                    b.Navigation("TransactionDetails");
+                    b.Navigation("PaymentDetails");
                 });
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.LuRecurrenceType", b =>

@@ -527,7 +527,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Detail")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -543,7 +542,7 @@ namespace FinanMan.Database.Migrations.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("TransactionDetails");
+                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.ScheduledTransaction", b =>
