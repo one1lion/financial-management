@@ -16,5 +16,5 @@ public static class ServiceExtensions
     public static IServiceCollection AddServerServices(this IServiceCollection services) =>
         services
             .AddTransient(typeof(ITransactionEntryService<>), typeof(TransactionEntryService<>))
-            .AddTransient(typeof(ILookupItemService), typeof(LookupItemService));
+            .AddTransient(typeof(ILookupListService), typeof(LookupItemService));
 }

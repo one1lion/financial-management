@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FinanMan.SharedServer.Services;
 
-public class LookupItemService : ILookupItemService
+public class LookupItemService : ILookupListService
 {
     public Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel
@@ -17,7 +17,7 @@ public class LookupItemService : ILookupItemService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItems<TLookupItemViewModel>(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItemsAsync<TLookupItemViewModel>(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel
     {
         throw new NotImplementedException();

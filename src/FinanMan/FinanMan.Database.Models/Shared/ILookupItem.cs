@@ -1,6 +1,6 @@
 ﻿namespace FinanMan.Database.Models.Shared;
 
-public interface ILookupItem
+public interface ILookupItem : IHasLookupListType
 {
     string Name { get; set; }
     int SortOrder { get; set; }

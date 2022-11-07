@@ -15,5 +15,7 @@ public static class ServiceExtensions
 
     public static IServiceCollection AddFluentValidation(this IServiceCollection services) =>
         services
-            .AddSingleton<TransactionViewModelValidator<DepositEntryViewModel>, DepositEntryViewModelValidator>();
+            .AddSingleton<TransactionViewModelValidator<DepositEntryViewModel>, DepositEntryViewModelValidator>()
+            .AddSingleton<TransactionViewModelValidator<PaymentEntryViewModel>, PaymentEntryViewModelValidator>()
+            .AddSingleton<TransactionViewModelValidator<TransferEntryViewModel>, TransferEntryViewModelValidator>();
 }

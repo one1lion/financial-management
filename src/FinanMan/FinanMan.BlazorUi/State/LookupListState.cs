@@ -8,8 +8,8 @@ namespace FinanMan.BlazorUi.State;
 
 public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 {
-    private readonly ILookupItemService _lookupService;
-    public LookupListState(ILookupItemService lookupService)
+    private readonly ILookupListService _lookupService;
+    public LookupListState(ILookupListService lookupService)
     {
         _lookupService = lookupService;
     }

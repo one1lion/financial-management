@@ -2,9 +2,8 @@
 
 namespace FinanMan.Shared.LookupModels;
 
-public class PayeeViewModel
+public class PayeeViewModel : LookupItemViewModel<Payee>
 {
-    public int PayeeId { get; set; }
     public string PayeeName { get; set; } = default!;
     public IEnumerable<string> Categories { get; set; } = Array.Empty<string>();
 }
@@ -14,7 +13,7 @@ public static class PayeeViewModelExtensions
     public static PayeeViewModel ToViewModel(this Payee payee) =>
         new()
         {
-            PayeeId = payee.Id,
+            Id = payee.Id,
             PayeeName = payee.Name,
             Categories = payee.Categories?.Select(x => x.Name)?.ToArray() ?? Array.Empty<string>()
         };
