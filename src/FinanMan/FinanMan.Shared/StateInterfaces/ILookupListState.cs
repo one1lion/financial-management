@@ -1,4 +1,5 @@
-﻿using FinanMan.Shared.LookupModels;
+﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Shared.LookupModels;
 using System.ComponentModel;
 
 namespace FinanMan.Shared.StateInterfaces;
@@ -9,5 +10,6 @@ public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChang
     bool Initialized { get; set; }
     bool Initializing { get; set; }
     Task Initialize();
-    IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>();
+    IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>()
+         where TLookupItem : class, IHasLookupListType;
 }

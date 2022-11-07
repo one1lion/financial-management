@@ -1,4 +1,5 @@
-﻿using FinanMan.Database.Models.Tables;
+﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
@@ -98,6 +99,7 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     }
 
     public IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>()
+         where TLookupItem : class, IHasLookupListType
     {
         return LookupItemCache.OfType<LookupItemViewModel<TKey, TLookupItem>>();
     }
