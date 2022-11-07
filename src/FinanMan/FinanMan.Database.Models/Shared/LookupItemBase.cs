@@ -4,6 +4,7 @@ public abstract class LookupItemBase : LookupItemBase<int> { }
 
 public abstract class LookupItemBase<TKey> : ILookupItem<TKey>
 {
+    public abstract LookupListType ListType { get; }
     public virtual TKey Id { get; set; } = default!;
     public virtual string Name { get; set; } = default!;
     public virtual int SortOrder { get; set; }

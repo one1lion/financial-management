@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+<Node Id="IModel" Label="FinanManContext" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" PropertyAccessMode="PropertyAccessMode.Default" ProductVersion="6.0.7" Annotations="BaseTypeDiscoveryConvention:DerivedTypes: System.Collections.Generic.Dictionary`2[System.Type,System.Collections.Generic.List`1[Microsoft.EntityFrameworkCore.Metadata.IConventionEntityType]]
+Relational:MaxIdentifierLength: 128
+RelationshipDiscoveryConvention:InverseNavigationCandidates: System.Collections.Generic.Dictionary`2[System.Type,System.Collections.Generic.SortedSet`1[System.Type]]
+SqlServer:ValueGenerationStrategy: IdentityColumn" Category="Model" Group="Expanded" />
+<Node Id = "Account" Label="Account" Name="Account" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Accounts
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Deposit" Label="Deposit" Name="Deposit" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Deposits
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Account.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "Account.AccountType" Label="AccountType (1)" Name="AccountType" Category="Navigation Property" Type="LuAccountType"  Field="" Dependent="" Principal="LuAccountType" Inverse="" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Account.ScheduledTransactions" Label="ScheduledTransactions (*)" Name="ScheduledTransactions" Category="Navigation Collection" Type="ICollection&lt;ScheduledTransaction&gt;"  Field="" Dependent="ScheduledTransaction" Principal="" Inverse="Account" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Account.Transactions" Label="Transactions (*)" Name="Transactions" Category="Navigation Collection" Type="ICollection&lt;Transaction&gt;"  Field="" Dependent="Transaction" Principal="" Inverse="Account" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Account.Transfers" Label="Transfers (*)" Name="Transfers" Category="Navigation Collection" Type="ICollection&lt;Transfer&gt;"  Field="" Dependent="Transfer" Principal="" Inverse="TargetAccount" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Account.AccountTypeId" Label="AccountTypeId (int)" Name="AccountTypeId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Account.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(120)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 120" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuAccountType" Label="LuAccountType" Name="LuAccountType" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: AccountTypes
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Deposit.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "Deposit.DepositReason" Label="DepositReason (1)" Name="DepositReason" Category="Navigation Property" Type="LuDepositReason"  Field="" Dependent="" Principal="LuDepositReason" Inverse="Deposits" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Deposit.Transaction" Label="Transaction (1)" Name="Transaction" Category="Navigation Property" Type="Transaction"  Field="" Dependent="" Principal="Transaction" Inverse="Deposit" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Deposit.Amount" Label="Amount (double)" Name="Amount" Category="Property Required" Type="double" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Deposit.DepositReasonId" Label="DepositReasonId (int)" Name="DepositReasonId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Deposit.TransactionId" Label="TransactionId (int)" Name="TransactionId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategory" Label="LuCategory" Name="LuCategory" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Categories
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "LuAccountType.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "LuAccountType.Deleted" Label="Deleted (bool)" Name="Deleted" Category="Property Required" Type="bool" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuAccountType.LastUpdated" Label="LastUpdated (DateTime)" Name="LastUpdated" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuAccountType.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(80)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 80" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuAccountType.SortOrder" Label="SortOrder (int)" Name="SortOrder" Category="Property Required" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuDepositReason" Label="LuDepositReason" Name="LuDepositReason" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: DepositReasons
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "LuCategory.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "LuCategory.Deleted" Label="Deleted (bool)" Name="Deleted" Category="Property Required" Type="bool" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategory.LastUpdated" Label="LastUpdated (DateTime)" Name="LastUpdated" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategory.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(80)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 80" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategory.SortOrder" Label="SortOrder (int)" Name="SortOrder" Category="Property Required" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategory.Payees" Label="Payees (ICollection&lt;Payee&gt;)" Name="Payees" Category="Property Optional" Type="ICollection&lt;Payee&gt;" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="False" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuLineItemType" Label="LuLineItemType" Name="LuLineItemType" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: LineItemTypes
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "LuDepositReason.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "LuDepositReason.Deposits" Label="Deposits (*)" Name="Deposits" Category="Navigation Collection" Type="ICollection&lt;Deposit&gt;"  Field="" Dependent="Deposit" Principal="" Inverse="DepositReason" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "LuDepositReason.Deleted" Label="Deleted (bool)" Name="Deleted" Category="Property Required" Type="bool" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuDepositReason.LastUpdated" Label="LastUpdated (DateTime)" Name="LastUpdated" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuDepositReason.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(80)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 80" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuDepositReason.SortOrder" Label="SortOrder (int)" Name="SortOrder" Category="Property Required" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuRecurrenceType" Label="LuRecurrenceType" Name="LuRecurrenceType" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: RecurrenceTypes
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "LuLineItemType.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "LuLineItemType.TransactionDetails" Label="TransactionDetails (*)" Name="TransactionDetails" Category="Navigation Collection" Type="ICollection&lt;TransactionDetail&gt;"  Field="" Dependent="TransactionDetail" Principal="" Inverse="LineItemType" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "LuLineItemType.Deleted" Label="Deleted (bool)" Name="Deleted" Category="Property Required" Type="bool" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuLineItemType.LastUpdated" Label="LastUpdated (DateTime)" Name="LastUpdated" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuLineItemType.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(80)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 80" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuLineItemType.SortOrder" Label="SortOrder (int)" Name="SortOrder" Category="Property Required" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Payee" Label="Payee" Name="Payee" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Payees
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "LuRecurrenceType.Id" Label="Id (RecurrenceType)" Name="Id" Category="Property Primary" Type="RecurrenceType" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuRecurrenceType.ScheduledTransactions" Label="ScheduledTransactions (*)" Name="ScheduledTransactions" Category="Navigation Collection" Type="ICollection&lt;ScheduledTransaction&gt;"  Field="" Dependent="ScheduledTransaction" Principal="" Inverse="RecurrenceType" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "LuRecurrenceType.Deleted" Label="Deleted (bool)" Name="Deleted" Category="Property Required" Type="bool" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuRecurrenceType.DisplayText" Label="DisplayText (string)" Name="DisplayText" Category="Property Required" Type="string" MaxLength="(20)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 20" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuRecurrenceType.LastUpdated" Label="LastUpdated (DateTime)" Name="LastUpdated" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuRecurrenceType.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(80)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 80" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuRecurrenceType.SortOrder" Label="SortOrder (int)" Name="SortOrder" Category="Property Required" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Payment" Label="Payment" Name="Payment" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Payments
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Payee.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "Payee.Payments" Label="Payments (*)" Name="Payments" Category="Navigation Collection" Type="ICollection&lt;Payment&gt;"  Field="" Dependent="Payment" Principal="" Inverse="Payee" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Payee.ScheduledTransactions" Label="ScheduledTransactions (*)" Name="ScheduledTransactions" Category="Navigation Collection" Type="ICollection&lt;ScheduledTransaction&gt;"  Field="" Dependent="ScheduledTransaction" Principal="" Inverse="Payee" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Payee.Categories" Label="Categories (1)" Name="Categories" Category="Navigation Property" Type="ICollection&lt;LuCategory&gt;"  Field="" Dependent="" Principal="" Inverse="Payees" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Payee.Name" Label="Name (string)" Name="Name" Category="Property Required" Type="string" MaxLength="(120)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 120" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "ScheduledTransaction" Label="ScheduledTransaction" Name="ScheduledTransaction" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: ScheduledTransactions
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Payment.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "Payment.Payee" Label="Payee (1)" Name="Payee" Category="Navigation Property" Type="Payee"  Field="" Dependent="" Principal="Payee" Inverse="Payments" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Payment.Transaction" Label="Transaction (1)" Name="Transaction" Category="Navigation Property" Type="Transaction"  Field="" Dependent="" Principal="Transaction" Inverse="Payment" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Payment.PayeeId" Label="PayeeId (int)" Name="PayeeId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Payment.TransactionId" Label="TransactionId (int)" Name="TransactionId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transaction" Label="Transaction" Name="Transaction" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Transactions
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "ScheduledTransaction.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "ScheduledTransaction.Account" Label="Account (1)" Name="Account" Category="Navigation Property" Type="Account"  Field="" Dependent="" Principal="Account" Inverse="ScheduledTransactions" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "ScheduledTransaction.Payee" Label="Payee (1)" Name="Payee" Category="Navigation Property" Type="Payee"  Field="" Dependent="" Principal="Payee" Inverse="ScheduledTransactions" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "ScheduledTransaction.RecurrenceType" Label="RecurrenceType (1)" Name="RecurrenceType" Category="Navigation Property" Type="LuRecurrenceType"  Field="" Dependent="" Principal="LuRecurrenceType" Inverse="ScheduledTransactions" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "ScheduledTransaction.AccountId" Label="AccountId (int)" Name="AccountId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "ScheduledTransaction.DayNum" Label="DayNum (int)" Name="DayNum" Category="Property Required" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "ScheduledTransaction.Memo" Label="Memo (string)" Name="Memo" Category="Property Required" Type="string" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "ScheduledTransaction.PayeeId" Label="PayeeId (int)" Name="PayeeId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "ScheduledTransaction.RecurrenceTypeId" Label="RecurrenceTypeId (RecurrenceType)" Name="RecurrenceTypeId" Category="Property Foreign" Type="RecurrenceType" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "TransactionDetail" Label="TransactionDetail" Name="TransactionDetail" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: TransactionDetails
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Transaction.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "Transaction.Account" Label="Account (1)" Name="Account" Category="Navigation Property" Type="Account"  Field="" Dependent="" Principal="Account" Inverse="Transactions" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transaction.Deposit" Label="Deposit (1)" Name="Deposit" Category="Navigation Property" Type="Deposit"  Field="" Dependent="Deposit" Principal="" Inverse="Transaction" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transaction.Payment" Label="Payment (1)" Name="Payment" Category="Navigation Property" Type="Payment"  Field="" Dependent="Payment" Principal="" Inverse="Transaction" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transaction.TransactionDetails" Label="TransactionDetails (*)" Name="TransactionDetails" Category="Navigation Collection" Type="ICollection&lt;TransactionDetail&gt;"  Field="" Dependent="TransactionDetail" Principal="" Inverse="Transaction" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transaction.Transfer" Label="Transfer (1)" Name="Transfer" Category="Navigation Property" Type="Transfer"  Field="" Dependent="Transfer" Principal="" Inverse="Transaction" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transaction.AccountId" Label="AccountId (int)" Name="AccountId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transaction.DateEntered" Label="DateEntered (DateTime)" Name="DateEntered" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transaction.Memo" Label="Memo (string)" Name="Memo" Category="Property Required" Type="string" MaxLength="(255)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 255" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transaction.PostingDate" Label="PostingDate (DateTime?)" Name="PostingDate" Category="Property Optional" Type="DateTime?" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="False" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transaction.TransactionDate" Label="TransactionDate (DateTime)" Name="TransactionDate" Category="Property Required" Type="DateTime" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transfer" Label="Transfer" Name="Transfer" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="Relational:TableName: Transfers
+RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "TransactionDetail.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "TransactionDetail.LineItemType" Label="LineItemType (1)" Name="LineItemType" Category="Navigation Property" Type="LuLineItemType"  Field="" Dependent="" Principal="LuLineItemType" Inverse="TransactionDetails" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "TransactionDetail.Transaction" Label="Transaction (1)" Name="Transaction" Category="Navigation Property" Type="Transaction"  Field="" Dependent="" Principal="Transaction" Inverse="TransactionDetails" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "TransactionDetail.Amount" Label="Amount (double)" Name="Amount" Category="Property Required" Type="double" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "TransactionDetail.Description" Label="Description (string)" Name="Description" Category="Property Required" Type="string" MaxLength="(255)" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="MaxLength: 255" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "TransactionDetail.LineItemTypeId" Label="LineItemTypeId (int)" Name="LineItemTypeId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "TransactionDetail.TransactionId" Label="TransactionId (int)" Name="TransactionId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategoryPayee" Label="LuCategoryPayee" Name="LuCategoryPayee" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="RelationshipDiscoveryConvention:NavigationCandidates: System.Collections.Immutable.ImmutableSortedDictionary`2[System.Reflection.PropertyInfo,System.ValueTuple`2[System.Type,System.Nullable`1[System.Boolean]]]" Category="EntityType" Group="Expanded" />
+<Node Id = "Transfer.Id" Label="Id (int)" Name="Id" Category="Property Primary" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn" IsPrimaryKey="True" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="ValueGenerated.OnAdd" />
+<Node Id = "Transfer.TargetAccount" Label="TargetAccount (1)" Name="TargetAccount" Category="Navigation Property" Type="Account"  Field="" Dependent="" Principal="Account" Inverse="Transfers" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transfer.Transaction" Label="Transaction (1)" Name="Transaction" Category="Navigation Property" Type="Transaction"  Field="" Dependent="" Principal="Transaction" Inverse="Transfer" PropertyAccessMode="PropertyAccessMode.Default" />
+<Node Id = "Transfer.Amount" Label="Amount (double)" Name="Amount" Category="Property Required" Type="double" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="False" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transfer.TargetAccountId" Label="TargetAccountId (int)" Name="TargetAccountId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "Transfer.TransactionId" Label="TransactionId (int)" Name="TransactionId" Category="Property Foreign" Type="int" MaxLength="None" Field="" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="False" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategoryPayee" Label="LuCategoryPayee" Name="LuCategoryPayee" BaseClass="" IsAbstract="False" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot"  Annotations="" Category="EntityType" Group="Expanded" />
+<Node Id = "LuCategoryPayee.CategoriesId" Label="CategoriesId (int)" Name="CategoriesId" Category="Property Primary" Type="int" MaxLength="None" Field="nofield" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="True" IsForeignKey="True" IsRequired="True" IsIndexed="False" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+<Node Id = "LuCategoryPayee.PayeesId" Label="PayeesId (int)" Name="PayeesId" Category="Property Primary" Type="int" MaxLength="None" Field="nofield" PropertyAccessMode="PropertyAccessMode.Default" BeforeSaveBehavior="PropertySaveBehavior.Save" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="" IsPrimaryKey="True" IsForeignKey="True" IsRequired="True" IsIndexed="True" IsShadow="False" IsAlternateKey="False" IsConcurrencyToken="False" IsUnicode="True" ValueGenerated="None" />
+  </Nodes>
+  <Links>
+<Link Source = "IModel" Target="Account" Category="Contains" />
+<Link Source = "IModel" Target="Deposit" Category="Contains" />
+<Link Source = "Account" Target="Account.AccountType" Category="Contains" />
+<Link Source = "Account" Target="Account.ScheduledTransactions" Category="Contains" />
+<Link Source = "Account" Target="Account.Transactions" Category="Contains" />
+<Link Source = "Account" Target="Account.Transfers" Category="Contains" />
+<Link Source = "Account" Target="Account.Id" Category="Contains" />
+<Link Source="Account" Target="LuAccountType" From="Account.AccountTypeId" To="LuAccountType.Id" Name="Account -> LuAccountType" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source = "Account" Target="Account.AccountTypeId" Category="Contains" />
+<Link Source = "Account" Target="Account.Name" Category="Contains" />
+<Link Source = "IModel" Target="LuAccountType" Category="Contains" />
+<Link Source = "Deposit" Target="Deposit.DepositReason" Category="Contains" />
+<Link Source = "Deposit" Target="Deposit.Transaction" Category="Contains" />
+<Link Source = "Deposit" Target="Deposit.Id" Category="Contains" />
+<Link Source="Deposit" Target="LuDepositReason" From="Deposit.DepositReasonId" To="LuDepositReason.Id" Name="Deposit -> LuDepositReason" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="Deposit" Target="Transaction" From="Deposit.TransactionId" To="Transaction.Id" Name="Deposit -> Transaction" Annotations="" IsUnique="True" Label="1:1" Category="Foreign Key" />
+<Link Source = "Deposit" Target="Deposit.Amount" Category="Contains" />
+<Link Source = "Deposit" Target="Deposit.DepositReasonId" Category="Contains" />
+<Link Source = "Deposit" Target="Deposit.TransactionId" Category="Contains" />
+<Link Source = "IModel" Target="LuCategory" Category="Contains" />
+<Link Source = "LuAccountType" Target="LuAccountType.Id" Category="Contains" />
+<Link Source = "LuAccountType" Target="LuAccountType.Deleted" Category="Contains" />
+<Link Source = "LuAccountType" Target="LuAccountType.LastUpdated" Category="Contains" />
+<Link Source = "LuAccountType" Target="LuAccountType.Name" Category="Contains" />
+<Link Source = "LuAccountType" Target="LuAccountType.SortOrder" Category="Contains" />
+<Link Source = "IModel" Target="LuDepositReason" Category="Contains" />
+<Link Source = "LuCategory" Target="LuCategory.Id" Category="Contains" />
+<Link Source = "LuCategory" Target="LuCategory.Deleted" Category="Contains" />
+<Link Source = "LuCategory" Target="LuCategory.LastUpdated" Category="Contains" />
+<Link Source = "LuCategory" Target="LuCategory.Name" Category="Contains" />
+<Link Source = "LuCategory" Target="LuCategory.SortOrder" Category="Contains" />
+<Link Source = "LuCategory" Target="LuCategory.Payees" Category="Contains" />
+<Link Source = "IModel" Target="LuLineItemType" Category="Contains" />
+<Link Source = "LuDepositReason" Target="LuDepositReason.Deposits" Category="Contains" />
+<Link Source = "LuDepositReason" Target="LuDepositReason.Id" Category="Contains" />
+<Link Source = "LuDepositReason" Target="LuDepositReason.Deleted" Category="Contains" />
+<Link Source = "LuDepositReason" Target="LuDepositReason.LastUpdated" Category="Contains" />
+<Link Source = "LuDepositReason" Target="LuDepositReason.Name" Category="Contains" />
+<Link Source = "LuDepositReason" Target="LuDepositReason.SortOrder" Category="Contains" />
+<Link Source = "IModel" Target="LuRecurrenceType" Category="Contains" />
+<Link Source = "LuLineItemType" Target="LuLineItemType.TransactionDetails" Category="Contains" />
+<Link Source = "LuLineItemType" Target="LuLineItemType.Id" Category="Contains" />
+<Link Source = "LuLineItemType" Target="LuLineItemType.Deleted" Category="Contains" />
+<Link Source = "LuLineItemType" Target="LuLineItemType.LastUpdated" Category="Contains" />
+<Link Source = "LuLineItemType" Target="LuLineItemType.Name" Category="Contains" />
+<Link Source = "LuLineItemType" Target="LuLineItemType.SortOrder" Category="Contains" />
+<Link Source = "IModel" Target="Payee" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.ScheduledTransactions" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.Id" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.Deleted" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.DisplayText" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.LastUpdated" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.Name" Category="Contains" />
+<Link Source = "LuRecurrenceType" Target="LuRecurrenceType.SortOrder" Category="Contains" />
+<Link Source = "IModel" Target="Payment" Category="Contains" />
+<Link Source = "Payee" Target="Payee.Payments" Category="Contains" />
+<Link Source = "Payee" Target="Payee.ScheduledTransactions" Category="Contains" />
+<Link Source = "Payee" Target="Payee.Categories" Category="Contains" />
+<Link Source = "Payee" Target="Payee.Id" Category="Contains" />
+<Link Source = "Payee" Target="Payee.Name" Category="Contains" />
+<Link Source = "IModel" Target="ScheduledTransaction" Category="Contains" />
+<Link Source = "Payment" Target="Payment.Payee" Category="Contains" />
+<Link Source = "Payment" Target="Payment.Transaction" Category="Contains" />
+<Link Source = "Payment" Target="Payment.Id" Category="Contains" />
+<Link Source="Payment" Target="Payee" From="Payment.PayeeId" To="Payee.Id" Name="Payment -> Payee" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="Payment" Target="Transaction" From="Payment.TransactionId" To="Transaction.Id" Name="Payment -> Transaction" Annotations="" IsUnique="True" Label="1:1" Category="Foreign Key" />
+<Link Source = "Payment" Target="Payment.PayeeId" Category="Contains" />
+<Link Source = "Payment" Target="Payment.TransactionId" Category="Contains" />
+<Link Source = "IModel" Target="Transaction" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.Account" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.Payee" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.RecurrenceType" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.Id" Category="Contains" />
+<Link Source="ScheduledTransaction" Target="Account" From="ScheduledTransaction.AccountId" To="Account.Id" Name="ScheduledTransaction -> Account" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="ScheduledTransaction" Target="Payee" From="ScheduledTransaction.PayeeId" To="Payee.Id" Name="ScheduledTransaction -> Payee" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="ScheduledTransaction" Target="LuRecurrenceType" From="ScheduledTransaction.RecurrenceTypeId" To="LuRecurrenceType.Id" Name="ScheduledTransaction -> LuRecurrenceType" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.AccountId" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.DayNum" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.Memo" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.PayeeId" Category="Contains" />
+<Link Source = "ScheduledTransaction" Target="ScheduledTransaction.RecurrenceTypeId" Category="Contains" />
+<Link Source = "IModel" Target="TransactionDetail" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.Account" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.Deposit" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.Payment" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.TransactionDetails" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.Transfer" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.Id" Category="Contains" />
+<Link Source="Transaction" Target="Account" From="Transaction.AccountId" To="Account.Id" Name="Transaction -> Account" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source = "Transaction" Target="Transaction.AccountId" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.DateEntered" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.Memo" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.PostingDate" Category="Contains" />
+<Link Source = "Transaction" Target="Transaction.TransactionDate" Category="Contains" />
+<Link Source = "IModel" Target="Transfer" Category="Contains" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.LineItemType" Category="Contains" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.Transaction" Category="Contains" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.Id" Category="Contains" />
+<Link Source="TransactionDetail" Target="LuLineItemType" From="TransactionDetail.LineItemTypeId" To="LuLineItemType.Id" Name="TransactionDetail -> LuLineItemType" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="TransactionDetail" Target="Transaction" From="TransactionDetail.TransactionId" To="Transaction.Id" Name="TransactionDetail -> Transaction" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.Amount" Category="Contains" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.Description" Category="Contains" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.LineItemTypeId" Category="Contains" />
+<Link Source = "TransactionDetail" Target="TransactionDetail.TransactionId" Category="Contains" />
+<Link Source = "IModel" Target="LuCategoryPayee" Category="Contains" />
+<Link Source = "Transfer" Target="Transfer.TargetAccount" Category="Contains" />
+<Link Source = "Transfer" Target="Transfer.Transaction" Category="Contains" />
+<Link Source = "Transfer" Target="Transfer.Id" Category="Contains" />
+<Link Source="Transfer" Target="Account" From="Transfer.TargetAccountId" To="Account.Id" Name="Transfer -> Account" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="Transfer" Target="Transaction" From="Transfer.TransactionId" To="Transaction.Id" Name="Transfer -> Transaction" Annotations="" IsUnique="True" Label="1:1" Category="Foreign Key" />
+<Link Source = "Transfer" Target="Transfer.Amount" Category="Contains" />
+<Link Source = "Transfer" Target="Transfer.TargetAccountId" Category="Contains" />
+<Link Source = "Transfer" Target="Transfer.TransactionId" Category="Contains" />
+<Link Source = "IModel" Target="LuCategoryPayee" Category="Contains" />
+<Link Source = "LuCategoryPayee" Target="LuCategoryPayee.CategoriesId" Category="Contains" />
+<Link Source="LuCategoryPayee" Target="LuCategory" From="LuCategoryPayee.CategoriesId" To="LuCategory.Id" Name="LuCategoryPayee -> LuCategory" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source="LuCategoryPayee" Target="Payee" From="LuCategoryPayee.PayeesId" To="Payee.Id" Name="LuCategoryPayee -> Payee" Annotations="" IsUnique="False" Label="1:*" Category="Foreign Key" />
+<Link Source = "LuCategoryPayee" Target="LuCategoryPayee.PayeesId" Category="Contains" />
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="EntityType" ValueLabel="True">
+      <Condition Expression="HasCategory('EntityType')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Primary" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Primary')" />
+      <Setter Property="Background" Value="#FF008000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Optional" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Optional')" />
+      <Setter Property="Background" Value="#FF808040" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Foreign" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Foreign')" />
+      <Setter Property="Background" Value="#FF8080FF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Required" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Required')" />
+      <Setter Property="Background" Value="#FFC0A000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Navigation Property" ValueLabel="True">
+      <Condition Expression="HasCategory('Navigation Property')" />
+      <Setter Property="Background" Value="#FF990000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Navigation Collection" ValueLabel="True">
+      <Condition Expression="HasCategory('Navigation Collection')" />
+      <Setter Property="Background" Value="#FFFF3232" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Model" ValueLabel="True">
+      <Condition Expression="HasCategory('Model')" />
+      <Setter Property="Background" Value="#FFFFFFFF" />
+    </Style>
+  </Styles>
+  <Properties>
+    <Property Id="Name" Group="Model Properties" DataType="System.String" />
+    <Property Id="Field"  Description="Backing field" Group="Model Properties" DataType="System.String" />
+    <Property Id="Type"  Description="CLR data type" Group="Model Properties" DataType="System.String" />
+    <Property Id="To" Description="Source property" Group="Model Properties" DataType="System.String" />
+    <Property Id="From" Description="Target property" Group="Model Properties" DataType="System.String" />
+    <Property Id="Dependent" Description="Dependent entity" Group="Model Properties" DataType="System.String" />
+    <Property Id="Inverse" Description="Inverse entity" Group="Model Properties" DataType="System.String" />
+    <Property Id="Principal" Description="Principal entity" Group="Model Properties" DataType="System.String" />    
+    <Property Id="Annotations" Description="Annotations" Group="Model Properties" DataType="System.String" />
+    <Property Id="BaseClass"  Description="Base class" Group="Model Properties" DataType="System.String" />
+    <Property Id="ChangeTrackingStrategy" Description="Change tracking strategy" Group="Model Properties" DataType="System.String" />
+    <Property Id="IsUnique" Group="Model Properties" DataType="System.Boolean" />
+    <Property Id="IsAbstract" Group="Model Properties" DataType="System.Boolean" />
+    <Property Id="ProductVersion" Label="Product Version" Description="EF Core product version" Group="Model Properties" DataType="System.String" />
+    <Property Id="IsIndexed" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsRequired" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsPrimaryKey" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsForeignKey" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsShadow" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsAlternateKey" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsConcurrencyToken" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsIndexed" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsUnicode" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="ValueGenerated" Group="Property Flags" DataType="System.String" />
+    <Property Id="BeforeSaveBehavior" Group="Property Flags" DataType="System.String" />
+    <Property Id="AfterSaveBehavior" Group="Property Flags" DataType="System.String" />
+    <Property Id="PropertyAccessMode" Group="Property Flags" DataType="System.String" />
+  </Properties>
+</DirectedGraph>

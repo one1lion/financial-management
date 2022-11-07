@@ -1,8 +1,11 @@
 ﻿using FinanMan.Database.Models.Shared;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanMan.Database.Models.Tables;
 
 public partial class LuLineItemType : LookupItemBase
 {
-    public virtual ICollection<TransactionDetail> TransactionDetails { get; set; } = new HashSet<TransactionDetail>();
+    [NotMapped]
+    public override LookupListType ListType => LookupListType.LineItemType;
+    public virtual ICollection<PaymentDetail> TransactionDetails { get; set; } = new HashSet<PaymentDetail>();
 }

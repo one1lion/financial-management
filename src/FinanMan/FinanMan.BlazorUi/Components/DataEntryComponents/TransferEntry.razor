@@ -2,7 +2,7 @@
 @using FinanMan.Shared.DataEntryModels
 
 <div class="data-entry-wrapper">
-    <EditForm Model=_newTransfer id="transferEntryForm" class="data-entry-form">
+    <EditForm Model=_newTransfer id="transferEntryForm" class="data-entry-form" OnValidSubmit=HandleTransferSubmitted>
         <DataAnnotationsValidator />
         <div id="transferDate" class="form-group">
             <label>Date</label>

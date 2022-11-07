@@ -1,7 +1,12 @@
-﻿namespace FinanMan.Database.Models.Tables;
+﻿using FinanMan.Database.Models.Shared;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public partial class Payee
+namespace FinanMan.Database.Models.Tables;
+
+public partial class Payee : IHasLookupListType
 {
+    [NotMapped]
+    public LookupListType ListType => LookupListType.AccountType;
     public int Id { get; set; }
     public string Name { get; set; } = default!;
 

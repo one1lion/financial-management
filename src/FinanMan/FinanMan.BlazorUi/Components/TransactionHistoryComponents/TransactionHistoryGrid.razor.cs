@@ -1,4 +1,8 @@
+using FinanMan.Database.Models.Shared;
 using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.DataEntryModels;
+using FinanMan.Shared.Extensions;
+using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -7,113 +11,121 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 
 public partial class TransactionHistoryGrid
 {
+    [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositTransactionService { get; set; } = default!;
     [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
 
+    private List<DepositEntryViewModel>? _deposits;
     private List<Transaction>? _transactions;
     private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
+    {
+        return RefreshTransactions();
+    }
+
+    private async Task RefreshTransactions()
     {
         // Simulate getting data from the server
         var randDates = Enumerable.Range(0, 4).Select(x => DateTime.UtcNow.AddDays(-Random.Shared.Next(1, 30))).ToArray();
-        await Task.Delay(Random.Shared.Next(500, 2000));
-        _transactions = new List<Transaction>()
+        var depResp = await DepositTransactionService.GetTransactionsAsync();
+
+        if (depResp.WasError)
+        {
+            // TODO: Do something special with the error
+        }
+        else
+        {
+            _deposits = depResp.Data;
+            _transactions = _deposits?.ToEntityModel().ToList();
+        }
+
+        var addTrans = new List<Transaction>()
         {
             new()
             {
-                Account = new() { Name = "Credit Card"},
-                Payment = new() { Payee = new() { Name = "Taco Bell"} },
+                Account = new() { Name = "Credit Card" },
+                Payment = new() {
+                    Payee = new() { Name = "Taco Bell" } ,
+                    PaymentDetails = new List<PaymentDetail>()
+                    {
+                        new()
+                        {
+                            LineItemType = new() { Name = "Sub Total" },
+                            Amount = 4.99
+                        },
+                        new()
+                        {
+                            LineItemType = new() { Name = "Sales Tax" },
+                            Amount = .24
+                        },
+                    }
+                },
                 Memo = string.Empty,
                 TransactionDate = randDates[0],
-                PostingDate = randDates[0],
-                TransactionDetails = new List<TransactionDetail>()
-                {
-                    new()
-                    {
-                        LineItemType = new() { Name = "Sub Total"},
-                        Amount = 4.99
-                    },
-                    new()
-                    {
-                        LineItemType = new() { Name = "Sales Tax"},
-                        Amount = .24
-                    },
-                }
+                PostingDate = randDates[0]
             },
             new()
             {
-                Account = new() { Name = "Credit Card"},
-                Payment = new() { Payee = new() { Name = "My Favorite Grocery Store That Delivers"} },
+                Account = new() { Name = "Credit Card" },
+                Payment = new() {
+                    Payee = new() { Name = "My Favorite Grocery Store That Delivers" },
+                    PaymentDetails = new List<PaymentDetail>()
+                    {
+                        new()
+                        {
+                            LineItemType = new() { Name = "Sub Total" },
+                            Amount = 128.32
+                        },
+                        new()
+                        {
+                            LineItemType = new() { Name = "Sales Tax" },
+                            Amount = 4.24
+                        },
+                        new()
+                        {
+                            LineItemType = new() { Name = "Fee" },
+                            Detail = "Delivery Fee",
+                            Amount = 4.24},
+                        new()
+                        {
+                            LineItemType = new() { Name = "Fee" },
+                            Detail = "Service Fee",
+                            Amount = 6.57},
+                        new()
+                        {
+                            LineItemType = new() { Name = "Discount" },
+                            Detail = "Promotion",
+                            Amount = -4.24
+                        },
+                        new()
+                        {
+                            LineItemType = new() { Name = "Tip" },
+                            Amount = 12.83
+                        }
+                    }
+                },
                 Memo = string.Empty,
                 TransactionDate = randDates[1],
-                PostingDate = randDates[1],
-                TransactionDetails = new List<TransactionDetail>()
-                {
-                    new()
-                    {
-                        LineItemType = new() { Name = "Sub Total"},
-                        Amount = 128.32
-                    },
-                    new()
-                    {
-                        LineItemType = new() { Name = "Sales Tax"},
-                        Amount = 4.24
-                    },
-                    new()
-                    {
-                        LineItemType = new() { Name = "Fee"},
-                        Description = "Delivery Fee",
-                        Amount = 4.24},
-                    new()
-                    {
-                        LineItemType = new() { Name = "Fee"},
-                        Description = "Service Fee",
-                        Amount = 6.57},
-                    new()
-                    {
-                        LineItemType = new() { Name = "Discount"},
-                        Description = "Promotion",
-                        Amount = -4.24
-                    },
-                    new()
-                    {
-                        LineItemType = new() { Name = "Tip"},
-                        Amount = 12.83
-                    }}
+                PostingDate = randDates[1]
             },
             new()
             {
-                Account = new() { Name = "Checking"},
-                Deposit = new()
-                {
-                    DepositReason = new() { Name = "Paycheck" }
+                Account = new() { Name = "Checking" },
+                Transfer = new() {
+                    TargetAccount = new() { Name = "Credit Card" },
+                    Amount = 2345
                 },
-                Memo = "With 30 hours OT",
-                TransactionDate = randDates[2],
-                PostingDate = randDates[2],
-                TransactionDetails = new List<TransactionDetail>()
-                {
-                    new()
-                    {
-                        LineItemType = new() { Name = "Net Pay"},
-                        Amount = 5000
-                    }
-                }
-            },
-            new()
-            {
-                Account = new() { Name = "Checking"},
-                Transfer = new() { TargetAccount = new() { Name = "Credit Card"} },
-                TransactionDate = randDates[3],
-                TransactionDetails = new List<TransactionDetail>()
-                {
-                    new()
-                    {
-                        LineItemType = new() { Name = "Payment"},
-                        Amount = 2345
-                    }
-                }
+                TransactionDate = randDates[3]
             }
         };
+
+        if (_transactions?.Any() ?? false)
+        {
+            _transactions.AddRange(addTrans);
+        }
+        else
+        {
+            _transactions = addTrans;
+        }
     }
 
     /// <summary>
@@ -142,20 +154,20 @@ public partial class TransactionHistoryGrid
         }
         return InvokeAsync(StateHasChanged);
     }
-    
+
     private Task SortByColumn(ColumnName columnName, SortDir dir)
     {
         if (_sortColumns.Any(x => x.Column != columnName)) { _sortColumns.Clear(); }
 
         var sortCol = _sortColumns.FirstOrDefault(x => x.Column == columnName);
-        var alreadyApplied = 
+        var alreadyApplied =
             // The column is not sorted and we are trying to sort to none
             (sortCol is null && dir == SortDir.None)
             // Or the column is already sorted by the request direction
             || (sortCol is not null
                 && ((sortCol.Descending && dir == SortDir.Desc)
                     || (!sortCol.Descending && dir == SortDir.Asc)));
-        if (alreadyApplied) 
+        if (alreadyApplied)
         {
             return Task.CompletedTask;
         }
@@ -166,12 +178,12 @@ public partial class TransactionHistoryGrid
             _sortColumns.Add(sortCol);
             return InvokeAsync(StateHasChanged);
         }
-        else if(dir == SortDir.None)
+        else if (dir == SortDir.None)
         {
             _sortColumns.Remove(sortCol);
             return InvokeAsync(StateHasChanged);
         }
-        
+
         sortCol.Descending = dir == SortDir.Desc;
 
         return InvokeAsync(StateHasChanged);
@@ -210,17 +222,25 @@ public partial class TransactionHistoryGrid
                     break;
                 case ColumnName.PayeeColumn:
                     sortColProp = x =>
-                        x.IsPayment
-                        ? x.Payment?.Payee.Name
-                        : x.IsTransfer
-                          ? x.Transfer?.TargetAccount.Name
-                          : default;
+                        x.TransactionType switch
+                        {
+                            TransactionType.Payment => x.Payment?.Payee?.Name,
+                            TransactionType.Transfer => x.Transfer?.TargetAccount?.Name,
+                            _ => default
+                        };
                     break;
                 case ColumnName.MemoColumn:
                     sortColProp = x => x.Memo;
                     break;
-                case ColumnName.AmountColumn:
-                    sortColProp = x => x.TransactionDetails.Sum(x => x.Amount);
+                case ColumnName.TotalColumn:
+                    sortColProp = x =>
+                    (x.TransactionType switch
+                    {
+                        TransactionType.Payment => x.Payment?.PaymentDetails.Sum(y => y.Amount),
+                        TransactionType.Deposit => x.Deposit?.Amount,
+                        TransactionType.Transfer => x.Transfer?.Amount,
+                        _ => default
+                    }) ?? 0;
                     break;
             }
 
@@ -258,7 +278,7 @@ public enum ColumnName
     [Display(Name = "Memo")]
     MemoColumn,
     [Display(Name = "Amount")]
-    AmountColumn
+    TotalColumn
 }
 
 public enum SortDir

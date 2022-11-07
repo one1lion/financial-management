@@ -2,13 +2,23 @@
 @using FinanMan.Shared.DataEntryModels
 
 <div class="data-entry-wrapper">
-    <EditForm Model=_newDeposit id="depositEntryForm" class="data-entry-form">
+    <EditForm Model=_newDeposit id="depositEntryForm" class="data-entry-form" OnValidSubmit="HandleDepositSubmitted">
         <DataAnnotationsValidator />
+        @if (_currentResponse?.WasError ?? false)
+        {
+            <div class="error-message-wrapper">
+                @_currentResponse.RenderError
+            </div>
+        }
+        
         <div id="transDate" class="form-group">
             <label>Date</label>
-            <InputDate @bind-Value=_newDeposit.TransactionDate />
+            <InputDate @bind-Value=_newDeposit.TransactionDate @ref=_transDateInput />
+            <p>
+                <ValidationMessage For="() => _newDeposit.TransactionDate" class="text-danger" />
+            </p>
         </div>
-        
+
         <div id="account" class="form-group">
             <label>To Account</label>
             <InputSelect @bind-Value=_newDeposit.TargetAccountValueText>
@@ -21,6 +31,9 @@
                     }
                 }
             </InputSelect>
+            <p>
+                <ValidationMessage For="() => _newDeposit.TargetAccountValueText" class="text-danger" />
+            </p>
         </div>
 
         <div id="reason" class="form-group">
@@ -46,7 +59,7 @@
             <label>Memo</label>
             <InputText @bind-Value=_newDeposit.Memo />
         </div>
-        
+
         <div id="saveButton" class="form-group">
             <button type="submit">Submit</button>
         </div>

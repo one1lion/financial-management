@@ -1,0 +1,11 @@
+﻿<CascadingValue Value=this Name="FlyoutParent">
+    <div class="flyout@(_show ? " expanded" : string.Empty)" @onclick="_ => UpdateShowAsync(false)">
+        <div class="flyout-content-wrapper" @onclick:stopPropagation=true>
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+            <button class="close-button" @onclick="_ => UpdateShowAsync(false)">&times;</button>
+        </div>
+    </div>
+</CascadingValue>

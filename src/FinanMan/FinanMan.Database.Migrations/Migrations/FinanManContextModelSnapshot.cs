@@ -55,6 +55,9 @@ namespace FinanMan.Database.Migrations.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<int>("DepositReasonId")
                         .HasColumnType("int");
 
@@ -512,6 +515,36 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.ToTable("Payments");
                 });
 
+            modelBuilder.Entity("FinanMan.Database.Models.Tables.PaymentDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Detail")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("LineItemTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LineItemTypeId");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("PaymentDetails");
+                });
+
             modelBuilder.Entity("FinanMan.Database.Models.Tables.ScheduledTransaction", b =>
                 {
                     b.Property<int>("Id")
@@ -562,11 +595,13 @@ namespace FinanMan.Database.Migrations.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Memo")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime?>("PostingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PurgeDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("TransactionDate")
@@ -579,7 +614,7 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("FinanMan.Database.Models.Tables.TransactionDetail", b =>
+            modelBuilder.Entity("FinanMan.Database.Models.Tables.Transfer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -589,34 +624,6 @@ namespace FinanMan.Database.Migrations.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("LineItemTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LineItemTypeId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("TransactionDetails");
-                });
-
-            modelBuilder.Entity("FinanMan.Database.Models.Tables.Transfer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("TargetAccountId")
                         .HasColumnType("int");
@@ -698,6 +705,25 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.Navigation("Transaction");
                 });
 
+            modelBuilder.Entity("FinanMan.Database.Models.Tables.PaymentDetail", b =>
+                {
+                    b.HasOne("FinanMan.Database.Models.Tables.LuLineItemType", "LineItemType")
+                        .WithMany("TransactionDetails")
+                        .HasForeignKey("LineItemTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinanMan.Database.Models.Tables.Payment", "Payment")
+                        .WithMany("PaymentDetails")
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LineItemType");
+
+                    b.Navigation("Payment");
+                });
+
             modelBuilder.Entity("FinanMan.Database.Models.Tables.ScheduledTransaction", b =>
                 {
                     b.HasOne("FinanMan.Database.Models.Tables.Account", "Account")
@@ -734,25 +760,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("FinanMan.Database.Models.Tables.TransactionDetail", b =>
-                {
-                    b.HasOne("FinanMan.Database.Models.Tables.LuLineItemType", "LineItemType")
-                        .WithMany("TransactionDetails")
-                        .HasForeignKey("LineItemTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FinanMan.Database.Models.Tables.Transaction", "Transaction")
-                        .WithMany("TransactionDetails")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LineItemType");
-
-                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("FinanMan.Database.Models.Tables.Transfer", b =>
@@ -820,13 +827,16 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.Navigation("ScheduledTransactions");
                 });
 
+            modelBuilder.Entity("FinanMan.Database.Models.Tables.Payment", b =>
+                {
+                    b.Navigation("PaymentDetails");
+                });
+
             modelBuilder.Entity("FinanMan.Database.Models.Tables.Transaction", b =>
                 {
                     b.Navigation("Deposit");
 
                     b.Navigation("Payment");
-
-                    b.Navigation("TransactionDetails");
 
                     b.Navigation("Transfer");
                 });

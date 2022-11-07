@@ -1,14 +1,19 @@
 using FinanMan.BlazorUi.Extensions;
 using FinanMan.Shared.Extensions;
+using FinanMan.SharedServer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.SetupDbContext(config);
+
 builder.Services.AddFinanManLocalization();
 builder.Services.AddStateManagement();
+builder.Services.AddServerServices();
 
 var app = builder.Build();
 

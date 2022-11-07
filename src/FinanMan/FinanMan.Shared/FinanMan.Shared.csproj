@@ -1,22 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.7" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.8" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FinanMan.Abstractions\FinanMan.Abstractions.csproj" />
-    <ProjectReference Include="..\FinanMan.Database.Models\FinanMan.Database.Models.csproj" />
-    <ProjectReference Include="..\FinanMan.SharedLocalization\FinanMan.SharedLocalization.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\FinanMan.Database.Models\FinanMan.Database.Models.csproj" />
+		<ProjectReference Include="..\FinanMan.SharedLocalization\FinanMan.SharedLocalization.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Resources\Localization\Enums\EntryType.Designer.cs">
+			<DependentUpon>EntryType.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Localization\Enums\EntryType.resx">
+			<LastGenOutput>EntryType.Designer.cs</LastGenOutput>
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+	</ItemGroup>
 </Project>

@@ -1,10 +1,36 @@
-﻿@inherits LayoutComponentBase
+﻿@using FinanMan.BlazorUi.SharedComponents.FlyoutComponents
+@inherits LayoutComponentBase
+@implements IDisposable
 
 <PageTitle>Financial Management</PageTitle>
 
 <div class="dukasoft-content-wrapper">
     <TopBar />
     <main class="content">
-       @Body
+        @Body
     </main>
 </div>
+
+<Flyout @bind-Show=UiState.FlyoutVisible ChildContent=UiState.FlyoutContent />
+    
+@code {
+    [Inject] private IUiState UiState { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        UiState.PropertyChanged += HandleUiPropertyChanged;
+    }
+
+    private void HandleUiPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(UiState.FlyoutVisible))
+        {
+            StateHasChanged();
+        }
+    }
+
+    public void Dispose()
+    {
+        UiState.PropertyChanged -= HandleUiPropertyChanged;
+    }
+}

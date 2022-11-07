@@ -1,19 +1,26 @@
-﻿using FinanMan.Abstractions.ModelInterfaces.LookupModels;
-using FinanMan.Abstractions.StateInterfaces;
-using FinanMan.Database.Models.Tables;
+﻿using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
+using FinanMan.Shared.ServiceInterfaces;
+using FinanMan.Shared.StateInterfaces;
 
 namespace FinanMan.BlazorUi.State;
 
-public class LookupListState : ILookupListState
+public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 {
+    private readonly ILookupListService _lookupService;
+    public LookupListState(ILookupListService lookupService)
+    {
+        _lookupService = lookupService;
+    }
+
     public List<ILookupItemViewModel> LookupItemCache { get; } = new();
 
     private bool _initialized;
     private bool _initializing;
 
-    public bool Initialized { get => _initialized; set => _initialized = value; }
-    public bool Initializing { get => _initializing; set => _initializing = value; }
+    public bool Initialized { get => _initialized; set => SetField(ref _initialized, value); }
+    public bool Initializing { get => _initializing; set => SetField(ref _initializing, value); }
 
     public Task Initialize()
     {
@@ -28,10 +35,10 @@ public class LookupListState : ILookupListState
         };
         List<LuDepositReason> _depositReasons = new()
         {
-            new() {Id = 1, Name = "Regular Paycheck"},
-            new() {Id = 2, Name = "State Income Tax Return"},
-            new() {Id = 3, Name = "Federal Income Tax Return"},
-            new() {Id = 4, Name = "Just Because"}
+            new() {Id = 5, SortOrder = 1, Name = "Regular Paycheck"},
+            new() {Id = 2, SortOrder = 2, Name = "State Income Tax Return"},
+            new() {Id = 3, SortOrder = 3, Name = "Federal Income Tax Return"},
+            new() {Id = 4, SortOrder = 4, Name = "Just Because"}
         };
         List<LuLineItemType> _lineItemTypes = new()
         {

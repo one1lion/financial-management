@@ -1,6 +1,6 @@
 ﻿:root {
   --light: #f0f3f0;
-  --primary-text-color: #CBCECB;
+  --primary-text-color: #f0f3f0;
   --primary-background-color: #03060A;
   --font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif, serif;
   --default-border-color: #D7F5FA;
@@ -29,6 +29,11 @@
   --table-header-background-color: #1D2933;
   --table-header-background-hover-color: rgba(255, 255, 255, .05);
   --table-footer-background-color: #1D2933;
+}
+
+.light-theme {
+  --primary-text-color: #03060A;
+  --primary-background-color: #f0f3f0;
 }
 
 .card {

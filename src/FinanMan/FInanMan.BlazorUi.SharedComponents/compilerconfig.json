@@ -2,5 +2,9 @@
   {
     "outputFile": "Card/Card.razor.css",
     "inputFile": "Card/Card.razor.scss"
+  },
+  {
+    "outputFile": "FlyoutComponents/Flyout.razor.css",
+    "inputFile": "FlyoutComponents/Flyout.razor.scss"
   }
 ]
