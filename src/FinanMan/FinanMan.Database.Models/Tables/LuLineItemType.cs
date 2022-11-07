@@ -6,6 +6,6 @@ namespace FinanMan.Database.Models.Tables;
 public partial class LuLineItemType : LookupItemBase
 {
     [NotMapped]
-    public override LookupListType ListType => LookupListType.LineItemType;
+    public override LookupListType ListType => LookupListType.LineItemTypes;
     public virtual ICollection<PaymentDetail> TransactionDetails { get; set; } = new HashSet<PaymentDetail>();
 }

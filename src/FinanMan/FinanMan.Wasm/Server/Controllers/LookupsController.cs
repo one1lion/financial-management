@@ -8,7 +8,7 @@ namespace FinanMan.Server.Controllers;
 
 [ApiController]
 public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBase
-    where TLookupItemViewModel : class, ILookupItemViewModel
+    where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType
 {
     protected abstract ILookupListService ListService { get; }
 
@@ -35,11 +35,11 @@ public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBa
 
 [Route("api/Lookups/Accounts")]
 [ApiController]
-public class AccountsLookupController : LookupsControllerBase<AccountViewModel>
+public class AccountsController : LookupsControllerBase<AccountViewModel>
 {
     protected override ILookupListService ListService { get; }
 
-    public AccountsLookupController(ILookupListService listService)
+    public AccountsController(ILookupListService listService)
     {
         ListService = listService;
     }
@@ -52,6 +52,66 @@ public class AccountTypesController : LookupsControllerBase<LookupItemViewModel<
     protected override ILookupListService ListService { get; }
 
     public AccountTypesController(ILookupListService listService)
+    {
+        ListService = listService;
+    }
+}
+
+[Route("api/Lookups/Categories")]
+[ApiController]
+public class CategoriesController : LookupsControllerBase<LookupItemViewModel<LuAccountType>>
+{
+    protected override ILookupListService ListService { get; }
+
+    public CategoriesController(ILookupListService listService)
+    {
+        ListService = listService;
+    }
+}
+
+[Route("api/Lookups/DepositReasons")]
+[ApiController]
+public class DepositReasonsController : LookupsControllerBase<LookupItemViewModel<LuDepositReason>>
+{
+    protected override ILookupListService ListService { get; }
+
+    public DepositReasonsController(ILookupListService listService)
+    {
+        ListService = listService;
+    }
+}
+
+[Route("api/Lookups/LineItemTypes")]
+[ApiController]
+public class LineItemTypesController : LookupsControllerBase<LookupItemViewModel<LuLineItemType>>
+{
+    protected override ILookupListService ListService { get; }
+
+    public LineItemTypesController(ILookupListService listService)
+    {
+        ListService = listService;
+    }
+}
+
+[Route("api/Lookups/Payees")]
+[ApiController]
+public class PayeesController : LookupsControllerBase<LookupItemViewModel<Payee>>
+{
+    protected override ILookupListService ListService { get; }
+
+    public PayeesController(ILookupListService listService)
+    {
+        ListService = listService;
+    }
+}
+
+[Route("api/Lookups/RecurrenceTypes")]
+[ApiController]
+public class RecurrenceTypesController : LookupsControllerBase<LookupItemViewModel<LuRecurrenceType>>
+{
+    protected override ILookupListService ListService { get; }
+
+    public RecurrenceTypesController(ILookupListService listService)
     {
         ListService = listService;
     }

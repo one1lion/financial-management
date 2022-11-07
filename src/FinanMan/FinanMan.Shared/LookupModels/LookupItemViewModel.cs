@@ -8,7 +8,7 @@ public class LookupItemViewModel<TItem> : LookupItemViewModel<int, TItem>
 public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem>, IHasLookupListType
     where TItem : class, IHasLookupListType
 {
-    public LookupListType ListType => Item?.ListType ?? LookupListType.Account;
+    public LookupListType ListType => Item?.ListType ?? LookupListType.Accounts;
     public Type Type => typeof(TItem);
     public TKey Id { get; set; } = default!;
     public string ListItemId => $"{Type}-{Id}";

@@ -2,5 +2,5 @@
 
 public interface IHasLookupListType
 {
-    public LookupListType ListType { get; }
+    LookupListType ListType { get; }
 }

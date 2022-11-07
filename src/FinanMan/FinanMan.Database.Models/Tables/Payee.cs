@@ -6,7 +6,7 @@ namespace FinanMan.Database.Models.Tables;
 public partial class Payee : IHasLookupListType
 {
     [NotMapped]
-    public LookupListType ListType => LookupListType.AccountType;
+    public LookupListType ListType => LookupListType.AccountTypes;
     public int Id { get; set; }
     public string Name { get; set; } = default!;
 

@@ -2,11 +2,11 @@
 
 public enum LookupListType
 {
-    Account,
-    AccountType,
-    Category,
-    DepositReason,
-    LineItemType,
-    Payee,
-    RecurrenceType
+    Accounts,
+    AccountTypes,
+    Categories,
+    DepositReasons,
+    LineItemTypes,
+    Payees,
+    RecurrenceTypes
 }

@@ -6,5 +6,5 @@ namespace FinanMan.Database.Models.Tables;
 public partial class LuAccountType : LookupItemBase
 {
     [NotMapped]
-    public override LookupListType ListType => LookupListType.AccountType;
+    public override LookupListType ListType => LookupListType.AccountTypes;
 }

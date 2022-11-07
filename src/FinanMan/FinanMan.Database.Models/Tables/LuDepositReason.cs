@@ -6,6 +6,6 @@ namespace FinanMan.Database.Models.Tables;
 public class LuDepositReason : LookupItemBase
 {
     [NotMapped]
-    public override LookupListType ListType => LookupListType.DepositReason;
+    public override LookupListType ListType => LookupListType.DepositReasons;
     public virtual ICollection<Deposit> Deposits { get; set; } = new HashSet<Deposit>();
 }

@@ -6,7 +6,7 @@ namespace FinanMan.Database.Models.Tables;
 public partial class LuRecurrenceType : LookupItemBase<RecurrenceType>
 {
     [NotMapped]
-    public override LookupListType ListType => LookupListType.RecurrenceType;
+    public override LookupListType ListType => LookupListType.RecurrenceTypes;
     public string DisplayText { get; set; } = default!;
 
     public virtual ICollection<ScheduledTransaction> ScheduledTransactions { get; set; } = new HashSet<ScheduledTransaction>();
