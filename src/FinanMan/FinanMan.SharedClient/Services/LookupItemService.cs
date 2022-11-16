@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
@@ -21,11 +22,22 @@ public class LookupItemService : ILookupListService
     {
         var retResp = new ResponseModel<List<TLookupItemViewModel>>();
         var typeInst = Activator.CreateInstance<TLookupItemViewModel>();
+        var endpointType = typeof(TLookupItemViewModel) switch
+        {
+            var t when t == typeof(AccountViewModel) => LookupListType.Accounts,
+            var t when t == typeof(LookupItemViewModel<LuAccountType>) => LookupListType.AccountTypes,
+            var t when t == typeof(LookupItemViewModel<LuCategory>) => LookupListType.Categories,
+            var t when t == typeof(LookupItemViewModel<LuDepositReason>) => LookupListType.DepositReasons,
+            var t when t == typeof(LookupItemViewModel<LuLineItemType>) => LookupListType.LineItemTypes,
+            var t when t == typeof(PayeeViewModel) => LookupListType.Payees,
+            var t when t == typeof(LookupItemViewModel<LuRecurrenceType>) => LookupListType.RecurrenceTypes,
+            _ => throw new NotImplementedException(),
+        };
 
         try
         {
-            var resp = await _httpClient.GetFromJsonAsync<ResponseModel<List<TLookupItemViewModel>>>(string.Format(_urlPattern, typeInst.ListType.ToString()), ct);
-            if(resp is not null)
+            var resp = await _httpClient.GetFromJsonAsync<ResponseModel<List<TLookupItemViewModel>>>(string.Format(_urlPattern, endpointType.ToString()), ct);
+            if (resp is not null)
             {
                 retResp = resp;
             }

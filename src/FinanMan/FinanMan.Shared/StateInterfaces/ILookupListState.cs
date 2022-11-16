@@ -11,5 +11,5 @@ public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChang
     bool Initializing { get; set; }
     Task Initialize();
     IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>()
-         where TLookupItem : class, IHasLookupListType;
+         where TLookupItem : class, IHasLookupListType, new();
 }

@@ -3,10 +3,10 @@
 namespace FinanMan.Shared.LookupModels;
 
 public class LookupItemViewModel<TItem> : LookupItemViewModel<int, TItem>
-    where TItem : class, IHasLookupListType { }
+    where TItem : class, IHasLookupListType, new() { }
 
 public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem>, IHasLookupListType
-    where TItem : class, IHasLookupListType
+    where TItem : class, IHasLookupListType, new()
 {
     public LookupListType ListType => Item?.ListType ?? LookupListType.Accounts;
     public Type Type => typeof(TItem);
@@ -17,5 +17,5 @@ public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem
     public int SortOrder { get; set; }
     public DateTime? LastUpdated { get; set; }
 
-    public TItem? Item { get; set; }
+    public TItem Item { get; set; } = new TItem();
 }

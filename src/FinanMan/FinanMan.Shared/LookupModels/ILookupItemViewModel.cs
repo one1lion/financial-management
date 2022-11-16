@@ -18,6 +18,6 @@ public interface ILookupItemViewModel<TKey> : ILookupItemViewModel
 
 public interface ILookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey>
 {
-    TItem? Item { get; set; }
+    TItem Item { get; set; }
     Type Type { get; }
 }

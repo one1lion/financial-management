@@ -108,7 +108,7 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     }
 
     public IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>()
-         where TLookupItem : class, IHasLookupListType
+         where TLookupItem : class, IHasLookupListType, new()
     {
         return LookupItemCache.OfType<LookupItemViewModel<TKey, TLookupItem>>();
     }
