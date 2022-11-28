@@ -27,42 +27,13 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     {
         if (_initialized || _initializing) { return; }
         _initializing = true;
-
-        //var accountsTask = _lookupService.GetLookupItemsAsync<AccountViewModel>();
-        //var accountTypesTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
-        //var categoriesTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
-        //var depositReasonsTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
-        //var lineItemTypesTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
-        //var payeesTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<Payee>>();
-        //var recurrenceTypesTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuRecurrenceType>>();
-
-        //var lookupTasks = new Task[]
-        //{
-        //    accountsTask,
-        //    accountTypesTask,
-        //    categoriesTask,
-        //    depositReasonsTask,
-        //    lineItemTypesTask,
-        //    payeesTask,
-        //    recurrenceTypesTask
-        //};
-
-        //await Task.WhenAll(lookupTasks);
-
-        //var accountsResp = accountsTask.Result;
-        //var accountTypesResp = accountTypesTask.Result;
-        //var categoriesResp = categoriesTask.Result;
-        //var depositReasonsResp = depositReasonsTask.Result;
-        //var lineItemTypesResp = lineItemTypesTask.Result;
-        //var payeesResp = payeesTask.Result;
-        //var recurrenceTypesResp = recurrenceTypesTask.Result;
-
+        
         var accountsResp = await _lookupService.GetLookupItemsAsync<AccountViewModel>();
         var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
         var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
         var depositReasonsResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
         var lineItemTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
-        var payeesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<Payee>>();
+        var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeViewModel>();
         var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuRecurrenceType>>();
 
         // API request to get list items

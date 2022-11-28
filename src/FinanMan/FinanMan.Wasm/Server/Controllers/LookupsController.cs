@@ -8,7 +8,7 @@ namespace FinanMan.Server.Controllers;
 
 [ApiController]
 public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBase
-    where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType
+    where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
 {
     protected abstract ILookupListService ListService { get; }
 
