@@ -5,6 +5,7 @@ using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace FinanMan.SharedServer.Services;
 
@@ -25,7 +26,7 @@ public class LookupItemService : ILookupListService
 
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
-        var queryable = new List<TLookupItemViewModel>().AsQueryable();
+        IQueryable<TLookupItemViewModel> queryable = default!;
         
         switch (typeInst.ListType)
         {
