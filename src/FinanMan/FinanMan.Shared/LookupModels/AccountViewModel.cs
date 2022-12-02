@@ -14,6 +14,10 @@ public static class AccountViewModelExtensions
         new() { 
             Id = account.Id,
             AccountName = account.Name,
-            AccountType = account.AccountType?.Name ?? string.Empty
+            AccountType = account.AccountType?.Name ?? string.Empty,
+            DisplayText = account.Name,
+            ValueText = account.Id.ToString(),
+            SortOrder = account.Id,
+            Item = account
         };
 }

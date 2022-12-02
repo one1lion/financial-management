@@ -31,14 +31,9 @@ public class LookupItemService : ILookupListService
         switch (typeInst.ListType)
         {
             case LookupListType.Accounts:
-                queryable = context.Accounts.Select(x => new AccountViewModel()
-                {
-                    Id = x.Id,
-                    AccountName = x.Name,
-                    SortOrder = x.Id,
-                    Item = x
-                })
-                .OfType<TLookupItemViewModel>();
+                queryable = context.Accounts
+                    .Select(x => x.ToViewModel())
+                    .OfType<TLookupItemViewModel>();
                 break;
             case LookupListType.AccountTypes:
                 queryable = context.AccountTypes.Select(x => new LookupItemViewModel<LuAccountType>()
@@ -118,6 +113,7 @@ public class LookupItemService : ILookupListService
         // Sort by SortOrder
         // Apply Page if any
         retResp.Data = queryable.ToList();
+        retResp.RecordCount = retResp.Data.Count;
         return retResp;
     }
 

@@ -10,6 +10,7 @@ namespace FinanMan.BlazorUi.State;
 public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 {
     private readonly ILookupListService _lookupService;
+    
     public LookupListState(ILookupListService lookupService)
     {
         _lookupService = lookupService;
@@ -27,7 +28,7 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     {
         if (_initialized || _initializing) { return; }
         _initializing = true;
-        
+
         var accountsResp = await _lookupService.GetLookupItemsAsync<AccountViewModel>();
         var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
         var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
@@ -39,16 +40,8 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         // API request to get list items
         if (!accountsResp.WasError && (accountsResp.Data?.Any() ?? false))
         {
-            LookupItemCache.AddRange(accountsResp.Data.Select(x => new LookupItemViewModel<AccountViewModel>()
-            {
-                Id = x.Id,
-                DisplayText = x.AccountName,
-                ValueText = x.Id.ToString(),
-                LastUpdated = DateTime.UtcNow,
-                Item = x
-            }));
+            LookupItemCache.AddRange(accountsResp.Data);
         }
-
         if (!accountTypesResp.WasError && (accountTypesResp.Data?.Any() ?? false))
         {
             LookupItemCache.AddRange(accountTypesResp.Data);
@@ -78,9 +71,9 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         _initializing = false;
     }
 
-    public IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>()
-         where TLookupItem : class, IHasLookupListType, new()
+    public IEnumerable<TLookupItem> GetLookupItems<TLookupItem>()
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        return LookupItemCache.OfType<LookupItemViewModel<TKey, TLookupItem>>();
+        return LookupItemCache.OfType<TLookupItem>();
     }
 }
