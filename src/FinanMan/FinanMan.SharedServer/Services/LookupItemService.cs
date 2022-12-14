@@ -5,7 +5,7 @@ using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace FinanMan.SharedServer.Services;
 
@@ -22,12 +22,68 @@ public class LookupItemService : ILookupListService
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModel<List<TLookupItemViewModel>>();
-        var typeInst = new TLookupItemViewModel();
 
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
-        IQueryable<TLookupItemViewModel> queryable = default!;
+        var queryable = GetQueryableLookupList<TLookupItemViewModel>(context);
+
+        if (queryable is null)
+        {
+            retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
+            return retResp;
+        }
         
+        // Sort by SortOrder
+        // Apply Page if any
+        retResp.Data = queryable.ToList();
+        retResp.RecordCount = retResp.Data.Count;
+        return retResp;
+    }
+
+    public async Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var retResp = new ResponseModel<TLookupItemViewModel>();
+
+        using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+
+        var queryable = GetQueryableLookupList<TLookupItemViewModel>(context);
+
+        if (queryable is null)
+        {
+            retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
+            return retResp;
+        }
+
+        retResp.Data = queryable.FirstOrDefault(x => x.ValueText == id.ToString());
+        retResp.RecordCount = retResp.Data is null ? 0 : 1;
+        return retResp;
+    }
+
+    public Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        throw new NotImplementedException();
+    }
+
+    #region Helpers
+    private static IQueryable<TLookupItemViewModel>? GetQueryableLookupList<TLookupItemViewModel>(FinanManContext context)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var typeInst = new TLookupItemViewModel();
+        IQueryable<TLookupItemViewModel>? queryable = null;
         switch (typeInst.ListType)
         {
             case LookupListType.Accounts:
@@ -106,38 +162,9 @@ public class LookupItemService : ILookupListService
                 })
                 .OfType<TLookupItemViewModel>();
                 break;
-            default:
-                retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
-                return retResp;
         }
-        // Sort by SortOrder
-        // Apply Page if any
-        retResp.Data = queryable.ToList();
-        retResp.RecordCount = retResp.Data.Count;
-        return retResp;
-    }
 
-    public Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
-        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
-    {
-        throw new NotImplementedException();
+        return queryable;
     }
-
-    public Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
-        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
-        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
-        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
-    {
-        throw new NotImplementedException();
-    }
+    #endregion Helpers
 }
