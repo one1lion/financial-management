@@ -55,14 +55,47 @@ public class LookupItemService : ILookupListService
             return retResp;
         }
 
-        retResp.Data = queryable.FirstOrDefault(x => x.ValueText == id.ToString());
+        retResp.Data = await queryable.FirstOrDefaultAsync(x => x.ValueText == id.ToString());
         retResp.RecordCount = retResp.Data is null ? 0 : 1;
         return retResp;
     }
 
-    public Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
+        var retResp = new ResponseModelBase<int>();
+
+        using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+        var lookupList = GetQueryableLookupList<TLookupItemViewModel>(context);
+
+        if (lookupList is null)
+        {
+            retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
+            return retResp;
+        }
+
+        var foundRec = await lookupList
+            .FirstOrDefaultAsync(x => x.DisplayText == dataEntryViewModel.DisplayText, cancellationToken: ct);
+
+        if(foundRec is not null)
+        {
+            retResp.AddError($"A record with the display text '{dataEntryViewModel.DisplayText}' already exists.");
+            return retResp;
+        }
+
+        using var trans = await context.Database.BeginTransactionAsync(ct);
+
+        // TODO: Finish writing the ToEntity extensions
+        var newRec = dataEntryViewModel.ToEntity();
+
+        await context.AddAsync(newRec, ct);
+
+        retResp.RecordCount = await context.SaveChangesAsync(ct);
+
+        await trans.CommitAsync(ct);
+
+        //retResp.RecordId = newRec.Id;
+
         throw new NotImplementedException();
     }
 
@@ -167,4 +200,14 @@ public class LookupItemService : ILookupListService
         return queryable;
     }
     #endregion Helpers
+}
+
+
+public static class ILookupItemExtensions
+{
+    // TODO: Finish writing the ToEntity extensions
+    public static ILookupItem ToEntity(this ILookupItemViewModel viewModel)
+        => throw new NotImplementedException();
+
+    // TODO: Add a ToViewModel extension
 }
