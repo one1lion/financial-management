@@ -2,6 +2,7 @@
 @page "/data-entry/{EntType}"
 
 @using FinanMan.BlazorUi.Components.DataEntryComponents
+@using FinanMan.Database.Models.Tables;
 @using FinanMan.Shared.General;
 @using FinanMan.Shared.LookupModels;
 @using FinanMan.Shared.ServiceInterfaces;
@@ -63,13 +64,7 @@
 
     private async Task HandleCreateLookupClicked()
     {
-        _newLookupItemResp = await LookupListService.AddLookupItem(new AccountViewModel()
-            {
-                DisplayText = $"My New List Item_{DateTime.Now.Ticks}",
-                AccountTypeId = 1,
-                AccountType = "Checking",
-                ValueText = 0.ToString()
-            });
+        _newLookupItemResp = await LookupListService.DeleteLookupItem<AccountViewModel>(5);
         await InvokeAsync(StateHasChanged);
     }
 }

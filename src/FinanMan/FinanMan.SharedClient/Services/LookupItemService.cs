@@ -105,10 +105,27 @@ public class LookupItemService : ILookupListService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct)
+    public async Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
+        var retResp = new ResponseModelBase<int>();
         var typeInst = Activator.CreateInstance<TLookupItemViewModel>();
-        throw new NotImplementedException();
+
+        try
+        {
+            var resp = await _httpClient.DeleteFromJsonAsync<ResponseModelBase<int>>($"{string.Format(_urlPattern, typeInst.ListType.ToString())}/{id}", ct);
+            if (resp is not null)
+            {
+                retResp = resp;
+            }
+        }
+        catch (Exception ex)
+        {
+            retResp.AddError($"The request to delete the specified {typeInst.ListType} failed.");
+#if DEBUG
+            retResp.AddError(ex);
+#endif
+        }
+        return retResp;
     }
 }

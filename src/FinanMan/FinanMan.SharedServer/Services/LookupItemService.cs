@@ -116,10 +116,37 @@ public class LookupItemService : ILookupListService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
-            where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    public async Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        throw new NotImplementedException();
+        var retResp = new ResponseModelBase<int>();
+
+        using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+        var lookupList = GetQueryableLookupList<TLookupItemViewModel>(context);
+
+        if (lookupList is null)
+        {
+            retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
+            return retResp;
+        }
+
+        var viewModel = await lookupList.FirstOrDefaultAsync(x => x.ValueText == id.ToString());
+        if (viewModel is null)
+        {
+            retResp.AddError($"The {typeof(TLookupItemViewModel)} with id {id} was not found.");
+            return retResp;
+        }
+
+        var recordToDelete = viewModel.ToEntityModel();
+
+        context.Attach(recordToDelete);
+        recordToDelete.Deleted = true;
+        recordToDelete.LastUpdated = DateTime.Now;
+
+        retResp.RecordCount = await context.SaveChangesAsync(ct);
+        retResp.RecordId = id;
+        
+        return retResp;
     }
 
     #region Helpers
