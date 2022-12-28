@@ -75,7 +75,7 @@ public class LineItemTypesController : LookupsControllerBase<LookupItemViewModel
 
 [Route("api/Lookups/Payees")]
 [ApiController]
-public class PayeesController : LookupsControllerBase<LookupItemViewModel<Payee>>
+public class PayeesController : LookupsControllerBase<PayeeViewModel>
 {
     public PayeesController(ILookupListService listService) : base(listService) {}
 }

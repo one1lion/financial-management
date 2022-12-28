@@ -5,7 +5,6 @@ using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace FinanMan.SharedServer.Services;
 
@@ -32,8 +31,8 @@ public class LookupItemService : ILookupListService
             retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
             return retResp;
         }
-        
-        // Sort by SortOrder
+
+        // TODO: Sort by SortOrder
         // Apply Page if any
         retResp.Data = queryable.ToList();
         retResp.RecordCount = retResp.Data.Count;
@@ -77,7 +76,7 @@ public class LookupItemService : ILookupListService
         var foundRec = await lookupList
             .FirstOrDefaultAsync(x => x.DisplayText == dataEntryViewModel.DisplayText, cancellationToken: ct);
 
-        if(foundRec is not null)
+        if (foundRec is not null)
         {
             retResp.AddError($"A record with the display text '{dataEntryViewModel.DisplayText}' already exists.");
             return retResp;
@@ -85,18 +84,30 @@ public class LookupItemService : ILookupListService
 
         using var trans = await context.Database.BeginTransactionAsync(ct);
 
-        // TODO: Finish writing the ToEntity extensions
-        var newRec = dataEntryViewModel.ToEntity();
+        try
+        {
+            var newRec = dataEntryViewModel.ToEntityModel();
 
-        await context.AddAsync(newRec, ct);
+            if(newRec is Account ac)
+            {
+                ac.AccountType = default!;
+            }
 
-        retResp.RecordCount = await context.SaveChangesAsync(ct);
+            await context.AddAsync(newRec, ct);
 
-        await trans.CommitAsync(ct);
+            retResp.RecordCount = await context.SaveChangesAsync(ct);
 
-        //retResp.RecordId = newRec.Id;
+            await trans.CommitAsync(ct);
 
-        throw new NotImplementedException();
+            retResp.RecordId = newRec.GetId();
+        }
+        catch (Exception ex)
+        {
+            await trans.RollbackAsync();
+            retResp.AddError($"The request to add the new {typeof(TLookupItemViewModel)} failed. {ex.Message}");
+        }
+
+        return retResp;
     }
 
     public Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
@@ -106,7 +117,7 @@ public class LookupItemService : ILookupListService
     }
 
     public Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
-        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+            where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         throw new NotImplementedException();
     }
@@ -121,7 +132,18 @@ public class LookupItemService : ILookupListService
         {
             case LookupListType.Accounts:
                 queryable = context.Accounts
-                    .Select(x => x.ToViewModel())
+                    .Include(x => x.AccountType)
+                    .Select(x =>  new AccountViewModel()
+                    {
+                        Id = x.Id,
+                        DisplayText = x.Name,
+                        AccountType = x.AccountType.Name,
+                        AccountTypeId = x.AccountTypeId,
+                        SortOrder = x.SortOrder,
+                        ValueText = x.Id.ToString(),
+                        LastUpdated = x.LastUpdated,
+                        Item = x
+                    })
                     .OfType<TLookupItemViewModel>();
                 break;
             case LookupListType.AccountTypes:
@@ -206,8 +228,42 @@ public class LookupItemService : ILookupListService
 public static class ILookupItemExtensions
 {
     // TODO: Finish writing the ToEntity extensions
-    public static ILookupItem ToEntity(this ILookupItemViewModel viewModel)
-        => throw new NotImplementedException();
+    public static ILookupItem ToEntityModel(this ILookupItemViewModel viewModel)
+    {
+        switch (viewModel)
+        {
+            case AccountViewModel accountViewModel:
+                return accountViewModel.Item;
+            case LookupItemViewModel<LuAccountType> luAccountTypeViewModel:
+                return luAccountTypeViewModel.Item;
+            case LookupItemViewModel<LuCategory> luCategoryViewModel:
+                return luCategoryViewModel.Item;
+            case LookupItemViewModel<LuDepositReason> luDepositReasonViewModel:
+                return luDepositReasonViewModel.Item;
+            case LookupItemViewModel<LuLineItemType> luLineItemTypeViewModel:
+                return luLineItemTypeViewModel.Item;
+            case PayeeViewModel payeeViewModel:
+                return payeeViewModel.Item;
+            default:
+                // NOTE: Recurrence types are not maintainable from the application
+                throw new NotImplementedException();
+        }
+    }
 
-    // TODO: Add a ToViewModel extension
+    public static int GetId(this ILookupItem model)
+    {
+        var type = model.GetType();
+        var idProp = type.GetProperty(nameof(ILookupItem<int>.Id));
+
+        var idVal = idProp?.GetValue(model)?.ToString();
+        var id = 0;
+        if (idProp is null || (idProp.PropertyType != typeof(Enum) && !int.TryParse(idVal, out id)))
+        {
+            return 0;
+        }
+
+        if (idProp.PropertyType == typeof(Enum)) { return (int?)idProp.GetValue(model) ?? 0; }
+
+        return id;
+    }
 }

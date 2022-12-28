@@ -5,10 +5,10 @@ using System.Text.Json.Serialization;
 namespace FinanMan.Shared.LookupModels;
 
 public class LookupItemViewModel<TItem> : LookupItemViewModel<int, TItem>
-    where TItem : class, IHasLookupListType, new() { }
+    where TItem : class, ILookupItem<int>, IHasLookupListType, new() { }
 
 public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem>, IHasLookupListType
-    where TItem : class, IHasLookupListType, new()
+    where TItem : class, ILookupItem<TKey>, IHasLookupListType, new()
 {
     [JsonIgnore]
     public LookupListType ListType => Type switch
@@ -24,12 +24,15 @@ public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem
     };
     [JsonIgnore]
     public Type Type => typeof(TItem);
-    public TKey Id { get; set; } = default!;
+    public TKey Id { 
+        get => Item.Id; 
+        set => Item.Id = value; 
+    }
     public string ListItemId => $"{Type}-{Id}";
-    public string DisplayText { get; set; } = default!;
+    public string DisplayText { get => Item.Name; set => Item.Name = value; }
     public string ValueText { get; set; } = default!;
-    public int SortOrder { get; set; }
-    public DateTime? LastUpdated { get; set; }
+    public int SortOrder { get => Item.SortOrder; set => Item.SortOrder = value; }
+    public DateTime LastUpdated { get => Item.LastUpdated; set => Item.LastUpdated = value; }
 
     public TItem Item { get; set; } = new TItem();
 }

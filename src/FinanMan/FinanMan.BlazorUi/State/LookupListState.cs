@@ -35,7 +35,7 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         var depositReasonsResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
         var lineItemTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
         var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeViewModel>();
-        var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuRecurrenceType>>();
+        var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
 
         // API request to get list items
         if (!accountsResp.WasError && (accountsResp.Data?.Any() ?? false))

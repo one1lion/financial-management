@@ -66,11 +66,36 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)
+    public async Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
+        var retResp = new ResponseModelBase<int>();
         var typeInst = Activator.CreateInstance<TLookupItemViewModel>();
-        throw new NotImplementedException();
+
+        try
+        {
+            var resp = await _httpClient.PostAsJsonAsync(string.Format(_urlPattern, dataEntryViewModel.ListType.ToString()), dataEntryViewModel, ct);
+            if(!resp.IsSuccessStatusCode)
+            {
+                retResp.AddError($"The request to add the specified {dataEntryViewModel.ListType} failed.  The server responded with {resp.StatusCode}: {resp.ReasonPhrase}");
+                return retResp;
+            }
+
+            retResp = await resp.Content.ReadFromJsonAsync<ResponseModelBase<int>>(cancellationToken: ct) ?? new()
+            {
+                ErrorMessages = new() { $"The request to add the specified {dataEntryViewModel.ListType} was successful, however the response could not be parsed." }
+            };
+        }
+        catch (Exception ex)
+        {
+            retResp = new();
+            retResp.AddError($"The request to add the specified {dataEntryViewModel.ListType} failed.");
+#if DEBUG
+            retResp.AddError(ex);
+#endif
+        }
+
+        return retResp;
     }
 
     public Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)

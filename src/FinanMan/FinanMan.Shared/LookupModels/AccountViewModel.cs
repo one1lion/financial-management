@@ -4,20 +4,38 @@ namespace FinanMan.Shared.LookupModels;
 
 public class AccountViewModel : LookupItemViewModel<Account>
 {
-    public string AccountName { get; set; } = default!;
-    public string AccountType { get; set; } = default!;
+    public string AccountName { get => Item.Name; set => Item.Name = value; }
+    public int AccountTypeId
+    {
+        get => Item.AccountTypeId;
+        set
+        {
+            Item.AccountTypeId = value;
+            if (Item.AccountType is null) { Item.AccountType = new(); }
+            Item.AccountType.Id = value;
+        }
+    }
+    public string AccountType
+    {
+        get => Item.AccountType?.Name ?? string.Empty;
+        set
+        {
+            if (Item.AccountType is null) { Item.AccountType = new(); }
+            Item.AccountType.Name = value;
+        }
+    }
 }
 
 public static class AccountViewModelExtensions
 {
     public static AccountViewModel ToViewModel(this Account account) =>
-        new() { 
+        new()
+        {
             Id = account.Id,
-            AccountName = account.Name,
-            AccountType = account.AccountType?.Name ?? string.Empty,
             DisplayText = account.Name,
             ValueText = account.Id.ToString(),
-            SortOrder = account.Id,
+            SortOrder = account.SortOrder,
+            LastUpdated = account.LastUpdated,
             Item = account
         };
 }

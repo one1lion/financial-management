@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FinanMan.Tests.BusinessLogicTesting;
+namespace FinanMan.Tests.BusinessLogicTesting.TransactionEntry;
 
 public class PaymentTransactionEntryServiceTests
 {
@@ -23,7 +23,7 @@ public class PaymentTransactionEntryServiceTests
     {
         var (dbContextFactory, contextOptions) = MockDataHelpers.PrepareDbContext(ct);
         var loggerFactory = MockDataHelpers.GetLoggerFactory();
-        
+
         // Prepare a new Payment Entry Service instance
         var sut = new TransactionEntryService<PaymentEntryViewModel>(dbContextFactory.Object, _dataEntryValidator, loggerFactory.Object);
 
@@ -40,7 +40,7 @@ public class PaymentTransactionEntryServiceTests
 
         var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
         var loggerFactory = MockDataHelpers.GetLoggerFactory();
-        
+
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<PaymentEntryViewModel>(1, 20);
         var context = new FinanManContext(contextOptions);
@@ -81,7 +81,7 @@ public class PaymentTransactionEntryServiceTests
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<PaymentEntryViewModel>(1, 20);
-        var context = new FinanManContext(contextOptions); 
+        var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
 
@@ -124,7 +124,7 @@ public class PaymentTransactionEntryServiceTests
             {
                 new() { LineItemTypeValueText = 1.ToString(), Amount = 100 },
                 new() { LineItemTypeValueText = 2.ToString(), Amount = 13 },
-                
+
             }
         };
 
@@ -138,7 +138,7 @@ public class PaymentTransactionEntryServiceTests
         Assert.False(result.WasError);
 
         // Get the new record back from in-memory db
-        context = new FinanManContext(contextOptions); 
+        context = new FinanManContext(contextOptions);
         var newPayment = context.Transactions
             .Include(e => e.Payment)
             .ThenInclude(e => e.PaymentDetails)
@@ -165,10 +165,10 @@ public class PaymentTransactionEntryServiceTests
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<PaymentEntryViewModel>(1, 10);
-        var context = new FinanManContext(contextOptions); 
+        var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-        
+
         var toUpdate = transactions.First();
         var updateValue = (PaymentEntryViewModel)toUpdate.ToViewModel();
         var expectedPostedDate = DateTime.UtcNow;
@@ -192,7 +192,7 @@ public class PaymentTransactionEntryServiceTests
         Assert.Equal(toUpdate.Id, updatedPayment.Id);
         Assert.Equal(expectedPostedDate, updatedPayment.PostingDate);
     }
-    
+
     [Fact]
     public async Task DeletePayment_SetsDeletedFlagInTransactionRecord()
     {
@@ -207,7 +207,7 @@ public class PaymentTransactionEntryServiceTests
         var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-        
+
         var idCheck = transactions.First().Id;
         var expectedViewModel = (PaymentEntryViewModel)transactions.First().ToViewModel();
 

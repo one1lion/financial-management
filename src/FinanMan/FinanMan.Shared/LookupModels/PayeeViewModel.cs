@@ -4,7 +4,7 @@ namespace FinanMan.Shared.LookupModels;
 
 public class PayeeViewModel : LookupItemViewModel<Payee>
 {
-    public string PayeeName { get; set; } = default!;
+    public string PayeeName { get => DisplayText; set => DisplayText = value; } 
     public IEnumerable<string> Categories { get; set; } = Array.Empty<string>();
 }
 
@@ -14,7 +14,11 @@ public static class PayeeViewModelExtensions
         new()
         {
             Id = payee.Id,
-            PayeeName = payee.Name,
-            Categories = payee.Categories?.Select(x => x.Name)?.ToArray() ?? Array.Empty<string>()
+            DisplayText = payee.Name,
+            ValueText = payee.Id.ToString(),
+            Categories = payee.Categories?.Select(x => x.Name)?.ToArray() ?? Array.Empty<string>(),
+            LastUpdated = payee.LastUpdated,
+            SortOrder = payee.SortOrder,
+            Item = payee
         };
 }
