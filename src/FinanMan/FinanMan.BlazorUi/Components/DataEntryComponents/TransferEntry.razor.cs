@@ -18,12 +18,11 @@ public partial class TransferEntry
     private InputDate<DateTime?>? _transDateInput;
 
     private TransferEntryViewModel _newTransfer = new();
-    private List<ILookupItemViewModel<int, AccountViewModel>>? _accounts;
+    private List<AccountViewModel>? _accounts;
     protected override async Task OnInitializedAsync()
     {
         await LookupListState.Initialize();
-        await Task.Delay(2000);
-        _accounts = LookupListState.GetLookupItems<int, AccountViewModel>().ToList();
+        _accounts = LookupListState.GetLookupItems<AccountViewModel>().ToList();
     }
 
     private async Task HandleTransferSubmitted()

@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Components.Forms;
+@using Microsoft.AspNetCore.Components.Routing
+
+<NavigationLock ConfirmExternalNavigation="(ConfirmNav || OverrideAllowExternalNav)"
+                OnBeforeInternalNavigation=HandleBeforeNavigation />
+
+@* TODO: Add a modal for confirming navigation  *@
+                
+@code {
+    [Parameter] public EditContext? EditContext { get; set; }
+    [Parameter] public bool OverrideAllowExternalNav { get; set; }
+    /// <summary>
+    /// This is a callback that is invoked before the internal navigation is performed.
+    /// The returned boolean is used as a "preventDefault" flag.  If false is returned,
+    /// the default logic for checking for whether or not navigation should be blocked
+    /// will occur, otherwise nothing further will happen.
+    /// </summary>
+    [Parameter] public Func<LocationChangingContext, Task<bool>>? OnBeforeInternalNavigation { get; set; }
+
+    private bool ConfirmNav => EditContext?.IsModified() ?? false;
+
+    public async Task HandleBeforeNavigation(LocationChangingContext context)
+    {
+        if (OnBeforeInternalNavigation is not null && await OnBeforeInternalNavigation.Invoke(context))
+        {
+            return;
+        }
+
+        if(context.CancellationToken.IsCancellationRequested) { return; }
+
+
+        if(ConfirmNav)
+        {
+            // TODO: Display the modal for confirming navigation and prevent 
+            // navigation if the user does not confirm.
+            context.PreventNavigation();
+        }
+    }
+}

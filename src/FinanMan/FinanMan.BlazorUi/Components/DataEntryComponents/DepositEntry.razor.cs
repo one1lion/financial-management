@@ -16,8 +16,8 @@ public partial class DepositEntry
     [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositEntryService { get; set; } = default!;
 
     private DepositEntryViewModel _newDeposit = new();
-    private List<ILookupItemViewModel<int, AccountViewModel>>? _accounts;
-    private List<ILookupItemViewModel<int, LuDepositReason>>? _depositReasons;
+    private List<AccountViewModel>? _accounts;
+    private List<LookupItemViewModel<LuDepositReason>>? _depositReasons;
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
 
@@ -26,17 +26,23 @@ public partial class DepositEntry
     protected override Task OnInitializedAsync()
     {
         LookupListState.PropertyChanged += HandleLookupListStateChanged;
+        PopulateLookups();
         return LookupListState.Initialize();
     }
 
-    private void HandleLookupListStateChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private async void HandleLookupListStateChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(ILookupListState.Initialized) && LookupListState.Initialized)
         {
-            _accounts = LookupListState.GetLookupItems<int, AccountViewModel>().ToList();
-            _depositReasons = LookupListState.GetLookupItems<int, LuDepositReason>().ToList();
+            PopulateLookups();
         }
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void PopulateLookups()
+    {
+        _accounts = LookupListState.GetLookupItems<AccountViewModel>().ToList();
+        _depositReasons = LookupListState.GetLookupItems<LookupItemViewModel<LuDepositReason>>().ToList();
     }
 
     private async Task HandleDepositSubmitted(EditContext editContext)

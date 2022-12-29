@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FinanMan.Tests.BusinessLogicTesting;
+namespace FinanMan.Tests.BusinessLogicTesting.TransactionEntry;
 
 public class DepositTransactionEntryServiceTests
 {
@@ -22,7 +22,7 @@ public class DepositTransactionEntryServiceTests
     {
         var (dbContextFactory, contextOptions) = MockDataHelpers.PrepareDbContext(ct);
         var loggerFactory = MockDataHelpers.GetLoggerFactory();
-        
+
         // Prepare a new Deposit Entry Service instance
         var sut = new TransactionEntryService<DepositEntryViewModel>(dbContextFactory.Object, _dataEntryValidator, loggerFactory.Object);
 
@@ -39,7 +39,7 @@ public class DepositTransactionEntryServiceTests
 
         var (dbContextFactory, contextOptions, sut) = PrepareServiceUnderTest(ct);
         var loggerFactory = MockDataHelpers.GetLoggerFactory();
-        
+
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 20);
         var context = new FinanManContext(contextOptions);
@@ -80,7 +80,7 @@ public class DepositTransactionEntryServiceTests
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 20);
-        var context = new FinanManContext(contextOptions); 
+        var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
 
@@ -132,7 +132,7 @@ public class DepositTransactionEntryServiceTests
         Assert.False(result.WasError);
 
         // Get the new record back from in-memory db
-        context = new FinanManContext(contextOptions); 
+        context = new FinanManContext(contextOptions);
         var newDeposit = context.Transactions.Include(e => e.Deposit).FirstOrDefault(e => e.Id == result.RecordId);
 
         // The records (Transaction and Deposit) exists in the database
@@ -156,10 +156,10 @@ public class DepositTransactionEntryServiceTests
 
         // Mock the primary tables/entities that is going to be used by the service
         var transactions = MockDataHelpers.GenerateTransactions<DepositEntryViewModel>(1, 10);
-        var context = new FinanManContext(contextOptions); 
+        var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-        
+
         var toUpdate = transactions.First();
         var updateValue = (DepositEntryViewModel)toUpdate.ToViewModel();
         var expectedPostedDate = DateTime.UtcNow;
@@ -183,7 +183,7 @@ public class DepositTransactionEntryServiceTests
         Assert.Equal(toUpdate.Id, updatedDeposit.Id);
         Assert.Equal(expectedPostedDate, updatedDeposit.PostingDate);
     }
-    
+
     [Fact]
     public async Task DeleteDeposit_SetsDeletedFlagInTransactionRecord()
     {
@@ -198,7 +198,7 @@ public class DepositTransactionEntryServiceTests
         var context = new FinanManContext(contextOptions);
         await context.Transactions.AddRangeAsync(transactions);
         await context.SaveChangesAsync(ct);
-        
+
         var idCheck = transactions.First().Id;
         var expectedViewModel = (DepositEntryViewModel)transactions.First().ToViewModel();
 

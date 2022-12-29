@@ -25,4 +25,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IdentityModelInterfaces\" />
+    <Folder Include="StateInterfaces\" />
+  </ItemGroup>
+
 </Project>

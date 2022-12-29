@@ -2,6 +2,10 @@
 @page "/data-entry/{EntType}"
 
 @using FinanMan.BlazorUi.Components.DataEntryComponents
+@using FinanMan.Database.Models.Tables;
+@using FinanMan.Shared.General;
+@using FinanMan.Shared.LookupModels;
+@using FinanMan.Shared.ServiceInterfaces;
 
 <div id="dataEntryPage" class="page-content">
     <header>
@@ -28,21 +32,47 @@
         }
     </section>
     <TransactionHistory />
+    @*<button type="button" @onclick="HandleCreateLookupClicked">Hey look, a button!</button>*@
+    @if(_newLookupItemResp?.WasError ?? false)
+    {
+        <p class="text-danger">
+            Ya dun broke it!<br />
+        </p>
+        @_newLookupItemResp.RenderError
+    }
 </div>
 
 @code {
+    [Inject] private ILookupListService LookupListService { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-    [Parameter] 
-    public string EntType 
+    [Parameter]
+    public string EntType
     {
         get => _entryType.ToString();
-        set => _entryType = Enum.TryParse<EntryType>(value, out var et) ? et : EntryType.Payments; 
+        set => _entryType = Enum.TryParse<EntryType>(value, out var et) ? et : EntryType.Payments;
     }
-    private EntryType _entryType  = EntryType.Payments;
+    private EntryType _entryType = EntryType.Payments;
+
+    private ResponseModelBase<int>? _newLookupItemResp;
+
 
     private void HandleEntryTabClicked(EntryType entryType)
     {
-        if(_entryType == entryType) { return; }
+        if (_entryType == entryType) { return; }
         NavigationManager.NavigateTo($"data-entry/{entryType}");
     }
+
+    //private async Task HandleCreateLookupClicked()
+    //{
+    //    _newLookupItemResp = await LookupListService.UpdateLookupItem(
+    //        new PayeeViewModel()
+    //        {
+    //            Id = 4,
+    //            DisplayText = "Internet Service Provider",
+    //            SortOrder = 4,
+    //            Deleted = true
+    //        }
+    //    );
+    //    await InvokeAsync(StateHasChanged);
+    //}
 }

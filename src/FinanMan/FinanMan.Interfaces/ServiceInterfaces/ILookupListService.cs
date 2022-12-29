@@ -1,9 +1,7 @@
-﻿using FinanMan.Database.Models.Shared;
-using FinanMan.Shared.General;
+﻿using FinanMan.Interfaces.General;
 using FinanMan.Shared.LookupModels;
 
-namespace FinanMan.Shared.ServiceInterfaces;
-
+namespace FinanMan.Interfaces.ServiceInterfaces;
 public interface ILookupListService
 {
     Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItemsAsync<TLookupItemViewModel>(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)

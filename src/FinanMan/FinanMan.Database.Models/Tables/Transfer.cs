@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace FinanMan.Database.Models.Tables;
+﻿namespace FinanMan.Database.Models.Tables;
 
 public partial class Transfer
 {

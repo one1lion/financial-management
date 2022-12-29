@@ -16,9 +16,9 @@ public partial class PaymentEntry
 
     private PaymentEntryViewModel _newPayment = new();
     private PaymentDetailViewModel _newLineItem = new();
-    private List<ILookupItemViewModel<int, AccountViewModel>>? _accounts;
-    private List<ILookupItemViewModel<int, LuLineItemType>>? _lineItemTypes;
-    private List<ILookupItemViewModel<int, PayeeViewModel>>? _payees;
+    private List<AccountViewModel>? _accounts;
+    private List<LookupItemViewModel<LuLineItemType>>? _lineItemTypes;
+    private List<PayeeViewModel>? _payees;
 
     private EditForm? _paymentEntryEditForm;
     private EditForm? _lineItemEntryEditForm;
@@ -30,10 +30,9 @@ public partial class PaymentEntry
     protected override async Task OnInitializedAsync()
     {
         await LookupListState.Initialize();
-        await Task.Delay(2000);
-        _accounts = LookupListState.GetLookupItems<int, AccountViewModel>().ToList();
-        _payees = LookupListState.GetLookupItems<int, PayeeViewModel>().ToList();
-        _lineItemTypes = LookupListState.GetLookupItems<int, LuLineItemType>().ToList();
+        _accounts = LookupListState.GetLookupItems<AccountViewModel>().ToList();
+        _payees = LookupListState.GetLookupItems<PayeeViewModel>().ToList();
+        _lineItemTypes = LookupListState.GetLookupItems<LookupItemViewModel<LuLineItemType>>().ToList();
     }
 
     private async Task HandlePaymentSubmitted()

@@ -1,14 +1,11 @@
 ﻿using FinanMan.Database.Models.Shared;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanMan.Database.Models.Tables;
 
-public partial class Account : IHasLookupListType
+public partial class Account : LookupItemBase
 {
-    [NotMapped]
-    public LookupListType ListType => LookupListType.AccountType;
-    public int Id { get; set; }
-    public string Name { get; set; } = default!;
+    public Account() : base(LookupListType.Accounts) { }
+
     public int AccountTypeId { get; set; }
 
     public virtual LuAccountType AccountType { get; set; } = default!;

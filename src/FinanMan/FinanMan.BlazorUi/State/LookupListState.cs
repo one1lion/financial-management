@@ -10,6 +10,7 @@ namespace FinanMan.BlazorUi.State;
 public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 {
     private readonly ILookupListService _lookupService;
+    
     public LookupListState(ILookupListService lookupService)
     {
         _lookupService = lookupService;
@@ -23,84 +24,56 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     public bool Initialized { get => _initialized; set => SetField(ref _initialized, value); }
     public bool Initializing { get => _initializing; set => SetField(ref _initializing, value); }
 
-    public Task Initialize()
+    public async Task Initialize()
     {
-        if (_initialized || _initializing) { return Task.CompletedTask; }
+        if (_initialized || _initializing) { return; }
         _initializing = true;
-        List<Account> _accounts = new()
-        {
-            new() {Id = 1, Name = "Checking"},
-            new() {Id = 2, Name = "Savings"},
-            new() {Id = 3, Name = "Cheese"},
-            new() {Id = 4, Name = "Coffee"}
-        };
-        List<LuDepositReason> _depositReasons = new()
-        {
-            new() {Id = 5, SortOrder = 1, Name = "Regular Paycheck"},
-            new() {Id = 2, SortOrder = 2, Name = "State Income Tax Return"},
-            new() {Id = 3, SortOrder = 3, Name = "Federal Income Tax Return"},
-            new() {Id = 4, SortOrder = 4, Name = "Just Because"}
-        };
-        List<LuLineItemType> _lineItemTypes = new()
-        {
-            new() {Id = 1, Name = "Sub Total", SortOrder = 0},
-            new() {Id = 2, Name = "Tax", SortOrder = 1},
-            new() {Id = 3, Name = "Tip", SortOrder = 2}
-        };
 
-        List<Payee> _payees = new()
-        {
-            new() {Id = 1, Name = "Vindy's"},
-            new() {Id = 2, Name = "My Favourite Groucerie Stoure"},
-            new() {Id = 3, Name = "Tacho Bear"}
-        };
+        var accountsResp = await _lookupService.GetLookupItemsAsync<AccountViewModel>();
+        var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
+        var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
+        var depositReasonsResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
+        var lineItemTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
+        var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeViewModel>();
+        var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
 
         // API request to get list items
-        LookupItemCache.AddRange(_accounts.Select(x => new LookupItemViewModel<AccountViewModel>()
+        if (!accountsResp.WasError && (accountsResp.Data?.Any() ?? false))
         {
-            Id = x.Id,
-            DisplayText = x.Name,
-            ValueText = x.Id.ToString(),
-            LastUpdated = DateTime.UtcNow,
-            Item = x.ToViewModel()
-        }));
-
-        LookupItemCache.AddRange(_depositReasons.Select(x => new LookupItemViewModel<LuDepositReason>()
+            LookupItemCache.AddRange(accountsResp.Data);
+        }
+        if (!accountTypesResp.WasError && (accountTypesResp.Data?.Any() ?? false))
         {
-            Id = x.Id,
-            DisplayText = x.Name,
-            ValueText = x.Id.ToString(),
-            LastUpdated = DateTime.UtcNow,
-            Item = x
-        }));
-
-        LookupItemCache.AddRange(_lineItemTypes.Select(x => new LookupItemViewModel<LuLineItemType>()
+            LookupItemCache.AddRange(accountTypesResp.Data);
+        }
+        if (!categoriesResp.WasError && (categoriesResp.Data?.Any() ?? false))
         {
-            Id = x.Id,
-            DisplayText = x.Name,
-            ValueText = x.Id.ToString(),
-            LastUpdated = DateTime.UtcNow,
-            Item = x
-        }));
-
-        LookupItemCache.AddRange(_payees.Select(x => new LookupItemViewModel<PayeeViewModel>()
+            LookupItemCache.AddRange(categoriesResp.Data);
+        }
+        if (!depositReasonsResp.WasError && (depositReasonsResp.Data?.Any() ?? false))
         {
-            Id = x.Id,
-            DisplayText = x.Name,
-            ValueText = x.Id.ToString(),
-            LastUpdated = DateTime.UtcNow,
-            Item = x.ToViewModel()
-        }));
+            LookupItemCache.AddRange(depositReasonsResp.Data);
+        }
+        if (!lineItemTypesResp.WasError && (lineItemTypesResp.Data?.Any() ?? false))
+        {
+            LookupItemCache.AddRange(lineItemTypesResp.Data);
+        }
+        if (!payeesResp.WasError && (payeesResp.Data?.Any() ?? false))
+        {
+            LookupItemCache.AddRange(payeesResp.Data);
+        }
+        if (!recurrenceTypesResp.WasError && (recurrenceTypesResp.Data?.Any() ?? false))
+        {
+            LookupItemCache.AddRange(recurrenceTypesResp.Data);
+        }
 
         _initialized = true;
         _initializing = false;
-
-        return Task.CompletedTask;
     }
 
-    public IEnumerable<ILookupItemViewModel<TKey, TLookupItem>> GetLookupItems<TKey, TLookupItem>()
-         where TLookupItem : class, IHasLookupListType
+    public IEnumerable<TLookupItem> GetLookupItems<TLookupItem>()
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        return LookupItemCache.OfType<LookupItemViewModel<TKey, TLookupItem>>();
+        return LookupItemCache.OfType<TLookupItem>();
     }
 }

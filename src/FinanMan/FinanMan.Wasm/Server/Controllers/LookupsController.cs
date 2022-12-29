@@ -8,51 +8,81 @@ namespace FinanMan.Server.Controllers;
 
 [ApiController]
 public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBase
-    where TLookupItemViewModel : class, ILookupItemViewModel
+    where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
 {
-    protected abstract ILookupListService ListService { get; }
+    private readonly ILookupListService _listService;
+
+    public LookupsControllerBase(ILookupListService listService)
+    {
+        _listService = listService;
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetLookupItems(int startRecord = 0, int pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default) =>
-        Ok(await ListService.GetLookupItemsAsync<TLookupItemViewModel>(startRecord, pageSize, asOfDate, ct));
+        Ok(await _listService.GetLookupItemsAsync<TLookupItemViewModel>(startRecord, pageSize, asOfDate, ct));
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetLookupItem(int id, CancellationToken ct = default) =>
-        Ok(await ListService.GetLookupItem<TLookupItemViewModel>(id, ct));
+        Ok(await _listService.GetLookupItem<TLookupItemViewModel>(id, ct));
 
     [HttpPost]
     public async Task<IActionResult> AddLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default) =>
-        Ok(await ListService.AddLookupItem<TLookupItemViewModel>(dataEntryViewModel, ct));
+        Ok(await _listService.AddLookupItem<TLookupItemViewModel>(dataEntryViewModel, ct));
 
     [HttpPut]
     public async Task<IActionResult> UpdateLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default) =>
-        Ok(await ListService.UpdateLookupItem<TLookupItemViewModel>(dataEntryViewModel, ct));
+        Ok(await _listService.UpdateLookupItem<TLookupItemViewModel>(dataEntryViewModel, ct));
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteLookupItem(int id, CancellationToken ct = default) =>
-        Ok(await ListService.DeleteLookupItem<TLookupItemViewModel>(id, ct));
+        Ok(await _listService.DeleteLookupItem<TLookupItemViewModel>(id, ct));
 }
 
 [Route("api/Lookups/Accounts")]
 [ApiController]
-public class AccountsLookupController : LookupsControllerBase<AccountViewModel>
+public class AccountsController : LookupsControllerBase<AccountViewModel>
 {
-    protected override ILookupListService ListService { get; }
-
-    public AccountsLookupController(ILookupListService listService)
-    {
-        ListService = listService;
-    }
+    public AccountsController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/AccountTypes")]
 [ApiController]
 public class AccountTypesController : LookupsControllerBase<LookupItemViewModel<LuAccountType>>
 {
-    protected override ILookupListService ListService { get; }
+    public AccountTypesController(ILookupListService listService) : base(listService) {}
+}
 
-    public AccountTypesController(ILookupListService listService)
-    {
-        ListService = listService;
-    }
+[Route("api/Lookups/Categories")]
+[ApiController]
+public class CategoriesController : LookupsControllerBase<LookupItemViewModel<LuAccountType>>
+{
+    public CategoriesController(ILookupListService listService) : base(listService) {}
+}
+
+[Route("api/Lookups/DepositReasons")]
+[ApiController]
+public class DepositReasonsController : LookupsControllerBase<LookupItemViewModel<LuDepositReason>>
+{
+    public DepositReasonsController(ILookupListService listService) : base(listService) {}
+}
+
+[Route("api/Lookups/LineItemTypes")]
+[ApiController]
+public class LineItemTypesController : LookupsControllerBase<LookupItemViewModel<LuLineItemType>>
+{
+    public LineItemTypesController(ILookupListService listService) : base(listService) {}
+}
+
+[Route("api/Lookups/Payees")]
+[ApiController]
+public class PayeesController : LookupsControllerBase<PayeeViewModel>
+{
+    public PayeesController(ILookupListService listService) : base(listService) {}
+}
+
+[Route("api/Lookups/RecurrenceTypes")]
+[ApiController]
+public class RecurrenceTypesController : LookupsControllerBase<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>
+{
+    public RecurrenceTypesController(ILookupListService listService) : base(listService) {}
 }

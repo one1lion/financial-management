@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FinanMan.Tests.BusinessLogicTesting;
+namespace FinanMan.Tests.BusinessLogicTesting.TransactionEntry;
 
 public class TransferTransactionEntryServiceTests
 {
