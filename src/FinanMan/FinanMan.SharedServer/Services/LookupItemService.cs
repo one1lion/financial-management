@@ -110,10 +110,54 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        throw new NotImplementedException();
+        var retResp = new ResponseModelBase<int>();
+
+        using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+        var lookupList = GetQueryableLookupList<TLookupItemViewModel>(context);
+
+        if (lookupList is null)
+        {
+            retResp.AddError($"Invalid lookup list type: {typeof(TLookupItemViewModel)}");
+            return retResp;
+        }
+
+        var foundRec = await lookupList
+            .FirstOrDefaultAsync(x => x.ValueText == dataEntryViewModel.ValueText, cancellationToken: ct);
+
+        if (foundRec is null)
+        {
+            retResp.AddError($"A record with the Id '{dataEntryViewModel.ValueText}' could not be found exists.");
+            return retResp;
+        }
+
+        using var trans = await context.Database.BeginTransactionAsync(ct);
+
+        try
+        {
+            var forUpdate = foundRec.ToEntityModel();
+
+            // Attach and start tracking changes
+            context.Attach(forUpdate);
+
+            // Update the properties
+            forUpdate.Patch(dataEntryViewModel.ToEntityModel());
+
+            retResp.RecordCount = await context.SaveChangesAsync(ct);
+
+            await trans.CommitAsync(ct);
+
+            retResp.RecordId = forUpdate.GetId();
+        }
+        catch (Exception ex)
+        {
+            await trans.RollbackAsync();
+            retResp.AddError($"The request to add the new {typeof(TLookupItemViewModel)} failed. {ex.Message}");
+        }
+
+        return retResp;
     }
 
     public async Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
@@ -274,6 +318,26 @@ public static class ILookupItemExtensions
             default:
                 // NOTE: Recurrence types are not maintainable from the application
                 throw new NotImplementedException();
+        }
+    }
+    
+    public static void Patch(this ILookupItem model, ILookupItem updatedModel)
+    {
+        model.Name = updatedModel.Name;
+        model.SortOrder = updatedModel.SortOrder;
+        model.LastUpdated = DateTime.Now;
+        model.Deleted = updatedModel.Deleted;
+
+        switch(model)
+        {
+            case Account account:
+                var updatedAccount = (Account)updatedModel;
+                account.AccountTypeId = updatedAccount.AccountTypeId;
+                account.AccountType = default!;
+                break;
+            case Payee payee:
+                // TODO: Update the categories list associated with the Payee
+                break;
         }
     }
 

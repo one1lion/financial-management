@@ -25,13 +25,18 @@ public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem
     [JsonIgnore]
     public Type Type => typeof(TItem);
     public TKey Id { 
-        get => Item.Id; 
-        set => Item.Id = value; 
+        get => Item.Id;
+        set
+        {
+            Item.Id = value;
+            ValueText = value?.ToString() ?? "0";
+        }
     }
     public string ListItemId => $"{Type}-{Id}";
     public string DisplayText { get => Item.Name; set => Item.Name = value; }
     public string ValueText { get; set; } = default!;
     public int SortOrder { get => Item.SortOrder; set => Item.SortOrder = value; }
+    public bool Deleted { get => Item.Deleted; set => Item.Deleted = value; }
     public DateTime LastUpdated { get => Item.LastUpdated; set => Item.LastUpdated = value; }
 
     public TItem Item { get; set; } = new TItem();
