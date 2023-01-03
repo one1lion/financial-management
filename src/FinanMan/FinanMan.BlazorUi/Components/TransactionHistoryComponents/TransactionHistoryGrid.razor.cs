@@ -12,11 +12,19 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 public partial class TransactionHistoryGrid
 {
     [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositTransactionService { get; set; } = default!;
+    [Inject] private ITransactionEntryService<PaymentEntryViewModel> PaymentTransactionService { get; set; } = default!;
+    [Inject] private ITransactionEntryService<TransferEntryViewModel> TransferTransactionService { get; set; } = default!;
     [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
 
-    private List<DepositEntryViewModel>? _deposits;
     private List<Transaction>? _transactions;
     private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
+
+    /// <summary>
+    /// Tracks the list of columns being sorted (Keys) and whether they are 
+    /// sorted descending or not (Values).
+    /// </summary>
+    private readonly List<SortColumn> _sortColumns = new();
+
     protected override Task OnInitializedAsync()
     {
         return RefreshTransactions();
@@ -24,115 +32,61 @@ public partial class TransactionHistoryGrid
 
     private async Task RefreshTransactions()
     {
-        // Simulate getting data from the server
-        var randDates = Enumerable.Range(0, 4).Select(x => DateTime.UtcNow.AddDays(-Random.Shared.Next(1, 30))).ToArray();
-        var depResp = await DepositTransactionService.GetTransactionsAsync();
+        var asOfDate = (_transactions?.Any() ?? false)
+            ? _transactions.Max(t => t.TransactionDate)
+            : default(DateTime?);
 
-        if (depResp.WasError)
+        var depTransTask = DepositTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
+        var paymentTransTask = PaymentTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
+        var transferTransTask = TransferTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
+
+        await Task.WhenAll(depTransTask, paymentTransTask, transferTransTask);
+
+        var depResp = depTransTask.Result;
+        var payResp = paymentTransTask.Result;
+        var traResp = transferTransTask.Result;
+
+        _transactions?.Clear();
+
+        if (depResp?.WasError ?? true)
         {
             // TODO: Do something special with the error
         }
-        else
+        else if (depResp.Data is not null)
         {
-            _deposits = depResp.Data;
-            _transactions = _deposits?.ToEntityModel().ToList();
+            AddTransactionsToList(depResp.Data.ToEntityModel().ToList());
         }
-
-        var addTrans = new List<Transaction>()
+        
+        if (payResp?.WasError ?? true)
         {
-            new()
-            {
-                Account = new() { Name = "Credit Card" },
-                Payment = new() {
-                    Payee = new() { Name = "Taco Bell" } ,
-                    PaymentDetails = new List<PaymentDetail>()
-                    {
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sub Total" },
-                            Amount = 4.99
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sales Tax" },
-                            Amount = .24
-                        },
-                    }
-                },
-                Memo = string.Empty,
-                TransactionDate = randDates[0],
-                PostingDate = randDates[0]
-            },
-            new()
-            {
-                Account = new() { Name = "Credit Card" },
-                Payment = new() {
-                    Payee = new() { Name = "My Favorite Grocery Store That Delivers" },
-                    PaymentDetails = new List<PaymentDetail>()
-                    {
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sub Total" },
-                            Amount = 128.32
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sales Tax" },
-                            Amount = 4.24
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Fee" },
-                            Detail = "Delivery Fee",
-                            Amount = 4.24},
-                        new()
-                        {
-                            LineItemType = new() { Name = "Fee" },
-                            Detail = "Service Fee",
-                            Amount = 6.57},
-                        new()
-                        {
-                            LineItemType = new() { Name = "Discount" },
-                            Detail = "Promotion",
-                            Amount = -4.24
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Tip" },
-                            Amount = 12.83
-                        }
-                    }
-                },
-                Memo = string.Empty,
-                TransactionDate = randDates[1],
-                PostingDate = randDates[1]
-            },
-            new()
-            {
-                Account = new() { Name = "Checking" },
-                Transfer = new() {
-                    TargetAccount = new() { Name = "Credit Card" },
-                    Amount = 2345
-                },
-                TransactionDate = randDates[3]
-            }
-        };
-
-        if (_transactions?.Any() ?? false)
-        {
-            _transactions.AddRange(addTrans);
+            // TODO: Do something special with the error
         }
-        else
+        else if (payResp.Data is not null)
         {
-            _transactions = addTrans;
+            AddTransactionsToList(payResp.Data.ToEntityModel().ToList());
+        }
+        
+        if (traResp?.WasError ?? true)
+        {
+            // TODO: Do something special with the error
+        }
+        else if (traResp.Data is not null)
+        {
+            AddTransactionsToList(traResp.Data.ToEntityModel().ToList());
         }
     }
 
-    /// <summary>
-    /// Tracks the list of columns being sorted (Keys) and whether they are 
-    /// sorted descending or not (Values).
-    /// </summary>
-    private readonly List<SortColumn> _sortColumns = new();
+    private void AddTransactionsToList(IEnumerable<Transaction> transactions)
+    {
+        if (_transactions is null)
+        {
+            _transactions = transactions.ToList();
+        }
+        else
+        {
+            _transactions.AddRange(transactions);
+        }
+    }
 
     private Task HandleColumnHeaderClicked(ColumnName columnName)
     {

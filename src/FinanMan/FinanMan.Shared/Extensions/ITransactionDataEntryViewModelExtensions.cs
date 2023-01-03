@@ -12,6 +12,11 @@ public static class ITransactionDataEntryViewModelExtensions
         {
             Id = model.TransactionId,
             TransactionDate = model.TransactionDate!.Value,
+            Account = new Account()
+            {
+                Id = model.AccountId!.Value,
+                Name = model.AccountName ?? string.Empty
+            },
             AccountId = model.AccountId!.Value,
             Memo = model.Memo,
             PostingDate = model.PostedDate,
@@ -63,6 +68,9 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Deposit:
                 viewModel = new DepositEntryViewModel()
                 {
+                    AccountId = model.AccountId,
+                    AccountName = model.Account.Name,
+                    TargetAccountValueText = model.Account.Name,
                     DepositReasonValueText = model.Deposit?.DepositReasonId.ToString(),
                     Amount = model.Deposit?.Amount
                 };
@@ -70,6 +78,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Payment:
                 viewModel = new PaymentEntryViewModel()
                 {
+                    AccountName = model.Account.Name,
                     PayeeName = model.Payment?.Payee?.Name,
                     PayeeValueText = model.Payment?.PayeeId.ToString(),
                     LineItems = model.Payment?.PaymentDetails?.ToViewModel()?.ToList() ?? new List<PaymentDetailViewModel>()
@@ -78,6 +87,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Transfer:
                 viewModel = new TransferEntryViewModel()
                 {
+                    AccountName = model.Account.Name,
                     TargetAccountName = model.Transfer?.TargetAccount?.Name,
                     Amount = model.Transfer?.Amount
                 };

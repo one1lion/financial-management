@@ -41,14 +41,17 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
             var transactions = context.Transactions.AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Deposit)
                 .Include(x => x.Payment)
                 .ThenInclude(x => x.PaymentDetails)
+                .Include(x => x.Payment)
+                .ThenInclude(x => x.Payee)
                 .Include(x => x.Transfer)
                 .Where(x =>
                     _transactionType == TransactionType.Deposit && x.Deposit != null
                     || _transactionType == TransactionType.Payment && x.Payment != null
-                    || _transactionType == TransactionType.Transfer &&  x.Transfer != null)
+                    || _transactionType == TransactionType.Transfer && x.Transfer != null)
                 .AsQueryable();
 
             if (asOfDate.HasValue)
@@ -86,6 +89,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
             var transaction = await context.Transactions.AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Deposit)
                 .Include(x => x.Payment)
                 .ThenInclude(x => x.PaymentDetails)

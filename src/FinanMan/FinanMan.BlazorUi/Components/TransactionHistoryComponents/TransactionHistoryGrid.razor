@@ -87,13 +87,16 @@
                             @switch(curTransaction)
                             {
                                 case PaymentEntryViewModel payment:
-                                    <span>@payment.PayeeName</span>
+                                    <span>(Payment) @payment.PayeeName</span>
                                     break;
                                 case TransferEntryViewModel transfer:
-                                    <span>@transfer.TargetAccountName</span>
+                                    <span>(Transfer) @transfer.TargetAccountName</span>
+                                    break;
+                                case DepositEntryViewModel deposit:
+                                    <span>(Deposit) @deposit.DepositReasonValueText</span>
                                     break;
                                 default:
-                                    <span>&nbsp;</span>
+                                    <span>&nbsp; (no clue)</span>
                                     break;
                             }
                         </td>
