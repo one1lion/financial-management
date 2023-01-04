@@ -38,6 +38,11 @@ public static class ITransactionDataEntryViewModelExtensions
                 {
                     TransactionId = model.TransactionId,
                     PayeeId = paymentEntryViewModel.PayeeId ?? 0,
+                    Payee = new Payee()
+                    {
+                        Id = paymentEntryViewModel.PayeeId ?? 0,
+                        Name = paymentEntryViewModel.PayeeName ?? string.Empty
+                    },
                     PaymentDetails = paymentEntryViewModel.LineItems.ToEntityModel().ToList()
                 };
                 break;
@@ -46,6 +51,11 @@ public static class ITransactionDataEntryViewModelExtensions
                 {
                     TransactionId = model.TransactionId,
                     TargetAccountId = transferEntryViewModel.TargetAccountId ?? 0,
+                    TargetAccount = new Account()
+                    {
+                        Id = transferEntryViewModel.TargetAccountId ?? 0,
+                        Name = transferEntryViewModel.TargetAccountName ?? string.Empty
+                    },
                     Amount = transferEntryViewModel.Total
                 };
                 break;
@@ -82,6 +92,7 @@ public static class ITransactionDataEntryViewModelExtensions
                     PayeeName = model.Payment?.Payee?.Name,
                     PayeeValueText = model.Payment?.PayeeId.ToString(),
                     LineItems = model.Payment?.PaymentDetails?.ToViewModel()?.ToList() ?? new List<PaymentDetailViewModel>()
+                    // TODO: Populate categories
                 };
                 break;
             case TransactionType.Transfer:

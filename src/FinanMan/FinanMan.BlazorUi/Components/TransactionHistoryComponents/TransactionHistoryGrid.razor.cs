@@ -16,8 +16,8 @@ public partial class TransactionHistoryGrid
     [Inject] private ITransactionEntryService<TransferEntryViewModel> TransferTransactionService { get; set; } = default!;
     [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
 
-    private List<Transaction>? _transactions;
-    private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
+    private List<ITransactionDataEntryViewModel>? _transactions;
+    private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
 
     /// <summary>
     /// Tracks the list of columns being sorted (Keys) and whether they are 
@@ -54,7 +54,7 @@ public partial class TransactionHistoryGrid
         }
         else if (depResp.Data is not null)
         {
-            AddTransactionsToList(depResp.Data.ToEntityModel().ToList());
+            AddTransactionsToList(depResp.Data);
         }
         
         if (payResp?.WasError ?? true)
@@ -63,7 +63,7 @@ public partial class TransactionHistoryGrid
         }
         else if (payResp.Data is not null)
         {
-            AddTransactionsToList(payResp.Data.ToEntityModel().ToList());
+            AddTransactionsToList(payResp.Data);
         }
         
         if (traResp?.WasError ?? true)
@@ -72,11 +72,11 @@ public partial class TransactionHistoryGrid
         }
         else if (traResp.Data is not null)
         {
-            AddTransactionsToList(traResp.Data.ToEntityModel().ToList());
+            AddTransactionsToList(traResp.Data);
         }
     }
 
-    private void AddTransactionsToList(IEnumerable<Transaction> transactions)
+    private void AddTransactionsToList(IEnumerable<ITransactionDataEntryViewModel> transactions)
     {
         if (_transactions is null)
         {
@@ -151,7 +151,7 @@ public partial class TransactionHistoryGrid
             false => SortDir.Asc
         };
 
-    private IEnumerable<Transaction>? GetSortedTransactions()
+    private IEnumerable<ITransactionDataEntryViewModel>? GetSortedTransactions()
     {
         if (_transactions is null) { return default; }
 
@@ -161,25 +161,25 @@ public partial class TransactionHistoryGrid
 
         foreach (var curSort in _sortColumns)
         {
-            Func<Transaction, object?> sortColProp = default!;
+            Func<ITransactionDataEntryViewModel, object?> sortColProp = default!;
 
             switch (curSort.Column)
             {
                 case ColumnName.PendingColumn:
-                    sortColProp = x => x.PostingDate ?? DateTime.MinValue;
+                    sortColProp = x => x.PostedDate ?? DateTime.MinValue;
                     break;
                 case ColumnName.TransDateColumn:
                     sortColProp = x => x.TransactionDate;
                     break;
                 case ColumnName.AccountColumn:
-                    sortColProp = x => x.Account.Name;
+                    sortColProp = x => x.AccountName;
                     break;
                 case ColumnName.PayeeColumn:
                     sortColProp = x =>
-                        x.TransactionType switch
+                        x switch
                         {
-                            TransactionType.Payment => x.Payment?.Payee?.Name,
-                            TransactionType.Transfer => x.Transfer?.TargetAccount?.Name,
+                            PaymentEntryViewModel p => p.PayeeName,
+                            TransferEntryViewModel t => t.TargetAccountName,
                             _ => default
                         };
                     break;
@@ -187,14 +187,7 @@ public partial class TransactionHistoryGrid
                     sortColProp = x => x.Memo;
                     break;
                 case ColumnName.TotalColumn:
-                    sortColProp = x =>
-                    (x.TransactionType switch
-                    {
-                        TransactionType.Payment => x.Payment?.PaymentDetails.Sum(y => y.Amount),
-                        TransactionType.Deposit => x.Deposit?.Amount,
-                        TransactionType.Transfer => x.Transfer?.Amount,
-                        _ => default
-                    }) ?? 0;
+                    sortColProp = x => x.Total;
                     break;
             }
 
