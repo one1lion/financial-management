@@ -3,6 +3,7 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.ServiceInterfaces;
+using FinanMan.Shared.StateInterfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -11,128 +12,28 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 
 public partial class TransactionHistoryGrid
 {
-    [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositTransactionService { get; set; } = default!;
     [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
+    [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
-    private List<DepositEntryViewModel>? _deposits;
-    private List<Transaction>? _transactions;
-    private IEnumerable<Transaction>? SortedTransactions => GetSortedTransactions();
-    protected override Task OnInitializedAsync()
-    {
-        return RefreshTransactions();
-    }
-
-    private async Task RefreshTransactions()
-    {
-        // Simulate getting data from the server
-        var randDates = Enumerable.Range(0, 4).Select(x => DateTime.UtcNow.AddDays(-Random.Shared.Next(1, 30))).ToArray();
-        var depResp = await DepositTransactionService.GetTransactionsAsync();
-
-        if (depResp.WasError)
-        {
-            // TODO: Do something special with the error
-        }
-        else
-        {
-            _deposits = depResp.Data;
-            _transactions = _deposits?.ToEntityModel().ToList();
-        }
-
-        var addTrans = new List<Transaction>()
-        {
-            new()
-            {
-                Account = new() { Name = "Credit Card" },
-                Payment = new() {
-                    Payee = new() { Name = "Taco Bell" } ,
-                    PaymentDetails = new List<PaymentDetail>()
-                    {
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sub Total" },
-                            Amount = 4.99
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sales Tax" },
-                            Amount = .24
-                        },
-                    }
-                },
-                Memo = string.Empty,
-                TransactionDate = randDates[0],
-                PostingDate = randDates[0]
-            },
-            new()
-            {
-                Account = new() { Name = "Credit Card" },
-                Payment = new() {
-                    Payee = new() { Name = "My Favorite Grocery Store That Delivers" },
-                    PaymentDetails = new List<PaymentDetail>()
-                    {
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sub Total" },
-                            Amount = 128.32
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Sales Tax" },
-                            Amount = 4.24
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Fee" },
-                            Detail = "Delivery Fee",
-                            Amount = 4.24},
-                        new()
-                        {
-                            LineItemType = new() { Name = "Fee" },
-                            Detail = "Service Fee",
-                            Amount = 6.57},
-                        new()
-                        {
-                            LineItemType = new() { Name = "Discount" },
-                            Detail = "Promotion",
-                            Amount = -4.24
-                        },
-                        new()
-                        {
-                            LineItemType = new() { Name = "Tip" },
-                            Amount = 12.83
-                        }
-                    }
-                },
-                Memo = string.Empty,
-                TransactionDate = randDates[1],
-                PostingDate = randDates[1]
-            },
-            new()
-            {
-                Account = new() { Name = "Checking" },
-                Transfer = new() {
-                    TargetAccount = new() { Name = "Credit Card" },
-                    Amount = 2345
-                },
-                TransactionDate = randDates[3]
-            }
-        };
-
-        if (_transactions?.Any() ?? false)
-        {
-            _transactions.AddRange(addTrans);
-        }
-        else
-        {
-            _transactions = addTrans;
-        }
-    }
+    private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
+    private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
 
     /// <summary>
     /// Tracks the list of columns being sorted (Keys) and whether they are 
     /// sorted descending or not (Values).
     /// </summary>
     private readonly List<SortColumn> _sortColumns = new();
+
+    protected override Task OnInitializedAsync()
+    {
+        TransactionsState.OnTransactionHistoryChanged += HandleTransactionHistoryChanged;
+        return TransactionsState.RefreshTransactionHistoryAsync();
+    }
+
+    private Task HandleTransactionHistoryChanged()
+    {
+        return InvokeAsync(StateHasChanged);
+    }
 
     private Task HandleColumnHeaderClicked(ColumnName columnName)
     {
@@ -197,7 +98,7 @@ public partial class TransactionHistoryGrid
             false => SortDir.Asc
         };
 
-    private IEnumerable<Transaction>? GetSortedTransactions()
+    private IEnumerable<ITransactionDataEntryViewModel>? GetSortedTransactions()
     {
         if (_transactions is null) { return default; }
 
@@ -207,25 +108,25 @@ public partial class TransactionHistoryGrid
 
         foreach (var curSort in _sortColumns)
         {
-            Func<Transaction, object?> sortColProp = default!;
+            Func<ITransactionDataEntryViewModel, object?> sortColProp = default!;
 
             switch (curSort.Column)
             {
                 case ColumnName.PendingColumn:
-                    sortColProp = x => x.PostingDate ?? DateTime.MinValue;
+                    sortColProp = x => x.PostedDate ?? DateTime.MinValue;
                     break;
                 case ColumnName.TransDateColumn:
                     sortColProp = x => x.TransactionDate;
                     break;
                 case ColumnName.AccountColumn:
-                    sortColProp = x => x.Account.Name;
+                    sortColProp = x => x.AccountName;
                     break;
                 case ColumnName.PayeeColumn:
                     sortColProp = x =>
-                        x.TransactionType switch
+                        x switch
                         {
-                            TransactionType.Payment => x.Payment?.Payee?.Name,
-                            TransactionType.Transfer => x.Transfer?.TargetAccount?.Name,
+                            PaymentEntryViewModel p => p.PayeeName,
+                            TransferEntryViewModel t => t.TargetAccountName,
                             _ => default
                         };
                     break;
@@ -233,14 +134,7 @@ public partial class TransactionHistoryGrid
                     sortColProp = x => x.Memo;
                     break;
                 case ColumnName.TotalColumn:
-                    sortColProp = x =>
-                    (x.TransactionType switch
-                    {
-                        TransactionType.Payment => x.Payment?.PaymentDetails.Sum(y => y.Amount),
-                        TransactionType.Deposit => x.Deposit?.Amount,
-                        TransactionType.Transfer => x.Transfer?.Amount,
-                        _ => default
-                    }) ?? 0;
+                    sortColProp = x => x.Total;
                     break;
             }
 
@@ -254,7 +148,8 @@ public partial class TransactionHistoryGrid
             }
         }
 
-        _transactions = sortedTrans.ToList();
+        // TODO: Decide whether to apply the current sort to the underlying transactions history list from state
+        TransactionsState.Transactions = sortedTrans.ToList();
         return sortedTrans;
     }
 }

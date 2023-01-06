@@ -30,6 +30,7 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
     public string? AccountName { get; set; }
     [Required]
     public string? DepositReasonValueText { get; set; }
+    public string? DepositReasonDisplayText { get; set; }
     public string? Memo { get; set; }
     [Required]
     public double? Amount { get; set; }

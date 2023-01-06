@@ -2,6 +2,7 @@
 
 public enum TransactionType
 {
+    Unknown,
     Deposit,
     Payment,
     Transfer

@@ -11,10 +11,15 @@ public static class ITransactionDataEntryViewModelExtensions
         var transaction = new Transaction()
         {
             Id = model.TransactionId,
-            TransactionDate = model.TransactionDate!.Value,
+            TransactionDate = model.TransactionDate!.Value.ToUniversalTime(),
+            Account = new Account()
+            {
+                Id = model.AccountId!.Value,
+                Name = model.AccountName ?? string.Empty
+            },
             AccountId = model.AccountId!.Value,
             Memo = model.Memo,
-            PostingDate = model.PostedDate,
+            PostingDate = model.PostedDate?.ToUniversalTime(),
             DateEntered = DateTime.UtcNow
         };
 
@@ -33,6 +38,11 @@ public static class ITransactionDataEntryViewModelExtensions
                 {
                     TransactionId = model.TransactionId,
                     PayeeId = paymentEntryViewModel.PayeeId ?? 0,
+                    Payee = new Payee()
+                    {
+                        Id = paymentEntryViewModel.PayeeId ?? 0,
+                        Name = paymentEntryViewModel.PayeeName ?? string.Empty
+                    },
                     PaymentDetails = paymentEntryViewModel.LineItems.ToEntityModel().ToList()
                 };
                 break;
@@ -41,6 +51,11 @@ public static class ITransactionDataEntryViewModelExtensions
                 {
                     TransactionId = model.TransactionId,
                     TargetAccountId = transferEntryViewModel.TargetAccountId ?? 0,
+                    TargetAccount = new Account()
+                    {
+                        Id = transferEntryViewModel.TargetAccountId ?? 0,
+                        Name = transferEntryViewModel.TargetAccountName ?? string.Empty
+                    },
                     Amount = transferEntryViewModel.Total
                 };
                 break;
@@ -63,21 +78,28 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Deposit:
                 viewModel = new DepositEntryViewModel()
                 {
+                    AccountId = model.AccountId,
+                    AccountName = model.Account.Name,
+                    TargetAccountValueText = model.Account.Name,
                     DepositReasonValueText = model.Deposit?.DepositReasonId.ToString(),
+                    DepositReasonDisplayText = model.Deposit?.DepositReason?.Name,
                     Amount = model.Deposit?.Amount
                 };
                 break;
             case TransactionType.Payment:
                 viewModel = new PaymentEntryViewModel()
                 {
+                    AccountName = model.Account.Name,
                     PayeeName = model.Payment?.Payee?.Name,
                     PayeeValueText = model.Payment?.PayeeId.ToString(),
                     LineItems = model.Payment?.PaymentDetails?.ToViewModel()?.ToList() ?? new List<PaymentDetailViewModel>()
+                    // TODO: Populate categories
                 };
                 break;
             case TransactionType.Transfer:
                 viewModel = new TransferEntryViewModel()
                 {
+                    AccountName = model.Account.Name,
                     TargetAccountName = model.Transfer?.TargetAccount?.Name,
                     Amount = model.Transfer?.Amount
                 };
@@ -88,8 +110,8 @@ public static class ITransactionDataEntryViewModelExtensions
 
         // Populate the common properties
         viewModel.TransactionId = model.Id;
-        viewModel.TransactionDate = model.TransactionDate;
-        viewModel.PostedDate = model.PostingDate;
+        viewModel.TransactionDate = model.TransactionDate.ToLocalTime();
+        viewModel.PostedDate = model.PostingDate?.ToLocalTime();
         viewModel.AccountId = model.AccountId;
         viewModel.AccountName = model.Account?.Name;
         viewModel.Memo = model.Memo;
@@ -111,7 +133,7 @@ public static class LineItemViewModelExtensions
     {
         LineItemTypeId = model.LineItemTypeId ?? 0,
         Amount = model.Amount ?? 0,
-        Detail = model.Detail,
+        Detail = model.Detail
     };
 
     public static IEnumerable<PaymentDetail> ToEntityModel(this IEnumerable<PaymentDetailViewModel> model) =>
@@ -121,7 +143,7 @@ public static class LineItemViewModelExtensions
     {
         LineItemTypeValueText = model.LineItemTypeId.ToString(),
         Amount = model.Amount,
-        Detail = model.Detail,
+        Detail = model.Detail
     };
 
     public static IEnumerable<PaymentDetailViewModel> ToViewModel(this IEnumerable<PaymentDetail> model) =>

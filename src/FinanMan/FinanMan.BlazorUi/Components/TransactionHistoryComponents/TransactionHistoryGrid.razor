@@ -57,13 +57,13 @@
             </tr>
         </thead>
         <tbody>
-            @if (_transactions is null)
+            @if (SortedTransactions is null)
             {
                 <tr>
                     <td colspan="6">@Localizer["Loading"]</td>
                 </tr>
             }
-            else if (!_transactions.Any())
+            else if (!SortedTransactions.Any())
             {
                 <tr>
                     <td colspan="6">@Localizer["NoTransactionsMessage"]</td>
@@ -72,7 +72,7 @@
             else
             {
                 // Since _transactions is not null here, neither is SortedTransactions
-                foreach (var curTransaction in SortedTransactions!.ToViewModel())
+                foreach (var curTransaction in SortedTransactions)
                 {
                     <tr>
                         <td>
@@ -91,6 +91,9 @@
                                     break;
                                 case TransferEntryViewModel transfer:
                                     <span>@transfer.TargetAccountName</span>
+                                    break;
+                                case DepositEntryViewModel deposit:
+                                    <span>@deposit.DepositReasonDisplayText</span>
                                     break;
                                 default:
                                     <span>&nbsp;</span>

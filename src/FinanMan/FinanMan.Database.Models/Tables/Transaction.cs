@@ -16,7 +16,8 @@ public partial class Transaction
     [NotMapped]
     public TransactionType TransactionType => Deposit is not null ? TransactionType.Deposit
         : Payment is not null ? TransactionType.Payment
-        : TransactionType.Transfer;
+        : Transfer is not null ? TransactionType.Transfer
+        : TransactionType.Unknown;
 
     public virtual Account Account { get; set; } = default!;
     public virtual Deposit? Deposit { get; set; }
