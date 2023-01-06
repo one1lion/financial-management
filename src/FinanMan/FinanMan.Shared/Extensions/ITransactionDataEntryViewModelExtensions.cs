@@ -11,7 +11,7 @@ public static class ITransactionDataEntryViewModelExtensions
         var transaction = new Transaction()
         {
             Id = model.TransactionId,
-            TransactionDate = model.TransactionDate!.Value,
+            TransactionDate = model.TransactionDate!.Value.ToUniversalTime(),
             Account = new Account()
             {
                 Id = model.AccountId!.Value,
@@ -19,7 +19,7 @@ public static class ITransactionDataEntryViewModelExtensions
             },
             AccountId = model.AccountId!.Value,
             Memo = model.Memo,
-            PostingDate = model.PostedDate,
+            PostingDate = model.PostedDate?.ToUniversalTime(),
             DateEntered = DateTime.UtcNow
         };
 
@@ -82,6 +82,7 @@ public static class ITransactionDataEntryViewModelExtensions
                     AccountName = model.Account.Name,
                     TargetAccountValueText = model.Account.Name,
                     DepositReasonValueText = model.Deposit?.DepositReasonId.ToString(),
+                    DepositReasonDisplayText = model.Deposit?.DepositReason?.Name,
                     Amount = model.Deposit?.Amount
                 };
                 break;
@@ -109,8 +110,8 @@ public static class ITransactionDataEntryViewModelExtensions
 
         // Populate the common properties
         viewModel.TransactionId = model.Id;
-        viewModel.TransactionDate = model.TransactionDate;
-        viewModel.PostedDate = model.PostingDate;
+        viewModel.TransactionDate = model.TransactionDate.ToLocalTime();
+        viewModel.PostedDate = model.PostingDate?.ToLocalTime();
         viewModel.AccountId = model.AccountId;
         viewModel.AccountName = model.Account?.Name;
         viewModel.Memo = model.Memo;
@@ -132,7 +133,7 @@ public static class LineItemViewModelExtensions
     {
         LineItemTypeId = model.LineItemTypeId ?? 0,
         Amount = model.Amount ?? 0,
-        Detail = model.Detail,
+        Detail = model.Detail
     };
 
     public static IEnumerable<PaymentDetail> ToEntityModel(this IEnumerable<PaymentDetailViewModel> model) =>
@@ -142,7 +143,7 @@ public static class LineItemViewModelExtensions
     {
         LineItemTypeValueText = model.LineItemTypeId.ToString(),
         Amount = model.Amount,
-        Detail = model.Detail,
+        Detail = model.Detail
     };
 
     public static IEnumerable<PaymentDetailViewModel> ToViewModel(this IEnumerable<PaymentDetail> model) =>

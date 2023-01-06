@@ -3,6 +3,7 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.ServiceInterfaces;
+using FinanMan.Shared.StateInterfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -11,12 +12,10 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 
 public partial class TransactionHistoryGrid
 {
-    [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositTransactionService { get; set; } = default!;
-    [Inject] private ITransactionEntryService<PaymentEntryViewModel> PaymentTransactionService { get; set; } = default!;
-    [Inject] private ITransactionEntryService<TransferEntryViewModel> TransferTransactionService { get; set; } = default!;
     [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
+    [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
-    private List<ITransactionDataEntryViewModel>? _transactions;
+    private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
     private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
 
     /// <summary>
@@ -27,65 +26,13 @@ public partial class TransactionHistoryGrid
 
     protected override Task OnInitializedAsync()
     {
-        return RefreshTransactions();
+        TransactionsState.OnTransactionHistoryChanged += HandleTransactionHistoryChanged;
+        return TransactionsState.RefreshTransactionHistoryAsync();
     }
 
-    private async Task RefreshTransactions()
+    private Task HandleTransactionHistoryChanged()
     {
-        var asOfDate = (_transactions?.Any() ?? false)
-            ? _transactions.Max(t => t.TransactionDate)
-            : default(DateTime?);
-
-        var depTransTask = DepositTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
-        var paymentTransTask = PaymentTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
-        var transferTransTask = TransferTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
-
-        await Task.WhenAll(depTransTask, paymentTransTask, transferTransTask);
-
-        var depResp = depTransTask.Result;
-        var payResp = paymentTransTask.Result;
-        var traResp = transferTransTask.Result;
-
-        _transactions?.Clear();
-
-        if (depResp?.WasError ?? true)
-        {
-            // TODO: Do something special with the error
-        }
-        else if (depResp.Data is not null)
-        {
-            AddTransactionsToList(depResp.Data);
-        }
-        
-        if (payResp?.WasError ?? true)
-        {
-            // TODO: Do something special with the error
-        }
-        else if (payResp.Data is not null)
-        {
-            AddTransactionsToList(payResp.Data);
-        }
-        
-        if (traResp?.WasError ?? true)
-        {
-            // TODO: Do something special with the error
-        }
-        else if (traResp.Data is not null)
-        {
-            AddTransactionsToList(traResp.Data);
-        }
-    }
-
-    private void AddTransactionsToList(IEnumerable<ITransactionDataEntryViewModel> transactions)
-    {
-        if (_transactions is null)
-        {
-            _transactions = transactions.ToList();
-        }
-        else
-        {
-            _transactions.AddRange(transactions);
-        }
+        return InvokeAsync(StateHasChanged);
     }
 
     private Task HandleColumnHeaderClicked(ColumnName columnName)
@@ -201,7 +148,8 @@ public partial class TransactionHistoryGrid
             }
         }
 
-        _transactions = sortedTrans.ToList();
+        // TODO: Decide whether to apply the current sort to the underlying transactions history list from state
+        TransactionsState.Transactions = sortedTrans.ToList();
         return sortedTrans;
     }
 }

@@ -9,6 +9,7 @@ namespace FinanMan.BlazorUi.Extensions
         public static IServiceCollection AddStateManagement(this IServiceCollection services) =>
             services
                 .AddScoped<ILookupListState, LookupListState>()
+                .AddScoped<ITransactionsState, TransactionsState>()
                 .AddScoped<IUiState, UiState>();
     }
 }

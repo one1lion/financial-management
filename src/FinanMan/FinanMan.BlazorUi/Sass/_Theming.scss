@@ -1,0 +1,6 @@
+@import 'ColorVariables';
+
+.light-theme {
+    --primary-text-color: #{$darkteal};
+    --primary-background-color: #f0f3f0;
+}

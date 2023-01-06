@@ -1,4 +1,3 @@
-using FinanMan.BlazorUi.State;
 using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
@@ -13,6 +12,7 @@ namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 public partial class DepositEntry
 {
     [Inject] private ILookupListState LookupListState { get; set; } = default!;
+    [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
     [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositEntryService { get; set; } = default!;
 
     private DepositEntryViewModel _newDeposit = new();
@@ -57,6 +57,7 @@ public partial class DepositEntry
             {
                 await _transDateInput.Element.Value.FocusAsync();
             }
+            await TransactionsState.RefreshTransactionHistoryAsync();
         }
         _submitting = false;
     }

@@ -8,6 +8,8 @@
   --topbar-height: 3.3rem;
   --topbar-background-color: #020305;
   --topbar-foreground-color: var(--primary-text-color);
+  --border-glow: rgba(255,255,255,.3);
+  --faint-border-glow: rgba(255, 255, 255, .1);
   --card-background-color: var(--primary-background-color);
   --card-foreground-color: var(--primary-text-color);
   --card-border-color: var(--primary-background-color);
@@ -29,11 +31,6 @@
   --table-header-background-color: #1D2933;
   --table-header-background-hover-color: rgba(255, 255, 255, .05);
   --table-footer-background-color: #1D2933;
-}
-
-.light-theme {
-  --primary-text-color: #03060A;
-  --primary-background-color: #f0f3f0;
 }
 
 .card {

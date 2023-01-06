@@ -1,5 +1,6 @@
 ﻿using FinanMan.Database;
 using FinanMan.Database.Models.Shared;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.General;
@@ -43,11 +44,13 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             var transactions = context.Transactions.AsNoTracking()
                 .Include(x => x.Account)
                 .Include(x => x.Deposit)
+                    .ThenInclude(x => x.DepositReason)
                 .Include(x => x.Payment)
-                .ThenInclude(x => x.PaymentDetails)
+                    .ThenInclude(x => x.PaymentDetails)
                 .Include(x => x.Payment)
-                .ThenInclude(x => x.Payee)
+                    .ThenInclude(x => x.Payee)
                 .Include(x => x.Transfer)
+                    .ThenInclude(x => x.TargetAccount)
                 .Where(x =>
                     _transactionType == TransactionType.Deposit && x.Deposit != null
                     || _transactionType == TransactionType.Payment && x.Payment != null
@@ -56,7 +59,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
 
             if (asOfDate.HasValue)
             {
-                transactions = transactions.Where(x => x.TransactionDate <= asOfDate.Value);
+                transactions = transactions.Where(x => x.DateEntered > asOfDate.Value);
             }
 
             var pagedResult = await transactions
@@ -91,9 +94,13 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             var transaction = await context.Transactions.AsNoTracking()
                 .Include(x => x.Account)
                 .Include(x => x.Deposit)
+                    .ThenInclude(x => x.DepositReason)
                 .Include(x => x.Payment)
-                .ThenInclude(x => x.PaymentDetails)
+                    .ThenInclude(x => x.PaymentDetails)
+                .Include(x => x.Payment)
+                    .ThenInclude(x => x.Payee)
                 .Include(x => x.Transfer)
+                    .ThenInclude(x => x.TargetAccount)
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             retResp.Data = (TDataEntryViewModel?)transaction?.ToViewModel();
@@ -129,7 +136,25 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var trans = await context.Database.BeginTransactionAsync(ct);
 
             var newTransaction = dataEntryViewModel.ToEntityModel();
+            newTransaction.Account = default!;
 
+            switch(newTransaction.TransactionType)
+            {
+                case TransactionType.Deposit:
+                    newTransaction.Deposit!.DepositReason = default!;
+                    break;
+                case TransactionType.Payment:
+                    newTransaction.Payment!.Payee = default!;
+                    foreach(var curDetail in newTransaction.Payment.PaymentDetails)
+                    {
+                        curDetail.Payment = default!;
+                    }
+                    break;
+                case TransactionType.Transfer:
+                    newTransaction.Transfer!.TargetAccount = default!;
+                    break;
+            }
+            
             await context.Transactions.AddAsync(newTransaction, ct);
             retResp.RecordCount = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
