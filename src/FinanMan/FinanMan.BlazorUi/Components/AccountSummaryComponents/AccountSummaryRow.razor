@@ -1,5 +1,30 @@
-﻿<h3>AccountSummaryRow</h3>
+﻿@using FinanMan.Shared.AccountSummaryModels;
+
+<tr>
+    <td>
+        <a href="javascript:void(0)" @onclick=HandleAccountClicked>
+            @Model.AccountName
+        </a>
+    </td>
+    <td>
+        @Model.CurrentBalance
+        @if (Model.Pending != 0)
+        {
+            <span class="pending">
+               (@Model.Pending)
+            </span>
+        }
+    </td>
+    <td>
+        @Model.AdjustedBalance
+    </td>
+</tr>
 
 @code {
-    [Parameter] public string? Model { get; set; }
+    [Parameter] public AccountSummaryViewModel Model { get; set; } = default!;
+
+    private void HandleAccountClicked()
+    {
+        // Navigate / Somehow show the transaction history for this account
+    }
 }

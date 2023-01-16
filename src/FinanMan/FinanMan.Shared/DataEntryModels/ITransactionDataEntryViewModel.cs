@@ -11,5 +11,5 @@ public interface ITransactionDataEntryViewModel
     public string? AccountName { get; set; }
     public int? AccountId { get; set; }
     public string? Memo { get; set; }
-    public double Total { get; }
+    public decimal Total { get; }
 }

@@ -16,7 +16,6 @@
             <li><button type="button" class="tab-button invert@(_entryType == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">@SharedLocalizer["Transfers"]</button></li>
         </ul>
     </header>
-    <AccountSummary />
     <section class="data-entry-section">
         <span class="title">@_entryType.GetDisplayText()</span>
 
@@ -33,6 +32,7 @@
                 break;
         }
     </section>
+    <AccountSummary />
     <TransactionHistory />
     @*<button type="button" @onclick="HandleCreateLookupClicked">Hey look, a button!</button>*@
     @if(_newLookupItemResp?.WasError ?? false)

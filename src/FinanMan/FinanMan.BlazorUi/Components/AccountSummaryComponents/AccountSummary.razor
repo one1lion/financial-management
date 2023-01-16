@@ -1,4 +1,8 @@
 ﻿<div id="accountSummary" class="account-summary-wrapper">
     <h3 class="header">@SharedLocalizer["AccountSummary"]</h3>
-    <AccountSummaryGrid />
+    @if (_accountSummariesResp?.WasError ?? false)
+    {
+        @_accountSummariesResp.RenderError
+    }
+    <AccountSummaryGrid AccountSummaries=_accountSummariesResp?.Data />
 </div>

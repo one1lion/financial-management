@@ -45,13 +45,16 @@ public class AccountService : IAccountService
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
         var accounts = context.Accounts.AsNoTracking()
+            .Include(x => x.AccountType)
             .Include(x => x.Transactions)
                 .ThenInclude(x => x.Payment)
-                .ThenInclude(x => x.PaymentDetails)
+                    .ThenInclude(x => x.PaymentDetails)
             .Include(x => x.Transactions)
                 .ThenInclude(x => x.Deposit)
             .Include(x => x.Transactions)
-                .ThenInclude(x => x.Transfer);
+                .ThenInclude(x => x.Transfer)
+            .Include(x => x.Transfers)
+                .ThenInclude(x => x.Transaction);
 
         var retModel = new List<AccountSummaryViewModel>();
 

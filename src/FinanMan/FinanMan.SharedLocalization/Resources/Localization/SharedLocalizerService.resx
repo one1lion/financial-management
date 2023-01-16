@@ -180,6 +180,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NoAccountsMessage" xml:space="preserve">
+    <value>No accounts have been added.</value>
+  </data>
   <data name="NothingAtAddress" xml:space="preserve">
     <value>Sorry, there's nothing at this address.</value>
   </data>
