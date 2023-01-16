@@ -35,7 +35,7 @@ public static class DataHelper
                 {
                     new() { Id = sortOrder, Name = "Checking", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },
                     new() { Id = sortOrder, Name = "Savings", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },
-                    new() { Id = sortOrder, Name = "Credit Card", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) },
+                    new() { Id = sortOrder, Name = "Credit Card", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00), IncreaseOnPayment = true },
                     new() { Id = sortOrder, Name = "Cash", SortOrder = sortOrder++, LastUpdated = new DateTime(2022, 07, 25, 17, 41, 00) }
                 }.OfType<TEntity>(),
             var t when t == typeof(LuCategory) => new List<LuCategory>()

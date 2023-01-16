@@ -4,6 +4,7 @@ using FinanMan.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanMan.Database.Migrations.Migrations
 {
     [DbContext(typeof(FinanManContext))]
-    partial class FinanManContextModelSnapshot : ModelSnapshot
+    [Migration("20230116183834_ChangedAmountFieldsToDec")]
+    partial class ChangedAmountFieldsToDec
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,9 +97,6 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IncreaseOnPayment")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime2");
 
@@ -119,7 +119,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         {
                             Id = 1,
                             Deleted = false,
-                            IncreaseOnPayment = false,
                             LastUpdated = new DateTime(2022, 7, 25, 17, 41, 0, 0, DateTimeKind.Unspecified),
                             Name = "Checking",
                             SortOrder = 1
@@ -128,7 +127,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         {
                             Id = 2,
                             Deleted = false,
-                            IncreaseOnPayment = false,
                             LastUpdated = new DateTime(2022, 7, 25, 17, 41, 0, 0, DateTimeKind.Unspecified),
                             Name = "Savings",
                             SortOrder = 2
@@ -137,7 +135,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         {
                             Id = 3,
                             Deleted = false,
-                            IncreaseOnPayment = false,
                             LastUpdated = new DateTime(2022, 7, 25, 17, 41, 0, 0, DateTimeKind.Unspecified),
                             Name = "Credit Card",
                             SortOrder = 3
@@ -146,7 +143,6 @@ namespace FinanMan.Database.Migrations.Migrations
                         {
                             Id = 4,
                             Deleted = false,
-                            IncreaseOnPayment = false,
                             LastUpdated = new DateTime(2022, 7, 25, 17, 41, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cash",
                             SortOrder = 4

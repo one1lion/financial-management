@@ -11,7 +11,7 @@ public partial class Payment
 
     [NotMapped]
     [JsonIgnore]
-    public double Total => PaymentDetails.Sum(x => x.Amount);
+    public decimal Total => Math.Round(PaymentDetails.Sum(x => x.Amount), 2);
 
     public virtual Payee Payee { get; set; } = default!;
     public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = new HashSet<PaymentDetail>();
