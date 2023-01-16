@@ -1,6 +1,7 @@
 ﻿@page "/data-entry"
 @page "/data-entry/{EntType}"
 
+@using FinanMan.BlazorUi.Components.AccountSummaryComponents
 @using FinanMan.BlazorUi.Components.DataEntryComponents
 @using FinanMan.Database.Models.Tables;
 @using FinanMan.Shared.General;
@@ -10,11 +11,12 @@
 <div id="dataEntryPage" class="page-content">
     <header>
         <ul class="data-entry-tabs">
-            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">Payments</button></li>
-            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)">Deposits</button></li>
-            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">Transfers</button></li>
+            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">@SharedLocalizer["Payments"]</button></li>
+            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)">@SharedLocalizer["Deposits"]</button></li>
+            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">@SharedLocalizer["Transfers"]</button></li>
         </ul>
     </header>
+    <AccountSummary />
     <section class="data-entry-section">
         <span class="title">@_entryType.GetDisplayText()</span>
 

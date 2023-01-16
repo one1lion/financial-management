@@ -29,12 +29,12 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         if (_initialized || _initializing) { return; }
         _initializing = true;
 
-        var accountsResp = await _lookupService.GetLookupItemsAsync<AccountViewModel>();
+        var accountsResp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
         var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
         var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
         var depositReasonsResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
         var lineItemTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
-        var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeViewModel>();
+        var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeLookupViewModel>();
         var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
 
         // API request to get list items

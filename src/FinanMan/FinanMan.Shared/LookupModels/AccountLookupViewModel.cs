@@ -2,7 +2,7 @@
 
 namespace FinanMan.Shared.LookupModels;
 
-public class AccountViewModel : LookupItemViewModel<Account>
+public class AccountLookupViewModel : LookupItemViewModel<Account>
 {
     public string AccountName { get => Item.Name; set => Item.Name = value; }
     public int AccountTypeId
@@ -28,7 +28,7 @@ public class AccountViewModel : LookupItemViewModel<Account>
 
 public static class AccountViewModelExtensions
 {
-    public static AccountViewModel ToViewModel(this Account account) =>
+    public static AccountLookupViewModel ToViewModel(this Account account) =>
         new()
         {
             Id = account.Id,

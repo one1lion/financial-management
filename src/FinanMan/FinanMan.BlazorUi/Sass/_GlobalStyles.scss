@@ -15,6 +15,22 @@ a {
     }
 }
 
+h1 {
+    font-size: var(--font-size-h1);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+}
+
 button {
     color: var(--button-foreground-color);
     background-color: var(--button-background-color);

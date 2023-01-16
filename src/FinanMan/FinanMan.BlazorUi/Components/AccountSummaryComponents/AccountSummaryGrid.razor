@@ -1,0 +1,23 @@
+﻿@using FinanMan.BlazorUi.JsInterop;
+<table id="accountSummaryGrid" class="">
+    <thead>
+        <tr>
+            <th>
+                @SharedLocalizer["Name"]
+            </th>
+            <th>
+                @SharedLocalizer["CurrentBalance"]
+            </th>
+            <th>
+                @SharedLocalizer["AdjustedBalance"]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public List<AccountSummary> AccountSummaries { get; set; } = default!;
+}

@@ -46,7 +46,6 @@
                                     <li class="divider"><hr /></li>
                                     <li class="menu-item">Filter</li>
                                     <li class="menu-item">Clear Filter</li>
-
                                 </ul>
                             </div>
                         </div>
@@ -60,13 +59,13 @@
             @if (SortedTransactions is null)
             {
                 <tr>
-                    <td colspan="6">@Localizer["Loading"]</td>
+                    <td colspan="6">@SharedLocalizer["Loading"]</td>
                 </tr>
             }
             else if (!SortedTransactions.Any())
             {
                 <tr>
-                    <td colspan="6">@Localizer["NoTransactionsMessage"]</td>
+                    <td colspan="6">@SharedLocalizer["NoTransactionsMessage"]</td>
                 </tr>
             }
             else

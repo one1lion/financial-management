@@ -40,9 +40,9 @@ public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBa
 
 [Route("api/Lookups/Accounts")]
 [ApiController]
-public class AccountsController : LookupsControllerBase<AccountViewModel>
+public class AccountLookupsController : LookupsControllerBase<AccountLookupViewModel>
 {
-    public AccountsController(ILookupListService listService) : base(listService) { }
+    public AccountLookupsController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/AccountTypes")]
@@ -75,9 +75,9 @@ public class LineItemTypesController : LookupsControllerBase<LookupItemViewModel
 
 [Route("api/Lookups/Payees")]
 [ApiController]
-public class PayeesController : LookupsControllerBase<PayeeViewModel>
+public class PayeeLookupsController : LookupsControllerBase<PayeeLookupViewModel>
 {
-    public PayeesController(ILookupListService listService) : base(listService) {}
+    public PayeeLookupsController(ILookupListService listService) : base(listService) {}
 }
 
 [Route("api/Lookups/RecurrenceTypes")]

@@ -2,7 +2,7 @@
 
 namespace FinanMan.Shared.LookupModels;
 
-public class PayeeViewModel : LookupItemViewModel<Payee>
+public class PayeeLookupViewModel : LookupItemViewModel<Payee>
 {
     public string PayeeName { get => DisplayText; set => DisplayText = value; } 
     public IEnumerable<string> Categories { get; set; } = Array.Empty<string>();
@@ -10,7 +10,7 @@ public class PayeeViewModel : LookupItemViewModel<Payee>
 
 public static class PayeeViewModelExtensions
 {
-    public static PayeeViewModel ToViewModel(this Payee payee) =>
+    public static PayeeLookupViewModel ToViewModel(this Payee payee) =>
         new()
         {
             Id = payee.Id,

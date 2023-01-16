@@ -1,13 +1,11 @@
-﻿@inject IStringLocalizer<App> Localizer
-
-<Router AppAssembly=typeof(App).Assembly>
+﻿<Router AppAssembly=typeof(App).Assembly>
     <Found Context="routeData">
         <RouteView RouteData=routeData DefaultLayout=typeof(MainLayout) />
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
         <LayoutView Layout=typeof(MainLayout)>
-            <p role="alert">@Localizer["NotFound"]</p>
+            <p role="alert">@SharedLocalizer["NotFound"]</p>
         </LayoutView>
     </NotFound>
 </Router>
