@@ -219,6 +219,9 @@
   <data name="TrackHeader" xml:space="preserve">
     <value>Track</value>
   </data>
+  <data name="TransactionHistory" xml:space="preserve">
+    <value>Transaction History</value>
+  </data>
   <data name="TransDateColumnHeader" xml:space="preserve">
     <value>Transaction Date</value>
   </data>

@@ -14,6 +14,8 @@ public partial class TransactionHistoryGrid
 {
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
+    private string _id = Guid.NewGuid().ToString();
+
     private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
     private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
 

@@ -68,6 +68,10 @@ input:not([type=checkbox]):not([type=radio]), select:not([type=checkbox]):not([t
   color: var(--primary-text-color);
 }
 
+table.data-grid thead tr td, table.data-grid thead tr th {
+  text-align: left;
+}
+
 body, html {
   margin: 0;
   padding: 0;

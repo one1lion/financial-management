@@ -1,8 +1,18 @@
-﻿<div id="accountSummary" class="account-summary-wrapper">
-    <h3 class="header">@SharedLocalizer["AccountSummary"]</h3>
-    @if (_accountSummariesResp?.WasError ?? false)
-    {
-        @_accountSummariesResp.RenderError
-    }
-    <AccountSummaryGrid AccountSummaries=_accountSummariesResp?.Data />
-</div>
+﻿<aside id="accountSummary" class="account-summary-wrapper">
+    <Card AdditionalCssClasses="account-summary-card">
+        <CardHeader>
+            @SharedLocalizer["AccountSummary"]
+        </CardHeader>
+        <CardBody>
+            @if (_accountSummariesResp?.WasError ?? false)
+            {
+                <CardText>
+                    @_accountSummariesResp.RenderError
+                </CardText>
+            }
+            <CardText>
+                <AccountSummaryGrid AccountSummaries=_accountSummariesResp?.Data />
+            </CardText>
+        </CardBody>
+    </Card>
+</aside>

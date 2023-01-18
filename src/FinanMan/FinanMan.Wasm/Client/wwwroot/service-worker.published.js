@@ -24,7 +24,7 @@ async function onInstall(event) {
 
 async function onActivate(event) {
     console.info('Service worker: Activate');
-
+    
     // Delete unused caches
     const cacheKeys = await caches.keys();
     await Promise.all(cacheKeys

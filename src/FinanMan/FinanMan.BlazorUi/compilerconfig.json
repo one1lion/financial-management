@@ -42,5 +42,13 @@
   {
     "outputFile": "Components/TransactionHistoryComponents/TransactionHistoryGrid.razor.css",
     "inputFile": "Components/TransactionHistoryComponents/TransactionHistoryGrid.razor.scss"
+  },
+  {
+    "outputFile": "Components/AccountSummaryComponents/AccountSummary.razor.css",
+    "inputFile": "Components/AccountSummaryComponents/AccountSummary.razor.scss"
+  },
+  {
+    "outputFile": "Components/AccountSummaryComponents/AccountSummaryGrid.razor.css",
+    "inputFile": "Components/AccountSummaryComponents/AccountSummaryGrid.razor.scss"
   }
 ]

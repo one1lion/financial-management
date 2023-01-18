@@ -27,6 +27,17 @@ else
     app.UseHsts();
 }
 
+app.UseCors(
+    options =>
+    {
+#if DEBUG
+        options.WithOrigins("https://localhost:7176, https://0.0.0.0");
+#endif
+        options.AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
