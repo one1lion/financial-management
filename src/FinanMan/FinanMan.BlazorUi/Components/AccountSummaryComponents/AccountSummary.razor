@@ -1,0 +1,18 @@
+﻿<aside id="accountSummary" class="account-summary-wrapper">
+    <Card AdditionalCssClasses="account-summary-card">
+        <CardHeader>
+            @SharedLocalizer["AccountSummary"]
+        </CardHeader>
+        <CardBody>
+            @if (_accountSummariesResp?.WasError ?? false)
+            {
+                <CardText>
+                    @_accountSummariesResp.RenderError
+                </CardText>
+            }
+            <CardText>
+                <AccountSummaryGrid AccountSummaries=_accountSummariesResp?.Data />
+            </CardText>
+        </CardBody>
+    </Card>
+</aside>

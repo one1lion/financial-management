@@ -12,12 +12,15 @@
     --topbar-foreground-color: var(--primary-text-color);
     --border-glow: rgba(255,255,255,.3); // Cyberpunk Theme: #{$bubblegum};
     --faint-border-glow: rgba(255, 255, 255, .1);
+    /* Cards */
     --card-background-color: var(--primary-background-color);
     --card-foreground-color: var(--primary-text-color);
     --card-border-color: var(--primary-background-color);
+    /* Inputs */
     --input-border-color: var(--default-border-color);
     --input-border-style: 1px solid var(--input-border-color);
     --input-background-color: #03000A;
+    /* Buttons */
     --button-foreground-color: var(--primary-background-color);
     --button-background-color: var(--light);
     --button-hover-foreground-color: var(--light);
@@ -30,7 +33,13 @@
     --footer-background-color: #1D2933;
     --active-tab-button-background-color: #9E410E;
     --active-tab-button-foreground-color: var(--light);
+    /* Tables */
     --table-header-background-color: #1D2933;
     --table-header-background-hover-color: rgba(255, 255, 255, .05);
     --table-footer-background-color: #1D2933;
+    /* Fonts */
+    --font-size-h1: 2em;
+    --font-size-h2: 1.5em;
+    --font-size-h3: 1.17em;
+    --font-size-h4: 1em;
 }

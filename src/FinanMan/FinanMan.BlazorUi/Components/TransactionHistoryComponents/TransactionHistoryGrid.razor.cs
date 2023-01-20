@@ -12,8 +12,9 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 
 public partial class TransactionHistoryGrid
 {
-    [Inject] private IStringLocalizer<TransactionHistoryGrid> Localizer { get; set; } = default!;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
+
+    private string _id = Guid.NewGuid().ToString();
 
     private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
     private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();

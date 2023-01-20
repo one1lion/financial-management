@@ -24,12 +24,12 @@ public class TransferEntryViewModel : ITransactionDataEntryViewModel
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? TargetAccountName { get; set; }
     public string? Memo { get; set; }
-    public double? Amount { get; set; }
+    public decimal? Amount { get; set; }
     public DateTime? TransactionDate { get; set; }
     public DateTime? PostedDate { get; set; }
     
     [JsonIgnore]
-    public double Total => Amount ?? 0;
+    public decimal Total => Amount ?? 0;
     [JsonIgnore]
     public int? SourceAccountId => int.TryParse(SourceAccountValueText ?? string.Empty, out var aid) ? aid : default;
     [JsonIgnore]

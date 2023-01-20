@@ -19,6 +19,15 @@ public partial class Transaction
         : Transfer is not null ? TransactionType.Transfer
         : TransactionType.Unknown;
 
+    [NotMapped]
+    public decimal Total => TransactionType switch
+    {
+        TransactionType.Deposit => Deposit?.Amount ?? 0m,
+        TransactionType.Payment => Payment?.Total ?? 0m,
+        TransactionType.Transfer => Transfer?.Amount ?? 0m,
+        _ => 0m
+    };
+
     public virtual Account Account { get; set; } = default!;
     public virtual Deposit? Deposit { get; set; }
     public virtual Payment? Payment { get; set; }

@@ -1,0 +1,16 @@
+﻿global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Forms;
+global using Microsoft.AspNetCore.Components.Web;
+global using Microsoft.AspNetCore.Components.Routing;
+global using Microsoft.Extensions.Localization;
+global using Microsoft.JSInterop;
+global using FinanMan.BlazorUi.Components.TransactionHistoryComponents;
+global using FinanMan.BlazorUi.Shared;
+global using FinanMan.BlazorUi.SharedComponents.Card;
+global using FinanMan.BlazorUi.SharedComponents.CustomNavigationLockComponent;
+global using FinanMan.Database.Models.Shared;
+global using FinanMan.Shared;
+global using FinanMan.Shared.Enums;
+global using FinanMan.Shared.Extensions;
+global using FinanMan.Shared.ServiceInterfaces;
+global using FinanMan.Shared.StateInterfaces;

@@ -1,8 +1,13 @@
 ﻿#dataEntryPage {
   display: grid;
+  grid-template-columns: auto 1fr;
 }
 #dataEntryPage header {
+  grid-column: 1/3;
   padding: 1rem 1.4rem;
+  position: sticky;
+  top: 0;
+  background-color: var(--primary-background-color);
 }
 #dataEntryPage header .data-entry-tabs {
   display: flex;
@@ -36,6 +41,13 @@
   align-items: flex-end;
   gap: 1rem;
   width: calc(42ch + 5rem);
+}
+#dataEntryPage ::deep .transaction-history-wrapper {
+  padding: 1rem;
+  grid-column: 1/3;
+}
+#dataEntryPage ::deep .account-summary-wrapper {
+  padding: 1rem;
 }
 
 .grid {

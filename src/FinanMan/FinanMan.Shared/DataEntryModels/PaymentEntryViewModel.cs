@@ -33,7 +33,7 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
     public DateTime? TransactionDate { get; set; }
 
     [JsonIgnore]
-    public double Total => Math.Round(LineItems.Where(x => x.Amount.HasValue).Sum(x => x.Amount!.Value), 2);
+    public decimal Total => Math.Round(LineItems.Where(x => x.Amount.HasValue).Sum(x => x.Amount!.Value), 2);
 
     [JsonIgnore]
     public int? PayeeId => int.TryParse(PayeeValueText ?? string.Empty, out var pid) ? pid : default;

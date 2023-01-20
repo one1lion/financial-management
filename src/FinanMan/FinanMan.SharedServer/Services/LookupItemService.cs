@@ -204,7 +204,7 @@ public class LookupItemService : ILookupListService
             case LookupListType.Accounts:
                 queryable = context.Accounts
                     .Include(x => x.AccountType)
-                    .Select(x =>  new AccountViewModel()
+                    .Select(x =>  new AccountLookupViewModel()
                     {
                         Id = x.Id,
                         DisplayText = x.Name,
@@ -266,7 +266,7 @@ public class LookupItemService : ILookupListService
                 .OfType<TLookupItemViewModel>();
                 break;
             case LookupListType.Payees:
-                queryable = context.Payees.Select(x => new PayeeViewModel()
+                queryable = context.Payees.Select(x => new PayeeLookupViewModel()
                 {
                     Id = x.Id,
                     DisplayText = x.Name,
@@ -303,7 +303,7 @@ public static class ILookupItemExtensions
     {
         switch (viewModel)
         {
-            case AccountViewModel accountViewModel:
+            case AccountLookupViewModel accountViewModel:
                 return accountViewModel.Item;
             case LookupItemViewModel<LuAccountType> luAccountTypeViewModel:
                 return luAccountTypeViewModel.Item;
@@ -313,7 +313,7 @@ public static class ILookupItemExtensions
                 return luDepositReasonViewModel.Item;
             case LookupItemViewModel<LuLineItemType> luLineItemTypeViewModel:
                 return luLineItemTypeViewModel.Item;
-            case PayeeViewModel payeeViewModel:
+            case PayeeLookupViewModel payeeViewModel:
                 return payeeViewModel.Item;
             default:
                 // NOTE: Recurrence types are not maintainable from the application

@@ -9,11 +9,11 @@
             <CardBody>
                 <CardText>
                     <div class="form-group">
-                        <label>@Localizer["Username"]</label>
+                        <label>@SharedLocalizer["Username"]</label>
                         <InputText @bind-Value=_loginModel.Username />
                     </div>
                     <div class="form-group">
-                        <label>@Localizer["Password"]</label>
+                        <label>@SharedLocalizer["Password"]</label>
                         <InputText type="password" @bind-Value=_loginModel.Password />
                     </div>
                 </CardText>
@@ -21,8 +21,8 @@
             <CardFooter>
                 <button type="submit" class="invert">Sign In</button>
                 <div class="extra-links">
-                    <a href="#!">@Localizer["ForgotPassword"]</a>
-                    <a href="#!">@Localizer["SignUp"]</a>
+                    <a href="#!">@SharedLocalizer["ForgotPassword"]</a>
+                    <a href="#!">@SharedLocalizer["SignUp"]</a>
                 </div>
             </CardFooter>
         </Card>
@@ -30,7 +30,6 @@
 </div>
 
 @code {
-    [Inject] private IStringLocalizer<LoginForm> Localizer { get; set; } = default!;
     private LoginModel _loginModel = new();
 
     private async Task HandleLoginSubmitted(EditContext editContext)

@@ -1,0 +1,45 @@
+﻿@using FinanMan.BlazorUi.JsInterop;
+@using FinanMan.Shared.AccountSummaryModels;
+
+<table id="accountSummaryGrid" class="data-grid">
+    <thead>
+        <tr>
+            <th>
+                @SharedLocalizer["Name"]
+            </th>
+            <th>
+                @SharedLocalizer["CurrentBalance"]
+            </th>
+            <th>
+                @SharedLocalizer["AdjustedBalance"]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(AccountSummaries is null)
+        {
+            <tr>
+                <td colspan="3">
+                    @SharedLocalizer["Loading"]
+                </td>
+            </tr>
+        }
+        else if(!AccountSummaries.Any())
+        {
+            <tr>
+                <td colspan="3">@SharedLocalizer["NoAccountsMessage"]</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var curAccountSummary in AccountSummaries)
+            {
+                <AccountSummaryRow Model=curAccountSummary />
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public IEnumerable<AccountSummaryViewModel>? AccountSummaries { get; set; }
+}

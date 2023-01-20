@@ -9,7 +9,7 @@ public class PaymentDetailViewModel
     public string? LineItemTypeValueText { get; set; }
     public string? Detail { get; set; }
     [Required]
-    public double? Amount { get; set; }
+    public decimal? Amount { get; set; }
 
     [JsonIgnore]
     public int? LineItemTypeId => int.TryParse(LineItemTypeValueText ?? string.Empty, out var litid) ? litid : default;

@@ -5,15 +5,15 @@
 @using FinanMan.SharedLocalization.Extensions
 @implements IDisposable
 
-<PageTitle>@Localizer["IndexTitle"]</PageTitle>
+<PageTitle>@SharedLocalizer["IndexTitle"]</PageTitle>
 
 <article class="page index-page">
     <header class="hero">
         <div class="hero-filter"></div>
         <div class="content">
             <div class="title">
-                @Localizer["HeroTitle"]
-                <span class="sub-title">@Localizer["HeroSubtitle"]</span>
+                @SharedLocalizer["HeroTitle"]
+                <span class="sub-title">@SharedLocalizer["HeroSubtitle"]</span>
             </div>
             <LoginForm />
         </div>
@@ -22,46 +22,46 @@
         <div class="card-wrapper">
             <Card>
                 <CardHeader>
-                    @Localizer["TrackHeader"]
+                    @SharedLocalizer["TrackHeader"]
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        @Localizer["TrackBodyContent"]
+                        @SharedLocalizer["TrackBodyContent"]
                     </CardText>
                 </CardBody>
                 <CardFooter>
                     <button type="button">
-                        @Localizer["GetStartedButtonText"]
+                        @SharedLocalizer["GetStartedButtonText"]
                     </button>
                 </CardFooter>
             </Card>
             <Card>
                 <CardHeader>
-                    @Localizer["WatchHeader"]
+                    @SharedLocalizer["WatchHeader"]
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        @Localizer["WatchBodyContent"]
+                        @SharedLocalizer["WatchBodyContent"]
                     </CardText>
                 </CardBody>
                 <CardFooter>
                     <button type="button">
-                        @Localizer["GetStartedButtonText"]
+                        @SharedLocalizer["GetStartedButtonText"]
                     </button>
                 </CardFooter>
             </Card>
             <Card>
                 <CardHeader>
-                    @Localizer["PlanHeader"]
+                    @SharedLocalizer["PlanHeader"]
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        @Localizer["PlanBodyContent"]
+                        @SharedLocalizer["PlanBodyContent"]
                     </CardText>
                 </CardBody>
                 <CardFooter>
                     <button type="button">
-                        @Localizer["GetStartedButtonText"]
+                        @SharedLocalizer["GetStartedButtonText"]
                     </button>
                 </CardFooter>
             </Card>
@@ -71,21 +71,21 @@
         <section>
             <span class="header">
                 <a href="data-entry">
-                    Data Entry
+                    @SharedLocalizer["DataEntry"]
                 </a>
             </span>
             <ul>
-                <li>Payment</li>
-                <li>Deposit</li>
-                <li>Transfer</li>
+                <li>@SharedLocalizer["Payment"]</li>
+                <li>@SharedLocalizer["Deposit"]</li>
+                <li>@SharedLocalizer["Transfer"]</li>
             </ul>
         </section>
         <section>
-            <span class="header">About</span>
+            <span class="header">@SharedLocalizer["About"]</span>
             <ul>
-                <li>About Automated Realms</li>
-                <li>Core Values</li>
-                <li><button type="button" @onclick=HandleContactUsClicked>Contact Us</button></li>
+                <li>@SharedLocalizer["AboutAutomatedRealms"]</li>
+                <li>@SharedLocalizer["CoreValues"]</li>
+                <li><button type="button" @onclick=HandleContactUsClicked>@SharedLocalizer["ContactUs"]</button></li>
             </ul>
         </section>
     </footer>
@@ -93,7 +93,6 @@
 
 @code {
     [Inject] private IUiState UiState { get; set; } = default!;
-    [Inject] private IStringLocalizer<Index> Localizer { get; set; } = default!;
 
     private DepositEntryViewModel _newDeposit = new();
     private EditContext _editContext = default!;
@@ -118,3 +117,5 @@
 
     }
 }
+
+

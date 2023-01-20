@@ -4,7 +4,7 @@ namespace FinanMan.SharedLocalization
 {
     public class SharedLocalizerService : IStringLocalizer
     {
-        private IStringLocalizer _localizer;
+        private readonly IStringLocalizer _localizer;
         public SharedLocalizerService(IStringLocalizerFactory stringLocalizerFactory)
         {
             _localizer = stringLocalizerFactory.Create(typeof(SharedLocalizerService));

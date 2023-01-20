@@ -33,10 +33,10 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
     public string? DepositReasonDisplayText { get; set; }
     public string? Memo { get; set; }
     [Required]
-    public double? Amount { get; set; }
+    public decimal? Amount { get; set; }
 
     [JsonIgnore]
-    public double Total => Amount ?? 0;
+    public decimal Total => Amount ?? 0;
 
     [JsonIgnore]
     public int? TargetAccountId => int.TryParse(TargetAccountValueText ?? string.Empty, out var taid) ? taid : default;

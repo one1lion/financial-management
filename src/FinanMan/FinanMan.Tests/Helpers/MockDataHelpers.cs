@@ -49,14 +49,14 @@ public static class MockDataHelpers
                 Id = startId + e,
                 TransactionDate = GenerateRandomDate(),
                 DateEntered = DateTime.UtcNow,
-                PostingDate = Random.Shared.NextDouble() < .5 ? DateTime.UtcNow : null,
-                Memo = Random.Shared.NextDouble() < .2 ? Guid.NewGuid().ToString() : null,
+                PostingDate = (decimal)Random.Shared.NextDouble() < .5m ? DateTime.UtcNow : null,
+                Memo = (decimal)Random.Shared.NextDouble() < .2m ? Guid.NewGuid().ToString() : null,
                 Deposit = new Deposit()
                 {
                     Id = startId + e,
                     DepositReasonId = 1,
                     TransactionId = startId + e,
-                    Amount = Random.Shared.NextDouble() * 23415.23 + 1,
+                    Amount = (decimal)Random.Shared.NextDouble() * 23415.23m + 1,
                 }
             })
             .ToList();
@@ -77,7 +77,7 @@ public static class MockDataHelpers
                     Id = startId + e,
                     TransactionId = startId + e,
                     DepositReasonId = 1,
-                    Amount = Random.Shared.NextDouble() * 23415.23 + 1,
+                    Amount = (decimal)Random.Shared.NextDouble() * 23415.23m + 1,
                 } : null,
                 Payment = typeof(TViewModel) == typeof(PaymentEntryViewModel) ? new Payment()
                 {
@@ -86,12 +86,12 @@ public static class MockDataHelpers
                     PaymentDetails = new List<PaymentDetail>() {
                         new() {
                             Id = (startId + e) * 100 + 1,
-                            Amount = Random.Shared.NextDouble() * 23415.23 + 1 ,
+                            Amount = (decimal)Random.Shared.NextDouble() * 23415.23m + 1 ,
                             LineItemTypeId = 1
                         },
                         new() {
                             Id = (startId + e) * 100 + 2,
-                            Amount = Random.Shared.NextDouble() * 23415.23 + 1 ,
+                            Amount = (decimal)Random.Shared.NextDouble() * 23415.23m + 1 ,
                             LineItemTypeId = 2
                         }
                     }
@@ -101,7 +101,7 @@ public static class MockDataHelpers
                     Id = startId + e,
                     TransactionId = startId + e,
                     TargetAccountId = 2,
-                    Amount = Random.Shared.NextDouble() * 23415.23 + 1,
+                    Amount = (decimal)Random.Shared.NextDouble() * 23415.23m + 1,
                 } : null
             })
             .ToList();
@@ -115,7 +115,6 @@ public static class MockDataHelpers
         var newSpan = new TimeSpan(0, randomTest.Next(0, (int)timeSpan.Value.TotalMinutes), 0);
         return earliestDate.Value + newSpan;
     }
-
 
     public static (Mock<IDbContextFactory<FinanManContext>> dbContextFactory, DbContextOptions<FinanManContext> contextOptions) PrepareDbContext(CancellationToken ct)
     {

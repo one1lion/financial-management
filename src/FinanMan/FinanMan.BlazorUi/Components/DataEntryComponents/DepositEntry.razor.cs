@@ -16,7 +16,7 @@ public partial class DepositEntry
     [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositEntryService { get; set; } = default!;
 
     private DepositEntryViewModel _newDeposit = new();
-    private List<AccountViewModel>? _accounts;
+    private List<AccountLookupViewModel>? _accounts;
     private List<LookupItemViewModel<LuDepositReason>>? _depositReasons;
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
@@ -41,7 +41,7 @@ public partial class DepositEntry
 
     private void PopulateLookups()
     {
-        _accounts = LookupListState.GetLookupItems<AccountViewModel>().ToList();
+        _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
         _depositReasons = LookupListState.GetLookupItems<LookupItemViewModel<LuDepositReason>>().ToList();
     }
 
