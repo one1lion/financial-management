@@ -1,10 +1,9 @@
-﻿namespace FinanMan.Maui
+﻿namespace FinanMan.Maui;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

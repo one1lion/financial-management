@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FInanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
+    <ProjectReference Include="..\FinanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
     <ProjectReference Include="..\FinanMan.Shared\FinanMan.Shared.csproj" />
   </ItemGroup>
 

@@ -32,6 +32,11 @@ async function onActivate(event) {
         .map(key => caches.delete(key)));
 }
 
+function onInstall(event) {
+    self.skipWaiting();
+    console.info("installed without waiting");
+}
+
 async function onFetch(event) {
     let cachedResponse = null;
     if (event.request.method === 'GET') {
