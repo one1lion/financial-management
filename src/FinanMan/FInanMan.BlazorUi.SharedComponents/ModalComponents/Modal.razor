@@ -1,0 +1,14 @@
+﻿@if (Show)
+{
+    <div class="modal-wrapper">
+        <div class="modal-content">
+            @if (ShowDismiss)
+            {
+                <button type="button" class="dismiss" @onclick=HandleDismissClicked>
+                    &times;
+                </button>
+            }
+            @ChildContent
+        </div>
+    </div>
+}

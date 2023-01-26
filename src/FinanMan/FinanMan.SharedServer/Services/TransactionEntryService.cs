@@ -41,16 +41,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         {
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
-            var transactions = context.Transactions.AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Deposit)
-                    .ThenInclude(x => x.DepositReason)
-                .Include(x => x.Payment)
-                    .ThenInclude(x => x.PaymentDetails)
-                .Include(x => x.Payment)
-                    .ThenInclude(x => x.Payee)
-                .Include(x => x.Transfer)
-                    .ThenInclude(x => x.TargetAccount)
+            var transactions = context.TransactionQuery().AsNoTracking()
                 .Where(x =>
                     _transactionType == TransactionType.Deposit && x.Deposit != null
                     || _transactionType == TransactionType.Payment && x.Payment != null
@@ -91,16 +82,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         {
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
-            var transaction = await context.Transactions.AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Deposit)
-                    .ThenInclude(x => x.DepositReason)
-                .Include(x => x.Payment)
-                    .ThenInclude(x => x.PaymentDetails)
-                .Include(x => x.Payment)
-                    .ThenInclude(x => x.Payee)
-                .Include(x => x.Transfer)
-                    .ThenInclude(x => x.TargetAccount)
+            var transaction = await context.TransactionQuery().AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             retResp.Data = (TDataEntryViewModel?)transaction?.ToViewModel();
@@ -135,26 +117,8 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
             using var trans = await context.Database.BeginTransactionAsync(ct);
 
-            var newTransaction = dataEntryViewModel.ToEntityModel();
-            newTransaction.Account = default!;
+            var newTransaction = dataEntryViewModel.ToEntityModel(false);
 
-            switch(newTransaction.TransactionType)
-            {
-                case TransactionType.Deposit:
-                    newTransaction.Deposit!.DepositReason = default!;
-                    break;
-                case TransactionType.Payment:
-                    newTransaction.Payment!.Payee = default!;
-                    foreach(var curDetail in newTransaction.Payment.PaymentDetails)
-                    {
-                        curDetail.Payment = default!;
-                    }
-                    break;
-                case TransactionType.Transfer:
-                    newTransaction.Transfer!.TargetAccount = default!;
-                    break;
-            }
-            
             await context.Transactions.AddAsync(newTransaction, ct);
             retResp.RecordCount = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
@@ -198,13 +162,17 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var trans = await context.Database.BeginTransactionAsync(ct);
 
             // Find the matching record in the database
-            if (!await context.Transactions.AnyAsync(x => x.Id == dataEntryViewModel.TransactionId, ct))
+            var existRecord = await context.TransactionQuery()
+                .FirstOrDefaultAsync(x => x.Id == dataEntryViewModel.TransactionId, ct);
+            if (existRecord is null)
             {
                 retResp.AddError("The specified transaction does not exist.");
                 return retResp;
             }
 
-            var updatedRecord = dataEntryViewModel.ToEntityModel();
+
+
+            var updatedRecord = dataEntryViewModel.ToEntityModel(false);
 
             context.Transactions.Update(updatedRecord);
 
@@ -260,4 +228,19 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
 
         return retResp;
     }
+}
+
+public static class FinanManContextExtensions { 
+    public static IQueryable<Transaction> TransactionQuery(this FinanManContext context)
+        => context.Transactions
+            .Include(x => x.Account)
+                .ThenInclude(x => x.AccountType)
+            .Include(x => x.Deposit)
+                .ThenInclude(x => x.DepositReason)
+            .Include(x => x.Payment)
+                .ThenInclude(x => x.PaymentDetails)
+            .Include(x => x.Payment)
+                .ThenInclude(x => x.Payee)
+            .Include(x => x.Transfer)
+                .ThenInclude(x => x.TargetAccount);
 }

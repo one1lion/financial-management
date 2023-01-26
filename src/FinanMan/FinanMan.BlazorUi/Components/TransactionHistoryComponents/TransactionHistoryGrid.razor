@@ -12,14 +12,14 @@
         <thead>
             <tr>
                 <td colspan="6">
-                    Sort Info:
+                    @SharedLocalizer["SortInfoLabel"]
                     @if (!_sortColumns.Any())
                     {
-                        <span>No Sort</span>
+                        <span> @SharedLocalizer["NoSortText"]</span>
                     }
                     else
                     {
-                        <span>@string.Join(", ", _sortColumns.Select(x => $"{x.Column} {(x.Descending ? "Desc": "Asc")}"))</span>
+                        <span> @string.Join(", ", _sortColumns.Select(x => $"{x.Column} {(x.Descending ? "Desc": "Asc")}"))</span>
                     }
                 </td>
             </tr>
@@ -71,39 +71,31 @@
             else
             {
                 // Since _transactions is not null here, neither is SortedTransactions
-                foreach (var curTransaction in SortedTransactions)
+                foreach (var curTransaction in SortedTransactions.Where(x => x is not null))
                 {
-                    <tr>
-                        <td>
-                            @if (!curTransaction.PostedDate.HasValue)
-                            {
-                                <span>😒</span>
-                            }
-                        </td>
-                        <td>@curTransaction.TransactionDate?.ToLocalTime().ToShortDateString()</td>
-                        <td>@curTransaction.AccountName</td>
-                        <td>
-                            @switch(curTransaction)
-                            {
-                                case PaymentEntryViewModel payment:
-                                    <span>@payment.PayeeName</span>
-                                    break;
-                                case TransferEntryViewModel transfer:
-                                    <span>@transfer.TargetAccountName</span>
-                                    break;
-                                case DepositEntryViewModel deposit:
-                                    <span>@deposit.DepositReasonDisplayText</span>
-                                    break;
-                                default:
-                                    <span>&nbsp;</span>
-                                    break;
-                            }
-                        </td>
-                        <td>@curTransaction.Memo</td>
-                        <td>@curTransaction.Total</td>
-                    </tr>
+                    @switch (curTransaction)
+                    {
+                        case PaymentEntryViewModel payment:
+                            <PaymentHistoryRow Transaction=payment />
+                            break;
+                        case TransferEntryViewModel transfer:
+                            <TransferHistoryRow Transaction=transfer />
+                            break;
+                        case DepositEntryViewModel deposit:
+                            <DepositHistoryRow Transaction=deposit />
+                            break;
+                        default:
+                            <tr>
+                                <td colspan="6">@SharedLocalizer["InvalidTransactionTypeMessage"]</td>
+                            </tr>
+                            break;
+                    }
                 }
             }
         </tbody>
     </table>
 </section>
+
+<TemplatedModal @bind-Show=_showPostedDateEntry>
+
+</TemplatedModal>

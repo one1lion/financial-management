@@ -14,7 +14,7 @@ public partial class TransactionHistoryGrid
 {
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
-    private string _id = Guid.NewGuid().ToString();
+    private readonly string _id = Guid.NewGuid().ToString();
 
     private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
     private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
@@ -24,7 +24,8 @@ public partial class TransactionHistoryGrid
     /// sorted descending or not (Values).
     /// </summary>
     private readonly List<SortColumn> _sortColumns = new();
-
+    private bool _showPostedDateEntry;
+    private ITransactionDataEntryViewModel? _transactionToEdit;
     protected override Task OnInitializedAsync()
     {
         TransactionsState.OnTransactionHistoryChanged += HandleTransactionHistoryChanged;
