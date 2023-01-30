@@ -7,6 +7,7 @@ public class TransferEntryViewModel : ITransactionDataEntryViewModel
 {
     public TransactionType TransactionType => TransactionType.Transfer;
 
+    public int TransferId { get; set; }
     public int TransactionId { get; set; }
 
     public int? AccountId { get; set; }

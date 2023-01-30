@@ -114,7 +114,7 @@ public partial class TransactionHistoryGrid
 
             switch (curSort.Column)
             {
-                case ColumnName.PendingColumn:
+                case ColumnName.PostedDateColumn:
                     sortColProp = x => x.PostedDate ?? DateTime.MinValue;
                     break;
                 case ColumnName.TransDateColumn:
@@ -164,8 +164,8 @@ public class SortColumn
 
 public enum ColumnName
 {
-    [Display(Name = "Pending")]
-    PendingColumn,
+    [Display(Name = "Posted Date")]
+    PostedDateColumn,
     [Display(Name = "Trans Date")]
     TransDateColumn,
     [Display(Name = "Account")]

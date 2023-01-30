@@ -11,6 +11,7 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
 {
     public TransactionType TransactionType => TransactionType.Deposit;
 
+    public int DepositId { get; set; }
     public int TransactionId { get; set; }
 
     [Required]

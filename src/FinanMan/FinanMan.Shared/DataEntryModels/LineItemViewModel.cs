@@ -7,7 +7,9 @@ public class PaymentDetailViewModel
 {
     [Required]
     public string? LineItemTypeValueText { get; set; }
+    public string? LineItemTypeName { get; set; }
     public string? Detail { get; set; }
+    public int SortOrder { get; set; }
     [Required]
     public decimal? Amount { get; set; }
 

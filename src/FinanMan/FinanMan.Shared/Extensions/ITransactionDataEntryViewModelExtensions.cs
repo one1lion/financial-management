@@ -28,6 +28,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case DepositEntryViewModel depositEntryViewModel:
                 transaction.Deposit = new()
                 {
+                    Id = depositEntryViewModel.DepositId,
                     TransactionId = model.TransactionId,
                     DepositReasonId = depositEntryViewModel.DepositReasonId ?? 0,
                     DepositReason = includeNavProperties ? new LuDepositReason()
@@ -42,6 +43,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case PaymentEntryViewModel paymentEntryViewModel:
                 transaction.Payment = new()
                 {
+                    Id = paymentEntryViewModel.PaymentId,
                     TransactionId = model.TransactionId,
                     PayeeId = paymentEntryViewModel.PayeeId ?? 0,
                     Payee = includeNavProperties ? new Payee()
@@ -56,6 +58,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransferEntryViewModel transferEntryViewModel:
                 transaction.Transfer = new()
                 {
+                    Id = transferEntryViewModel.TransferId,
                     TransactionId = model.TransactionId,
                     TargetAccountId = transferEntryViewModel.TargetAccountId ?? 0,
                     TargetAccount = includeNavProperties ? new Account()
@@ -112,7 +115,7 @@ public static class ITransactionDataEntryViewModelExtensions
 
                 var existLineItems = transaction.Payment.PaymentDetails;
 
-                var paymentDetails = paymentEntryViewModel.LineItems.ToEntityModel().ToList();
+                var paymentDetails = paymentEntryViewModel.LineItems.ToEntityModel(false).ToList();
                 var lisToAdd = paymentDetails.Where(x => x.Id == 0).ToList();
                 var lisToRemove = existLineItems.Where(x => !paymentDetails.Any(y => y.Id == x.Id)).ToArray();
                 var lisToUpdate = existLineItems.Where(x => paymentDetails.Any(y => y.Id == x.Id)).ToList();
@@ -164,6 +167,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Deposit:
                 viewModel = new DepositEntryViewModel()
                 {
+                    DepositId = model.Deposit?.Id ?? 0,
                     AccountId = model.AccountId,
                     AccountName = model.Account.Name,
                     TargetAccountValueText = model.Account.Name,
@@ -175,6 +179,7 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Payment:
                 viewModel = new PaymentEntryViewModel()
                 {
+                    PaymentId = model.Payment?.Id ?? 0,
                     AccountName = model.Account.Name,
                     PayeeName = model.Payment?.Payee?.Name,
                     PayeeValueText = model.Payment?.PayeeId.ToString(),
@@ -185,8 +190,10 @@ public static class ITransactionDataEntryViewModelExtensions
             case TransactionType.Transfer:
                 viewModel = new TransferEntryViewModel()
                 {
+                    TransferId = model.Transfer?.Id ?? 0,
                     AccountName = model.Account.Name,
                     TargetAccountName = model.Transfer?.TargetAccount?.Name,
+                    TargetAccountValueText = model.Transfer?.TargetAccountId.ToString(),
                     Amount = model.Transfer?.Amount
                 };
                 break;
@@ -221,7 +228,8 @@ public static class LineItemViewModelExtensions
         LineItemType = includeNavProperties ? new LuLineItemType()
         {
             Id = model.LineItemTypeId ?? 0,
-            Name = model.LineItemTypeValueText ?? string.Empty
+            Name = model.LineItemTypeName ?? string.Empty,
+            SortOrder = model.SortOrder
         } : null!,
         Amount = model.Amount ?? 0,
         Detail = model.Detail
@@ -233,6 +241,8 @@ public static class LineItemViewModelExtensions
     public static PaymentDetailViewModel ToViewModel(this PaymentDetail model) => new()
     {
         LineItemTypeValueText = model.LineItemTypeId.ToString(),
+        LineItemTypeName = model.LineItemType?.Name,
+        SortOrder = model.LineItemType?.SortOrder ?? 0,
         Amount = model.Amount,
         Detail = model.Detail
     };

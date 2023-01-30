@@ -11,6 +11,7 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
 
     public int TransactionId { get; set; }
 
+    public int PaymentId { get; set; }
     public int? AccountId { get; set; }
     [Required]
     public string? AccountValueText

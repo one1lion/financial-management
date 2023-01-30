@@ -170,15 +170,11 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 return retResp;
             }
 
-
-
-            var updatedRecord = dataEntryViewModel.ToEntityModel(false);
-
-            context.Transactions.Update(updatedRecord);
+            existRecord.Patch(dataEntryViewModel);
 
             retResp.RecordCount = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
-            retResp.RecordId = updatedRecord.Id;
+            retResp.RecordId = existRecord.Id;
         }
         catch (Exception ex)
         {
@@ -190,7 +186,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 _ => "An unexpected error occurred while saving the deposit"
             };
             retResp.AddError(msg);
-
+            retResp.RecordCount = 0;
             var logger = _loggerFactory.CreateLogger<TransactionEntryService<TDataEntryViewModel>>();
             logger.LogError(ex, "An error occurred while trying to add a new {transType}: {msg}", typeof(TDataEntryViewModel), msg);
         }
@@ -239,6 +235,7 @@ public static class FinanManContextExtensions {
                 .ThenInclude(x => x.DepositReason)
             .Include(x => x.Payment)
                 .ThenInclude(x => x.PaymentDetails)
+                    .ThenInclude(x => x.LineItemType)
             .Include(x => x.Payment)
                 .ThenInclude(x => x.Payee)
             .Include(x => x.Transfer)
