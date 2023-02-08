@@ -1,11 +1,4 @@
-using FinanMan.Database.Models.Shared;
-using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
-using FinanMan.Shared.Extensions;
-using FinanMan.Shared.ServiceInterfaces;
-using FinanMan.Shared.StateInterfaces;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
@@ -14,7 +7,7 @@ public partial class TransactionHistoryGrid
 {
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
-    private string _id = Guid.NewGuid().ToString();
+    private readonly string _id = Guid.NewGuid().ToString();
 
     private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
     private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
@@ -24,6 +17,7 @@ public partial class TransactionHistoryGrid
     /// sorted descending or not (Values).
     /// </summary>
     private readonly List<SortColumn> _sortColumns = new();
+    private bool _showPostedDateEntry;
 
     protected override Task OnInitializedAsync()
     {
@@ -113,7 +107,7 @@ public partial class TransactionHistoryGrid
 
             switch (curSort.Column)
             {
-                case ColumnName.PendingColumn:
+                case ColumnName.PostedDateColumn:
                     sortColProp = x => x.PostedDate ?? DateTime.MinValue;
                     break;
                 case ColumnName.TransDateColumn:
@@ -163,8 +157,8 @@ public class SortColumn
 
 public enum ColumnName
 {
-    [Display(Name = "Pending")]
-    PendingColumn,
+    [Display(Name = "Posted Date")]
+    PostedDateColumn,
     [Display(Name = "Trans Date")]
     TransDateColumn,
     [Display(Name = "Account")]

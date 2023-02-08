@@ -11,6 +11,7 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
 {
     public TransactionType TransactionType => TransactionType.Deposit;
 
+    public int DepositId { get; set; }
     public int TransactionId { get; set; }
 
     [Required]
@@ -42,4 +43,23 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
     public int? TargetAccountId => int.TryParse(TargetAccountValueText ?? string.Empty, out var taid) ? taid : default;
     [JsonIgnore]
     public int? DepositReasonId => int.TryParse(DepositReasonValueText ?? string.Empty, out var drid) ? drid : default;
+
+    public object Clone() => MemberwiseClone();
+
+    public void Patch(ITransactionDataEntryViewModel source)
+    {
+        if (source is DepositEntryViewModel sourceModel)
+        {
+            DepositId = sourceModel.DepositId;
+            TransactionId = sourceModel.TransactionId;
+            TransactionDate = sourceModel.TransactionDate;
+            PostedDate = sourceModel.PostedDate;
+            AccountId = sourceModel.AccountId;
+            AccountName = sourceModel.AccountName;
+            DepositReasonValueText = sourceModel.DepositReasonValueText;
+            DepositReasonDisplayText = sourceModel.DepositReasonDisplayText;
+            Memo = sourceModel.Memo;
+            Amount = sourceModel.Amount;
+        }
+    }
 }

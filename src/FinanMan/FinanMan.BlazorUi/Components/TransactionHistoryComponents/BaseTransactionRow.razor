@@ -1,0 +1,24 @@
+﻿@typeparam T
+@using FinanMan.Shared.DataEntryModels;
+@using Blazored.FluentValidation;
+
+@code {
+    public virtual RenderFragment RenderRow => @<tr>
+        <td>
+            @if (Transaction.PostedDate.HasValue)
+            {
+                @Transaction.PostedDate.Value.ToShortDateString() <button class="btn-link text-danger" @onclick=HandlePendingValueClicked>&times;</button>
+            }
+            else
+            {
+                <span @onclick=HandlePendingValueClicked>Pending</span>
+            }
+            <ConfirmTogglePendingModal T=T Transaction=Transaction @bind-Show=_showTogglePendingDialog OnConfirmClicked="_ => InvokeAsync(StateHasChanged)" />
+        </td>
+        <td>@Transaction.TransactionDate?.ToShortDateString()</td>
+        <td>@Transaction.AccountName</td>
+        <td>@((MarkupString)PayeeValue)</td>
+        <td>@Transaction.Memo</td>
+        <td>@Transaction.Total</td>
+    </tr>;
+}

@@ -2,7 +2,7 @@
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public interface ITransactionDataEntryViewModel
+public interface ITransactionDataEntryViewModel : ICloneable
 {
     int TransactionId { get; set; }
     TransactionType TransactionType { get; }
@@ -12,4 +12,6 @@ public interface ITransactionDataEntryViewModel
     public int? AccountId { get; set; }
     public string? Memo { get; set; }
     public decimal Total { get; }
+
+    void Patch(ITransactionDataEntryViewModel source);
 }

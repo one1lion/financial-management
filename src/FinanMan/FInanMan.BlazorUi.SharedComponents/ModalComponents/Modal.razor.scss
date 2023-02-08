@@ -1,0 +1,30 @@
+.modal-wrapper {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.6);
+
+    .modal-content {
+        position: relative;
+
+        .dismiss-wrapper {
+            position: absolute;
+            display: flex;
+            justify-content: flex-end;
+            top: 0;
+            right: 0;
+            left: 0;
+            padding: .4rem .6rem;
+
+            .dismiss {
+                font-size: 1.2em;
+                padding: 0;
+                margin: 0;
+                background: transparent;
+                border: none;
+                color: inherit;
+            }
+        }
+    }
+}

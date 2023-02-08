@@ -126,6 +126,9 @@
   <data name="AccountColumnHeader" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="AccountNameRowHeader" xml:space="preserve">
+    <value>Account:</value>
+  </data>
   <data name="AccountSummary" xml:space="preserve">
     <value>Account Summary</value>
   </data>
@@ -135,8 +138,14 @@
   <data name="AmountColumnHeader" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="AmountRowHeader" xml:space="preserve">
+    <value>Amount:</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="ConfirmMarkPendingTitle" xml:space="preserve">
+    <value>Mark Pending?</value>
   </data>
   <data name="ContactUs" xml:space="preserve">
     <value>Contact Us</value>
@@ -147,11 +156,17 @@
   <data name="CurrentBalance" xml:space="preserve">
     <value>Current Balance</value>
   </data>
+  <data name="CurrentRecordInformationText" xml:space="preserve">
+    <value>The current record information:</value>
+  </data>
   <data name="DataEntry" xml:space="preserve">
     <value>Data Entry</value>
   </data>
   <data name="Deposit" xml:space="preserve">
     <value>Deposit</value>
+  </data>
+  <data name="EnterPostedDateTitle" xml:space="preserve">
+    <value>Enter Posted Date</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot your username or password?</value>
@@ -168,14 +183,23 @@
   <data name="IndexTitle" xml:space="preserve">
     <value>Financial Management Tracker</value>
   </data>
+  <data name="InvalidTransactionTypeMessage" xml:space="preserve">
+    <value>Invalid Transaction Type</value>
+  </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log In</value>
   </data>
+  <data name="MarkPendingQuestion" xml:space="preserve">
+    <value>Are you sure you want to mark this transaction as Pending?  This will remove the Posted Date from the record.</value>
+  </data>
   <data name="MemoColumnHeader" xml:space="preserve">
     <value>Memo</value>
+  </data>
+  <data name="MemoRowHeader" xml:space="preserve">
+    <value>Memo:</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -183,17 +207,26 @@
   <data name="NoAccountsMessage" xml:space="preserve">
     <value>No accounts have been added.</value>
   </data>
+  <data name="NoSortText" xml:space="preserve">
+    <value>No Sort</value>
+  </data>
   <data name="NothingAtAddress" xml:space="preserve">
     <value>Sorry, there's nothing at this address.</value>
   </data>
   <data name="NoTransactionsMessage" xml:space="preserve">
     <value>No transactions have been entered</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="PayeeColumnHeader" xml:space="preserve">
     <value>Pay To</value>
+  </data>
+  <data name="PayeeRowHeader" xml:space="preserve">
+    <value>Payee:</value>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
@@ -207,11 +240,23 @@
   <data name="PlanHeader" xml:space="preserve">
     <value>Plan</value>
   </data>
+  <data name="PostedDateLabel" xml:space="preserve">
+    <value>Posted Date</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Need an account? Sign up.</value>
+  </data>
+  <data name="SortInfoLabel" xml:space="preserve">
+    <value>Sort Info:</value>
+  </data>
+  <data name="TotalRowHeader" xml:space="preserve">
+    <value>Total:</value>
   </data>
   <data name="TrackBodyContent" xml:space="preserve">
     <value>Track your financial accounts and the related transactions and balances</value>
@@ -224,6 +269,9 @@
   </data>
   <data name="TransDateColumnHeader" xml:space="preserve">
     <value>Transaction Date</value>
+  </data>
+  <data name="TransDateRowHeader" xml:space="preserve">
+    <value>Transaction Date:</value>
   </data>
   <data name="Transfer" xml:space="preserve">
     <value>Transfer</value>

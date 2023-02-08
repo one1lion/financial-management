@@ -34,7 +34,8 @@ public class AccountService : IAccountService
         var retResp = new ResponseModel<AccountLookupViewModel>();
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
-        
+        retResp.Data = (await context.Accounts.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == accountId))?.ToViewModel();
 
         return retResp;
     }
@@ -60,7 +61,7 @@ public class AccountService : IAccountService
 
         foreach(var account in accounts)
         {
-            AccountSummaryViewModel accountSummary = account.ToAccountSummaryModel();
+            var accountSummary = account.ToAccountSummaryModel();
             retModel.Add(accountSummary);
         }
 
