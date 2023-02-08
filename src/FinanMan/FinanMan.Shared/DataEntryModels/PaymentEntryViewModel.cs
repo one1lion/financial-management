@@ -23,7 +23,7 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
         }
     }
     public string? AccountName { get; set; }
-    public ICollection<PaymentDetailViewModel> LineItems { get; init; } = new List<PaymentDetailViewModel>();
+    public ICollection<PaymentDetailViewModel> LineItems { get; set; } = new List<PaymentDetailViewModel>();
     public string? Memo { get; set; }
     [Required]
     public string? PayeeValueText { get; set; }
@@ -38,5 +38,30 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
 
     [JsonIgnore]
     public int? PayeeId => int.TryParse(PayeeValueText ?? string.Empty, out var pid) ? pid : default;
+
+    public object Clone()
+    {
+        var clonedPayment = (PaymentEntryViewModel)MemberwiseClone();
+        clonedPayment.LineItems = LineItems.Select(x => x.Clone()).OfType<PaymentDetailViewModel>().ToList();
+
+        return clonedPayment;
+    }
+
+    public void Patch(ITransactionDataEntryViewModel source)
+    {
+        if (source is PaymentEntryViewModel sourceModel)
+        {
+            PaymentId = sourceModel.PaymentId;
+            TransactionId = sourceModel.TransactionId;
+            AccountId = sourceModel.AccountId;
+            AccountName = sourceModel.AccountName;
+            LineItems = sourceModel.LineItems.Select(x => x.Clone()).OfType<PaymentDetailViewModel>().ToList();
+            Memo = sourceModel.Memo;
+            PayeeValueText = sourceModel.PayeeValueText;
+            PayeeName = sourceModel.PayeeName;
+            PostedDate = sourceModel.PostedDate;
+            TransactionDate = sourceModel.TransactionDate;
+        }
+    }
 
 }

@@ -1,16 +1,13 @@
-﻿using FinanMan.Database.Models.Shared;
-using FinanMan.Database.Models.Tables;
+﻿using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
-using FinanMan.Shared.ServiceInterfaces;
-using FinanMan.Shared.StateInterfaces;
 
 namespace FinanMan.BlazorUi.State;
 
 public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 {
     private readonly ILookupListService _lookupService;
-    
+
     public LookupListState(ILookupListService lookupService)
     {
         _lookupService = lookupService;

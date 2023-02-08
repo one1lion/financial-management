@@ -34,7 +34,7 @@ public partial class Modal
     
     private void HandleDismissClicked()
     {
-        ShowDismiss = false;
+        Show = false;
         StateHasChanged();
     }
 }

@@ -6,5 +6,9 @@
   {
     "outputFile": "FlyoutComponents/Flyout.razor.css",
     "inputFile": "FlyoutComponents/Flyout.razor.scss"
+  },
+  {
+    "outputFile": "ModalComponents/Modal.razor.css",
+    "inputFile": "ModalComponents/Modal.razor.scss"
   }
 ]

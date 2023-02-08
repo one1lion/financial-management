@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace FinanMan.Shared.DataEntryModels;
 
-public class PaymentDetailViewModel
+public class PaymentDetailViewModel : ICloneable
 {
     [Required]
     public string? LineItemTypeValueText { get; set; }
@@ -15,4 +15,6 @@ public class PaymentDetailViewModel
 
     [JsonIgnore]
     public int? LineItemTypeId => int.TryParse(LineItemTypeValueText ?? string.Empty, out var litid) ? litid : default;
+
+    public object Clone() => MemberwiseClone();
 }

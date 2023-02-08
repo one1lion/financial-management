@@ -1,11 +1,4 @@
-using FinanMan.Database.Models.Shared;
-using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
-using FinanMan.Shared.Extensions;
-using FinanMan.Shared.ServiceInterfaces;
-using FinanMan.Shared.StateInterfaces;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
@@ -25,7 +18,7 @@ public partial class TransactionHistoryGrid
     /// </summary>
     private readonly List<SortColumn> _sortColumns = new();
     private bool _showPostedDateEntry;
-    private ITransactionDataEntryViewModel? _transactionToEdit;
+
     protected override Task OnInitializedAsync()
     {
         TransactionsState.OnTransactionHistoryChanged += HandleTransactionHistoryChanged;

@@ -11,11 +11,12 @@ public partial class ContactUsFlyoutContent : FlyoutContentBase
         return Task.FromResult(_allowClose);
     }
 
-    public void Dispose()
+    public new void Dispose()
     {
         if (FlyoutParent?.CanClose == CanCloseAsync)
         {
             FlyoutParent.CanClose = null;
         }
+        base.Dispose();
     }
 }

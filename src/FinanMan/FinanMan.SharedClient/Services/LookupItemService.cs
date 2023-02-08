@@ -22,7 +22,6 @@ public class LookupItemService : ILookupListService
     {
         var retResp = new ResponseModel<List<TLookupItemViewModel>>();
         var typeInst = new TLookupItemViewModel();
-        Console.WriteLine($"Trying to get lookup items for {typeof(TLookupItemViewModel)} ({typeInst.ListType})");
 
         try
         {

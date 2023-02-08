@@ -1,66 +1,24 @@
-﻿@using FinanMan.Shared.DataEntryModels;
-@typeparam T
+﻿@typeparam T
+@using FinanMan.Shared.DataEntryModels;
+@using Blazored.FluentValidation;
 
 @code {
     public virtual RenderFragment RenderRow => @<tr>
         <td>
             @if (Transaction.PostedDate.HasValue)
             {
-                @Transaction.PostedDate.Value.ToShortDateString() <button class="btn-link text-danger" @onclick="_ => TogglePending()">&times;</button>
+                @Transaction.PostedDate.Value.ToShortDateString() <button class="btn-link text-danger" @onclick=HandlePendingValueClicked>&times;</button>
             }
             else
             {
-                <span @onclick="_ => TogglePending()">Pending</span>
+                <span @onclick=HandlePendingValueClicked>Pending</span>
             }
+            <ConfirmTogglePendingModal T=T Transaction=Transaction @bind-Show=_showTogglePendingDialog OnConfirmClicked="_ => InvokeAsync(StateHasChanged)" />
         </td>
-        <td>@Transaction.TransactionDate?.ToLocalTime().ToShortDateString()</td>
+        <td>@Transaction.TransactionDate?.ToShortDateString()</td>
         <td>@Transaction.AccountName</td>
-        <td>
-            @switch (Transaction)
-            {
-                case PaymentEntryViewModel payment:
-                    <span>@payment.PayeeName</span>
-                    break;
-                case TransferEntryViewModel transfer:
-                    <span>@transfer.TargetAccountName</span>
-                    break;
-                case DepositEntryViewModel deposit:
-                    <span>@deposit.DepositReasonDisplayText</span>
-                    break;
-                default:
-                    <span>&nbsp;</span>
-                    break;
-            }
-        </td>
+        <td>@((MarkupString)PayeeValue)</td>
         <td>@Transaction.Memo</td>
         <td>@Transaction.Total</td>
     </tr>;
-
-    public virtual RenderFragment RenderConfirmMarkPendingModal => @<TemplatedModal @bind-Show=_showConfirmMarkPending>
-        <ModalHeader>
-            <h3>@SharedLocalizer["ConfirmMarkPendingTitle"]</h3>
-        </ModalHeader>
-        <ModalContent>
-            <p>@SharedLocalizer["MarkPendingQuestion"]</p>
-        </ModalContent>
-        <ModalFooter>
-            <button type="button" class="btn btn-primary" @onclick="_ => TogglePending(true)">Remove</button>
-            <button type="button" class="btn btn-secondary" @onclick="_ => _showConfirmMarkPending = false">Cancel</button>
-        </ModalFooter>
-    </TemplatedModal>;
-
-    public virtual RenderFragment RenderEnterPostedDateModal => @<TemplatedModal @bind-Show=_showPostedDateEntry>
-        <ModalHeader>
-            <h3>@SharedLocalizer["EnterPostedDateTitle"]</h3>
-        </ModalHeader>
-        <ModalContent>
-            <label for="postedDate-@Transaction.TransactionId">@SharedLocalizer["PostedDateLabel"]</label>
-            <input type="date" id="postedDate-@Transaction.TransactionId" @bind=_enteredPostedDate />
-        </ModalContent>
-        <ModalFooter>
-            <button type="button" class="btn btn-primary" @onclick="_ => TogglePending(true)">Ok</button>
-            <button type="button" class="btn btn-secondary" @onclick="_ => _showPostedDateEntry = false">Cancel</button>
-        </ModalFooter>
-    </TemplatedModal>;
-
 }
