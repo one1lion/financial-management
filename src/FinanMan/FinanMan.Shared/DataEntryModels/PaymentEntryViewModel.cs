@@ -10,6 +10,7 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
     public TransactionType TransactionType => TransactionType.Payment;
 
     public int TransactionId { get; set; }
+    public DateTime DateEntered { get; set; } = DateTime.UtcNow;
 
     public int PaymentId { get; set; }
     public int? AccountId { get; set; }

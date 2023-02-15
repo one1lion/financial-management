@@ -10,6 +10,7 @@ public class TransferEntryViewModel : ITransactionDataEntryViewModel
 
     public int TransferId { get; set; }
     public int TransactionId { get; set; }
+    public DateTime DateEntered { get; set; } = DateTime.UtcNow;
 
     public int? AccountId { get; set; }
     public string? SourceAccountValueText

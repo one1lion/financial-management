@@ -20,7 +20,7 @@ public static class ITransactionDataEntryViewModelExtensions
             AccountId = model.AccountId!.Value,
             Memo = model.Memo,
             PostingDate = model.PostedDate,
-            DateEntered = DateTime.UtcNow
+            DateEntered = model.TransactionId == 0 ? DateTime.UtcNow : model.DateEntered
         };
 
         switch (model)
@@ -203,6 +203,7 @@ public static class ITransactionDataEntryViewModelExtensions
 
         // Populate the common properties
         viewModel.TransactionId = model.Id;
+        viewModel.DateEntered = model.DateEntered;
         viewModel.TransactionDate = model.TransactionDate;
         viewModel.PostedDate = model.PostingDate;
         viewModel.AccountId = model.AccountId;

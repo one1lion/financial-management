@@ -6,8 +6,8 @@
         <EditForm Model=_newPayment Context="paymentDataEntryItem" id="paymentEntryForm" class="data-entry-form" @ref=_paymentEntryEditForm>
             <DataAnnotationsValidator />
             <div id="transDate" class="form-group">
-                <label>Transaction Date</label>
-                <InputDate @bind-Value=_newPayment.TransactionDate />
+                <label id="lblSomeId" aria-label="someId" for="someId">Transaction Date</label>
+                <InputDate id="someId" aria-labelledby="lblSomeId" @bind-Value=_newPayment.TransactionDate />
                 <ValidationMessage For="() => _newPayment.TransactionDate" />
             </div>
 
@@ -126,7 +126,7 @@
                 <ValidationMessage For="() => _newPayment.PostedDate" />
             </div>
             <div id="saveButton" class="form-group">
-                <button type="button" @onclick=HandlePaymentSubmitted>Submit</button>
+                <button type="button" @onclick=HandlePaymentSubmitted title="Submit">Submit</button>
             </div>
             @*<EditFormNavigationLock EditContext=paymentDataEntryItem />*@
         </EditForm>

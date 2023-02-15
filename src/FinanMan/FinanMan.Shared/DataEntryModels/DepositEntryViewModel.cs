@@ -13,6 +13,7 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
 
     public int DepositId { get; set; }
     public int TransactionId { get; set; }
+    public DateTime DateEntered { get; set; } = DateTime.UtcNow;
 
     [Required]
     public DateTime? TransactionDate { get; set; }

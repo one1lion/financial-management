@@ -1,10 +1,6 @@
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
-using FinanMan.Shared.ServiceInterfaces;
-using FinanMan.Shared.StateInterfaces;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 
@@ -12,6 +8,7 @@ public partial class TransferEntry
 {
     [Inject] private ILookupListState LookupListState { get; set; } = default!;
     [Inject] private ITransactionEntryService<TransferEntryViewModel> TransferEntryService { get; set; } = default!;
+    [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
@@ -37,6 +34,7 @@ public partial class TransferEntry
             {
                 await _transDateInput.Element.Value.FocusAsync();
             }
+            await TransactionsState.RefreshTransactionHistoryAsync();
         }
         _submitting = false;
 
