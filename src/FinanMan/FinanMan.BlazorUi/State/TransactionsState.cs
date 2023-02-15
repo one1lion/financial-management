@@ -36,7 +36,7 @@ public class TransactionsState : BaseNotifyPropertyChanges, ITransactionsState
     public async Task RefreshTransactionHistoryAsync()
     {
         var asOfDate = (_transactions?.Any() ?? false)
-            ? _transactions.Max(t => t.TransactionDate)
+            ? _transactions.Max(t => t.DateEntered)
             : default(DateTime?);
 
         var depTransTask = _depositTransactionService.GetTransactionsAsync(asOfDate: asOfDate);
@@ -49,7 +49,6 @@ public class TransactionsState : BaseNotifyPropertyChanges, ITransactionsState
         var payResp = paymentTransTask.Result;
         var traResp = transferTransTask.Result;
 
-        _transactions?.Clear();
         var transactionErroredResponses = new List<ResponseModel<List<ITransactionDataEntryViewModel>>>();
 
         if (depResp?.WasError ?? true)

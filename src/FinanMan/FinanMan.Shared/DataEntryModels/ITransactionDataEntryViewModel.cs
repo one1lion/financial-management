@@ -6,6 +6,7 @@ public interface ITransactionDataEntryViewModel : ICloneable
 {
     int TransactionId { get; set; }
     TransactionType TransactionType { get; }
+    public DateTime DateEntered { get; set; }
     public DateTime? TransactionDate { get; set; }
     public DateTime? PostedDate { get; set; }
     public string? AccountName { get; set; }

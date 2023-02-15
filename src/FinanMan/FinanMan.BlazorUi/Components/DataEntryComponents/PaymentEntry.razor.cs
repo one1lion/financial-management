@@ -2,10 +2,6 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
-using FinanMan.Shared.ServiceInterfaces;
-using FinanMan.Shared.StateInterfaces;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 
@@ -13,6 +9,7 @@ public partial class PaymentEntry
 {
     [Inject] private ILookupListState LookupListState { get; set; } = default!;
     [Inject] private ITransactionEntryService<PaymentEntryViewModel> PaymentEntryService { get; set; } = default!;
+    [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
     private PaymentEntryViewModel _newPayment = new();
     private PaymentDetailViewModel _newLineItem = new();
@@ -53,6 +50,7 @@ public partial class PaymentEntry
             {
                 await _transDateInput.Element.Value.FocusAsync();
             }
+            await TransactionsState.RefreshTransactionHistoryAsync();
         }
         _submitting = false;
 

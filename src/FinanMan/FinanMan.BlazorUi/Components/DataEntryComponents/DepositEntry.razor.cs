@@ -2,10 +2,6 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
-using FinanMan.Shared.ServiceInterfaces;
-using FinanMan.Shared.StateInterfaces;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 

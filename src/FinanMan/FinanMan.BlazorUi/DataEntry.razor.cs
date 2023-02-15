@@ -2,12 +2,9 @@ namespace FinanMan.BlazorUi;
 
 public partial class DataEntry
 {
-    [Inject]
-    private ILookupListService LookupListService { get; set; } = default!;
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = default!;
-    [Parameter]
-    public string EntType { get; set; } = default!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
+    [Parameter] public string EntType { get; set; } = default!;
 
     private EntryType _entryType = EntryType.Payments;
 
