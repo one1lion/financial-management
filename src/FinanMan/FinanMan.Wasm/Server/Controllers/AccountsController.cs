@@ -24,8 +24,8 @@ public class AccountsController : ControllerBase
         => Ok(await _accountService.GetAccountAsync(id));
 
     [HttpGet("summaries")]
-    public async Task<IActionResult> GetAccountSummaries()
-        => Ok(await _accountService.GetAccountSummariesAsync());
+    public async Task<IActionResult> GetAccountSummaries(CancellationToken ct = default)
+        => Ok(await _accountService.GetAccountSummariesAsync(ct));
 
     [HttpGet("summaries/{id:int}")]
     public async Task<IActionResult> GetAccountSummary([FromRoute] int id)
