@@ -6,6 +6,7 @@ namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 public partial class ConfirmTogglePendingModal<T>
     where T : class, ITransactionDataEntryViewModel
 {
+    [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
     [Inject] private ITransactionEntryService<T> TransactionEntryService { get; set; } = default!;
 
     [Parameter] public T Transaction { get; set; } = default!;
@@ -97,6 +98,7 @@ public partial class ConfirmTogglePendingModal<T>
                     {
                         await OnConfirmClicked.InvokeAsync();
                     }
+                    TransactionsState.NotifyTransactionsChanged();
                 }
                 else
                 {
