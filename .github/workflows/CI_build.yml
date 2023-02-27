@@ -12,6 +12,10 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x'
+      - name: Install MAUI Workloads
+        run: |
+          dotnet workload install android --ignore-failed-sources
+          dotnet workload install maui --ignore-failed-sources
       - name: Install dependencies
         run: dotnet restore 'src/FinanMan/FinanMan.sln'
       - name: Build
