@@ -19,11 +19,11 @@ public partial class DepositEntry
 
     private InputDate<DateTime?>? _transDateInput;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         LookupListState.PropertyChanged += HandleLookupListStateChanged;
+        await LookupListState.Initialize();
         PopulateLookups();
-        return LookupListState.Initialize();
     }
 
     private async void HandleLookupListStateChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
