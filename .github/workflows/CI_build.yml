@@ -13,8 +13,8 @@ jobs:
         with:
           dotnet-version: '7.x'
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore 'src/FinanMan/FinanMan.sln'
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore 'src/FinanMan/FinanMan.sln'
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --no-restore --verbosity normal 'src/FinanMan/FinanMan.sln'
