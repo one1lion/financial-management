@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: dotnet restore 'src/FinanMan/FinanMan.sln'
       - name: Build
-        run: dotnet build --configuration Release --no-restore 'src/FinanMan/FinanMan.sln'
+        run: dotnet build --configuration Release -p:PublishReadyToRun=false --no-restore 'src/FinanMan/FinanMan.sln'
       - name: Test
         run: dotnet test --no-restore --verbosity normal 'src/FinanMan/FinanMan.sln'
