@@ -12,10 +12,10 @@
         <thead>
             <tr>
                 <td colspan="6">
-                    @SharedLocalizer["SortInfoLabel"]
+                    @SharedLocalizerService.SortInfoLabel
                     @if (!_sortColumns.Any())
                     {
-                        <span> @SharedLocalizer["NoSortText"]</span>
+                        <span> @SharedLocalizerService.NoSortText</span>
                     }
                     else
                     {
@@ -59,13 +59,13 @@
             @if (SortedTransactions is null)
             {
                 <tr>
-                    <td colspan="6">@SharedLocalizer["Loading"]</td>
+                    <td colspan="6">@SharedLocalizerService.Loading</td>
                 </tr>
             }
             else if (!SortedTransactions.Any())
             {
                 <tr>
-                    <td colspan="6">@SharedLocalizer["NoTransactionsMessage"]</td>
+                    <td colspan="6">@SharedLocalizerService.NoTransactionsMessage</td>
                 </tr>
             }
             else
@@ -86,7 +86,7 @@
                             break;
                         default:
                             <tr>
-                                <td colspan="6">@SharedLocalizer["InvalidTransactionTypeMessage"]</td>
+                                <td colspan="6">@SharedLocalizerService.InvalidTransactionTypeMessage</td>
                             </tr>
                             break;
                     }

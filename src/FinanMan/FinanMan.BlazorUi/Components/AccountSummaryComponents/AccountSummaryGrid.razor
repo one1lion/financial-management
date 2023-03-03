@@ -5,13 +5,13 @@
     <thead>
         <tr>
             <th>
-                @SharedLocalizer["Name"]
+                @SharedLocalizerService.Name
             </th>
             <th>
-                @SharedLocalizer["CurrentBalance"]
+                @SharedLocalizerService.CurrentBalance
             </th>
             <th>
-                @SharedLocalizer["AdjustedBalance"]
+                @SharedLocalizerService.AdjustedBalance
             </th>
         </tr>
     </thead>
@@ -20,14 +20,14 @@
         {
             <tr>
                 <td colspan="3">
-                    @SharedLocalizer["Loading"]
+                    @SharedLocalizerService.Loading
                 </td>
             </tr>
         }
         else if(!AccountSummaries.Any())
         {
             <tr>
-                <td colspan="3">@SharedLocalizer["NoAccountsMessage"]</td>
+                <td colspan="3">@SharedLocalizerService.NoAccountsMessage</td>
             </tr>
         }
         else

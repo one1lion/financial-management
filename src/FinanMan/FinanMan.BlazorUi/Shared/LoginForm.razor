@@ -4,16 +4,16 @@
     <EditForm Model=_loginModel OnValidSubmit=HandleLoginSubmitted>
         <Card>
             <CardHeader>
-                @SharedLocalizer["LogIn"]
+                @SharedLocalizerService.LogIn
             </CardHeader>
             <CardBody>
                 <CardText>
                     <div class="form-group">
-                        <label>@SharedLocalizer["Username"]</label>
+                        <label>@SharedLocalizerService.Username</label>
                         <InputText @bind-Value=_loginModel.Username />
                     </div>
                     <div class="form-group">
-                        <label>@SharedLocalizer["Password"]</label>
+                        <label>@SharedLocalizerService.Password</label>
                         <InputText type="password" @bind-Value=_loginModel.Password />
                     </div>
                 </CardText>
@@ -21,8 +21,8 @@
             <CardFooter>
                 <button type="submit" class="invert">Sign In</button>
                 <div class="extra-links">
-                    <a href="#!">@SharedLocalizer["ForgotPassword"]</a>
-                    <a href="#!">@SharedLocalizer["SignUp"]</a>
+                    <a href="#!">@SharedLocalizerService.ForgotPassword</a>
+                    <a href="#!">@SharedLocalizerService.SignUp</a>
                 </div>
             </CardFooter>
         </Card>
