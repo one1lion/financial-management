@@ -9,11 +9,11 @@
         <ModalHeader>
             @if (IsCurrentlyPending)
             {
-                <h3>@SharedLocalizer["EnterPostedDateTitle"]</h3>
+                <h3>@SharedLocalizerService.EnterPostedDateTitle</h3>
             }
             else
             {
-                <h3>@SharedLocalizer["ConfirmMarkPendingTitle"]</h3>
+                <h3>@SharedLocalizerService.ConfirmMarkPendingTitle</h3>
             }
         </ModalHeader>
         <ModalContent>
@@ -24,38 +24,38 @@
 
             @if (IsCurrentlyPending)
             {
-                <p>@SharedLocalizer["CurrentRecordInformationText"]</p>
+                <p>@SharedLocalizerService.CurrentRecordInformationText</p>
                 <div class="form-group">
-                    <label for="postedDate-@Transaction.TransactionId">@SharedLocalizer["PostedDateLabel"]</label>
+                    <label for="postedDate-@Transaction.TransactionId">@SharedLocalizerService.PostedDateLabel</label>
                     <input type="date" id="postedDate-@Transaction.TransactionId" @bind=_enteredPostedDate @ref=_postedDateInput />
                 </div>
             }
             else
             {
-                <p>@SharedLocalizer["MarkPendingQuestion"]</p>
+                <p>@SharedLocalizerService.MarkPendingQuestion</p>
             }
             <ul>
                 <li>
-                    <text>@SharedLocalizer["TransDateRowHeader"]</text>
+                    <text>@SharedLocalizerService.TransDateRowHeader</text>
                     <text>@Transaction.TransactionDate?.ToShortDateString()</text>
                 </li>
                 <li>
-                    <text>@SharedLocalizer["AccountNameRowHeader"]</text>
+                    <text>@SharedLocalizerService.AccountNameRowHeader</text>
                     <text>@Transaction.AccountName</text>
                 </li>
                 <li>
-                    <text>@SharedLocalizer["PayeeRowHeader"]</text>
+                    <text>@SharedLocalizerService.PayeeRowHeader</text>
                     <text>@((MarkupString)PayeeValue)</text>
                 </li>
                 @if (!string.IsNullOrWhiteSpace(Transaction.Memo))
                 {
                     <li>
-                        <text>@SharedLocalizer["MemoRowHeader"]</text>
+                        <text>@SharedLocalizerService.MemoRowHeader</text>
                         <text>@Transaction.Memo</text>
                     </li>
                 }
                 <li>
-                    <text>@SharedLocalizer["TotalRowHeader"]</text>
+                    <text>@SharedLocalizerService.TotalRowHeader</text>
                     <text>@Transaction.Total</text>
                 </li>
             </ul>
@@ -64,14 +64,14 @@
             <button type="button" class="btn btn-primary" @onclick="_ => TogglePending(true)">
                 @if (IsCurrentlyPending)
                 {
-                    <text>@SharedLocalizer["Ok"]</text>
+                    <text>@SharedLocalizerService.Ok</text>
                 }
                 else
                 {
-                    <text>@SharedLocalizer["Remove"]</text>
+                    <text>@SharedLocalizerService.Remove</text>
                 }
             </button>
-            <button type="button" class="btn btn-secondary" @onclick="HandleCancelClicked">@SharedLocalizer["Cancel"]</button>
+            <button type="button" class="btn btn-secondary" @onclick="HandleCancelClicked">@SharedLocalizerService.Cancel</button>
         </ModalFooter>
     </TemplatedModal>
 </EditForm>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DebuggingSourceGenerators": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\FinanMan.SharedLocalization\\FinanMan.SharedLocalization.csproj"
+    }
+  }
+}

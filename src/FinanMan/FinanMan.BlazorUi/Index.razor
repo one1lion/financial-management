@@ -5,15 +5,15 @@
 @using FinanMan.SharedLocalization.Extensions
 @implements IDisposable
 
-<PageTitle>@SharedLocalizer["IndexTitle"]</PageTitle>
+<PageTitle>@SharedLocalizerService.IndexTitle</PageTitle>
 
 <article class="page index-page">
     <header class="hero">
         <div class="hero-filter"></div>
         <div class="content">
             <div class="title">
-                @SharedLocalizer["HeroTitle"]
-                <span class="sub-title">@SharedLocalizer["HeroSubtitle"]</span>
+                @SharedLocalizerService.HeroTitle
+                <span class="sub-title">@SharedLocalizerService.HeroSubtitle</span>
             </div>
             <LoginForm />
         </div>
@@ -22,46 +22,46 @@
         <div class="card-wrapper">
             <Card>
                 <CardHeader>
-                        @SharedLocalizer["TrackHeader"]
+                    @SharedLocalizerService.TrackHeader
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                            @SharedLocalizer["TrackBodyContent"]
+                        @SharedLocalizerService.TrackBodyContent
                     </CardText>
                 </CardBody>
                 <CardFooter>
                     <button type="button" tabindex="0">
-                        @SharedLocalizer["GetStartedButtonText"]
-                    </button>
-                </CardFooter>
-            </Card>
-            <Card>
-                    <CardHeader>
-                        @SharedLocalizer["WatchHeader"]
-                    </CardHeader>
-                <CardBody>
-                    <CardText>
-                        @SharedLocalizer["WatchBodyContent"]
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                    <button type="button">
-                        @SharedLocalizer["GetStartedButtonText"]
+                        @SharedLocalizerService.GetStartedButtonText
                     </button>
                 </CardFooter>
             </Card>
             <Card>
                 <CardHeader>
-                    @SharedLocalizer["PlanHeader"]
+                    @SharedLocalizerService.WatchHeader
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        @SharedLocalizer["PlanBodyContent"]
+                        @SharedLocalizerService.WatchBodyContent
                     </CardText>
                 </CardBody>
                 <CardFooter>
                     <button type="button">
-                        @SharedLocalizer["GetStartedButtonText"]
+                        @SharedLocalizerService.GetStartedButtonText
+                    </button>
+                </CardFooter>
+            </Card>
+            <Card>
+                <CardHeader>
+                    @SharedLocalizerService.PlanHeader
+                </CardHeader>
+                <CardBody>
+                    <CardText>
+                        @SharedLocalizerService.PlanBodyContent
+                    </CardText>
+                </CardBody>
+                <CardFooter>
+                    <button type="button">
+                        @SharedLocalizerService.GetStartedButtonText
                     </button>
                 </CardFooter>
             </Card>
@@ -71,21 +71,21 @@
         <section>
             <span class="header">
                 <a href="data-entry">
-                    @SharedLocalizer["DataEntry"]
+                    @SharedLocalizerService.DataEntry
                 </a>
             </span>
             <ul>
-                <li>@SharedLocalizer["Payment"]</li>
-                <li>@SharedLocalizer["Deposit"]</li>
-                <li>@SharedLocalizer["Transfer"]</li>
+                <li>@SharedLocalizerService.Payment</li>
+                <li>@SharedLocalizerService.Deposit</li>
+                <li>@SharedLocalizerService.Transfer</li>
             </ul>
         </section>
         <section>
-            <span class="header">@SharedLocalizer["About"]</span>
+            <span class="header">@SharedLocalizerService.About</span>
             <ul>
-                <li>@SharedLocalizer["AboutAutomatedRealms"]</li>
-                <li>@SharedLocalizer["CoreValues"]</li>
-                <li><button type="button" @onclick=HandleContactUsClicked>@SharedLocalizer["ContactUs"]</button></li>
+                <li>@SharedLocalizerService.AboutAutomatedRealms</li>
+                <li>@SharedLocalizerService.CoreValues</li>
+                <li><button type="button" @onclick=HandleContactUsClicked>@SharedLocalizerService.ContactUs</button></li>
             </ul>
         </section>
     </footer>

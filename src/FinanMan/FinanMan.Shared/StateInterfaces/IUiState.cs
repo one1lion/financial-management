@@ -10,6 +10,11 @@ namespace FinanMan.Shared.StateInterfaces;
 
 public interface IUiState : INotifyPropertyChanged, INotifyPropertyChanging
 {
+    event Func<Task>? ActiveLanguageChanged;
+
     RenderFragment? FlyoutContent { get; set; }
     bool FlyoutVisible { get; set; }
+    string ActiveLanguage { get; }
+
+    void SetLanguage(string language);
 }

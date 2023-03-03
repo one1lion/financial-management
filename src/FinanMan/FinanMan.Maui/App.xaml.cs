@@ -1,11 +1,15 @@
-﻿namespace FinanMan.Maui;
+﻿using FinanMan.Shared.StateInterfaces;
+using System.Globalization;
+
+namespace FinanMan.Maui;
 
 public partial class App : Application
 {
-    public App()
+    public App(IUiState uiState)
     {
         InitializeComponent();
-
-        MainPage = new MainPage();
+        
+        MainPage = new MainPage(uiState);
     }
+
 }

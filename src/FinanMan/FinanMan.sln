@@ -56,6 +56,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{B356E913-F0B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Maui", "FinanMan.Maui\FinanMan.Maui.csproj", "{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source Generators", "Source Generators", "{B272D7D3-5C6A-4AC7-9DBC-042B23038ED0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalizationConstGenerator", "LocalizationConstGenerator\LocalizationConstGenerator.csproj", "{A7AD3945-D0AE-432F-850D-F3409DD1F347}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +124,10 @@ Global
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A7AD3945-D0AE-432F-850D-F3409DD1F347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7AD3945-D0AE-432F-850D-F3409DD1F347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7AD3945-D0AE-432F-850D-F3409DD1F347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7AD3945-D0AE-432F-850D-F3409DD1F347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +151,7 @@ Global
 		{D7DEC3A3-AD7E-45B8-BF41-ACE605E4B0AC} = {DDA12A56-D2D9-402F-A472-BBE141119242}
 		{B356E913-F0B4-4C51-9296-B6612CA9C142} = {DDA12A56-D2D9-402F-A472-BBE141119242}
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636} = {D7DEC3A3-AD7E-45B8-BF41-ACE605E4B0AC}
+		{A7AD3945-D0AE-432F-850D-F3409DD1F347} = {B272D7D3-5C6A-4AC7-9DBC-042B23038ED0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BC5E62D-A8CB-4DD4-B4A6-0F41B8EB1C16}
