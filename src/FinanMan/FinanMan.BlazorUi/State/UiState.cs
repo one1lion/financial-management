@@ -21,6 +21,12 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
     public string ActiveLanguage { get => _activeLanguage; }
 
     public event Func<Task>? ActiveLanguageChanged;
+    public event Func<Task>? CollapseSelectLists;
+    public event Func<Task>? InitialUiLoadComplete;
+
+    public int SomeNum { get; set; }
+
+    public bool InitialUiLoaded { get; private set; }
 
     public void SetLanguage(string language)
     {
@@ -39,9 +45,21 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
         }
-
+        
         _activeLanguage = language;
 
         ActiveLanguageChanged?.Invoke();
+    }
+
+    public void CollapseAllSelectLists()
+    {
+        CollapseSelectLists?.Invoke();
+    }
+
+    public void RaiseInitialUiLoadComplete()
+    {
+        if(InitialUiLoaded) { return; }
+        InitialUiLoaded = true;
+        InitialUiLoadComplete?.Invoke();
     }
 }

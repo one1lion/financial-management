@@ -1,12 +1,23 @@
+using FinanMan.BlazorUi.State;
+
 namespace FinanMan.BlazorUi;
 
 public partial class DataEntry
 {
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] private IUiState UiState { get; set; } = default!;
 
     [Parameter] public string EntType { get; set; } = default!;
 
     private EntryType _entryType = EntryType.Payments;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            UiState.RaiseInitialUiLoadComplete();
+        }
+    }
 
     public override Task SetParametersAsync(ParameterView parameters)
     {

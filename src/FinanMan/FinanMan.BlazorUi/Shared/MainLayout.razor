@@ -1,4 +1,6 @@
-﻿@using FinanMan.BlazorUi.SharedComponents.FlyoutComponents
+﻿@using FinanMan.BlazorUi.JsInterop;
+@using FinanMan.BlazorUi.SharedComponents.FlyoutComponents
+@using System.Diagnostics;
 @inherits LayoutComponentBase
 @implements IDisposable
 
@@ -13,24 +15,3 @@
 
 <Flyout @bind-Show=UiState.FlyoutVisible ChildContent=UiState.FlyoutContent />
     
-@code {
-    [Inject] private IUiState UiState { get; set; } = default!;
-
-    protected override void OnInitialized()
-    {
-        UiState.PropertyChanged += HandleUiPropertyChanged;
-    }
-
-    private void HandleUiPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(UiState.FlyoutVisible))
-        {
-            StateHasChanged();
-        }
-    }
-
-    public void Dispose()
-    {
-        UiState.PropertyChanged -= HandleUiPropertyChanged;
-    }
-}

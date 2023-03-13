@@ -1,5 +1,4 @@
 ﻿using FinanMan.BlazorUi.State;
-using FinanMan.Shared.StateInterfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FinanMan.BlazorUi.Extensions

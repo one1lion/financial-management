@@ -13,6 +13,12 @@
         <div class="content">
             <div class="title">
                 @SharedLocalizerService.HeroTitle
+                <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
                 <span class="sub-title">@SharedLocalizerService.HeroSubtitle</span>
             </div>
             <LoginForm />
@@ -90,32 +96,3 @@
         </section>
     </footer>
 </article>
-
-@code {
-    [Inject] private IUiState UiState { get; set; } = default!;
-
-    private DepositEntryViewModel _newDeposit = new();
-    private EditContext _editContext = default!;
-
-    protected override void OnInitialized()
-    {
-    }
-
-    private void HandleContactUsClicked()
-    {
-        UiState.FlyoutVisible = false;
-        UiState.FlyoutContent = (builder) =>
-        {
-            builder.OpenComponent<ContactUsFlyoutContent>(0);
-            builder.CloseComponent();
-        };
-        UiState.FlyoutVisible = true;
-    }
-
-    public void Dispose()
-    {
-
-    }
-}
-
-
