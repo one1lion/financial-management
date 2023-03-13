@@ -12,7 +12,7 @@ public partial class MainPage : ContentPage
     {
         _uiState = uiState;
         _uiState.ActiveLanguageChanged += HandleActiveLangaugeChanged;
-
+        
         InitializeComponent();
     }
 

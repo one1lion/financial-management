@@ -1,5 +1,6 @@
-﻿using FinanMan.BlazorUi.Extensions;
+﻿using FinanMan.BlazorUi.State;
 using FinanMan.Shared.Extensions;
+using FinanMan.Shared.StateInterfaces;
 using FinanMan.SharedClient.Extensions;
 using Microsoft.Extensions.Logging;
 
@@ -32,9 +33,12 @@ public static class MauiProgram
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
 
 
-        builder.Services.AddFinanManLocalization();
-        builder.Services.AddStateManagement();
-        builder.Services.AddClientServices();
+        builder.Services
+            .AddScoped<ILookupListState, LookupListState>()
+            .AddScoped<ITransactionsState, TransactionsState>()
+            .AddSingleton<IUiState, UiState>()
+            .AddFinanManLocalization()
+            .AddClientServices();
 
 
         return builder.Build();

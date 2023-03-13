@@ -4,11 +4,11 @@
              xmlns:local="clr-namespace:FinanMan.BlazorUi;assembly=FinanMan.BlazorUi"
              x:Class="FinanMan.Maui.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-
-    <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
-        <BlazorWebView.RootComponents>
-            <RootComponent Selector="#app" ComponentType="{x:Type local:App}" />
-        </BlazorWebView.RootComponents>
-    </BlazorWebView>
-
+    <Grid>
+        <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type local:App}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+    </Grid>
 </ContentPage>
