@@ -1,4 +1,7 @@
 # Financial Management Tracker Application
+
+[![pr integration pipeline](https://github.com/one1lion/financial-management/actions/workflows/CI_build.yml/badge.svg?branch=main&event=workflow_run)](https://github.com/one1lion/financial-management/actions/workflows/CI_build.yml)
+
 ## Introduction
 
 Welcome to the repository for the Financial Management Tracker Application.  This repository is a sample project used for exploring Blazor and, eventually, MAUI. You can find the project description, requirements, and other information below.  If you are here while this project is in development, feel free to join us on [Twitch](https://twitch.tv/one1lion) where we are streaming the progress.  I also post the videos to [YouTube](https://www.youtube.com/channel/UCYttq_qNbnkGgL7R93IrP-A) channel.  Enjoy!
