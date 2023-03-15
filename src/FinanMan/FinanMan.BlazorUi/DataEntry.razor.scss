@@ -2,12 +2,14 @@
     display: grid;
     // TODO: Use grid-template-areas for ease of media queries
     grid-template-columns: auto 1fr;
+
     header {
         grid-column: 1 / 3;
         padding: 1rem 1.4rem;
         position: sticky;
         top: 0;
         background-color: var(--primary-background-color);
+        z-index: 1;
 
         .data-entry-tabs {
             display: flex;
@@ -16,7 +18,7 @@
             padding: 0;
             margin: 0;
             z-index: 1;
-            
+
             button {
                 border: none;
                 padding: .6rem;
