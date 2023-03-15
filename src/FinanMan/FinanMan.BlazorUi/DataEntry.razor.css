@@ -8,6 +8,7 @@
   position: sticky;
   top: 0;
   background-color: var(--primary-background-color);
+  z-index: 1;
 }
 #dataEntryPage header .data-entry-tabs {
   display: flex;
