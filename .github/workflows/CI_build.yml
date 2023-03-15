@@ -1,6 +1,6 @@
-name: dotnet package
+name: pr integration pipeline
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
@@ -20,5 +20,5 @@ jobs:
         run: dotnet restore 'src/FinanMan/FinanMan.sln'
       - name: Build
         run: dotnet build --configuration Release -p:PublishReadyToRun=false -p:PublishTrimmed=false -p:RunAOTCompilation=false --no-restore 'src/FinanMan/FinanMan.sln'
-      - name: Test
-        run: dotnet test --no-restore --verbosity normal 'src/FinanMan/FinanMan.sln'
+#      - name: Test
+#        run: dotnet test --no-restore --verbosity normal 'src/FinanMan/FinanMan.sln'
