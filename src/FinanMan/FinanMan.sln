@@ -60,6 +60,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wpf", "Wpf", "{5C4BB7DC-C10
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Wpf", "FinanMan.Wpf\FinanMan.Wpf.csproj", "{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31A0C48C-59AD-48BE-A8A8-72F4168144E2}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.github\workflows\CI_build.yml = ..\..\.github\workflows\CI_build.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,8 +127,6 @@ Global
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
