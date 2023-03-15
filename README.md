@@ -1,6 +1,6 @@
 # Financial Management Tracker Application
 
-[![dotnet package](https://github.com/one1lion/financial-management/actions/workflows/CI_build.yml/badge.svg?branch=main&event=workflow_run)](https://github.com/one1lion/financial-management/actions/workflows/CI_build.yml)
+[![pr integration pipeline](https://github.com/one1lion/financial-management/actions/workflows/CI_build.yml/badge.svg?branch=main&event=workflow_run)](https://github.com/one1lion/financial-management/actions/workflows/CI_build.yml)
 
 ## Introduction
 
