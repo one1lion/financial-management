@@ -56,39 +56,43 @@
             </tr>
         </thead>
         <tbody>
-            @if (DisplayedTransactions is null)
+            @if (Transactions is null)
             {
                 <tr>
                     <td colspan="6">@SharedLocalizerService.Loading</td>
                 </tr>
             }
-            else if (!DisplayedTransactions.Any())
-            {
-                <tr>
-                    <td colspan="6">@SharedLocalizerService.NoTransactionsMessage</td>
-                </tr>
-            }
             else
             {
-                // Since _transactions is not null here, neither is SortedTransactions
-                foreach (var curTransaction in DisplayedTransactions.Where(x => x is not null))
+                var displayedTransactions = DisplayedTransactions.ToList();
+                if (!displayedTransactions.Any())
                 {
-                    @switch (curTransaction)
+                    <tr>
+                        <td colspan="6">@SharedLocalizerService.NoTransactionsMessage</td>
+                    </tr>
+                }
+                else
+                {
+                    // Since _transactions is not null here, neither is SortedTransactions
+                    foreach (var curTransaction in displayedTransactions.Where(x => x is not null))
                     {
-                        case PaymentEntryViewModel payment:
-                            <PaymentHistoryRow Transaction=payment />
-                            break;
-                        case TransferEntryViewModel transfer:
-                            <TransferHistoryRow Transaction=transfer />
-                            break;
-                        case DepositEntryViewModel deposit:
-                            <DepositHistoryRow Transaction=deposit />
-                            break;
-                        default:
-                            <tr>
-                                <td colspan="6">@SharedLocalizerService.InvalidTransactionTypeMessage</td>
-                            </tr>
-                            break;
+                        @switch (curTransaction)
+                        {
+                            case PaymentEntryViewModel payment:
+                                <PaymentHistoryRow Transaction=payment />
+                                break;
+                            case TransferEntryViewModel transfer:
+                                <TransferHistoryRow Transaction=transfer />
+                                break;
+                            case DepositEntryViewModel deposit:
+                                <DepositHistoryRow Transaction=deposit />
+                                break;
+                            default:
+                                <tr>
+                                    <td colspan="6">@SharedLocalizerService.InvalidTransactionTypeMessage</td>
+                                </tr>
+                                break;
+                        }
                     }
                 }
             }
