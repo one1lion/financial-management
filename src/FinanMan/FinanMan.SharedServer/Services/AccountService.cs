@@ -1,5 +1,4 @@
 ﻿using FinanMan.Database;
-using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.AccountSummaryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
@@ -16,7 +15,7 @@ public class AccountService : IAccountService
     {
         _dbContextFactory = dbContextFactory;
     }
-    
+
     public async Task<ResponseModel<IEnumerable<AccountLookupViewModel>>?> GetAccountsAsync(CancellationToken ct = default)
     {
         var retResp = new ResponseModel<IEnumerable<AccountLookupViewModel>>();
@@ -35,7 +34,7 @@ public class AccountService : IAccountService
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
         retResp.Data = (await context.Accounts.AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == accountId))?.ToViewModel();
+            .FirstOrDefaultAsync(x => x.Id == accountId, cancellationToken: ct))?.ToViewModel();
 
         return retResp;
     }
@@ -59,7 +58,7 @@ public class AccountService : IAccountService
 
         var retModel = new List<AccountSummaryViewModel>();
 
-        foreach(var account in accounts)
+        foreach (var account in accounts)
         {
             var accountSummary = account.ToAccountSummaryModel();
             retModel.Add(accountSummary);

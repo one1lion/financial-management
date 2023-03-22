@@ -23,7 +23,7 @@ public partial class MainLayout
         UiState.CollapseSelectLists += HandleCollapseSelectLists;
         var hold = UiState.SomeNum;
     }
-
+    
     private void HandleDebounceTimeout(object? sender, System.Timers.ElapsedEventArgs e)
     {
         _collapseDebounce.Stop();
@@ -38,8 +38,6 @@ public partial class MainLayout
         }
     }
 
-    long _changeCount;
-
     private async Task HandleCollapseSelectLists()
     {
         _collapseDebounce.Stop();
@@ -47,9 +45,19 @@ public partial class MainLayout
 
         if (_moving) { return; }
         _moving = true;
-        Debug.WriteLine($"Handling Collapse {++_changeCount}");
         await SuperDukasoftInterop.CollapseSelectLists(JsRuntime).AsTask();
-        await InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleFlyoutShowChanged(bool newShow)
+    {
+        if (newShow)
+        {
+            UiState.ShowFlyout(UiState.FlyoutContent);
+        }
+        else
+        {
+            UiState.CollapseFlyout();
+        }
     }
 
     public void Dispose()

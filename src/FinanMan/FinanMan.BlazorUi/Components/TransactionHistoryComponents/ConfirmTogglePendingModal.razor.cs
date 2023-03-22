@@ -62,6 +62,7 @@ public partial class ConfirmTogglePendingModal<T>
                 {
                     Transaction.Patch(forUpdate);
                     Show = false;
+                    TransactionsState.NotifyTransactionsChanged();
                     if (ShowChanged.HasDelegate)
                     {
                         await ShowChanged.InvokeAsync(false);

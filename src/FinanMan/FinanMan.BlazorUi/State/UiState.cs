@@ -1,8 +1,5 @@
 ﻿using FinanMan.Shared.General;
-using FinanMan.Shared.StateInterfaces;
-using Microsoft.AspNetCore.Components;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace FinanMan.BlazorUi.State;
 
@@ -16,8 +13,8 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
     private string _activeLanguage = "en-US";
     #endregion Backing Fields
 
-    public RenderFragment? FlyoutContent { get => _flyoutContent; set => SetField(ref _flyoutContent, value); }
-    public bool FlyoutVisible { get => _flyoutVisible; set => SetField(ref _flyoutVisible, value); }
+    public RenderFragment? FlyoutContent { get => _flyoutContent; private set => _flyoutContent = value; }
+    public bool FlyoutVisible { get => _flyoutVisible; private set => SetField(ref _flyoutVisible, value); }
     public string ActiveLanguage { get => _activeLanguage; }
 
     public event Func<Task>? ActiveLanguageChanged;
@@ -45,7 +42,7 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
         }
-        
+
         _activeLanguage = language;
 
         ActiveLanguageChanged?.Invoke();
@@ -56,9 +53,24 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
         CollapseSelectLists?.Invoke();
     }
 
+    public void ShowFlyout(RenderFragment? content)
+    {
+        FlyoutContent = content;
+        if (content is null) { 
+            CollapseFlyout();
+            return;
+        }
+        FlyoutVisible = true;
+    }
+
+    public void CollapseFlyout()
+    {
+        FlyoutVisible = false;
+    }
+
     public void RaiseInitialUiLoadComplete()
     {
-        if(InitialUiLoaded) { return; }
+        if (InitialUiLoaded) { return; }
         InitialUiLoaded = true;
         InitialUiLoadComplete?.Invoke();
     }

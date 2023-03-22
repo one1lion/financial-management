@@ -54,7 +54,7 @@ public class LookupItemService : ILookupListService
             return retResp;
         }
 
-        retResp.Data = await queryable.FirstOrDefaultAsync(x => x.ValueText == id.ToString());
+        retResp.Data = await queryable.FirstOrDefaultAsync(x => x.ValueText == id.ToString(), cancellationToken: ct);
         retResp.RecordCount = retResp.Data is null ? 0 : 1;
         return retResp;
     }
@@ -299,28 +299,18 @@ public class LookupItemService : ILookupListService
 public static class ILookupItemExtensions
 {
     // TODO: Finish writing the ToEntity extensions
-    public static ILookupItem ToEntityModel(this ILookupItemViewModel viewModel)
+    public static ILookupItem ToEntityModel(this ILookupItemViewModel viewModel) => viewModel switch
     {
-        switch (viewModel)
-        {
-            case AccountLookupViewModel accountViewModel:
-                return accountViewModel.Item;
-            case LookupItemViewModel<LuAccountType> luAccountTypeViewModel:
-                return luAccountTypeViewModel.Item;
-            case LookupItemViewModel<LuCategory> luCategoryViewModel:
-                return luCategoryViewModel.Item;
-            case LookupItemViewModel<LuDepositReason> luDepositReasonViewModel:
-                return luDepositReasonViewModel.Item;
-            case LookupItemViewModel<LuLineItemType> luLineItemTypeViewModel:
-                return luLineItemTypeViewModel.Item;
-            case PayeeLookupViewModel payeeViewModel:
-                return payeeViewModel.Item;
-            default:
-                // NOTE: Recurrence types are not maintainable from the application
-                throw new NotImplementedException();
-        }
-    }
-    
+        AccountLookupViewModel accountViewModel => accountViewModel.Item,
+        LookupItemViewModel<LuAccountType> luAccountTypeViewModel => luAccountTypeViewModel.Item,
+        LookupItemViewModel<LuCategory> luCategoryViewModel => luCategoryViewModel.Item,
+        LookupItemViewModel<LuDepositReason> luDepositReasonViewModel => luDepositReasonViewModel.Item,
+        LookupItemViewModel<LuLineItemType> luLineItemTypeViewModel => luLineItemTypeViewModel.Item,
+        PayeeLookupViewModel payeeViewModel => payeeViewModel.Item,
+        _ => throw new NotImplementedException(),
+        // NOTE: Recurrence types are not maintainable from the application
+    };
+
     public static void Patch(this ILookupItem model, ILookupItem updatedModel)
     {
         model.Name = updatedModel.Name;

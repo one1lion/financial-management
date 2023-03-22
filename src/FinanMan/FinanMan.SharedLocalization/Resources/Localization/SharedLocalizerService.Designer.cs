@@ -529,6 +529,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A listing of transaction history items..
+        /// </summary>
+        public static string TransactionHistoryTableDescription {
+            get {
+                return ResourceManager.GetString("TransactionHistoryTableDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Date.
         /// </summary>
         public static string TransDateColumnHeader {

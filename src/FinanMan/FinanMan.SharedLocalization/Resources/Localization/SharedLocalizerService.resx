@@ -273,6 +273,9 @@
   <data name="TransactionHistory" xml:space="preserve">
     <value>Transaction History</value>
   </data>
+  <data name="TransactionHistoryTableDescription" xml:space="preserve">
+    <value>A listing of transaction history items.</value>
+  </data>
   <data name="TransDateColumnHeader" xml:space="preserve">
     <value>Transaction Date</value>
   </data>

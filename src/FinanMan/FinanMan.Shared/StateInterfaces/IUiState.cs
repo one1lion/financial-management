@@ -10,8 +10,8 @@ public interface IUiState : INotifyPropertyChanged, INotifyPropertyChanging
     event Func<Task>? CollapseSelectLists;
     event Func<Task>? InitialUiLoadComplete;
 
-    RenderFragment? FlyoutContent { get; set; }
-    bool FlyoutVisible { get; set; }
+    RenderFragment? FlyoutContent { get; }
+    bool FlyoutVisible { get; }
     string ActiveLanguage { get; }
 
     bool InitialUiLoaded { get; }
@@ -19,4 +19,6 @@ public interface IUiState : INotifyPropertyChanged, INotifyPropertyChanging
     void SetLanguage(string language);
     void CollapseAllSelectLists();
     void RaiseInitialUiLoadComplete();
+    void ShowFlyout(RenderFragment? content);
+    void CollapseFlyout();
 }
