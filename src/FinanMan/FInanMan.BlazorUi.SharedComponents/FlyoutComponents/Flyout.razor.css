@@ -6,16 +6,30 @@
 }
 .flyout .flyout-content-wrapper {
   position: fixed;
+  padding: 0 1rem;
   top: 0;
   right: 0;
   height: 100vh;
   background: black;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
 }
-.flyout .close-button {
+.flyout .flyout-content-wrapper .close-button {
+  border: none;
+  border-radius: 0;
+  font-size: 1.2rem;
   position: absolute;
-  top: 0.4rem;
-  right: 0.4rem;
+  top: 50%;
+  left: 0;
+  transform: translate(-100%, -50%);
+  padding: 0;
+  height: 2rem;
+  width: 1.2rem;
 }
 .flyout:not(.expanded) {
   display: none;
+}
+.flyout.rtl .flyout-content-wrapper {
+  right: unset;
+  left: 0;
 }

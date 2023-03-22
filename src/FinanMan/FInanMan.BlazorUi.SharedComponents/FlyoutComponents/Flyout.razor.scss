@@ -6,19 +6,36 @@
 
     .flyout-content-wrapper {
         position: fixed;
+        padding: 0 1rem;
         top: 0;
         right: 0;
         height: 100vh;
         background: black;
-    } 
+        border-left: 1px solid white;
+        border-right: 1px solid white;
 
-    .close-button {
-        position: absolute;
-        top: .4rem;
-        right: .4rem;
+        .close-button {
+            border: none;
+            border-radius: 0;
+            font-size: 1.2rem;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translate(-100%, -50%);
+            padding: 0;
+            height: 2rem;
+            width: 1.2rem;
+        }
     }
 
     &:not(.expanded) {
         display: none;
+    }
+
+    &.rtl {
+        .flyout-content-wrapper {
+            right: unset;
+            left: 0;
+        }
     }
 }
