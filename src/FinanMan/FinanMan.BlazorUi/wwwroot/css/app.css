@@ -40,6 +40,9 @@
   --font-size-h2: 1.5em;
   --font-size-h3: 1.17em;
   --font-size-h4: 1em;
+  /* Default z-index */
+  --flyout-z-index: 2;
+  --modal-z-index: calc(var(--flyout-z-index) + 1);
 }
 
 .card {
@@ -48,6 +51,10 @@
 }
 .card .card-header, .card .card-footer {
   border-color: var(--primary-background-color) !important;
+}
+
+.modal-wrapper {
+  z-index: var(--modal-z-index);
 }
 
 .form-group {
