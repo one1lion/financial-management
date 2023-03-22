@@ -1,9 +1,10 @@
-using FinanMan.BlazorUi.SharedComponents.FlyoutComponents;
+﻿using FinanMan.BlazorUi.SharedComponents.FlyoutComponents;
 
 namespace FinanMan.BlazorUi.FlyoutContentComponents;
-
-public partial class ContactUsFlyoutContent : FlyoutContentBase
+public partial class AccountTransactionHistoryFlyoutContent : FlyoutContentBase
 {
+    [Parameter] public required string AccountName { get; set; }
+    
     private bool _allowClose = true;
 
     public override Task<bool> CanCloseAsync()

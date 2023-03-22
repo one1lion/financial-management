@@ -7,10 +7,12 @@ public partial class TransactionHistoryGrid
 {
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
+    [Parameter] public string? AccountName { get; set; }
+
     private readonly string _id = Guid.NewGuid().ToString();
 
-    private List<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions;
-    private IEnumerable<ITransactionDataEntryViewModel>? SortedTransactions => GetSortedTransactions();
+    private IEnumerable<ITransactionDataEntryViewModel>? _transactions => TransactionsState.Transactions?.Where(x => string.IsNullOrWhiteSpace(AccountName) || x.AccountName == AccountName);
+    private IEnumerable<ITransactionDataEntryViewModel>? DisplayedTransactions => GetSortedTransactions();
 
     /// <summary>
     /// Tracks the list of columns being sorted (Keys) and whether they are 
@@ -143,8 +145,6 @@ public partial class TransactionHistoryGrid
             }
         }
 
-        // TODO: Decide whether to apply the current sort to the underlying transactions history list from state
-        TransactionsState.Transactions = sortedTrans.ToList();
         return sortedTrans;
     }
 }

@@ -2,7 +2,7 @@
 @using FinanMan.Shared.DataEntryModels
 
 <section class="transaction-history">
-    <table id="tblTransactionHistory-@_id" class="data-grid">
+    <table id="tblTransactionHistory-@_id" class="data-grid" aria-label="@SharedLocalizerService.TransactionHistoryTableDescription">
         <colgroup id="postedDateCol" />
         <colgroup id="transDateCol" />
         <colgroup id="accountCol" />
@@ -56,13 +56,13 @@
             </tr>
         </thead>
         <tbody>
-            @if (SortedTransactions is null)
+            @if (DisplayedTransactions is null)
             {
                 <tr>
                     <td colspan="6">@SharedLocalizerService.Loading</td>
                 </tr>
             }
-            else if (!SortedTransactions.Any())
+            else if (!DisplayedTransactions.Any())
             {
                 <tr>
                     <td colspan="6">@SharedLocalizerService.NoTransactionsMessage</td>
@@ -71,7 +71,7 @@
             else
             {
                 // Since _transactions is not null here, neither is SortedTransactions
-                foreach (var curTransaction in SortedTransactions.Where(x => x is not null))
+                foreach (var curTransaction in DisplayedTransactions.Where(x => x is not null))
                 {
                     @switch (curTransaction)
                     {

@@ -1,4 +1,5 @@
-﻿@using FinanMan.Shared.AccountSummaryModels;
+﻿@using FinanMan.BlazorUi.FlyoutContentComponents;
+@using FinanMan.Shared.AccountSummaryModels;
 
 <tr>
     <td>
@@ -21,10 +22,19 @@
 </tr>
 
 @code {
+    [Inject] IUiState UiState { get; set; } = default!;
     [Parameter] public AccountSummaryViewModel Model { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized(); 
+    }
 
     private void HandleAccountClicked()
     {
         // Navigate / Somehow show the transaction history for this account
+        UiState.ShowFlyout(
+            @<AccountTransactionHistoryFlyoutContent AccountName=@Model.AccountName />
+        );
     }
 }

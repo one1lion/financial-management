@@ -24,13 +24,13 @@ public partial class Index
 
     private void HandleContactUsClicked()
     {
-        UiState.FlyoutVisible = false;
-        UiState.FlyoutContent = (builder) =>
-        {
-            builder.OpenComponent<ContactUsFlyoutContent>(0);
-            builder.CloseComponent();
-        };
-        UiState.FlyoutVisible = true;
+        UiState.CollapseFlyout();
+        UiState.ShowFlyout(
+            (builder) =>
+            {
+                builder.OpenComponent<ContactUsFlyoutContent>(0);
+                builder.CloseComponent();
+            }); 
     }
 
     public void Dispose()
