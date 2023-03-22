@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -27,6 +28,8 @@ public partial class App : Application
 #if DEBUG
         services.AddBlazorWebViewDeveloperTools();
 #endif
+        services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7176") });
+
         services
             .AddScoped<ILookupListState, LookupListState>()
             .AddScoped<ITransactionsState, TransactionsState>()
