@@ -22,7 +22,8 @@
         {
             foreach (var curLi in Payment.LineItems)
             {
-                <PaymentDetailRow PaymentDetail=curLi OnDeletePaymentDetailClicked=HandleDeletePaymentDetail />
+                var thisLi = curLi;
+                <PaymentDetailRow @bind-PaymentDetail=thisLi OnDeletePaymentDetailClicked=HandleDeletePaymentDetail />
             }
         }
     </tbody>

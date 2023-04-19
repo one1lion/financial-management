@@ -55,6 +55,10 @@ public partial class PaymentDetailRow
         PaymentDetail.Amount = _editPaymentDetail.Amount;
         PaymentDetail.Detail = _editPaymentDetail.Detail;
         _editing = false;
+        if (PaymentDetailChanged.HasDelegate)
+        {
+            return PaymentDetailChanged.InvokeAsync(PaymentDetail);
+        }
         return Task.CompletedTask;
     }
 
