@@ -22,7 +22,7 @@
         {
             foreach (var curLi in Payment.LineItems)
             {
-                <PaymentDetailRow PaymentDetail=curLi />
+                <PaymentDetailRow PaymentDetail=curLi OnDeletePaymentDetailClicked=HandleDeletePaymentDetail />
             }
         }
     </tbody>
