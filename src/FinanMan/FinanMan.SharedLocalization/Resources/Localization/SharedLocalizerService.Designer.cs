@@ -142,6 +142,33 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ClearFilter.
+        /// </summary>
+        public static string ClearFilter {
+            get {
+                return ResourceManager.GetString("ClearFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Sort.
+        /// </summary>
+        public static string ClearSort {
+            get {
+                return ResourceManager.GetString("ClearSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the Thing?.
+        /// </summary>
+        public static string ConfirmMarkDeleteTitle {
+            get {
+                return ResourceManager.GetString("ConfirmMarkDeleteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mark Pending?.
         /// </summary>
         public static string ConfirmMarkPendingTitle {
@@ -156,6 +183,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string ContactUs {
             get {
                 return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control Buttons.
+        /// </summary>
+        public static string ControlButtonsColumnHeader {
+            get {
+                return ResourceManager.GetString("ControlButtonsColumnHeader", resourceCulture);
             }
         }
         
@@ -196,6 +232,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deposit.
         /// </summary>
         public static string Deposit {
@@ -214,11 +259,56 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detail.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Transaction.
+        /// </summary>
+        public static string EditTransaction {
+            get {
+                return ResourceManager.GetString("EditTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string EditTransactionInstructions {
+            get {
+                return ResourceManager.GetString("EditTransactionInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Posted Date.
         /// </summary>
         public static string EnterPostedDateTitle {
             get {
                 return ResourceManager.GetString("EnterPostedDateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         
@@ -277,6 +367,24 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line Item Controls.
+        /// </summary>
+        public static string LineItemControlColumnHeader {
+            get {
+                return ResourceManager.GetString("LineItemControlColumnHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Item Type.
+        /// </summary>
+        public static string LineItemType {
+            get {
+                return ResourceManager.GetString("LineItemType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
@@ -291,6 +399,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string LogIn {
             get {
                 return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this transaction record?.
+        /// </summary>
+        public static string MarkDeletedQuestion {
+            get {
+                return ResourceManager.GetString("MarkDeletedQuestion", resourceCulture);
             }
         }
         
@@ -423,6 +540,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Pending.
         /// </summary>
+        public static string Pending {
+            get {
+                return ResourceManager.GetString("Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
         public static string PendingColumnHeader {
             get {
                 return ResourceManager.GetString("PendingColumnHeader", resourceCulture);
@@ -480,6 +606,24 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort Ascending.
+        /// </summary>
+        public static string SortAscending {
+            get {
+                return ResourceManager.GetString("SortAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort Descending.
+        /// </summary>
+        public static string SortDescending {
+            get {
+                return ResourceManager.GetString("SortDescending", resourceCulture);
             }
         }
         

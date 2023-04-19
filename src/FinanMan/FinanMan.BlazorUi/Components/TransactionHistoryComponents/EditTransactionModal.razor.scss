@@ -1,0 +1,55 @@
+@import '../../Sass/Sizing';
+
+#editTransModalContainer {
+    ::deep {
+        .modal-wrapper {
+            overflow-y: auto;
+
+            .modal-content {
+                max-height: calc(100vh - 2rem);
+                min-height: 40ch;
+                display: flex;
+
+                .card {
+                    .card-body {
+                        display: flex;
+                        overflow: hidden;
+
+                        .card-text {
+                            height: calc(100% - 2rem);
+                            overflow-y: auto;
+                            padding: 1rem;
+
+                            .title {
+                                display: none;
+                            }
+
+                            #saveButton {
+                                display: none;
+                            }
+                            // TODO: get this to apply to the form
+                            .data-entry-section {
+                                .data-entry-form {
+                                    width: auto;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $md-min) {
+    ::deep {
+        .data-entry-section {
+            .data-entry-form {
+                display: grid;
+                align-items: flex-end;
+                gap: 1rem;
+                width: calc(42ch + 5rem);
+            }
+        }
+    }
+}

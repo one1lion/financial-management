@@ -7,6 +7,8 @@ public abstract partial class BaseTransactionRow<T> : ComponentBase
     [Parameter] public T Transaction { get; set; } = default!;
 
     private bool _showTogglePendingDialog;
+    private bool _showConfirmDeleteDialog;
+    private bool _showEditDialog;
 
     private string PayeeValue => Transaction switch
     {
@@ -19,6 +21,18 @@ public abstract partial class BaseTransactionRow<T> : ComponentBase
     private Task HandlePendingValueClicked()
     {
         _showTogglePendingDialog = true;
+        return Task.CompletedTask;
+    }
+
+    private Task HandleEditClicked()
+    {
+        _showEditDialog = true;
+        return Task.CompletedTask;
+    }
+
+    private Task HandleDeleteClicked()
+    {
+        _showConfirmDeleteDialog = true;
         return Task.CompletedTask;
     }
 }

@@ -1,6 +1,6 @@
 ﻿@typeparam T
-@using FinanMan.Shared.DataEntryModels;
-@using Blazored.FluentValidation;
+@using FinanMan.Shared.DataEntryModels
+@using Blazored.FluentValidation
 
 @code {
     public virtual RenderFragment RenderRow => @<tr>
@@ -11,7 +11,7 @@
             }
             else
             {
-                <span @onclick=HandlePendingValueClicked>Pending</span>
+                <span @onclick=HandlePendingValueClicked>@SharedLocalizerService.Pending</span>
             }
             <ConfirmTogglePendingModal T=T Transaction=Transaction @bind-Show=_showTogglePendingDialog OnConfirmClicked="_ => InvokeAsync(StateHasChanged)" />
         </td>
@@ -20,5 +20,11 @@
         <td>@((MarkupString)PayeeValue)</td>
         <td>@Transaction.Memo</td>
         <td>@Transaction.Total</td>
+        <td class="control-buttons">
+            <button class="btn btn-link" role="button" @onclick=HandleEditClicked aria-label="@SharedLocalizerService.Edit"><i class="icon text-warning" aria-hidden="true">✎</i></button>
+            <button class="btn btn-link" role="button" @onclick=HandleDeleteClicked aria-label="@SharedLocalizerService.Delete"><i class="icon text-danger" aria-hidden="true">✖</i></button>
+            <ConfirmDeleteTransactionModal T=T Transaction=Transaction @bind-Show=_showConfirmDeleteDialog OnConfirmClicked="_ => InvokeAsync(StateHasChanged)" />
+            <EditTransactionModal T=T Transaction=Transaction @bind-Show=_showEditDialog OnConfirmClicked="_ => InvokeAsync(StateHasChanged)" />
+        </td>
     </tr>;
 }

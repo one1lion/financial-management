@@ -11,7 +11,9 @@ public partial class DepositEntry
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
     [Inject] private ITransactionEntryService<DepositEntryViewModel> DepositEntryService { get; set; } = default!;
 
-    private DepositEntryViewModel _newDeposit = new();
+    [Parameter] public DepositEntryViewModel? Deposit { get; set; }
+
+    private DepositEntryViewModel _editDeposit = new();
     private List<AccountLookupViewModel>? _accounts;
     private List<LookupItemViewModel<LuDepositReason>>? _depositReasons;
     private ResponseModelBase<int>? _currentResponse;
@@ -22,8 +24,18 @@ public partial class DepositEntry
     protected override async Task OnInitializedAsync()
     {
         LookupListState.PropertyChanged += HandleLookupListStateChanged;
-        await LookupListState.Initialize();
+        await LookupListState.InitializeAsync();
         PopulateLookups();
+    }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        parameters.SetParameterProperties(this);
+        if (parameters.TryGetValue<DepositEntryViewModel>(nameof(Deposit), out var deposit))
+        {
+            _editDeposit = deposit;
+        }
+        return base.SetParametersAsync(ParameterView.Empty);
     }
 
     private async void HandleLookupListStateChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -45,10 +57,10 @@ public partial class DepositEntry
     {
         _currentResponse = default;
         _submitting = true;
-        _currentResponse = await DepositEntryService.AddTransactionAsync(_newDeposit);
+        _currentResponse = await DepositEntryService.AddTransactionAsync(_editDeposit);
         if (!_currentResponse.WasError)
         {
-            _newDeposit = new();
+            _editDeposit = new();
             if (_transDateInput is not null && _transDateInput.Element.HasValue)
             {
                 await _transDateInput.Element.Value.FocusAsync();

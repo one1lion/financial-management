@@ -10,26 +10,38 @@ public partial class TransferEntry
     [Inject] private ITransactionEntryService<TransferEntryViewModel> TransferEntryService { get; set; } = default!;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
+    [Parameter] public TransferEntryViewModel? Transfer { get; set; }
+
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
     private InputDate<DateTime?>? _transDateInput;
 
-    private TransferEntryViewModel _newTransfer = new();
+    private TransferEntryViewModel _editTransfer = new();
     private List<AccountLookupViewModel>? _accounts;
     protected override async Task OnInitializedAsync()
     {
-        await LookupListState.Initialize();
+        await LookupListState.InitializeAsync();
         _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
+    }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        parameters.SetParameterProperties(this);
+        if (parameters.TryGetValue<TransferEntryViewModel>(nameof(Transfer), out var transfer))
+        {
+            _editTransfer = transfer;
+        }
+        return base.SetParametersAsync(ParameterView.Empty);
     }
 
     private async Task HandleTransferSubmitted()
     {
         _currentResponse = default;
         _submitting = true;
-        _currentResponse = await TransferEntryService.AddTransactionAsync(_newTransfer);
+        _currentResponse = await TransferEntryService.AddTransactionAsync(_editTransfer);
         if (!_currentResponse.WasError)
         {
-            _newTransfer = new();
+            _editTransfer = new();
             if (_transDateInput is not null && _transDateInput.Element.HasValue)
             {
                 await _transDateInput.Element.Value.FocusAsync();

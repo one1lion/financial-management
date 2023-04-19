@@ -45,4 +45,8 @@
     /* Default z-index */
     --flyout-z-index: 2;
     --modal-z-index: calc(var(--flyout-z-index) + 1);
+    /* Colors */
+    --danger-color: #DC3545;
+    --warning-color: #FFC107;
+    --muted-color: #777;
 }

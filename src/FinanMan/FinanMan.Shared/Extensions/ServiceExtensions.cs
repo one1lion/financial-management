@@ -10,8 +10,7 @@ public static class ServiceExtensions
 {
     public static IServiceCollection AddFinanManLocalization(this IServiceCollection services) => 
         services
-            .AddLocalization(option => option.ResourcesPath = "Resources/Localization")
-            .AddTransient<IStringLocalizer, SharedLocalizerService>();
+            .AddLocalization(option => option.ResourcesPath = "Resources/Localization");
 
     public static IServiceCollection AddFluentValidation(this IServiceCollection services) =>
         services

@@ -5,8 +5,15 @@
 
 <EditForm Model=Transaction OnValidSubmit="_ => TogglePending(true)">
     @* TODO: Use the FluentValidation validator, which involves feeding it the correct validator type based on the TransactionViewModel type *@
-    <TemplatedModal @bind-Show=Show ShowDismiss=false>
-        <ModalHeader>
+    <TemplatedQuestionDialog @bind-Show=Show 
+                             ShowDismiss=false
+                             ConfirmButtonCssClasses="btn btn-primary"
+                             ConfirmButtonText=@($"{(IsCurrentlyPending ? SharedLocalizerService.Ok : SharedLocalizerService.Remove)}")
+                             OnConfirmClicked="_ => TogglePending(true)"
+                             CancelButtonCssClasses="btn btn-secondary"
+                             CancelButtonText=@SharedLocalizerService.Cancel
+                             OnCancelClicked=HandleCancelClicked>
+        <TitleContent>
             @if (IsCurrentlyPending)
             {
                 <h3>@SharedLocalizerService.EnterPostedDateTitle</h3>
@@ -15,8 +22,8 @@
             {
                 <h3>@SharedLocalizerService.ConfirmMarkPendingTitle</h3>
             }
-        </ModalHeader>
-        <ModalContent>
+        </TitleContent>
+        <QuestionContent>
             @if (_currentResponse?.WasError ?? false)
             {
                @_currentResponse.RenderError
@@ -59,19 +66,6 @@
                     <text>@Transaction.Total</text>
                 </li>
             </ul>
-        </ModalContent>
-        <ModalFooter>
-            <button type="button" class="btn btn-primary" @onclick="_ => TogglePending(true)">
-                @if (IsCurrentlyPending)
-                {
-                    <text>@SharedLocalizerService.Ok</text>
-                }
-                else
-                {
-                    <text>@SharedLocalizerService.Remove</text>
-                }
-            </button>
-            <button type="button" class="btn btn-secondary" @onclick="HandleCancelClicked">@SharedLocalizerService.Cancel</button>
-        </ModalFooter>
-    </TemplatedModal>
+        </QuestionContent>
+    </TemplatedQuestionDialog>
 </EditForm>

@@ -2,21 +2,21 @@
 @using FinanMan.Shared.DataEntryModels
 
 <div class="data-entry-wrapper">
-    <EditForm Model=_newTransfer id="transferEntryForm" class="data-entry-form" OnValidSubmit=HandleTransferSubmitted>
+    <EditForm Model=_editTransfer id="transferEntryForm" class="data-entry-form" OnValidSubmit=HandleTransferSubmitted>
         <DataAnnotationsValidator />
         <div id="transferDate" class="form-group">
             <label>Date</label>
-            <InputDate @bind-Value=_newTransfer.TransactionDate />
+            <InputDate @bind-Value=_editTransfer.TransactionDate />
         </div>
 
         <div id="amount" class="form-group">
             <label>Amount</label>
-            <InputNumber step=".01" @bind-Value=_newTransfer.Amount />
+            <InputNumber step=".01" @bind-Value=_editTransfer.Amount />
         </div>
 
         <div id="fromAccount" class="form-group">
             <label>From Account</label>
-            <InputSelect @bind-Value=_newTransfer.SourceAccountValueText>
+            <InputSelect @bind-Value=_editTransfer.SourceAccountValueText>
                 <option value="">--Select Account--</option>
                 @if (_accounts is not null)
                 {
@@ -26,27 +26,25 @@
                     }
                 }
             </InputSelect>
-            <span>@_newTransfer.SourceAccountValueText</span>
         </div>
 
         <div id="toAccount" class="form-group">
             <label>To Account</label>
-            <InputSelect @bind-Value=_newTransfer.TargetAccountValueText>
+            <InputSelect @bind-Value=_editTransfer.TargetAccountValueText>
                 <option value="">--Select Account--</option>
                 @if (_accounts is not null)
                 {
-                    foreach (var curAccount in _accounts.Where(x => x.ValueText != _newTransfer.SourceAccountValueText))
+                    foreach (var curAccount in _accounts.Where(x => x.ValueText != _editTransfer.SourceAccountValueText))
                     {
                         <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
                     }
                 }
             </InputSelect>
-            <span>@_newTransfer.TargetAccountValueText</span>
         </div>
 
         <div id="memo" class="form-group">
             <label>Memo</label>
-            <InputText @bind-Value=_newTransfer.Memo />
+            <InputText @bind-Value=_editTransfer.Memo />
         </div>
 
         <div id="saveButton" class="form-group">

@@ -1,0 +1,34 @@
+﻿<tr>
+    @if (_editing)
+    {
+        <td>
+            <select @bind=_editPaymentDetail.LineItemTypeValueText>
+                @foreach (var curLineItemType in _lineItemTypes)
+                {
+                    <option value="@curLineItemType.ValueText">@curLineItemType.DisplayText</option>
+                }
+            </select>
+        </td>
+        <td><input type="text" @bind="@_editPaymentDetail.Detail" /></td>
+        <td><input type="number" @bind="@_editPaymentDetail.Amount" step=".01" /></td>
+    }
+    else
+    {
+        <td>@(_lineItemTypes.First(x => x.ValueText == PaymentDetail.LineItemTypeValueText).DisplayText)</td>
+        <td>@PaymentDetail.Detail</td>
+        <td>@PaymentDetail.Amount</td>
+    }
+    @* TODO: Add control buttons to edit/delete line items *@
+    <td>
+        @if(_editing)
+        {
+            <button class="btn btn-link" role="button" @onclick=HandleSaveClicked aria-label="@SharedLocalizerService.Save"><i class="icon text-success" aria-hidden="true">✔</i></button>
+            <button class="btn btn-link" role="button" @onclick=HandleCancelClicked aria-label="@SharedLocalizerService.Cancel"><i class="icon text-danger" aria-hidden="true">🗑</i></button>
+        }
+        else
+        {
+            <button class="btn btn-link" role="button" @onclick=HandleEditClicked aria-label="@SharedLocalizerService.Edit"><i class="icon text-warning" aria-hidden="true">✎</i></button>
+            <button class="btn btn-link" role="button" @onclick=HandleDeleteClicked aria-label="@SharedLocalizerService.Delete"><i class="icon text-danger" aria-hidden="true">✖</i></button>
+        }
+    </td>
+</tr>

@@ -1,0 +1,10 @@
+<TemplatedModal @bind-Show=Show ShowDismiss=ShowDismiss ModalHeader=TitleContent ModalContent=QuestionContent>
+    <ModalFooter>
+        <button type="button" class="@(ConfirmButtonCssClasses)" @onclick=HandleConfirmClicked>
+            <text>@ConfirmButtonText</text>
+        </button>
+        <button type="button" class="@(CancelButtonCssClasses)" @onclick=HandleCancelClicked>
+            <text>@CancelButtonText</text>
+        </button>
+    </ModalFooter>
+</TemplatedModal>

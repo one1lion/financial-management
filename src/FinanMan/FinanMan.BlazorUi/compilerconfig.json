@@ -50,5 +50,13 @@
   {
     "outputFile": "Components/AccountSummaryComponents/AccountSummaryGrid.razor.css",
     "inputFile": "Components/AccountSummaryComponents/AccountSummaryGrid.razor.scss"
+  },
+  {
+    "outputFile": "Components/TransactionHistoryComponents/EditTransactionModal.razor.css",
+    "inputFile": "Components/TransactionHistoryComponents/EditTransactionModal.razor.scss"
+  },
+  {
+    "outputFile": "Components/DataEntryComponents/PaymentDetailsTable.razor.css",
+    "inputFile": "Components/DataEntryComponents/PaymentDetailsTable.razor.scss"
   }
 ]

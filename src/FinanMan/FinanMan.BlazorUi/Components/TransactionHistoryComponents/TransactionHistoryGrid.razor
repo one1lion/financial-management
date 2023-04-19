@@ -40,12 +40,12 @@
                             <div class="filter-button" @onclick:stopPropagation=true>
                                 <span class="icon" tabindex="0">\|/</span>
                                 <ul class="context-menu filter-menu" tabindex="0">
-                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.Asc ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.Asc)">Sort Ascending</li>
-                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.Desc ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.Desc)">Sort Descending</li>
-                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.None ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.None)">Clear Sort</li>
+                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.Asc ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.Asc)">@SharedLocalizerService.SortAscending</li>
+                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.Desc ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.Desc)">@SharedLocalizerService.SortDescending</li>
+                                    <li class="menu-item@(GetSortedDir(curCol) == SortDir.None ? " disabled" : "")" @onclick="_ => SortByColumn(curCol, SortDir.None)">@SharedLocalizerService.ClearSort</li>
                                     <li class="divider"><hr /></li>
-                                    <li class="menu-item">Filter</li>
-                                    <li class="menu-item">Clear Filter</li>
+                                    <li class="menu-item">@SharedLocalizerService.Filter</li>
+                                    <li class="menu-item">@SharedLocalizerService.ClearFilter</li>
                                 </ul>
                             </div>
                         </div>
@@ -53,6 +53,9 @@
                         </div>
                     </th>
                 }
+                <th scope="col">
+                    <span class="sr-only">@SharedLocalizerService.ControlButtonsColumnHeader</span>
+                </th>
             </tr>
         </thead>
         <tbody>

@@ -9,7 +9,7 @@ public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChang
     List<ILookupItemViewModel> LookupItemCache { get; }
     bool Initialized { get; set; }
     bool Initializing { get; set; }
-    Task Initialize();
+    Task InitializeAsync();
     
     IEnumerable<TLookupItem> GetLookupItems<TLookupItem>()
          where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();

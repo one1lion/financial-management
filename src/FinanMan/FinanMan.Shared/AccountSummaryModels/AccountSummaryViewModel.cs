@@ -20,8 +20,8 @@ public static class AccountSummaryViewModelExtensions
     {
         // TODO: Update the account entity to include the flag for whether deposits add to or subtract from the total and use that flag to determine whether to use -1 or 1
         var depositMultiplier = account.AccountType.IncreaseOnPayment ? -1m : 1m;
-        var postedTransactions = account.Transactions.Where(x => x.PostingDate.HasValue).ToList();
-        var pendingTransactions = account.Transactions.Where(x => !x.PostingDate.HasValue).ToList();
+        var postedTransactions = account.Transactions.Where(x => !x.PurgeDate.HasValue && x.PostingDate.HasValue).ToList();
+        var pendingTransactions = account.Transactions.Where(x => !x.PurgeDate.HasValue && !x.PostingDate.HasValue).ToList();
 
         var postedDepositsTotal = postedTransactions.Where(x => x.TransactionType == TransactionType.Deposit).Sum(y => y.Total);
         var pendingDepositsTotal = pendingTransactions.Where(x => x.TransactionType == TransactionType.Deposit).Sum(y => y.Total);

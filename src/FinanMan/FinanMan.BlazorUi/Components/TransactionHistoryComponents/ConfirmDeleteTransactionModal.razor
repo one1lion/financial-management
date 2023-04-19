@@ -1,0 +1,48 @@
+﻿@typeparam T
+
+<TemplatedQuestionDialog @bind-Show=Show 
+                         ShowDismiss=false
+                         ConfirmButtonCssClasses="btn btn-primary"
+                         ConfirmButtonText=@SharedLocalizerService.Delete
+                         ConfirmButtonDisabled=_deleting
+                         OnConfirmClicked=DeleteTransaction
+                         CancelButtonCssClasses="btn btn-secondary"
+                         CancelButtonText=@SharedLocalizerService.Cancel
+                         CancelButtonDisabled=_deleting
+                         OnCancelClicked=HandleCancelClicked>
+    <TitleContent>
+        <h3>@SharedLocalizerService.ConfirmMarkDeleteTitle</h3>
+    </TitleContent>
+    <QuestionContent>
+        @if (_currentResponse?.WasError ?? false)
+        {
+            @_currentResponse.RenderError
+        }
+        <p>@SharedLocalizerService.MarkDeletedQuestion</p>
+        <ul>
+            <li>
+                <text>@SharedLocalizerService.TransDateRowHeader</text>
+                <text>@Transaction.TransactionDate?.ToShortDateString()</text>
+            </li>
+            <li>
+                <text>@SharedLocalizerService.AccountNameRowHeader</text>
+                <text>@Transaction.AccountName</text>
+            </li>
+            <li>
+                <text>@SharedLocalizerService.PayeeRowHeader</text>
+                <text>@((MarkupString)PayeeValue)</text>
+            </li>
+            @if (!string.IsNullOrWhiteSpace(Transaction.Memo))
+            {
+                <li>
+                    <text>@SharedLocalizerService.MemoRowHeader</text>
+                    <text>@Transaction.Memo</text>
+                </li>
+            }
+            <li>
+                <text>@SharedLocalizerService.TotalRowHeader</text>
+                <text>@Transaction.Total</text>
+            </li>
+        </ul>
+    </QuestionContent>
+</TemplatedQuestionDialog>

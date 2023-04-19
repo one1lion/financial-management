@@ -16,9 +16,9 @@ public class PaymentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTransactionsAsync(ushort sr = 0, ushort ps = 100, DateTime? aod = null, CancellationToken ct = default)
+    public async Task<IActionResult> GetTransactionsAsync(ushort sr = 0, ushort ps = 100, DateTime? aod = null, bool includeMarkedAsPurge = false, CancellationToken ct = default)
     {
-        return Ok(await _transactionEntryService.GetTransactionsAsync(sr, ps, aod, ct));
+        return Ok(await _transactionEntryService.GetTransactionsAsync(sr, ps, aod, includeMarkedAsPurge, ct));
     }
 
     [HttpGet("{id:int}")]

@@ -60,6 +60,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wpf", "Wpf", "{5C4BB7DC-C10
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanMan.Wpf", "FinanMan.Wpf\FinanMan.Wpf.csproj", "{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support Libraries", "Support Libraries", "{C92D892A-D436-43FF-9E73-902F094D8C00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxEstimator", "TaxEstimator\TaxEstimator.csproj", "{658C8B10-AF42-4430-A45D-A74FA55183BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +130,10 @@ Global
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658C8B10-AF42-4430-A45D-A74FA55183BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658C8B10-AF42-4430-A45D-A74FA55183BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658C8B10-AF42-4430-A45D-A74FA55183BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658C8B10-AF42-4430-A45D-A74FA55183BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +159,7 @@ Global
 		{2FDACCC7-07AC-42AC-85FE-DA7F62F20636} = {D7DEC3A3-AD7E-45B8-BF41-ACE605E4B0AC}
 		{5C4BB7DC-C10D-49F4-8F6C-7A00CE0E6251} = {DDA12A56-D2D9-402F-A472-BBE141119242}
 		{EE799B0B-2099-4B4F-862E-D3AF2DFDACD7} = {5C4BB7DC-C10D-49F4-8F6C-7A00CE0E6251}
+		{658C8B10-AF42-4430-A45D-A74FA55183BF} = {C92D892A-D436-43FF-9E73-902F094D8C00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BC5E62D-A8CB-4DD4-B4A6-0F41B8EB1C16}
