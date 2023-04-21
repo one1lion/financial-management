@@ -96,11 +96,6 @@ public static class ITransactionDataEntryViewModelExtensions
                 if (transaction.Deposit.DepositReasonId != depositEntryViewModel.DepositReasonId && depositEntryViewModel.DepositReasonId.HasValue)
                 {
                     transaction.Deposit.DepositReasonId = depositEntryViewModel.DepositReasonId.Value;
-                    transaction.Deposit.DepositReason = new LuDepositReason()
-                    {
-                        Id = depositEntryViewModel.DepositReasonId ?? 0,
-                        Name = depositEntryViewModel.DepositReasonDisplayText ?? string.Empty
-                    };
                 }
                 transaction.Deposit.Amount = depositEntryViewModel.Amount ?? 0;
                 break;
@@ -110,7 +105,6 @@ public static class ITransactionDataEntryViewModelExtensions
                 if (transaction.Payment.PayeeId != paymentEntryViewModel.PayeeId && paymentEntryViewModel.PayeeId.HasValue)
                 {
                     transaction.Payment.PayeeId = paymentEntryViewModel.PayeeId.Value;
-                    transaction.Payment.Payee = null!;
                 }
 
                 var existLineItems = transaction.Payment.PaymentDetails;
@@ -142,7 +136,6 @@ public static class ITransactionDataEntryViewModelExtensions
                 if (transaction.Transfer.TargetAccountId != transferEntryViewModel.TargetAccountId && transferEntryViewModel.TargetAccountId.HasValue)
                 {
                     transaction.Transfer.TargetAccountId = transferEntryViewModel.TargetAccountId.Value;
-                    transaction.Transfer.TargetAccount = null!;
                 }
 
                 transaction.Transfer.Amount = transferEntryViewModel.Total;

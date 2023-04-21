@@ -57,6 +57,7 @@ public partial class DepositEntry
     {
         _currentResponse = default;
         _submitting = true;
+        _editDeposit.UpdateAccountName(_accounts ?? new());
         _currentResponse = await DepositEntryService.AddTransactionAsync(_editDeposit);
         if (!_currentResponse.WasError)
         {

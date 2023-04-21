@@ -1,11 +1,14 @@
-﻿using FinanMan.Shared.DataEntryModels;
+﻿using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.Enums;
 using FinanMan.Shared.General;
+using FinanMan.Shared.LookupModels;
 
 namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 public partial class EditTransactionModal<T>
     where T : class, ITransactionDataEntryViewModel
 {
+    [Inject] private ILookupListState LookupListState { get; set; } = default!;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
     [Inject] private ITransactionEntryService<T> TransactionEntryService { get; set; } = default!;
 
@@ -28,13 +31,13 @@ public partial class EditTransactionModal<T>
 
     private T? _editTransaction; 
 
-    private string PayeeValue => Transaction switch
+    private List<AccountLookupViewModel>? _accounts;
+
+    protected override async Task OnInitializedAsync()
     {
-        PaymentEntryViewModel payment => payment.PayeeName,
-        TransferEntryViewModel transfer => transfer.TargetAccountName,
-        DepositEntryViewModel deposit => deposit.DepositReasonDisplayText,
-        _ => "&nbsp;"
-    } ?? string.Empty;
+        await LookupListState.InitializeAsync();
+        _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
+    }
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
@@ -52,6 +55,9 @@ public partial class EditTransactionModal<T>
     {
         if(_editTransaction is null) { return; }
         _saving = true;
+
+        _editTransaction.UpdateAccountName(_accounts ?? new());
+
         _currentResponse = await TransactionEntryService.UpdateTransactionAsync(_editTransaction);
         _saving = false;
         if (_currentResponse.WasError)
@@ -59,7 +65,7 @@ public partial class EditTransactionModal<T>
             await InvokeAsync(StateHasChanged);
             return;
         }
-
+        
         Transaction.Patch(_editTransaction);
         TransactionsState.NotifyTransactionsChanged();
 

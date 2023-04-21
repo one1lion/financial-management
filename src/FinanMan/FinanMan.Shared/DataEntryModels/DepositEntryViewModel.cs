@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Shared.LookupModels;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -62,5 +63,10 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
             Memo = sourceModel.Memo;
             Amount = sourceModel.Amount;
         }
+    }
+
+    public void UpdateAccountName(IEnumerable<AccountLookupViewModel> accounts)
+    {
+        AccountName = accounts?.FirstOrDefault(x => x.ValueText == TargetAccountValueText)?.DisplayText ?? string.Empty;
     }
 }

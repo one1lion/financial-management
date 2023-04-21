@@ -54,6 +54,7 @@ public partial class PaymentEntry
 
         _currentResponse = default;
         _submitting = true;
+        _editPayment.UpdateAccountName(_accounts ?? new());
         _currentResponse = await PaymentEntryService.AddTransactionAsync(_editPayment);
         if (!_currentResponse.WasError)
         {

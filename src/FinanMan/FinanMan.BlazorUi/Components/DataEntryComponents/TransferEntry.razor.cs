@@ -38,6 +38,7 @@ public partial class TransferEntry
     {
         _currentResponse = default;
         _submitting = true;
+        _editTransfer.UpdateAccountName(_accounts ?? new());
         _currentResponse = await TransferEntryService.AddTransactionAsync(_editTransfer);
         if (!_currentResponse.WasError)
         {

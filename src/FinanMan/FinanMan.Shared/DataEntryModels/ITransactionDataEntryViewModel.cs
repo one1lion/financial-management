@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Shared.LookupModels;
 
 namespace FinanMan.Shared.DataEntryModels;
 
@@ -15,4 +16,5 @@ public interface ITransactionDataEntryViewModel : ICloneable
     public decimal Total { get; }
 
     void Patch(ITransactionDataEntryViewModel source);
+    void UpdateAccountName(IEnumerable<AccountLookupViewModel> accounts);
 }

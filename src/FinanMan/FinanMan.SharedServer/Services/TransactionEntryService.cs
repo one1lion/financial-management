@@ -163,7 +163,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var trans = await context.Database.BeginTransactionAsync(ct);
 
             // Find the matching record in the database
-            var existRecord = await context.TransactionQuery()
+            var existRecord = await context.TransactionQuery(false)
                 .FirstOrDefaultAsync(x => x.Id == dataEntryViewModel.TransactionId, ct);
             if (existRecord is null)
             {
@@ -187,10 +187,6 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                         ? EntityState.Added
                         : EntityState.Modified;
                 }
-            }
-            else if (existRecord.Deposit is not null)
-            {
-                existRecord.Deposit.DepositReason = null!;
             }
 
             retResp.RecordCount = await context.SaveChangesAsync(ct);
@@ -248,8 +244,9 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
 
 public static class FinanManContextExtensions
 {
-    public static IQueryable<Transaction> TransactionQuery(this FinanManContext context)
-        => context.Transactions
+    public static IQueryable<Transaction> TransactionQuery(this FinanManContext context, bool includeLookups = true)
+        => includeLookups ?
+        context.Transactions
             .Include(x => x.Account)
                 .ThenInclude(x => x.AccountType)
             .Include(x => x.Deposit)
@@ -260,5 +257,14 @@ public static class FinanManContextExtensions
             .Include(x => x.Payment)
                 .ThenInclude(x => x.Payee)
             .Include(x => x.Transfer)
-                .ThenInclude(x => x.TargetAccount);
+                .ThenInclude(x => x.TargetAccount)
+        : context.Transactions
+         .Include(x => x.Account)
+         .Include(x => x.Deposit)
+         .Include(x => x.Payment)
+             .ThenInclude(x => x.PaymentDetails)
+         .Include(x => x.Payment)
+             .ThenInclude(x => x.Payee)
+         .Include(x => x.Transfer)
+             .ThenInclude(x => x.TargetAccount);
 }
