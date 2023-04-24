@@ -7,6 +7,7 @@ public partial class Account : LookupItemBase
     public Account() : base(LookupListType.Accounts) { }
 
     public int AccountTypeId { get; set; }
+    public DateTime? ClosedDate { get; set; }
 
     public virtual LuAccountType AccountType { get; set; } = default!;
     public virtual ICollection<ScheduledTransaction> ScheduledTransactions { get; set; } = new HashSet<ScheduledTransaction>();

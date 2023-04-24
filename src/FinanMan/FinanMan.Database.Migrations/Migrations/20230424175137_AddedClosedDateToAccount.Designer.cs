@@ -4,6 +4,7 @@ using FinanMan.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanMan.Database.Migrations.Migrations
 {
     [DbContext(typeof(FinanManContext))]
-    partial class FinanManContextModelSnapshot : ModelSnapshot
+    [Migration("20230424175137_AddedClosedDateToAccount")]
+    partial class AddedClosedDateToAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
