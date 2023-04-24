@@ -65,8 +65,9 @@ public class DepositEntryViewModel : ITransactionDataEntryViewModel
         }
     }
 
-    public void UpdateAccountName(IEnumerable<AccountLookupViewModel> accounts)
+    public void UpdateAccountName(IEnumerable<ILookupItemViewModel> lookups)
     {
+        var accounts = lookups.OfType<AccountLookupViewModel>();
         AccountName = accounts?.FirstOrDefault(x => x.ValueText == TargetAccountValueText)?.DisplayText ?? string.Empty;
     }
 }

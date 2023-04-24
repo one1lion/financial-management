@@ -23,7 +23,13 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 
     public async Task InitializeAsync()
     {
-        if (_initialized || _initializing) { return; }
+        if (_initialized || _initializing) {
+            while(!_initialized && _initializing)
+            {
+                await Task.Delay(200);
+            }
+            return; 
+        }
         _initializing = true;
         
         var accountsResp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();

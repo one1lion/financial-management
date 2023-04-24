@@ -32,11 +32,16 @@ public partial class EditTransactionModal<T>
     private T? _editTransaction; 
 
     private List<AccountLookupViewModel>? _accounts;
+    private List<PayeeLookupViewModel>? _payees;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await LookupListState.InitializeAsync();
-        _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
+        if (firstRender)
+        {
+            await LookupListState.InitializeAsync();
+            _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
+            _payees = LookupListState.GetLookupItems<PayeeLookupViewModel>().ToList();
+        }
     }
 
     public override async Task SetParametersAsync(ParameterView parameters)
@@ -56,8 +61,10 @@ public partial class EditTransactionModal<T>
         if(_editTransaction is null) { return; }
         _saving = true;
 
-        _editTransaction.UpdateAccountName(_accounts ?? new());
-
+        // TODO: Debug using WASM since it seems to work on Server
+        // Also remember to update other lookup items in the view model (e.g. DepositReason), so maybe rename to UpdateLookupNames
+        var lookups = (_accounts ?? new()).OfType<ILookupItemViewModel>().Union(_payees ?? new());
+        _editTransaction.UpdateAccountName(lookups);
         _currentResponse = await TransactionEntryService.UpdateTransactionAsync(_editTransaction);
         _saving = false;
         if (_currentResponse.WasError)
@@ -65,7 +72,7 @@ public partial class EditTransactionModal<T>
             await InvokeAsync(StateHasChanged);
             return;
         }
-        
+
         Transaction.Patch(_editTransaction);
         TransactionsState.NotifyTransactionsChanged();
 

@@ -16,5 +16,5 @@ public interface ITransactionDataEntryViewModel : ICloneable
     public decimal Total { get; }
 
     void Patch(ITransactionDataEntryViewModel source);
-    void UpdateAccountName(IEnumerable<AccountLookupViewModel> accounts);
+    void UpdateAccountName(IEnumerable<ILookupItemViewModel> accounts);
 }

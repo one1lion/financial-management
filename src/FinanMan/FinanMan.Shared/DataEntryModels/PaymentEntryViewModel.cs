@@ -67,8 +67,9 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
         }
     }
 
-    public void UpdateAccountName(IEnumerable<AccountLookupViewModel> accounts)
+    public void UpdateAccountName(IEnumerable<ILookupItemViewModel> lookups)
     {
-        AccountName = accounts?.FirstOrDefault(x => x.ValueText == AccountValueText)?.DisplayText ?? string.Empty;
+        AccountName = lookups?.OfType<AccountLookupViewModel>().FirstOrDefault(x => x.ValueText == AccountValueText)?.DisplayText ?? string.Empty;
+        PayeeName = lookups?.OfType<PayeeLookupViewModel>().FirstOrDefault(x => x.ValueText == PayeeValueText)?.DisplayText ?? string.Empty;
     }
 }

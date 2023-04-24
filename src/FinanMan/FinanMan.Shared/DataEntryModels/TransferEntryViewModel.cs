@@ -58,8 +58,9 @@ public class TransferEntryViewModel : ITransactionDataEntryViewModel
         }
     }
 
-    public void UpdateAccountName(IEnumerable<AccountLookupViewModel> accounts)
+    public void UpdateAccountName(IEnumerable<ILookupItemViewModel> lookups)
     {
+        var accounts = lookups.OfType<AccountLookupViewModel>();
         AccountName = accounts?.FirstOrDefault(x => x.ValueText == SourceAccountValueText)?.DisplayText ?? string.Empty;
         TargetAccountName = accounts?.FirstOrDefault(x => x.ValueText == TargetAccountValueText)?.DisplayText ?? string.Empty;
     }
