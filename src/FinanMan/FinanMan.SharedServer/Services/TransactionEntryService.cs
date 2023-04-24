@@ -32,20 +32,21 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _transactionType = dummyModel.ToEntityModel().TransactionType;
     }
 
-    public async Task<ResponseModel<List<TDataEntryViewModel>>?> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+
+    public async Task<ResponseModel<List<TDataEntryViewModel>>?> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, bool includeMarkedAsPurge = false, CancellationToken ct = default)
     {
         pageSize = Math.Clamp(pageSize, (ushort)5, (ushort)500);
         var retResp = new ResponseModel<List<TDataEntryViewModel>>();
-
         try
         {
             using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
             var transactions = context.TransactionQuery().AsNoTracking()
                 .Where(x =>
-                    _transactionType == TransactionType.Deposit && x.Deposit != null
+                    (_transactionType == TransactionType.Deposit && x.Deposit != null
                     || _transactionType == TransactionType.Payment && x.Payment != null
                     || _transactionType == TransactionType.Transfer && x.Transfer != null)
+                    && (includeMarkedAsPurge || !x.PurgeDate.HasValue))
                 .AsQueryable();
 
             if (asOfDate.HasValue)
@@ -162,7 +163,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
             using var trans = await context.Database.BeginTransactionAsync(ct);
 
             // Find the matching record in the database
-            var existRecord = await context.TransactionQuery()
+            var existRecord = await context.TransactionQuery(false)
                 .FirstOrDefaultAsync(x => x.Id == dataEntryViewModel.TransactionId, ct);
             if (existRecord is null)
             {
@@ -170,7 +171,23 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 return retResp;
             }
 
+            // This does not update the navigation property entities (related objects)
+            // TOOD: Investigate ways to get the related objects to update (such as in the PaymentDetails for Payment transactions)
+            //context.Entry(existRecord).CurrentValues.SetValues(dataEntryViewModel.ToEntityModel(true));
+
             existRecord.Patch(dataEntryViewModel);
+            if (existRecord.Payment is not null)
+            {
+                foreach (var curPaymentDetail in existRecord.Payment.PaymentDetails.ToList())
+                {
+                    curPaymentDetail.Payment = null!;
+                    curPaymentDetail.LineItemType = null!;
+
+                    context.Entry(curPaymentDetail).State = curPaymentDetail.Id == 0
+                        ? EntityState.Added
+                        : EntityState.Modified;
+                }
+            }
 
             retResp.RecordCount = await context.SaveChangesAsync(ct);
             await trans.CommitAsync(ct);
@@ -209,7 +226,6 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
                 retResp.AddError("The transaction to delete was not found");
                 return retResp;
             }
-
             // TODO: Set purge lifetime in application options
             toDelete.PurgeDate = DateTime.UtcNow.AddDays(15);
             retResp.RecordCount = await context.SaveChangesAsync(ct);
@@ -226,9 +242,11 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     }
 }
 
-public static class FinanManContextExtensions { 
-    public static IQueryable<Transaction> TransactionQuery(this FinanManContext context)
-        => context.Transactions
+public static class FinanManContextExtensions
+{
+    public static IQueryable<Transaction> TransactionQuery(this FinanManContext context, bool includeLookups = true)
+        => includeLookups ?
+        context.Transactions
             .Include(x => x.Account)
                 .ThenInclude(x => x.AccountType)
             .Include(x => x.Deposit)
@@ -239,5 +257,14 @@ public static class FinanManContextExtensions {
             .Include(x => x.Payment)
                 .ThenInclude(x => x.Payee)
             .Include(x => x.Transfer)
-                .ThenInclude(x => x.TargetAccount);
+                .ThenInclude(x => x.TargetAccount)
+        : context.Transactions
+         .Include(x => x.Account)
+         .Include(x => x.Deposit)
+         .Include(x => x.Payment)
+             .ThenInclude(x => x.PaymentDetails)
+         .Include(x => x.Payment)
+             .ThenInclude(x => x.Payee)
+         .Include(x => x.Transfer)
+             .ThenInclude(x => x.TargetAccount);
 }

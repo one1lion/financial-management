@@ -17,7 +17,7 @@ namespace FinanMan.Database.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -137,7 +137,7 @@ namespace FinanMan.Database.Migrations.Migrations
                         {
                             Id = 3,
                             Deleted = false,
-                            IncreaseOnPayment = false,
+                            IncreaseOnPayment = true,
                             LastUpdated = new DateTime(2022, 7, 25, 17, 41, 0, 0, DateTimeKind.Unspecified),
                             Name = "Credit Card",
                             SortOrder = 3
@@ -697,7 +697,7 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.HasOne("FinanMan.Database.Models.Tables.LuDepositReason", "DepositReason")
                         .WithMany("Deposits")
                         .HasForeignKey("DepositReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FinanMan.Database.Models.Tables.Transaction", "Transaction")
@@ -792,7 +792,7 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.HasOne("FinanMan.Database.Models.Tables.Account", "TargetAccount")
                         .WithMany("Transfers")
                         .HasForeignKey("TargetAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FinanMan.Database.Models.Tables.Transaction", "Transaction")

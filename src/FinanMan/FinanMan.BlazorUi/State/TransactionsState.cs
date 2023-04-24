@@ -138,6 +138,13 @@ public class TransactionsState : BaseNotifyPropertyChanges, ITransactionsState
         }
     }
 
+    public bool RemoveTransaction(int transactionId)
+    {
+        var success = (_transactions?.RemoveAll(x => x.TransactionId == transactionId) ?? 0) > 0;
+        NotifyTransactionsChanged();
+        return success;
+    }
+    
     public void NotifyTransactionsChanged()
     {
         OnTransactionHistoryChanged?.Invoke();
@@ -157,5 +164,4 @@ public class TransactionsState : BaseNotifyPropertyChanges, ITransactionsState
         }
     }
     #endregion Private Methods
-
 }

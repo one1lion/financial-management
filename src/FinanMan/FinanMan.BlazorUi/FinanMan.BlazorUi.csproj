@@ -32,4 +32,12 @@
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="components\transactionhistorycomponents\ConfirmDeleteTransactionModal.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="components\transactionhistorycomponents\ConfirmDeleteTransactionModal.razor" />
+  </ItemGroup>
+
 </Project>

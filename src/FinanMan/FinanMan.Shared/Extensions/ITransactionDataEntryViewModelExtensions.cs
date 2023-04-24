@@ -96,11 +96,6 @@ public static class ITransactionDataEntryViewModelExtensions
                 if (transaction.Deposit.DepositReasonId != depositEntryViewModel.DepositReasonId && depositEntryViewModel.DepositReasonId.HasValue)
                 {
                     transaction.Deposit.DepositReasonId = depositEntryViewModel.DepositReasonId.Value;
-                    transaction.Deposit.DepositReason = new LuDepositReason()
-                    {
-                        Id = depositEntryViewModel.DepositReasonId ?? 0,
-                        Name = depositEntryViewModel.DepositReasonDisplayText ?? string.Empty
-                    };
                 }
                 transaction.Deposit.Amount = depositEntryViewModel.Amount ?? 0;
                 break;
@@ -110,7 +105,6 @@ public static class ITransactionDataEntryViewModelExtensions
                 if (transaction.Payment.PayeeId != paymentEntryViewModel.PayeeId && paymentEntryViewModel.PayeeId.HasValue)
                 {
                     transaction.Payment.PayeeId = paymentEntryViewModel.PayeeId.Value;
-                    transaction.Payment.Payee = null!;
                 }
 
                 var existLineItems = transaction.Payment.PaymentDetails;
@@ -132,8 +126,7 @@ public static class ITransactionDataEntryViewModelExtensions
 
                 foreach (var liToUpdate in lisToUpdate)
                 {
-                    // TODO: Update the properties of the existing line item
-                    
+                    liToUpdate.Patch(paymentEntryViewModel.LineItems.First(x => x.Id == liToUpdate.Id));
                 }
 
                 break;
@@ -143,7 +136,6 @@ public static class ITransactionDataEntryViewModelExtensions
                 if (transaction.Transfer.TargetAccountId != transferEntryViewModel.TargetAccountId && transferEntryViewModel.TargetAccountId.HasValue)
                 {
                     transaction.Transfer.TargetAccountId = transferEntryViewModel.TargetAccountId.Value;
-                    transaction.Transfer.TargetAccount = null!;
                 }
 
                 transaction.Transfer.Amount = transferEntryViewModel.Total;
@@ -221,10 +213,11 @@ public static class ITransactionDataEntryViewModelExtensions
         model.ToViewModel().OfType<TViewModel>();
 }
 
-public static class LineItemViewModelExtensions
+public static class PaymentDetailExtensions
 {
     public static PaymentDetail ToEntityModel(this PaymentDetailViewModel model, bool includeNavProperties = true) => new()
     {
+        Id = model.Id,
         LineItemTypeId = model.LineItemTypeId ?? 0,
         LineItemType = includeNavProperties ? new LuLineItemType()
         {
@@ -241,6 +234,7 @@ public static class LineItemViewModelExtensions
 
     public static PaymentDetailViewModel ToViewModel(this PaymentDetail model) => new()
     {
+        Id = model.Id,
         LineItemTypeValueText = model.LineItemTypeId.ToString(),
         LineItemTypeName = model.LineItemType?.Name,
         SortOrder = model.LineItemType?.SortOrder ?? 0,
@@ -250,4 +244,19 @@ public static class LineItemViewModelExtensions
 
     public static IEnumerable<PaymentDetailViewModel> ToViewModel(this IEnumerable<PaymentDetail> model) =>
         model.Select(x => x.ToViewModel());
+
+    public static PaymentDetail Patch(this PaymentDetail model, PaymentDetailViewModel viewModel)
+    {
+        model.LineItemTypeId = viewModel.LineItemTypeId ?? 0;
+        model.LineItemType = new LuLineItemType()
+        {
+            Id = viewModel.LineItemTypeId ?? 0,
+            Name = viewModel.LineItemTypeName ?? string.Empty,
+            SortOrder = viewModel.SortOrder
+        };
+        model.Amount = viewModel.Amount ?? 0;
+        model.Detail = viewModel.Detail;
+
+        return model;
+    }
 }

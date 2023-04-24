@@ -1,5 +1,7 @@
 ﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.Enums;
+using FinanMan.Shared.LookupModels;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -65,4 +67,9 @@ public class PaymentEntryViewModel : ITransactionDataEntryViewModel
         }
     }
 
+    public void UpdateAccountName(IEnumerable<ILookupItemViewModel> lookups)
+    {
+        AccountName = lookups?.OfType<AccountLookupViewModel>().FirstOrDefault(x => x.ValueText == AccountValueText)?.DisplayText ?? string.Empty;
+        PayeeName = lookups?.OfType<PayeeLookupViewModel>().FirstOrDefault(x => x.ValueText == PayeeValueText)?.DisplayText ?? string.Empty;
+    }
 }

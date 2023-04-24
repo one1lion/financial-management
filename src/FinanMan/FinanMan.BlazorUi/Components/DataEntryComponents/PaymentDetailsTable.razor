@@ -1,0 +1,37 @@
+<table>
+    <colgroup id="lit" />
+    <colgroup id="lid" />
+    <colgroup id="lia" />
+    <colgroup id="lic" />
+    <thead>
+        <tr>
+            <th scope="col">@SharedLocalizerService.LineItemType</th>
+            <th scope="col">@SharedLocalizerService.Detail</th>
+            <th scope="col">@SharedLocalizerService.AmountColumnHeader</th>
+            <th scope="col">&nbsp;<label class="sr-only">@SharedLocalizerService.LineItemControlColumnHeader</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!(Payment.LineItems?.Any() ?? false))
+        {
+            <tr>
+                <td colspan="4">No items added</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var curLi in Payment.LineItems)
+            {
+                var thisLi = curLi;
+                <PaymentDetailRow @bind-PaymentDetail=thisLi OnDeletePaymentDetailClicked=HandleDeletePaymentDetail />
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <label>Total:</label> <strong>@Payment.Total</strong>
+            </td>
+        </tr>
+    </tfoot>
+</table>

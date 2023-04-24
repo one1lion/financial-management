@@ -1,0 +1,32 @@
+button, .btn {
+    color: var(--button-foreground-color);
+    background-color: var(--button-background-color);
+    border: var(--button-border-style);
+    border-radius: var(--button-border-radius);
+    padding: var(--button-padding);
+    font-weight: 600;
+
+    &.invert {
+        color: var(--button-background-color);
+        background-color: var(--button-foreground-color);
+        border-color: var(--button-background-color);
+    }
+
+    &:focus-within {
+        outline: var(--button-outline-style);
+    }
+
+    &:hover {
+        cursor: pointer;
+        color: var(--button-hover-foreground-color);
+        background-color: var(--button-hover-background-color);
+    }
+
+    &.btn-link {
+        color: var(--link-color);
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font-weight: 400;
+    }
+}

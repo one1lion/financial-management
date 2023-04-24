@@ -11,5 +11,6 @@ public interface ITransactionsState : INotifyPropertyChanged, INotifyPropertyCha
     List<ITransactionDataEntryViewModel>? Transactions { get; set; }
     
     Task RefreshTransactionHistoryAsync();
+    bool RemoveTransaction(int transactionId);
     void NotifyTransactionsChanged();
 }

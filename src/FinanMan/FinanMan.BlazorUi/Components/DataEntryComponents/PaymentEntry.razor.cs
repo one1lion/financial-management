@@ -11,7 +11,9 @@ public partial class PaymentEntry
     [Inject] private ITransactionEntryService<PaymentEntryViewModel> PaymentEntryService { get; set; } = default!;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
 
-    private PaymentEntryViewModel _newPayment = new();
+    [Parameter] public PaymentEntryViewModel? Payment { get; set; }
+
+    private PaymentEntryViewModel _editPayment = new();
     private PaymentDetailViewModel _newLineItem = new();
     private List<AccountLookupViewModel>? _accounts;
     private List<LookupItemViewModel<LuLineItemType>>? _lineItemTypes;
@@ -26,10 +28,20 @@ public partial class PaymentEntry
 
     protected override async Task OnInitializedAsync()
     {
-        await LookupListState.Initialize();
+        await LookupListState.InitializeAsync();
         _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
         _payees = LookupListState.GetLookupItems<PayeeLookupViewModel>().ToList();
         _lineItemTypes = LookupListState.GetLookupItems<LookupItemViewModel<LuLineItemType>>().ToList();
+}
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        parameters.SetParameterProperties(this);
+        if (parameters.TryGetValue<PaymentEntryViewModel>(nameof(Payment), out var payment))
+        {
+            _editPayment = payment;
+        }
+        return base.SetParametersAsync(ParameterView.Empty);
     }
 
     private async Task HandlePaymentSubmitted()
@@ -42,10 +54,12 @@ public partial class PaymentEntry
 
         _currentResponse = default;
         _submitting = true;
-        _currentResponse = await PaymentEntryService.AddTransactionAsync(_newPayment);
+        var lookups = (_accounts ?? new()).OfType<ILookupItemViewModel>().Union(_payees ?? new());
+        _editPayment.UpdateAccountName(lookups);
+        _currentResponse = await PaymentEntryService.AddTransactionAsync(_editPayment);
         if (!_currentResponse.WasError)
         {
-            _newPayment = new();
+            _editPayment = new();
             if (_transDateInput is not null && _transDateInput.Element.HasValue)
             {
                 await _transDateInput.Element.Value.FocusAsync();
@@ -64,7 +78,7 @@ public partial class PaymentEntry
         {
             return;
         }
-        _newPayment.LineItems.Add(_newLineItem);
+        _editPayment.LineItems.Add(_newLineItem);
         _newLineItem = new();
     }
 }

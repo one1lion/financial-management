@@ -21,6 +21,7 @@ public partial class DataEntry
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
+        parameters.SetParameterProperties(this);
         var entTypeParam = parameters.TryGetValue<string>(nameof(EntType), out var entType);
         if (entTypeParam && !string.IsNullOrWhiteSpace(entType))
         {
@@ -40,7 +41,7 @@ public partial class DataEntry
             _entryType = EntryType.Payments;
         }
 
-        return base.SetParametersAsync(parameters);
+        return base.SetParametersAsync(ParameterView.Empty);
     }
 
     private void HandleEntryTabClicked(EntryType entryType)

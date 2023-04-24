@@ -5,6 +5,7 @@ namespace FinanMan.Shared.DataEntryModels;
 
 public class PaymentDetailViewModel : ICloneable
 {
+    public int Id { get; set; }
     [Required]
     public string? LineItemTypeValueText { get; set; }
     public string? LineItemTypeName { get; set; }

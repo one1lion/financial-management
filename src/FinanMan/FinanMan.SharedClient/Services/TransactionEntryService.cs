@@ -18,10 +18,10 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
         _controllerName = this.GetApiEndpoint();
     }
 
-    public Task<ResponseModel<List<TDataEntryViewModel>>?> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, CancellationToken ct = default)
+    public Task<ResponseModel<List<TDataEntryViewModel>>?> GetTransactionsAsync(ushort startRecord = 0, ushort pageSize = 100, DateTime? asOfDate = null, bool includeMarkedAsPurge = false, CancellationToken ct = default)
     {
         var asOfDateQs = asOfDate.HasValue ? $"&aod={asOfDate.Value:yyyy-MM-dd'T'HH:mm:ss.fffffff}" : string.Empty;
-        return _httpClient.GetFromJsonAsync<ResponseModel<List<TDataEntryViewModel>>>($"{_controllerName}?sr={startRecord}&ps={pageSize}{asOfDateQs}", ct);
+        return _httpClient.GetFromJsonAsync<ResponseModel<List<TDataEntryViewModel>>>($"{_controllerName}?sr={startRecord}&ps={pageSize}&imp={includeMarkedAsPurge}{asOfDateQs}", ct);
     }
 
     public Task<ResponseModel<TDataEntryViewModel>?> GetTransactionAsync(int id, CancellationToken ct = default) =>

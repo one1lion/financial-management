@@ -11,9 +11,10 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.SetupDbContext(config);
 
-builder.Services.AddFinanManLocalization();
-builder.Services.AddStateManagement();
-builder.Services.AddServerServices();
+builder.Services.AddFinanManLocalization()
+    .AddStateManagement()
+    .AddServerServices()
+    .AddFluentValidation();
 
 var app = builder.Build();
 

@@ -43,18 +43,39 @@
   /* Default z-index */
   --flyout-z-index: 2;
   --modal-z-index: calc(var(--flyout-z-index) + 1);
+  /* Colors */
+  --danger-color: #DC3545;
+  --warning-color: #FFC107;
+  --muted-color: #777;
 }
 
-.card {
-  color: var(--card-foreground-color) !important;
-  background-color: var(--card-background-color) !important;
+button, .btn {
+  color: var(--button-foreground-color);
+  background-color: var(--button-background-color);
+  border: var(--button-border-style);
+  border-radius: var(--button-border-radius);
+  padding: var(--button-padding);
+  font-weight: 600;
 }
-.card .card-header, .card .card-footer {
-  border-color: var(--primary-background-color) !important;
+button.invert, .btn.invert {
+  color: var(--button-background-color);
+  background-color: var(--button-foreground-color);
+  border-color: var(--button-background-color);
 }
-
-.modal-wrapper {
-  z-index: var(--modal-z-index);
+button:focus-within, .btn:focus-within {
+  outline: var(--button-outline-style);
+}
+button:hover, .btn:hover {
+  cursor: pointer;
+  color: var(--button-hover-foreground-color);
+  background-color: var(--button-hover-background-color);
+}
+button.btn-link, .btn.btn-link {
+  color: var(--link-color);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-weight: 400;
 }
 
 .form-group {
@@ -77,6 +98,18 @@ input:not([type=checkbox]):not([type=radio]), select:not([type=checkbox]):not([t
 
 table.data-grid thead tr td, table.data-grid thead tr th {
   text-align: left;
+}
+
+.card {
+  color: var(--card-foreground-color) !important;
+  background-color: var(--card-background-color) !important;
+}
+.card .card-header, .card .card-footer {
+  border-color: var(--primary-background-color) !important;
+}
+
+.modal-wrapper {
+  z-index: var(--modal-z-index);
 }
 
 body, html {
@@ -111,26 +144,16 @@ h4 {
   font-size: var(--font-size-h4);
 }
 
-button {
-  color: var(--button-foreground-color);
-  background-color: var(--button-background-color);
-  border: var(--button-border-style);
-  border-radius: var(--button-border-radius);
-  padding: var(--button-padding);
-  font-weight: 600;
+.text-danger {
+  color: var(--danger-color);
 }
-button.invert {
-  color: var(--button-background-color);
-  background-color: var(--button-foreground-color);
-  border-color: var(--button-background-color);
+
+.text-warning {
+  color: var(--warning-color);
 }
-button:focus-within {
-  outline: var(--button-outline-style);
-}
-button:hover {
-  cursor: pointer;
-  color: var(--button-hover-foreground-color);
-  background-color: var(--button-hover-background-color);
+
+.text-muted {
+  color: var(--muted-color);
 }
 
 #blazor-error-ui {

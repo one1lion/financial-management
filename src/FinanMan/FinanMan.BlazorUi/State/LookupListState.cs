@@ -21,11 +21,17 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     public bool Initialized { get => _initialized; set => SetField(ref _initialized, value); }
     public bool Initializing { get => _initializing; set => SetField(ref _initializing, value); }
 
-    public async Task Initialize()
+    public async Task InitializeAsync()
     {
-        if (_initialized || _initializing) { return; }
+        if (_initialized || _initializing) {
+            while(!_initialized && _initializing)
+            {
+                await Task.Delay(200);
+            }
+            return; 
+        }
         _initializing = true;
-
+        
         var accountsResp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
         var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
         var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();

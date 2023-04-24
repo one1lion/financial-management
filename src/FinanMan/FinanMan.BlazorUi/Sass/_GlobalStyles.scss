@@ -31,29 +31,16 @@ h4 {
     font-size: var(--font-size-h4);
 }
 
-button {
-    color: var(--button-foreground-color);
-    background-color: var(--button-background-color);
-    border: var(--button-border-style);
-    border-radius: var(--button-border-radius);
-    padding: var(--button-padding);
-    font-weight: 600;
+.text-danger {
+    color: var(--danger-color);
+}
 
-    &.invert {
-        color: var(--button-background-color);
-        background-color: var(--button-foreground-color);
-        border-color: var(--button-background-color);
-    }
+.text-warning {
+    color: var(--warning-color);
+}
 
-    &:focus-within {
-        outline: var(--button-outline-style);
-    }
-
-    &:hover {
-        cursor: pointer;
-        color: var(--button-hover-foreground-color);
-        background-color: var(--button-hover-background-color);
-    }
+.text-muted {
+    color: var(--muted-color);
 }
 
 #blazor-error-ui {

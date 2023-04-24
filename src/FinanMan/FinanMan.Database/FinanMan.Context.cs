@@ -2,6 +2,9 @@
 using FinanMan.Database.Models.Shared;
 using FinanMan.Database.Models.Tables;
 using Microsoft.EntityFrameworkCore;
+#if DEBUG
+using System.Diagnostics;
+#endif
 
 namespace FinanMan.Database;
 
@@ -30,6 +33,15 @@ public class FinanManContext : DbContext
     #endregion Lookups
     #endregion Tables
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // DukaSoft rocks
+#if DEBUG
+        optionsBuilder.LogTo(message => Debug.WriteLine(message)); 
+#endif
+        base.OnConfiguring(optionsBuilder);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -41,6 +53,13 @@ public class FinanManContext : DbContext
                 .IsRequired();
 
             entity.HasIndex(e => e.Name);
+        });
+
+        modelBuilder.Entity<Deposit>(entity =>
+        {
+            entity.HasOne(x => x.DepositReason)
+                .WithMany(x => x.Deposits)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<LuAccountType>(entity =>
@@ -121,7 +140,7 @@ public class FinanManContext : DbContext
             
             entity.HasOne(e => e.TargetAccount)
                 .WithMany(e => e.Transfers)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Seed();

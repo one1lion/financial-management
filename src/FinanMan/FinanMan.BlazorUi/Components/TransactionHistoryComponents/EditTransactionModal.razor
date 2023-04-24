@@ -1,0 +1,45 @@
+@using FinanMan.BlazorUi.Components.DataEntryComponents
+@using FinanMan.Shared.DataEntryModels;
+@typeparam T
+
+<div id="editTransModalContainer" class="hold">
+    <TemplatedQuestionDialog @bind-Show=Show
+                             ShowDismiss=false
+                             ConfirmButtonCssClasses="btn btn-primary"
+                             ConfirmButtonText=@SharedLocalizerService.Update
+                             ConfirmButtonDisabled=@(_saving || _editTransaction is null)
+                             OnConfirmClicked=ConfirmEditTransaction
+                             CancelButtonCssClasses="btn btn-secondary"
+                             CancelButtonText=@SharedLocalizerService.Cancel
+                             CancelButtonDisabled=_saving
+                             OnCancelClicked=HandleCancelClicked>
+        <TitleContent>
+            <h3>@SharedLocalizerService.EditTransaction</h3>
+        </TitleContent>
+        <QuestionContent>
+            @if (_currentResponse?.WasError ?? false)
+            {
+                @_currentResponse.RenderError
+            }
+            <p>@SharedLocalizerService.EditTransactionInstructions</p>
+            <section class="data-entry-section">
+                <span class="title">@EntryType.GetDisplayText()</span>
+                @switch (_editTransaction)
+                {
+                    case DepositEntryViewModel deposit:
+                        <DepositEntry Deposit=deposit />
+                        break;
+                    case TransferEntryViewModel transfer:
+                        <TransferEntry Transfer=transfer />
+                        break;
+                    case PaymentEntryViewModel payment:
+                        <PaymentEntry Payment=payment />
+                        break;
+                    default:
+                        <span>@SharedLocalizerService.Loading</span>
+                        break;
+                }
+            </section>
+        </QuestionContent>
+    </TemplatedQuestionDialog>
+</div>

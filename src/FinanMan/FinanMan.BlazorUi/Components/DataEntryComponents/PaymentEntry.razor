@@ -3,17 +3,17 @@
 
 <div class="data-entry-wrapper">
     <EditForm Model=_newLineItem Context="newLineItem" @ref=_lineItemEntryEditForm>
-        <EditForm Model=_newPayment Context="paymentDataEntryItem" id="paymentEntryForm" class="data-entry-form" @ref=_paymentEntryEditForm>
+        <EditForm Model=_editPayment Context="paymentDataEntryItem" id="paymentEntryForm" class="data-entry-form" @ref=_paymentEntryEditForm>
             <DataAnnotationsValidator />
             <div id="transDate" class="form-group">
                 <label id="lblSomeId" aria-label="someId" for="someId">Transaction Date</label>
-                <InputDate id="someId" aria-labelledby="lblSomeId" @bind-Value=_newPayment.TransactionDate />
-                <ValidationMessage For="() => _newPayment.TransactionDate" />
+                <InputDate id="someId" aria-labelledby="lblSomeId" @bind-Value=_editPayment.TransactionDate />
+                <ValidationMessage For="() => _editPayment.TransactionDate" />
             </div>
 
             <div id="payee" class="form-group">
                 <label>Payee</label>
-                <InputSelect @bind-Value=_newPayment.PayeeValueText>
+                <InputSelect @bind-Value=_editPayment.PayeeValueText>
                     <option value="">--Select Payee--</option>
                     @if (_payees is not null)
                     {
@@ -23,13 +23,13 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="() => _newPayment.PayeeValueText" />
+                <ValidationMessage For="() => _editPayment.PayeeValueText" />
             </div>
 
             <div id="memo" class="form-group">
                 <label>Memo</label>
-                <InputText @bind-Value=_newPayment.Memo />
-                <ValidationMessage For="() => _newPayment.Memo" />
+                <InputText @bind-Value=_editPayment.Memo />
+                <ValidationMessage For="() => _editPayment.Memo" />
             </div>
 
             <div id="lineItemType" class="form-group">
@@ -64,56 +64,18 @@
             </div>
 
             <div id="transactionDetails" class="transaction-details">
-                <table>
-                    <colgroup id="lit" />
-                    <colgroup id="lid" />
-                    <colgroup id="lia" />
-                    <thead>
-                        <tr>
-                            <th scope="col">Line Item Type</th>
-                            <th scope="col">Detail</th>
-                            <th scope="col">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!(_newPayment.LineItems?.Any() ?? false))
-                        {
-                            <tr>
-                                <td colspan="3">No items added</td>
-                            </tr>
-                        }
-                        else
-                        {
-                            foreach (var curLi in _newPayment.LineItems)
-                            {
-                                <tr>
-                                    <td>@(_lineItemTypes!.First(x => x.ValueText == curLi.LineItemTypeValueText).DisplayText)</td>
-                                    <td>@curLi.Detail</td>
-                                    <td>@curLi.Amount</td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3">
-                                <label>Total:</label> <strong>@_newPayment.Total</strong>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-
+                <PaymentDetailsTable Payment=_editPayment />
             </div>
 
             <div id="postedDate" class="form-group">
                 <label>Posted Date</label>
-                <InputDate @bind-Value=_newPayment.PostedDate />
-                <ValidationMessage For="() => _newPayment.PostedDate" />
+                <InputDate @bind-Value=_editPayment.PostedDate />
+                <ValidationMessage For="() => _editPayment.PostedDate" />
             </div>
 
             <div id="account" class="form-group">
                 <label>Account</label>
-                <InputSelect @bind-Value=_newPayment.AccountValueText>
+                <InputSelect @bind-Value=_editPayment.AccountValueText>
                     <option value="">--Select Account--</option>
                     @if (_accounts is not null)
                     {
@@ -123,7 +85,7 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="() => _newPayment.PostedDate" />
+                <ValidationMessage For="() => _editPayment.PostedDate" />
             </div>
             <div id="saveButton" class="form-group">
                 <button type="button" @onclick=HandlePaymentSubmitted title="Submit">Submit</button>

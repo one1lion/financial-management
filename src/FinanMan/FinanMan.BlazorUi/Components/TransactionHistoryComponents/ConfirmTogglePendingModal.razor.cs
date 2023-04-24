@@ -67,7 +67,7 @@ public partial class ConfirmTogglePendingModal<T>
                     {
                         await ShowChanged.InvokeAsync(false);
                     }
-                    if(OnConfirmClicked.HasDelegate)
+                    if (OnConfirmClicked.HasDelegate)
                     {
                         await OnConfirmClicked.InvokeAsync();
                     }
@@ -109,14 +109,16 @@ public partial class ConfirmTogglePendingModal<T>
         }
     }
 
-    private Task HandleCancelClicked()
+    private async Task HandleCancelClicked()
     {
         Show = false;
         if (OnCancelClicked.HasDelegate)
         {
-            return OnCancelClicked.InvokeAsync();
+            await OnCancelClicked.InvokeAsync();
         }
-
-        return Task.CompletedTask;
+        if (ShowChanged.HasDelegate)
+        {
+            await ShowChanged.InvokeAsync(Show);
+        }
     }
 }

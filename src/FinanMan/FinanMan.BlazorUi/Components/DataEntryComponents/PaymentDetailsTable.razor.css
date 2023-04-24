@@ -1,0 +1,22 @@
+﻿table {
+  width: 100%;
+  height: 100%;
+}
+table thead {
+  position: sticky;
+  top: 0;
+}
+table thead tr {
+  background-color: var(--table-header-background-color);
+}
+table tr, table ::deep tr {
+  vertical-align: top;
+}
+table tr td, table tr th, table ::deep tr td, table ::deep tr th {
+  padding: 0.5rem;
+}
+table tfoot {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--table-footer-background-color);
+}
