@@ -23,19 +23,19 @@ public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBa
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetLookupItem(int id, CancellationToken ct = default) =>
-        Ok(await _listService.GetLookupItem<TLookupItemViewModel>(id, ct));
+        Ok(await _listService.GetLookupItemAsync<TLookupItemViewModel>(id, ct));
 
     [HttpPost]
     public async Task<IActionResult> AddLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default) =>
-        Ok(await _listService.AddLookupItem<TLookupItemViewModel>(dataEntryViewModel, ct));
+        Ok(await _listService.CreateLookupItemAsync<TLookupItemViewModel>(dataEntryViewModel, ct));
 
     [HttpPut]
     public async Task<IActionResult> UpdateLookupItem(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default) =>
-        Ok(await _listService.UpdateLookupItem<TLookupItemViewModel>(dataEntryViewModel, ct));
+        Ok(await _listService.UpdateLookupItemAsync<TLookupItemViewModel>(dataEntryViewModel, ct));
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteLookupItem(int id, CancellationToken ct = default) =>
-        Ok(await _listService.DeleteLookupItem<TLookupItemViewModel>(id, ct));
+        Ok(await _listService.DeleteLookupItemAsync<TLookupItemViewModel>(id, ct));
 }
 
 [Route("api/Lookups/Accounts")]

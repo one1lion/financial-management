@@ -23,8 +23,9 @@ public partial class PaymentEntry
     private EditForm? _lineItemEntryEditForm;
 
     private ResponseModelBase<int>? _currentResponse;
-    private bool _submitting;
     private InputDate<DateTime?>? _transDateInput;
+    private bool _submitting;
+    private bool _showAddAccount;
 
     protected override async Task OnInitializedAsync()
     {

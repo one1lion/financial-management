@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+	<Identity
+	  Name="509946bc-ac0a-4446-ad09-d1232b072eaa"
+	  Publisher="CN=Automated Realms"
+	  Version="1.0.2.0" />
+
+	<mp:PhoneIdentity PhoneProductId="509946bc-ac0a-4446-ad09-d1232b072eaa" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+	<Properties>
+		<DisplayName>FinanMan.Uwp</DisplayName>
+		<PublisherDisplayName>i_am_</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+	</Properties>
+
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+		<PackageDependency Name="Microsoft.WebView2Runtime.Stable"
+		  Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+		  MinVersion="1.0.0.0"/>
+	</Dependencies>
+
+	<Resources>
+		<Resource Language="x-generate"/>
+	</Resources>
+
+	<Applications>
+		<Application Id="App"
+		  Executable="$targetnametoken$.exe"
+		  EntryPoint="FinanMan.Uwp.App">
+			<uap:VisualElements
+			  DisplayName="FinanMan.Uwp"
+			  Square150x150Logo="Assets\Square150x150Logo.png"
+			  Square44x44Logo="Assets\Square44x44Logo.png"
+			  Description="FinanMan.Uwp"
+			  BackgroundColor="transparent">
+				<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+				<uap:SplashScreen Image="Assets\SplashScreen.png" />
+			</uap:VisualElements>
+		</Application>
+	</Applications>
+
+	<Capabilities>
+		<Capability Name="internetClient" />
+	</Capabilities>
+</Package>

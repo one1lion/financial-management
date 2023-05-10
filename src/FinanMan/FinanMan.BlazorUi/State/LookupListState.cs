@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database.Models.Tables;
+using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 
@@ -78,5 +79,48 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
          where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         return LookupItemCache.OfType<TLookupItem>();
+    }
+
+    public async Task<ResponseModel<TLookupItem>> CreateLookupItemAsync<TLookupItem>(TLookupItem lookupItem)
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var retResp = new ResponseModel<TLookupItem>()
+        {
+            Data = lookupItem
+        };
+
+        var resp = await _lookupService.CreateLookupItemAsync(lookupItem);
+        if(resp.WasError)
+        {
+            retResp.AddErrors(resp);
+            return retResp;
+        }
+        lookupItem.ValueText = resp.RecordId.ToString();
+
+        LookupItemCache.Add(lookupItem);
+        RaisePropertyChanged(nameof(LookupItemCache));
+        return retResp;
+    }
+
+    public async Task RefreshListAsync<TLookupItem>()
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var mostRecentUpdated = LookupItemCache.OfType<TLookupItem>().Max(x => x.LastUpdated);
+        var resp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>(asOfDate: mostRecentUpdated);
+        if (!(resp.Data?.Any() ?? false) || resp.WasError)
+        {
+            return;
+        }
+
+        // Find all returned items that already exist in the cache and remove them from the cache
+        var existingItems = resp.Data.Where(x => LookupItemCache.Any(y => y.ValueText == x.ValueText)).ToList();
+        if(existingItems.Any())
+        {
+            LookupItemCache.RemoveAll(x => existingItems.Any(y => y.ValueText == x.ValueText));
+        }
+
+        // Add all returned items to the cache
+        LookupItemCache.AddRange(resp.Data);
+        RaisePropertyChanged(nameof(LookupItemCache));
     }
 }

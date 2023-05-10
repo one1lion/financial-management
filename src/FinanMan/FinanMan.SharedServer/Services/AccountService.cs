@@ -1,5 +1,6 @@
 ﻿using FinanMan.Database;
 using FinanMan.Shared.AccountSummaryModels;
+using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
@@ -89,7 +90,7 @@ public class AccountService : IAccountService
         return retResp;
     }
 
-    public Task<ResponseModel<AccountLookupViewModel>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)
+    public Task<ResponseModel<AccountEntryViewModel>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

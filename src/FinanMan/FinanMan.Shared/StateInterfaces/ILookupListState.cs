@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database.Models.Shared;
+using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using System.ComponentModel;
 
@@ -10,7 +11,11 @@ public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChang
     bool Initialized { get; set; }
     bool Initializing { get; set; }
     Task InitializeAsync();
-    
+
     IEnumerable<TLookupItem> GetLookupItems<TLookupItem>()
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
+    Task<ResponseModel<TLookupItem>> CreateLookupItemAsync<TLookupItem>(TLookupItem lookupItem)
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
+    Task RefreshListAsync<TLookupItem>()
          where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
 }

@@ -1,0 +1,14 @@
+<TemplatedQuestionDialog @bind-Show=Show
+                         ConfirmButtonCssClasses="btn btn-primary"
+                         ConfirmButtonText=@SharedLocalizerService.Add
+                         ConfirmButtonDisabled=@(_submitting || _accountCreated)
+                         OnConfirmClicked=HandleConfirmClicked
+                         CancelButtonCssClasses="btn btn-link"
+                         CancelButtonText=@SharedLocalizerService.Cancel>
+    <TitleContent>
+        <h3>@SharedLocalizerService.AddAccount</h3>
+    </TitleContent>
+    <QuestionContent>
+        <AddAccountForm @ref=_accountFormRef OnAccountCreated=HandleAccountCreated />
+    </QuestionContent>
+</TemplatedQuestionDialog>

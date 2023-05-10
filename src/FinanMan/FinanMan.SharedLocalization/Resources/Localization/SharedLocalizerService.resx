@@ -126,11 +126,23 @@
   <data name="AccountColumnHeader" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
   <data name="AccountNameRowHeader" xml:space="preserve">
     <value>Account:</value>
   </data>
   <data name="AccountSummary" xml:space="preserve">
     <value>Account Summary</value>
+  </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>Account Type</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddAccount" xml:space="preserve">
+    <value>Add Account</value>
   </data>
   <data name="AdjustedBalance" xml:space="preserve">
     <value>Adjusted Balance</value>
@@ -261,6 +273,9 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="OpenDate" xml:space="preserve">
+    <value>Open Date</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -308,6 +323,9 @@
   </data>
   <data name="SortInfoLabel" xml:space="preserve">
     <value>Sort Info:</value>
+  </data>
+  <data name="StartingBalance" xml:space="preserve">
+    <value>Starting Balance</value>
   </data>
   <data name="TotalRowHeader" xml:space="preserve">
     <value>Total:</value>

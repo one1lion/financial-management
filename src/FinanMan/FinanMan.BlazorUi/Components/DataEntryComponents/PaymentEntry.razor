@@ -1,4 +1,5 @@
-﻿@using FinanMan.Database.Models.Tables
+﻿@using FinanMan.BlazorUi.Components.ListManagementComponents
+@using FinanMan.Database.Models.Tables
 @using FinanMan.Shared.DataEntryModels
 
 <div class="data-entry-wrapper">
@@ -75,17 +76,21 @@
 
             <div id="account" class="form-group">
                 <label>Account</label>
-                <InputSelect @bind-Value=_editPayment.AccountValueText>
-                    <option value="">--Select Account--</option>
-                    @if (_accounts is not null)
-                    {
-                        foreach (var curAccount in _accounts)
+                <div>
+                    <InputSelect @bind-Value=_editPayment.AccountValueText>
+                        <option value="">--Select Account--</option>
+                        @if (_accounts is not null)
                         {
-                            <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
+                            foreach (var curAccount in _accounts)
+                            {
+                                <option value="@curAccount.ValueText">@curAccount.DisplayText</option>
+                            }
                         }
-                    }
-                </InputSelect>
-                <ValidationMessage For="() => _editPayment.PostedDate" />
+                    </InputSelect>
+                    <button type="button" class="" @onclick="_ => _showAddAccount = true">&oplus;</button>
+                    <AddAccountDialog @bind-Show=_showAddAccount />
+                </div>
+                <ValidationMessage For="() => _editPayment.AccountValueText" />
             </div>
             <div id="saveButton" class="form-group">
                 <button type="button" @onclick=HandlePaymentSubmitted title="Submit">Submit</button>

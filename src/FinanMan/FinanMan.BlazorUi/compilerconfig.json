@@ -58,5 +58,9 @@
   {
     "outputFile": "Components/DataEntryComponents/PaymentDetailsTable.razor.css",
     "inputFile": "Components/DataEntryComponents/PaymentDetailsTable.razor.scss"
+  },
+  {
+    "outputFile": "Components/ListManagementComponents/AddAccountForm.razor.css",
+    "inputFile": "Components/ListManagementComponents/AddAccountForm.razor.scss"
   }
 ]

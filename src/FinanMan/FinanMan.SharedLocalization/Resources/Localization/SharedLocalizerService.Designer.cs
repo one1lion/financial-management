@@ -88,6 +88,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Name.
+        /// </summary>
+        public static string AccountName {
+            get {
+                return ResourceManager.GetString("AccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account:.
         /// </summary>
         public static string AccountNameRowHeader {
@@ -102,6 +111,33 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string AccountSummary {
             get {
                 return ResourceManager.GetString("AccountSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Type.
+        /// </summary>
+        public static string AccountType {
+            get {
+                return ResourceManager.GetString("AccountType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Account.
+        /// </summary>
+        public static string AddAccount {
+            get {
+                return ResourceManager.GetString("AddAccount", resourceCulture);
             }
         }
         
@@ -493,6 +529,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Date.
+        /// </summary>
+        public static string OpenDate {
+            get {
+                return ResourceManager.GetString("OpenDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -633,6 +678,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string SortInfoLabel {
             get {
                 return ResourceManager.GetString("SortInfoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting Balance.
+        /// </summary>
+        public static string StartingBalance {
+            get {
+                return ResourceManager.GetString("StartingBalance", resourceCulture);
             }
         }
         

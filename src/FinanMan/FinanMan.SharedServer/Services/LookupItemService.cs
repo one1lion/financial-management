@@ -39,7 +39,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+    public async Task<ResponseModel<TLookupItemViewModel>> GetLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModel<TLookupItemViewModel>();
@@ -59,7 +59,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> CreateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModelBase<int>();
@@ -110,7 +110,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModelBase<int>();
@@ -160,7 +160,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModelBase<int>();
