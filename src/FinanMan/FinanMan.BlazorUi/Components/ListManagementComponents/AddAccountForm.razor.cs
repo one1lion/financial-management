@@ -57,12 +57,12 @@ public partial class AddAccountForm
             return false;
         }
 
-        var model = _account.ToViewModel();
+        var model = _account.ToLookupViewModel();
         // Send the request to create the Account item
         // Return type should probably be the AccountLookupViewModel instead
         var retResp = await AccountService.CreateAccountAsync(model);
 
-        if(retResp?.Data is null)
+        if(retResp is null)
         {
             _accountEntryResponse.AddError("Something about the response was null and we expected something...I think");
             if(OnFailure.HasDelegate)
@@ -82,7 +82,7 @@ public partial class AddAccountForm
             return false;
         }
 
-        _account.Id = retResp.Data.Id;
+        _account.Id = retResp.RecordId;
         if (OnAccountCreated.HasDelegate)
         {
             await OnAccountCreated.InvokeAsync(_accountEntryResponse);

@@ -28,9 +28,40 @@ public class AccountService : IAccountService
     public Task<ResponseModel<AccountSummaryViewModel>?> GetAccountSummaryAsync(int accountId, CancellationToken ct = default)
         => _httpClient.GetFromJsonAsync<ResponseModel<AccountSummaryViewModel>>($"api/Accounts/Summaries/{accountId}", ct);
     
-    public Task<ResponseModel<AccountEntryViewModel>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var retResp = new ResponseModelBase<int>();
+        try
+        {
+            var resp = await _httpClient.PostAsJsonAsync("api/Accounts", accountModel, ct);
+            if (resp.IsSuccessStatusCode)
+            {
+                retResp = await resp.Content.ReadFromJsonAsync<ResponseModelBase<int>>(cancellationToken: ct);
+            }
+            else
+            {
+                retResp.AddError($"The request to create the account failed.  The server responded with status: {resp.StatusCode} - {resp.ReasonPhrase}");
+            }
+        }
+        catch (Exception ex)
+        {
+            retResp ??= new();
+
+            var errMessage = ex switch
+            {
+                TaskCanceledException or OperationCanceledException => "The task was canceled.",
+                // TODO: Do something with successStatus here - that is, we got a success response from the server,
+                //       but deserializing the response model ended up causing an exception
+                _ => "The create account operation failed unexpectedly."
+            };
+
+            retResp.AddError(errMessage);
+
+#if DEBUG
+            retResp.AddError(ex);
+#endif
+        }
+        return retResp;
     }
 
     public Task<ResponseModel<AccountLookupViewModel>?> UpdateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)

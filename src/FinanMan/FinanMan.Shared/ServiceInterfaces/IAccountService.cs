@@ -10,7 +10,7 @@ public interface IAccountService
     Task<ResponseModel<AccountLookupViewModel>?> GetAccountAsync(int accountId, CancellationToken ct = default);
     Task<ResponseModel<IEnumerable<AccountSummaryViewModel>>?> GetAccountSummariesAsync(CancellationToken ct = default);
     Task<ResponseModel<AccountSummaryViewModel>?> GetAccountSummaryAsync(int accountId, CancellationToken ct = default);
-    Task<ResponseModel<AccountEntryViewModel>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default);
+    Task<ResponseModelBase<int>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default);
     Task<ResponseModel<AccountLookupViewModel>?> UpdateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default);
     Task<ResponseModelBase<int>?> DeleteAccountAsync(int accountId, CancellationToken ct = default);
 }

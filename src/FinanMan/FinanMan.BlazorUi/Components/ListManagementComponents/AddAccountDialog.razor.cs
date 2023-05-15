@@ -38,10 +38,9 @@ public partial class AddAccountDialog
 
         _submitting = true;
         var success = await _accountFormRef.SubmitFormAsync();
-        if (_accountCreated)
+        if (success)
         {
-            // Add the created account 
-
+            Show = false;
         }
         _submitting = false;
     }

@@ -20,12 +20,18 @@ public class AccountEntryViewModel
 
 public static class AccountEntryViewModelExtensions
 {
-    public static AccountLookupViewModel ToViewModel(this AccountEntryViewModel model)
+    public static AccountLookupViewModel ToLookupViewModel(this AccountEntryViewModel model)
     {
+        var accountTypeId = int.TryParse(model.AccountTypeValueText ?? string.Empty, out var atid) ? atid : 0;
         return new Account()
         {
             Name = model.AccountName ?? string.Empty,
-            AccountTypeId = int.TryParse(model.AccountTypeValueText ?? string.Empty, out var atid) ? atid : 0
+            AccountTypeId = accountTypeId,
+            AccountType = new()
+            {
+                Id = accountTypeId,
+                Name = string.Empty
+            },
         }.ToViewModel();
     }
 }
