@@ -1,0 +1,84 @@
+.my-progress-bar {
+    --stlib-progress-fill-color: #165DBA;
+    --stlib-progress-empty-color: #CCCCCC;
+    --stlib-progress-success-fill-color: #00B04F;
+    --stlib-progress-fail-fill-color: #BF2026;
+    display: inline-flex;
+    gap: 0.4em;
+    flex-direction: column;
+    border-radius: 0.2rem;
+    overflow: hidden;
+
+    div[role=progressbar] {
+        --height: .4rem;
+        --width: 100%;
+        --fg: var(--stlib-progress-fill-color);
+        --bg: var(--stlib-progress-empty-color);
+        --pgPercentage: var(--value);
+        width: var(--width);
+        height: var(--height);
+        animation: growProgressBar 1s 1 forwards;
+        border-radius: 0.2rem;
+        position: relative;
+        background-color: var(--bg);
+        overflow: hidden;
+
+        .init-fill::before {
+            counter-reset: percentage var(--value);
+        }
+
+        .my-inner {
+            background-color: var(--fg);
+            top: 0;
+            height: 100%;
+            left: 0;
+            width: calc(var(--pgPercentage) * 1%);
+            animation: growProgressBar 1s 1 forwards, width 0.2s ease-out;
+        }
+
+        &:not(.init-fill) {
+            animation-duration: 0.01s;
+
+            .my-inner {
+                animation-duration: 0.01s;
+            }
+        }
+
+        &.infinite {
+            overflow-x: hidden;
+
+            .my-inner {
+                position: relative;
+                width: 100%;
+                background: linear-gradient(-45deg, var(--bg) 0 10%, var(--fg) 30% 70%, var(--bg) 90% 100%);
+                animation: infiniteProgress var(--animDuration) linear infinite;
+            }
+        }
+
+        .my-progress-label {
+            &.start {
+                align-self: flex-start;
+            }
+
+            &.center {
+                align-self: center;
+            }
+
+            &.end {
+                align-self: flex-end;
+            }
+        }
+    }
+}
+
+@media (forced-colors: active) {
+    .my-progress-bar {
+        forced-color-adjust: none;
+
+        div[role=progressbar] {
+            --progress-fill-color: blue;
+            --progress-empty-color: white;
+            --progress-success-fill-color: yellow;
+        }
+    }
+}

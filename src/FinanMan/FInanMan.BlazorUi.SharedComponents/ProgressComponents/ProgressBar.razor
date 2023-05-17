@@ -1,0 +1,11 @@
+<div class="my-progress-bar">
+    <div role="progressbar" class="@CssClasses" aria-valuenow="@Value" aria-valuemin="0" aria-valuemax="100" style="@Style">
+        <div class="my-inner">
+            @ChildContent
+        </div>
+    </div>
+    @if (Value >= 0 && ProgressLabelPosition != ProgressLabelPosition.Off)
+    {
+        <span class="my-progress-label @LabelCssClass">@((Value / 100d).ToString("#0%"))</span>
+    }
+</div>

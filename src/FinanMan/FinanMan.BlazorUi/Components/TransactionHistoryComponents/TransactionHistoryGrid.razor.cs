@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 
-public partial class TransactionHistoryGrid
+public partial class TransactionHistoryGrid : IDisposable
 {
     private const int _colCount = 7;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
@@ -147,6 +147,11 @@ public partial class TransactionHistoryGrid
         }
 
         return sortedTrans;
+    }
+
+    public void Dispose()
+    {
+        TransactionsState.OnTransactionHistoryChanged -= HandleTransactionHistoryChanged;
     }
 }
 

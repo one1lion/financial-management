@@ -37,7 +37,7 @@ public partial class MainWindow : Window, IDisposable
         // This will notify the Blazor Web View control that the window position has changed
         // which will make sure that newly expanded select elements will appear in the right
         // place.
-        BlazWebView.WebView.UpdateWindowPos();
+        BlazWebView.WebView?.UpdateWindowPos();
     }
        
     private Task HandleInitialUiLoaded()

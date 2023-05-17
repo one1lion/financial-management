@@ -1,4 +1,5 @@
-﻿using FinanMan.Database.Models.Tables;
+﻿using FinanMan.BlazorUi.State;
+using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
@@ -8,6 +9,7 @@ namespace FinanMan.BlazorUi.Components.ListManagementComponents;
 public partial class AddAccountDialog
 {
     [Inject, AllowNull] private ILookupListState LookupListState { get; set; }
+    [Inject, AllowNull] private ITransactionsState TransactionsState { get; set; }
 
     [Parameter]
     public bool Show
@@ -41,6 +43,7 @@ public partial class AddAccountDialog
         if (success)
         {
             Show = false;
+            await TransactionsState.RefreshTransactionHistoryAsync();
         }
         _submitting = false;
     }

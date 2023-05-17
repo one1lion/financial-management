@@ -6,6 +6,7 @@ namespace FinanMan.BlazorUi.Components.AccountSummaryComponents;
 public partial class AccountSummary : IDisposable
 {
     [Inject] private IAccountService AccountService { get; set; } = default!;
+    [Inject] private ILookupListState LookupListState { get; set; } = default!;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
     
     private ResponseModel<IEnumerable<AccountSummaryViewModel>>? _accountSummariesResp;
@@ -14,8 +15,17 @@ public partial class AccountSummary : IDisposable
     protected override async Task OnInitializedAsync()
     {
         await RefreshAccountSummaryAsync();
+        LookupListState.PropertyChanged += HandleStatePropertyChanged;
         TransactionsState.OnTransactionHistoryChanged += HandleTransactionHistoryChanged;
         await InvokeAsync(StateHasChanged);
+    }
+
+    private async void HandleStatePropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if(e.PropertyName == nameof(ILookupListState.LookupItemCache))
+        {
+            await RefreshAccountSummaryAsync();
+        }
     }
 
     private async Task HandleTransactionHistoryChanged()
@@ -56,6 +66,7 @@ public partial class AccountSummary : IDisposable
     public void Dispose()
     {
         _cts?.Cancel();
+        LookupListState.PropertyChanged -= HandleStatePropertyChanged;
         TransactionsState.OnTransactionHistoryChanged -= HandleTransactionHistoryChanged;
     }
 }

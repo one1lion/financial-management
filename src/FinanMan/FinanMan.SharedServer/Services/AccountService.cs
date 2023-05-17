@@ -1,6 +1,5 @@
 ﻿using FinanMan.Database;
 using FinanMan.Shared.AccountSummaryModels;
-using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;

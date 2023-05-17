@@ -26,6 +26,7 @@
 
 	<ItemGroup>
 		<None Include="compilerconfig.json" />
+		<None Include="ProgressComponents\ProgressBar.razor" />
 	</ItemGroup>
 
 </Project>
