@@ -9,7 +9,7 @@
 	<Identity
 	  Name="509946bc-ac0a-4446-ad09-d1232b072eaa"
 	  Publisher="CN=Automated Realms"
-	  Version="1.0.2.0" />
+	  Version="1.0.3.0" />
 
 	<mp:PhoneIdentity PhoneProductId="509946bc-ac0a-4446-ad09-d1232b072eaa" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
