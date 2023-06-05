@@ -7,9 +7,12 @@ public partial class DataEntry
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private IUiState UiState { get; set; } = default!;
 
-    [Parameter] public string EntType { get; set; } = default!;
+    [Parameter] public string EntType { get; set; } = string.Empty;
+    [Parameter] public string ListType { get; set; } = string.Empty;
 
-    private EntryType _entryType = EntryType.Payments;
+    private LookupListType ListTypeVal => Enum.TryParse<LookupListType>(ListType, out var t) ? t : LookupListType.AccountTypes;
+
+    private EntryType EntTypeVal => Enum.TryParse<EntryType>(EntType, out var t) ? t : EntryType.Payments;
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -23,22 +26,9 @@ public partial class DataEntry
     {
         parameters.SetParameterProperties(this);
         var entTypeParam = parameters.TryGetValue<string>(nameof(EntType), out var entType);
-        if (entTypeParam && !string.IsNullOrWhiteSpace(entType))
+        if (entTypeParam && !string.IsNullOrWhiteSpace(EntType) && !Enum.TryParse<EntryType>(entType, out var _))
         {
-            var entTypeParsed = Enum.GetValues<EntryType>().FirstOrDefault(x => x.ToString().ToLower() == entType.ToLower());
-            if (entType.ToLower() != entTypeParsed.ToString().ToLower())
-            {
-                NavigationManager.NavigateTo("data-entry");
-                return Task.CompletedTask;
-            }
-            else
-            {
-                _entryType = entTypeParsed;
-            }
-        }
-        else
-        {
-            _entryType = EntryType.Payments;
+            NavigationManager.NavigateTo("data-entry");
         }
 
         return base.SetParametersAsync(ParameterView.Empty);
@@ -46,7 +36,7 @@ public partial class DataEntry
 
     private void HandleEntryTabClicked(EntryType entryType)
     {
-        if (_entryType == entryType)
+        if (EntTypeVal == entryType)
         {
             return;
         }

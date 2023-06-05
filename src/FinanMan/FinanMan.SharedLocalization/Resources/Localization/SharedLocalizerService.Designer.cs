@@ -421,6 +421,24 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List Managment.
+        /// </summary>
+        public static string ListManagement {
+            get {
+                return ResourceManager.GetString("ListManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Management.
+        /// </summary>
+        public static string ListManagementTitleDisplay {
+            get {
+                return ResourceManager.GetString("ListManagementTitleDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
@@ -435,6 +453,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string LogIn {
             get {
                 return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lookup Lists.
+        /// </summary>
+        public static string LookupListTitle {
+            get {
+                return ResourceManager.GetString("LookupListTitle", resourceCulture);
             }
         }
         
@@ -489,6 +516,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string NoAccountsMessage {
             get {
                 return ResourceManager.GetString("NoAccountsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No items to display.
+        /// </summary>
+        public static string NoItemsMessage {
+            get {
+                return ResourceManager.GetString("NoItemsMessage", resourceCulture);
             }
         }
         
@@ -786,6 +822,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -10,7 +10,6 @@
 
 	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
-		<Content Remove="tsconfig.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -32,11 +31,11 @@
 	<ItemGroup>
 		<None Include="compilerconfig.json" />
 		<None Include="ProgressComponents\ProgressBar.razor" />
-		<None Include="tsconfig.json" />
 	</ItemGroup>
 
 	<PropertyGroup Label="Configuration">
 		<TypeScriptOutDir>wwwroot/js</TypeScriptOutDir>
+		<TypeScriptTarget>ES6</TypeScriptTarget>
 	</PropertyGroup>
 
 	<ItemGroup>

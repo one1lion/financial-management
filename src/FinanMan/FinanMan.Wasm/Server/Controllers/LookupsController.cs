@@ -54,7 +54,7 @@ public class AccountTypesController : LookupsControllerBase<LookupItemViewModel<
 
 [Route("api/Lookups/Categories")]
 [ApiController]
-public class CategoriesController : LookupsControllerBase<LookupItemViewModel<LuAccountType>>
+public class CategoriesController : LookupsControllerBase<LookupItemViewModel<LuCategory>>
 {
     public CategoriesController(ILookupListService listService) : base(listService) {}
 }

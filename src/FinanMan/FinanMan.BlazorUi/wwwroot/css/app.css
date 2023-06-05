@@ -18,6 +18,11 @@
   --input-border-color: var(--default-border-color);
   --input-border-style: 1px solid var(--input-border-color);
   --input-background-color: #03000A;
+  /* Lists */
+  --list-foreground-color: var(--primary-text-color);
+  --list-background-color: rgba(0, 0, 0, .2);
+  --list-item-hover-fg-color: var(--primary-text-color);
+  --list-item-hover-bg-color: rgba(255, 255, 255, .2);
   /* Buttons */
   --button-foreground-color: var(--primary-background-color);
   --button-background-color: var(--light);
@@ -186,4 +191,11 @@ h4 {
 }
 .blazor-error-boundary::after {
   content: "An error has occurred.";
+}
+
+.sr-only {
+  visibility: hidden;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
 }

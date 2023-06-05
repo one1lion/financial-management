@@ -1,0 +1,21 @@
+#lookupTypesListWrapper {
+    ul {
+        list-style: none;
+        padding: 0;
+        cursor: default;
+        background-color: var(--list-background-color);
+        color: var(--list-foreground-color);
+
+        li {
+            &:hover:not(.active) {
+                background-color: var(--list-item-hover-bg-color);
+                color: var(--list-item-hover-fg-color);
+            }
+
+            &.active {
+                background-color: var(--active-tab-button-background-color);
+                color: var(--active-tab-button-foreground-color);
+            }
+        }
+    }
+}

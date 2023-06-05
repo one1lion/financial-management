@@ -62,5 +62,13 @@
   {
     "outputFile": "Components/ListManagementComponents/AddAccountForm.razor.css",
     "inputFile": "Components/ListManagementComponents/AddAccountForm.razor.scss"
+  },
+  {
+    "outputFile": "Components/ListManagementComponents/LookupTypeList.razor.css",
+    "inputFile": "Components/ListManagementComponents/LookupTypeList.razor.scss"
+  },
+  {
+    "outputFile": "Components/ListManagementComponents/ListManagementPage.razor.css",
+    "inputFile": "Components/ListManagementComponents/ListManagementPage.razor.scss"
   }
 ]

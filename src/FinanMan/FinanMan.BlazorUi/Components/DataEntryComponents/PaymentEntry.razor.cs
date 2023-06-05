@@ -33,7 +33,7 @@ public partial class PaymentEntry
         _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
         _payees = LookupListState.GetLookupItems<PayeeLookupViewModel>().ToList();
         _lineItemTypes = LookupListState.GetLookupItems<LookupItemViewModel<LuLineItemType>>().ToList();
-}
+    }
 
     public override Task SetParametersAsync(ParameterView parameters)
     {

@@ -2,6 +2,7 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
+using FinanMan.Shared.ServiceInterfaces;
 
 namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 
