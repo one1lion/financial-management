@@ -1,12 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanMan.BlazorUi.SharedComponents.SampleComponents;
 public partial class SampleIsolatedJsComponent
@@ -15,19 +9,18 @@ public partial class SampleIsolatedJsComponent
     private Task<IJSObjectReference>? _module;
     private Task<IJSObjectReference> Module => _module ??= JsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/FinanMan.BlazorUi.SharedComponents/js/MyInterop.js").AsTask();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private string? _errMsg;
+
+    private async Task HandleClick()
     {
-        if (firstRender)
+        try
         {
-            try
-            {
-                var module = await Module;
-                await module.InvokeVoidAsync("showAlert", "Hello from C#!");
-            }
-            catch (Exception ex)
-            {
-                Debug.Assert(ex is null);
-            }
+            var module = await Module;
+            await module.InvokeVoidAsync("showAlert", "Hello from C#!");
         }
-    }   
+        catch (Exception ex)
+        {
+            _errMsg = ex.Message;
+        }
+    }
 }

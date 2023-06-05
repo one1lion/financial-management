@@ -3,6 +3,7 @@ using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
+using System.Collections.Concurrent;
 using System.Net.Http.Json;
 
 namespace FinanMan.SharedClient.Services;
@@ -10,6 +11,8 @@ namespace FinanMan.SharedClient.Services;
 public class AccountService : IAccountService
 {
     private readonly HttpClient _httpClient;
+
+    public readonly ICollection<object> MyCollection;
 
     public AccountService(HttpClient httpClient)
     {

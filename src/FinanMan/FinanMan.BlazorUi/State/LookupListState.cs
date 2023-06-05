@@ -33,13 +33,30 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         }
         _initializing = true;
         
-        var accountsResp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
-        var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
-        var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
-        var depositReasonsResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
-        var lineItemTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
-        var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeLookupViewModel>();
-        var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
+        var accountsRespTask = _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
+        var accountTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
+        var categoriesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
+        var depositReasonsRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
+        var lineItemTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
+        var payeesRespTask = _lookupService.GetLookupItemsAsync<PayeeLookupViewModel>();
+        var recurrenceTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
+
+        await Task.WhenAll(
+            accountsRespTask,
+            accountTypesRespTask,
+            categoriesRespTask,
+            depositReasonsRespTask,
+            lineItemTypesRespTask,
+            payeesRespTask,
+            recurrenceTypesRespTask);
+
+        var accountsResp = accountsRespTask.Result;
+        var accountTypesResp = accountTypesRespTask.Result;
+        var categoriesResp = categoriesRespTask.Result;
+        var depositReasonsResp = depositReasonsRespTask.Result;
+        var lineItemTypesResp = lineItemTypesRespTask.Result;
+        var payeesResp = payeesRespTask.Result;
+        var recurrenceTypesResp = recurrenceTypesRespTask.Result;
 
         // API request to get list items
         if (!accountsResp.WasError && (accountsResp.Data?.Any() ?? false))
