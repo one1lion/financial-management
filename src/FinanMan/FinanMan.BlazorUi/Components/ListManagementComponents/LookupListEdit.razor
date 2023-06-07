@@ -3,12 +3,25 @@
 <div id="listTypeItemsWrapper">
     <table>
         <colgroup id="name" />
-        <colgroup id="value" />
         <colgroup id="controls" />
         <thead>
             <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="name">@SharedLocalizerService.Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="@SharedLocalizerService.Name" @bind=_newItemName @bind:event="oninput" @onkeydown=HandleKeyDown @ref=_newItemInputRef />
+                        <button type="button" @onclick=HandleAddNewItemClicked>Add</button>
+                    </div>
+                    <p>
+                        @if (!string.IsNullOrWhiteSpace(_addNewError))
+                        {
+                            <span class="error">@_addNewError</span>
+                        }
+                    </p>
+                </td>
+            </tr>
+            <tr>
                 <th scope="col">@SharedLocalizerService.Name</th>
-                <th scope="col">@SharedLocalizerService.Value</th>
                 <th scope="col"><label class="sr-only">@SharedLocalizerService.ControlButtonsColumnHeader</label></th>
             </tr>
         </thead>
@@ -36,7 +49,6 @@
                 {
                     <tr>
                         <td>@curItem.DisplayText</td>
-                        <td>@curItem.ValueText</td>
                         <td>
                             <button type="button" class="btn btn-sm btn-outline-secondary" @onclick="_ => HandleEditItemClicked(curItem)">@SharedLocalizerService.Edit</button>
                             <button type="button" class="btn btn-sm btn-outline-danger" @onclick="_ => HandleDeleteItemClicked(curItem)">@SharedLocalizerService.Delete</button>

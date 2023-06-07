@@ -4,6 +4,12 @@ namespace FinanMan.Shared.LookupModels;
 
 public class PayeeLookupViewModel : LookupItemViewModel<Payee>
 {
+    public PayeeLookupViewModel() : base() { }
+    public PayeeLookupViewModel(Payee payee) : base(payee) 
+    {
+        Categories = payee.Categories?.Select(x => x.Name)?.ToArray() ?? Array.Empty<string>();
+    }
+
     public string PayeeName { get => DisplayText; set => DisplayText = value; } 
     public IEnumerable<string> Categories { get; set; } = Array.Empty<string>();
 }
