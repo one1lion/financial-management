@@ -6,6 +6,7 @@ public interface ILookupItemViewModel
     string DisplayText { get; set; }
     string ValueText { get; set; }
     int SortOrder { get; set; }
+    bool Deleted { get; set; }
     DateTime LastUpdated { get; set; }
 }
 

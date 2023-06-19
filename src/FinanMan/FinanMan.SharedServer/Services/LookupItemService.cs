@@ -88,12 +88,36 @@ public class LookupItemService : ILookupListService
         {
             var newRec = dataEntryViewModel.ToEntityModel();
 
-            if(newRec is Account ac)
+            if (newRec is Account ac)
             {
                 ac.AccountType = default!;
             }
 
+            if (newRec.SortOrder == 0)
+            {
+                // If the new record's sort order is not set, set it to the next available sort order
+                newRec.SortOrder = await lookupList.Where(x => !x.Deleted).MaxAsync(x => x.SortOrder, ct) + 1;
+            }
+            else
+            {
+                // Update the sort order of all the other records
+                var otherRecs = await lookupList.Where(x => !x.Deleted && x.SortOrder >= newRec.SortOrder).ToListAsync(ct);
+                foreach (var rec in otherRecs)
+                {
+                    rec.SortOrder++;
+                }
+            }
+
             await context.AddAsync(newRec, ct);
+
+            // Remove gaps in the sort order
+            var ordered = await lookupList.Where(x => !x.Deleted).OrderBy(x => x.SortOrder).ToListAsync(ct);
+
+            var curItem = 1;
+            foreach (var rec in ordered)
+            {
+                rec.SortOrder = curItem++;
+            }
 
             retResp.RecordCount = await context.SaveChangesAsync(ct);
 
@@ -105,6 +129,9 @@ public class LookupItemService : ILookupListService
         {
             await trans.RollbackAsync();
             retResp.AddError($"The request to add the new {typeof(TLookupItemViewModel)} failed. {ex.Message}");
+#if DEBUG
+            retResp.AddError(ex.StackTrace ?? string.Empty);
+#endif
         }
 
         return retResp;
@@ -189,7 +216,7 @@ public class LookupItemService : ILookupListService
 
         retResp.RecordCount = await context.SaveChangesAsync(ct);
         retResp.RecordId = id;
-        
+
         return retResp;
     }
 
@@ -204,7 +231,7 @@ public class LookupItemService : ILookupListService
             case LookupListType.Accounts:
                 queryable = context.Accounts
                     .Include(x => x.AccountType)
-                    .Select(x =>  new AccountLookupViewModel()
+                    .Select(x => new AccountLookupViewModel()
                     {
                         Id = x.Id,
                         DisplayText = x.Name,
@@ -213,6 +240,7 @@ public class LookupItemService : ILookupListService
                         SortOrder = x.SortOrder,
                         ValueText = x.Id.ToString(),
                         LastUpdated = x.LastUpdated,
+                        Deleted = x.Deleted,
                         Item = x
                     })
                     .OfType<TLookupItemViewModel>();
@@ -225,6 +253,7 @@ public class LookupItemService : ILookupListService
                     ValueText = x.Id.ToString(),
                     SortOrder = x.SortOrder,
                     LastUpdated = x.LastUpdated,
+                    Deleted = x.Deleted,
                     Item = x
                 })
                 .OfType<TLookupItemViewModel>();
@@ -237,6 +266,7 @@ public class LookupItemService : ILookupListService
                     ValueText = x.Id.ToString(),
                     SortOrder = x.SortOrder,
                     LastUpdated = x.LastUpdated,
+                    Deleted = x.Deleted,
                     Item = x
                 })
                 .OfType<TLookupItemViewModel>();
@@ -249,6 +279,7 @@ public class LookupItemService : ILookupListService
                     ValueText = x.Id.ToString(),
                     SortOrder = x.SortOrder,
                     LastUpdated = x.LastUpdated,
+                    Deleted = x.Deleted,
                     Item = x
                 })
                 .OfType<TLookupItemViewModel>();
@@ -261,6 +292,7 @@ public class LookupItemService : ILookupListService
                     ValueText = x.Id.ToString(),
                     SortOrder = x.SortOrder,
                     LastUpdated = x.LastUpdated,
+                    Deleted = x.Deleted,
                     Item = x
                 })
                 .OfType<TLookupItemViewModel>();
@@ -272,6 +304,7 @@ public class LookupItemService : ILookupListService
                     DisplayText = x.Name,
                     ValueText = x.Id.ToString(),
                     SortOrder = x.Id,
+                    Deleted = x.Deleted,
                     Item = x
                 })
                 .OfType<TLookupItemViewModel>();
@@ -284,6 +317,7 @@ public class LookupItemService : ILookupListService
                     ValueText = x.Id.ToString(),
                     SortOrder = x.SortOrder,
                     LastUpdated = x.LastUpdated,
+                    Deleted = x.Deleted,
                     Item = x
                 })
                 .OfType<TLookupItemViewModel>();
@@ -318,7 +352,7 @@ public static class ILookupItemExtensions
         model.LastUpdated = DateTime.Now;
         model.Deleted = updatedModel.Deleted;
 
-        switch(model)
+        switch (model)
         {
             case Account account:
                 var updatedAccount = (Account)updatedModel;

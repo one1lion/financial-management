@@ -188,5 +188,5 @@ public class ResponseModel<T, TKey> : ResponseModelBase<TKey>
   where T : class
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public T? ReturnObject { get; set; }
+    public T? Data { get; set; }
 }

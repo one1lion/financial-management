@@ -98,10 +98,10 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         return LookupItemCache.OfType<TLookupItem>();
     }
 
-    public async Task<ResponseModel<TLookupItem>> CreateLookupItemAsync<TLookupItem>(TLookupItem lookupItem)
+    public async Task<ResponseModel<ILookupItemViewModel>> CreateLookupItemAsync<TLookupItem>(TLookupItem lookupItem)
          where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        var retResp = new ResponseModel<TLookupItem>()
+        var retResp = new ResponseModel<ILookupItemViewModel>()
         {
             Data = lookupItem
         };
