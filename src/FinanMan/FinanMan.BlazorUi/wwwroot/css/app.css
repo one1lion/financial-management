@@ -199,3 +199,7 @@ h4 {
   width: 1px;
   height: 1px;
 }
+
+i.icon {
+  font-style: normal;
+}

@@ -1,6 +1,6 @@
 ﻿namespace FinanMan.Shared.LookupModels;
 
-public interface ILookupItemViewModel
+public interface ILookupItemViewModel : ICloneable
 {
     string ListItemId { get; }
     string DisplayText { get; set; }

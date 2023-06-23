@@ -1,0 +1,21 @@
+@    using FinanMan.BlazorUi.Components.IconComponents.Lib;
+    using FinanMan.BlazorUi.SharedComponents.IconComponents.Lib;
+<i class="icon" @attributes=AdditionalAttributes>
+    @Render
+</i>
+
+@code {
+    [Parameter] public IconName IconName { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private RenderFragment Render => builder =>
+    {
+        var curElem = 0;
+        var curType = IconName.GetIconType();
+        if(curType is not null)
+        {
+            builder.OpenComponent(curElem++, curType);
+            builder.CloseComponent();
+        }
+    };
+}
