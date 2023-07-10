@@ -13,9 +13,11 @@ public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChang
     Task InitializeAsync();
 
     IEnumerable<TLookupItem> GetLookupItems<TLookupItem>()
-         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
+        where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
     Task<ResponseModel<ILookupItemViewModel>> CreateLookupItemAsync<TLookupItem>(TLookupItem lookupItem)
-         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
+        where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
+    Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();
     Task RefreshListAsync<TLookupItem>()
-         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
+        where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
 }

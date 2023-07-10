@@ -21,6 +21,10 @@
                             <span class="error">@_addNewError</span>
                         }
                     </p>
+                    @if (_response?.WasError ?? false)
+                    {
+                        @_response.RenderError
+                    }
                 </td>
             </tr>
             <tr>
@@ -29,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(_loadingList || _items is null)
+            @if (_loadingList || _items is null)
             {
                 <tr>
                     <td colspan="3" class="loading">
@@ -38,7 +42,7 @@
                     </td>
                 </tr>
             }
-            else if(_items.Count == 0)
+            else if (_items.Count == 0)
             {
                 <tr>
                     <td colspan="3" class="no-items">
@@ -48,21 +52,37 @@
             }
             else
             {
-                foreach(var curItem in _items)
+                foreach (var curItem in _items)
                 {
+                    var editedItem = _editing && _editItem?.ListItemId == curItem.ListItemId;
                     <tr>
-                        <td>@curItem.DisplayText</td>
+                        @if (editedItem)
+                        {
+                            <input type="text" @bind=_editItem!.DisplayText @bind:event="oninput" @onkeydown=HandleKeyDown />
+                        }
+                        else
+                        {
+                            <td>@curItem.DisplayText</td>
+                        }
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-secondary" @onclick="_ => HandleEditItemClicked(curItem)">@SharedLocalizerService.Edit</button>
-                            <button type="button" class="btn btn-sm btn-outline-danger" @onclick="_ => HandleDeleteItemClicked(curItem)">@SharedLocalizerService.Delete</button>
+                            @if (editedItem)
+                            {
+                                <button class="btn btn-link" role="button" @onclick="_ => HandleConfirmSaveChanges(curItem)" aria-label="@SharedLocalizerService.Save"><i class="icon text-warning" aria-hidden="true">✔</i></button>
+                                <button class="btn btn-link" role="button" @onclick=HandleCancelChangesClicked aria-label="@SharedLocalizerService.Cancel"><i class="icon text-danger" aria-hidden="true">🗑</i></button>
+                            }
+                            else if (!_editing)
+                            {
+                                <button class="btn btn-link" role="button" @onclick="_ => HandleEditItemClicked(curItem)" aria-label="@SharedLocalizerService.Edit"><i class="icon text-warning" aria-hidden="true">✎</i></button>
+                                <button class="btn btn-link" role="button" @onclick="_ => HandleDeleteItemClicked(curItem)" aria-label="@SharedLocalizerService.Delete"><i class="icon text-danger" aria-hidden="true">✖</i></button>
+                            }
                         </td>
                     </tr>
                 }
-            
+
             }
         </tbody>
     </table>
-    
+
 
 </div>
 

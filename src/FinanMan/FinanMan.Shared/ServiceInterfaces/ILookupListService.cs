@@ -12,7 +12,7 @@ public interface ILookupListService
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();
     Task<ResponseModelBase<int>> CreateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();
-    Task<ResponseModelBase<int>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();
     Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();

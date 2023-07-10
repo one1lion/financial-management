@@ -68,7 +68,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.Uwp", "FinanMan.Uw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source Gens", "Source Gens", "{B40DC5F1-1200-423C-A91E-05D01820890D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThindalSourceGenFunStuff", "ThindalSourceGenFunStuff\ThindalSourceGenFunStuff.csproj", "{5BCAF71B-BFC6-4736-B5A0-EA1A7B6404E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThindalSourceGenFunStuff", "ThindalSourceGenFunStuff\ThindalSourceGenFunStuff.csproj", "{5BCAF71B-BFC6-4736-B5A0-EA1A7B6404E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35649808-BB6D-4176-9B95-BA66F5D6A0FC}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.gitattributes = ..\..\.gitattributes
+		..\..\.gitignore = ..\..\.gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

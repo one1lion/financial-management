@@ -137,12 +137,12 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
+    public async Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        var retResp = new ResponseModelBase<int>();
+        var retResp = new ResponseModel<ILookupItemViewModel>();
 
-        using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(ct);
         var lookupList = GetQueryableLookupList<TLookupItemViewModel>(context);
 
         if (lookupList is null)
@@ -176,14 +176,14 @@ public class LookupItemService : ILookupListService
 
             await trans.CommitAsync(ct);
 
-            retResp.RecordId = forUpdate.GetId();
+            retResp.Data = forUpdate.ToViewModel<TLookupItemViewModel>();
         }
         catch (Exception ex)
         {
             await trans.RollbackAsync();
             retResp.AddError($"The request to add the new {typeof(TLookupItemViewModel)} failed. {ex.Message}");
         }
-
+        
         return retResp;
     }
 
@@ -344,6 +344,85 @@ public static class ILookupItemExtensions
         _ => throw new NotImplementedException(),
         // NOTE: Recurrence types are not maintainable from the application
     };
+
+    public static TLookupItemViewModel ToViewModel<TLookupItemViewModel>(this ILookupItem viewModel)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+        => viewModel switch
+        {
+            Account x => new AccountLookupViewModel()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                AccountType = x.AccountType.Name,
+                AccountTypeId = x.AccountTypeId,
+                SortOrder = x.SortOrder,
+                ValueText = x.Id.ToString(),
+                LastUpdated = x.LastUpdated,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            LuAccountType x => new LookupItemViewModel<LuAccountType>()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                ValueText = x.Id.ToString(),
+                SortOrder = x.SortOrder,
+                LastUpdated = x.LastUpdated,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            LuCategory x => new LookupItemViewModel<LuCategory>()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                ValueText = x.Id.ToString(),
+                SortOrder = x.SortOrder,
+                LastUpdated = x.LastUpdated,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            LuDepositReason x => new LookupItemViewModel<LuDepositReason>()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                ValueText = x.Id.ToString(),
+                SortOrder = x.SortOrder,
+                LastUpdated = x.LastUpdated,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            LuLineItemType x => new LookupItemViewModel<LuLineItemType>()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                ValueText = x.Id.ToString(),
+                SortOrder = x.SortOrder,
+                LastUpdated = x.LastUpdated,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            Payee x => new PayeeLookupViewModel()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                ValueText = x.Id.ToString(),
+                SortOrder = x.Id,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            LuRecurrenceType x => new LookupItemViewModel<RecurrenceType, LuRecurrenceType>()
+            {
+                Id = x.Id,
+                DisplayText = x.Name,
+                ValueText = x.Id.ToString(),
+                SortOrder = x.SortOrder,
+                LastUpdated = x.LastUpdated,
+                Deleted = x.Deleted,
+                Item = x
+            } as TLookupItemViewModel,
+            _ => throw new NotImplementedException(),
+        } ?? new();
+
 
     public static void Patch(this ILookupItem model, ILookupItem updatedModel)
     {

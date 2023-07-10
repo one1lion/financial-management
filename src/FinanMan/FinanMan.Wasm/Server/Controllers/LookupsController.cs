@@ -49,40 +49,40 @@ public class AccountLookupsController : LookupsControllerBase<AccountLookupViewM
 [ApiController]
 public class AccountTypesController : LookupsControllerBase<LookupItemViewModel<LuAccountType>>
 {
-    public AccountTypesController(ILookupListService listService) : base(listService) {}
+    public AccountTypesController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/Categories")]
 [ApiController]
 public class CategoriesController : LookupsControllerBase<LookupItemViewModel<LuCategory>>
 {
-    public CategoriesController(ILookupListService listService) : base(listService) {}
+    public CategoriesController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/DepositReasons")]
 [ApiController]
 public class DepositReasonsController : LookupsControllerBase<LookupItemViewModel<LuDepositReason>>
 {
-    public DepositReasonsController(ILookupListService listService) : base(listService) {}
+    public DepositReasonsController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/LineItemTypes")]
 [ApiController]
 public class LineItemTypesController : LookupsControllerBase<LookupItemViewModel<LuLineItemType>>
 {
-    public LineItemTypesController(ILookupListService listService) : base(listService) {}
+    public LineItemTypesController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/Payees")]
 [ApiController]
 public class PayeeLookupsController : LookupsControllerBase<PayeeLookupViewModel>
 {
-    public PayeeLookupsController(ILookupListService listService) : base(listService) {}
+    public PayeeLookupsController(ILookupListService listService) : base(listService) { }
 }
 
 [Route("api/Lookups/RecurrenceTypes")]
 [ApiController]
 public class RecurrenceTypesController : LookupsControllerBase<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>
 {
-    public RecurrenceTypesController(ILookupListService listService) : base(listService) {}
+    public RecurrenceTypesController(ILookupListService listService) : base(listService) { }
 }

@@ -1,5 +1,4 @@
 ﻿using FinanMan.Database.Models.Tables;
-using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 
@@ -24,15 +23,16 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 
     public async Task InitializeAsync()
     {
-        if (_initialized || _initializing) {
-            while(!_initialized && _initializing)
+        if (_initialized || _initializing)
+        {
+            while (!_initialized && _initializing)
             {
                 await Task.Delay(200);
             }
-            return; 
+            return;
         }
         _initializing = true;
-        
+
         var accountsRespTask = _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
         var accountTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
         var categoriesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
@@ -107,7 +107,7 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         };
 
         var resp = await _lookupService.CreateLookupItemAsync(lookupItem);
-        if(resp.WasError)
+        if (resp.WasError)
         {
             retResp.AddErrors(resp);
             return retResp;
@@ -131,7 +131,7 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 
         // Find all returned items that already exist in the cache and remove them from the cache
         var existingItems = resp.Data.Where(x => LookupItemCache.Any(y => y.ValueText == x.ValueText)).ToList();
-        if(existingItems.Any())
+        if (existingItems.Any())
         {
             LookupItemCache.RemoveAll(x => existingItems.Any(y => y.ValueText == x.ValueText));
         }
@@ -139,5 +139,28 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         // Add all returned items to the cache
         LookupItemCache.AddRange(resp.Data);
         RaisePropertyChanged(nameof(LookupItemCache));
+    }
+
+    public async Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel lookupItem, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var resp = await _lookupService.UpdateLookupItemAsync(lookupItem, ct);
+        if (resp.WasError) { return resp; }
+        var existLookupItem = GetLookupItems<TLookupItemViewModel>().FirstOrDefault(x => x.ListItemId == lookupItem.ListItemId);
+        if (existLookupItem is null)
+        {
+            var getResp = await _lookupService.GetLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
+
+            if (getResp.WasError || getResp.Data is null)
+            {
+                resp.AddError("The update was successful, however, the lookup item could not be retrieved nor updated in the local cache.  Please refresh the application to get the updated list of lookup items.");
+                resp.AddErrors(getResp);
+                return resp;
+            }
+
+            LookupItemCache.Add(getResp.Data);
+        }
+
+        return resp;
     }
 }

@@ -22,6 +22,9 @@ public partial class LookupListEdit
     private List<LookupItemViewModel<LuCategory>> _selectedCategories = new();
     private string? _addNewError;
 
+    private ILookupItemViewModel? _editItem;
+    private bool _editing;
+
     private ResponseModel<ILookupItemViewModel>? _response = null;
 
     protected override void OnInitialized()
@@ -71,6 +74,8 @@ public partial class LookupListEdit
 
     private Task HandleEditItemClicked(ILookupItemViewModel item)
     {
+        _editItem = (ILookupItemViewModel)item.Clone();
+        _editing = true;
         return Task.CompletedTask;
     }
 
@@ -167,5 +172,47 @@ public partial class LookupListEdit
             await _newItemInputRef.Value.FocusAsync();
         }
         return;
+    }
+
+    private async Task HandleConfirmSaveChanges(ILookupItemViewModel item)
+    {
+        if (!_editing || _editItem is null || _editItem.DisplayText == item.DisplayText) { return; }
+
+        // TODO: Move the update response somewhere we have access to in the edit form
+        _response = _lookupType switch
+        {
+            LookupListType.AccountTypes => await LookupListState.UpdateLookupItemAsync((LookupItemViewModel<LuAccountType>)_editItem),
+            LookupListType.Categories => await LookupListState.UpdateLookupItemAsync((LookupItemViewModel<LuCategory>)_editItem),
+            LookupListType.DepositReasons => await LookupListState.UpdateLookupItemAsync((LookupItemViewModel<LuDepositReason>)_editItem),
+            LookupListType.LineItemTypes => await LookupListState.UpdateLookupItemAsync((LookupItemViewModel<LuLineItemType>)_editItem),
+            LookupListType.Payees => await LookupListState.UpdateLookupItemAsync((PayeeLookupViewModel)_editItem),
+            _ => new()
+            {
+                ErrorMessages = new() { $"Error updating item.  Cannot update an item of Type {_lookupType}." }
+            }
+        };
+
+        if(_response is null)
+        {
+            _response = new() { ErrorMessages = new() { "An error occurred while receiving the response from the server.  Please refresh the page to determine if the item was successfully updated." } };
+            return;
+        }
+
+        if (_response.WasError)
+        {
+            // The error will be displayed in the UI
+            return;
+        }
+
+        // If we are here, the item was successfully updated
+        item.DisplayText = _editItem.DisplayText;
+        _editItem = null;
+        _editing = false;
+    }
+
+    private void HandleCancelChangesClicked()
+    {
+        _editItem = null;
+        _editing = false;
     }
 }
