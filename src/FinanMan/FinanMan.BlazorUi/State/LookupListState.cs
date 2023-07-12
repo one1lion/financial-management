@@ -160,7 +160,38 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 
             LookupItemCache.Add(getResp.Data);
         }
+        else
+        {
+            existLookupItem.DisplayText = lookupItem.DisplayText;
+        }
 
+        RaisePropertyChanged(nameof(LookupItemCache));
         return resp;
+    }
+
+    public Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        //var resp = await _lookupService.DeleteLookupItemAsync(lookupItem, ct);
+        //if (resp.WasError) { return resp; }
+        //var existLookupItem = GetLookupItems<TLookupItemViewModel>().FirstOrDefault(x => x.ListItemId == lookupItem.ListItemId);
+        //if (existLookupItem is null)
+        //{
+        //    var getResp = await _lookupService.GetLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
+
+        //    if (getResp.WasError || getResp.Data is null)
+        //    {
+        //        resp.AddError("The delete was successful, however, the lookup item could not be retrieved nor updated in the local cache.  Please refresh the application to get the updated list of lookup items.");
+        //        resp.AddErrors(getResp);
+        //        return resp;
+        //    }
+
+        //    LookupItemCache.Add(getResp.Data);
+        //}
+
+        //RaisePropertyChanged(nameof(LookupItemCache));
+
+        //return resp;    
+        throw new NotImplementedException();
     }
 }

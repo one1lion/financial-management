@@ -18,6 +18,8 @@ public interface ILookupListState : INotifyPropertyChanged, INotifyPropertyChang
         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
     Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();
+    Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new();
     Task RefreshListAsync<TLookupItem>()
         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new();
 }

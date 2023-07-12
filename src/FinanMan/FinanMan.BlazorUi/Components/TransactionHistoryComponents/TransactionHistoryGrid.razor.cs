@@ -1,4 +1,5 @@
 using FinanMan.Shared.DataEntryModels;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.BlazorUi.Components.TransactionHistoryComponents;
@@ -7,6 +8,7 @@ public partial class TransactionHistoryGrid : IDisposable
 {
     private const int _colCount = 7;
     [Inject] private ITransactionsState TransactionsState { get; set; } = default!;
+    [Inject] private ILookupListState LookupListState { get; set; } = default!;
 
     [Parameter] public string? AccountName { get; set; }
 
@@ -25,7 +27,16 @@ public partial class TransactionHistoryGrid : IDisposable
     protected override Task OnInitializedAsync()
     {
         TransactionsState.OnTransactionHistoryChanged += HandleTransactionHistoryChanged;
+        LookupListState.PropertyChanged += HandlePropertyChanged;
         return TransactionsState.RefreshTransactionHistoryAsync();
+    }
+
+    private async void HandlePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if(e.PropertyName == nameof(ILookupListState.Initialized) || e.PropertyName == nameof(ILookupListState.LookupItemCache))
+        {
+            await InvokeAsync(StateHasChanged);
+        }   
     }
 
     private Task HandleTransactionHistoryChanged()
@@ -152,6 +163,7 @@ public partial class TransactionHistoryGrid : IDisposable
     public void Dispose()
     {
         TransactionsState.OnTransactionHistoryChanged -= HandleTransactionHistoryChanged;
+        LookupListState.PropertyChanged -= HandlePropertyChanged;
     }
 }
 
