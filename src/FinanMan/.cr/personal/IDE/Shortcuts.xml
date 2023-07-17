@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root Type="DevExpress.CodeRush.Foundation.Shortcuts.ShortcutsOptions">
+  <Options Language="Neutral">
+    <RootFolder>
+      <SubFolders>
+        <Item Id="{01ea3896-6cc1-4912-824e-88c7c5a82a25}" />
+        <Item Id="{66d31aae-e1f0-43b9-8108-123cb59d73bd}" />
+        <Item Id="{4fcfb46a-6fd9-4ba4-a790-6447cb1cf0a5}" />
+        <Item Id="{55d41133-671c-49f1-a934-6c5d59c3f319}">
+          <SubFolders>
+            <Item Id="{4bc2f87d-6dc0-41b5-9b0b-251498b765df}">
+              <Bindings>
+                <Item Id="{d18a79d1-fff5-4b71-8301-fb8f2397e0ac}" />
+                <Item Id="{cc238591-6417-4f4c-bca3-08b8ecbb8a1b}">
+                  <Enabled>False</Enabled>
+                </Item>
+                <Item Id="{06afe1a3-d8e6-45b5-8b3f-1d7a2ecd1553}">
+                  <Key1>
+                    <KeyCode>9</KeyCode>
+                  </Key1>
+                  <Key2 />
+                  <Command>TemplateExpand</Command>
+                  <ReadableContext>[CodeEditorHasFocus]</ReadableContext>
+                </Item>
+              </Bindings>
+            </Item>
+            <Item Id="{0d070b5c-9bc8-4784-9071-548ab0ef93e9}" />
+          </SubFolders>
+        </Item>
+        <Item Id="{a3f2b3b4-9497-4db5-9f8b-c4b30a2240ac}" />
+        <Item Id="{318b8900-85af-4c66-b37f-8a86508e7a89}" />
+        <Item Id="{d33fb6fa-56b3-40a1-b169-71e855b2e3a2}" />
+        <Item Id="{4aa0656f-7150-440b-8585-509c548e9d7e}" />
+      </SubFolders>
+    </RootFolder>
+  </Options>
+</Root>

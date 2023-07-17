@@ -1,0 +1,36 @@
+#calcContainer {
+    ::deep {
+        .modal-wrapper {
+            .modal-content {
+                .card {
+                    .card-body {
+                        .card-text {
+                            display: flex;
+                            flex-direction: column;
+                            gap: .4rem;
+
+                            .calc-buttons {
+                                display: grid;
+                                grid-template-columns: repeat(3, 3ch);
+                                grid-template-rows: repeat(4, 3ch);
+                                gap: .4rem;
+                                justify-content: center;
+                                align-content: center;
+
+                                button {
+                                    padding: 0;
+                                    display: grid;
+                                    place-items: center;
+
+                                    &#btn0 {
+                                        grid-column: 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
