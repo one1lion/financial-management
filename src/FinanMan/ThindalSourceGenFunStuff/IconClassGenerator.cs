@@ -11,7 +11,7 @@ namespace ThindalSourceGenFunStuff
 
         public void Execute(GeneratorExecutionContext context)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void Initialize(GeneratorInitializationContext context)
@@ -27,8 +27,8 @@ namespace ThindalSourceGenFunStuff
             {
                 // any attribute with name "EventLogEntryAttribute" is a candidate for property generation
                 if (syntaxNode is AttributeSyntax attributeSyntax
-                                       && attributeSyntax.Name is IdentifierNameSyntax identifierNameSyntax
-                                                          && identifierNameSyntax.Identifier.ValueText == _iconIdentifierAttribute)
+                    && attributeSyntax.Name is IdentifierNameSyntax identifierNameSyntax
+                    && identifierNameSyntax.Identifier.ValueText == _iconIdentifierAttribute)
                 {
                     CandidateAttributes.Add(attributeSyntax);
                 }

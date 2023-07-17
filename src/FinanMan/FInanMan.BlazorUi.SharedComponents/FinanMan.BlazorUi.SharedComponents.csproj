@@ -41,4 +41,8 @@
 	<ItemGroup>
 		<TypeScriptCompile Include="JsInterop\**\*.ts" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ThindalSourceGenFunStuff\ThindalSourceGenFunStuff.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
 </Project>

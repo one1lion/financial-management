@@ -13,11 +13,5 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
 		<PackageReference Include="System.CodeDom" Version="7.0.0" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include ="..\ThindalSourceGenFunStuff\ThindalSourceGenFunStuff.csproj" 
-					      OutputItemType="Analyzer"
-						  ReferenceOutputAssembly="false" />
-	</ItemGroup>
 	
 </Project>
