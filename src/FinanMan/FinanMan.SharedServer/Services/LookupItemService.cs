@@ -76,7 +76,7 @@ public class LookupItemService : ILookupListService
         var foundRec = await lookupList
             .FirstOrDefaultAsync(x => x.DisplayText == dataEntryViewModel.DisplayText, cancellationToken: ct);
 
-        if (foundRec is not null)
+        if (!(foundRec?.Deleted ?? true))
         {
             retResp.AddError($"A record with the display text '{dataEntryViewModel.DisplayText}' already exists.");
             return retResp;
@@ -86,6 +86,17 @@ public class LookupItemService : ILookupListService
 
         try
         {
+            if (foundRec?.Deleted ?? false)
+            {
+                foundRec.Deleted = false;
+                foundRec.LastUpdated = DateTime.UtcNow;
+                foundRec.SortOrder = dataEntryViewModel.SortOrder;
+
+                retResp.RecordCount = await context.SaveChangesAsync(ct);
+                await UpdateSortOrderAsync(retResp, context, lookupList, ct);
+                await trans.CommitAsync(ct);
+                return retResp;
+            }
             var newRec = dataEntryViewModel.ToEntityModel();
 
             if (newRec is Account ac)
@@ -110,16 +121,7 @@ public class LookupItemService : ILookupListService
 
             await context.AddAsync(newRec, ct);
 
-            // Remove gaps in the sort order
-            var ordered = await lookupList.Where(x => !x.Deleted).OrderBy(x => x.SortOrder).ToListAsync(ct);
-
-            var curItem = 1;
-            foreach (var rec in ordered)
-            {
-                rec.SortOrder = curItem++;
-            }
-
-            retResp.RecordCount = await context.SaveChangesAsync(ct);
+            await UpdateSortOrderAsync(retResp, context, lookupList, ct);
 
             await trans.CommitAsync(ct);
 
@@ -135,6 +137,20 @@ public class LookupItemService : ILookupListService
         }
 
         return retResp;
+    }
+
+    private static async Task UpdateSortOrderAsync<TLookupItemViewModel>(ResponseModelBase<int> retResp, FinanManContext context, IQueryable<TLookupItemViewModel>? lookupList, CancellationToken ct) where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        // Remove gaps in the sort order
+        var ordered = await lookupList.Where(x => !x.Deleted).OrderBy(x => x.SortOrder).ToListAsync(ct);
+
+        var curItem = 1;
+        foreach (var rec in ordered)
+        {
+            rec.SortOrder = curItem++;
+        }
+
+        retResp.RecordCount += await context.SaveChangesAsync(ct);
     }
 
     public async Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct = default)

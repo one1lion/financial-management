@@ -114,7 +114,15 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         }
         lookupItem.ValueText = resp.RecordId.ToString();
 
-        LookupItemCache.Add(lookupItem);
+        var foundItem = await GetLookupItem(lookupItem);
+        if (foundItem?.Data is not null)
+        {
+            foundItem.Data.Deleted = false;
+        }
+        else
+        {
+            LookupItemCache.Add(lookupItem);
+        }
         RaisePropertyChanged(nameof(LookupItemCache));
         return retResp;
     }
@@ -169,29 +177,35 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         return resp;
     }
 
-    public Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct)
+    public async Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel lookupItem, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        //var resp = await _lookupService.DeleteLookupItemAsync(lookupItem, ct);
-        //if (resp.WasError) { return resp; }
-        //var existLookupItem = GetLookupItems<TLookupItemViewModel>().FirstOrDefault(x => x.ListItemId == lookupItem.ListItemId);
-        //if (existLookupItem is null)
-        //{
-        //    var getResp = await _lookupService.GetLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
+        var resp = await _lookupService.DeleteLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
+        if (resp.WasError) { return resp; }
+        var existLookupItem = GetLookupItems<TLookupItemViewModel>().FirstOrDefault(x => x.ListItemId == lookupItem.ListItemId);
+        if (existLookupItem is null)
+        {
+            var getResp = await GetLookupItem(lookupItem, ct);
 
-        //    if (getResp.WasError || getResp.Data is null)
-        //    {
-        //        resp.AddError("The delete was successful, however, the lookup item could not be retrieved nor updated in the local cache.  Please refresh the application to get the updated list of lookup items.");
-        //        resp.AddErrors(getResp);
-        //        return resp;
-        //    }
+            if (getResp.WasError || getResp.Data is null)
+            {
+                resp.AddError("The delete was successful, however, the lookup item could not be retrieved nor updated in the local cache.  Please refresh the application to get the updated list of lookup items.");
+                resp.AddErrors(getResp);
+                return resp;
+            }
 
-        //    LookupItemCache.Add(getResp.Data);
-        //}
+            LookupItemCache.Add(getResp.Data);
+        }
+        else
+        {
+            existLookupItem.Deleted = true;
+        }
 
-        //RaisePropertyChanged(nameof(LookupItemCache));
+        RaisePropertyChanged(nameof(LookupItemCache));
 
-        //return resp;    
-        throw new NotImplementedException();
+        return resp;
     }
+
+    private async Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(TLookupItemViewModel lookupItem, CancellationToken ct = default) where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+        => await _lookupService.GetLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
 }

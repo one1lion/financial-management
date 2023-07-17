@@ -69,6 +69,10 @@ public partial class LookupListEdit
 
     private async void HandleLookupListTypeChanged(object? sender, PropertyChangedEventArgs e)
     {
+        if (e.PropertyName == nameof(ILookupListState.LookupItemCache))
+        {
+            RefreshItems();
+        }
         await InvokeAsync(StateHasChanged);
     }
 
@@ -79,9 +83,32 @@ public partial class LookupListEdit
         return Task.CompletedTask;
     }
 
-    private Task HandleDeleteItemClicked(ILookupItemViewModel item)
+    private async Task HandleDeleteItemClicked(ILookupItemViewModel item)
     {
-        return Task.CompletedTask;
+        _response = new();
+
+        var resp = item switch
+        {
+            LookupItemViewModel<LuAccountType> cItem => await LookupListState.DeleteLookupItemAsync(cItem),
+            LookupItemViewModel<LuCategory> cItem => await LookupListState.DeleteLookupItemAsync(cItem),
+            LookupItemViewModel<LuDepositReason> cItem => await LookupListState.DeleteLookupItemAsync(cItem),
+            LookupItemViewModel<LuLineItemType> cItem => await LookupListState.DeleteLookupItemAsync(cItem),
+            PayeeLookupViewModel cItem => await LookupListState.DeleteLookupItemAsync(cItem),
+            _ => default
+        };
+
+        resp ??= new()
+        {
+            ErrorMessages = new() { "Error deleting item" }
+        };
+
+        if (resp.WasError)
+        {
+            // Do something with the error
+            _response.AddErrors(resp);
+            _editing = false;
+            return;
+        }
     }
 
     private Task HandleKeyDown(KeyboardEventArgs e)
@@ -102,7 +129,7 @@ public partial class LookupListEdit
             return;
         }
 
-        if ((_items?.Any(x => x.DisplayText == _newItemName) ?? false))
+        if (_items?.Any(x => !x.Deleted && x.DisplayText == _newItemName) ?? false)
         {
             _addNewError = "Item already exists";
             return;
@@ -155,7 +182,7 @@ public partial class LookupListEdit
             return;
         }
 
-        if(_response.Data is null)
+        if (_response.Data is null)
         {
             _addNewError = "An error occurred while receiving the response from the server.  Please refresh the page to determine if the item was successfully added.";
             return;
@@ -192,7 +219,7 @@ public partial class LookupListEdit
             }
         };
 
-        if(_response is null)
+        if (_response is null)
         {
             _response = new() { ErrorMessages = new() { "An error occurred while receiving the response from the server.  Please refresh the page to determine if the item was successfully updated." } };
             return;

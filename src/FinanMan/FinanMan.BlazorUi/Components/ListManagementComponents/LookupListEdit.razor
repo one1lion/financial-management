@@ -52,7 +52,7 @@
             }
             else
             {
-                foreach (var curItem in _items)
+                foreach (var curItem in _items.Where(x => !x.Deleted))
                 {
                     var editedItem = _editing && _editItem?.ListItemId == curItem.ListItemId;
                     <tr>

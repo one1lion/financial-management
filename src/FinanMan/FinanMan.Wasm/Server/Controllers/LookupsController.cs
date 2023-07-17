@@ -38,49 +38,49 @@ public abstract class LookupsControllerBase<TLookupItemViewModel> : ControllerBa
         Ok(await _listService.DeleteLookupItemAsync<TLookupItemViewModel>(id, ct));
 }
 
-[Route("api/Lookups/Accounts")]
+[Route($"api/Lookups/{nameof(LookupListType.Accounts)}")]
 [ApiController]
 public class AccountLookupsController : LookupsControllerBase<AccountLookupViewModel>
 {
     public AccountLookupsController(ILookupListService listService) : base(listService) { }
 }
 
-[Route("api/Lookups/AccountTypes")]
+[Route($"api/Lookups/{nameof(LookupListType.AccountTypes)}")]
 [ApiController]
 public class AccountTypesController : LookupsControllerBase<LookupItemViewModel<LuAccountType>>
 {
     public AccountTypesController(ILookupListService listService) : base(listService) { }
 }
 
-[Route("api/Lookups/Categories")]
+[Route($"api/Lookups/{nameof(LookupListType.Categories)}")]
 [ApiController]
 public class CategoriesController : LookupsControllerBase<LookupItemViewModel<LuCategory>>
 {
     public CategoriesController(ILookupListService listService) : base(listService) { }
 }
 
-[Route("api/Lookups/DepositReasons")]
+[Route($"api/Lookups/{nameof(LookupListType.DepositReasons)}")]
 [ApiController]
 public class DepositReasonsController : LookupsControllerBase<LookupItemViewModel<LuDepositReason>>
 {
     public DepositReasonsController(ILookupListService listService) : base(listService) { }
 }
 
-[Route("api/Lookups/LineItemTypes")]
+[Route($"api/Lookups/{nameof(LookupListType.LineItemTypes)}")]
 [ApiController]
 public class LineItemTypesController : LookupsControllerBase<LookupItemViewModel<LuLineItemType>>
 {
     public LineItemTypesController(ILookupListService listService) : base(listService) { }
 }
 
-[Route("api/Lookups/Payees")]
+[Route($"api/Lookups/{nameof(LookupListType.Payees)}")]
 [ApiController]
 public class PayeeLookupsController : LookupsControllerBase<PayeeLookupViewModel>
 {
     public PayeeLookupsController(ILookupListService listService) : base(listService) { }
 }
 
-[Route("api/Lookups/RecurrenceTypes")]
+[Route($"api/Lookups/{nameof(LookupListType.RecurrenceTypes)}")]
 [ApiController]
 public class RecurrenceTypesController : LookupsControllerBase<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>
 {
