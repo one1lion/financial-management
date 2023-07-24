@@ -1,9 +1,11 @@
 ﻿.card {
+    --o1l-card-border-color: var(--card-border-color, #eee);
     display: inline-grid;
     grid-template-rows: auto 1fr auto;
-    border: 1px solid #eee;
+    border: 1px solid var(--o1l-card-border-color);
     border-radius: .4rem;
     box-shadow: 2px 2px 12px rgba(0, 0, 0, .2);
+
     ::deep {
         .card-header {
             padding: .4rem;
@@ -15,9 +17,11 @@
         .card-body {
             .card-text {
                 padding: .5rem .4rem;
+
                 &:first-of-type {
                     padding-top: 1rem;
-                } 
+                }
+
                 &:last-of-type {
                     padding-bottom: 1rem;
                 }

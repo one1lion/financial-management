@@ -9,5 +9,7 @@ public enum EntryType
     [Display(Name = "DepositsTitleDisplay", ShortName = "Deposits", ResourceType = typeof(Resources.Localization.Enums.EntryType))]
     Deposits,
     [Display(Name = "TransfersTitleDisplay", ShortName = "Transfers", ResourceType = typeof(Resources.Localization.Enums.EntryType))]
-    Transfers
+    Transfers,
+    [Display(Name = "ListManagementTitleDisplay", ShortName = "ListManagement", ResourceType = typeof(Resources.Localization.Enums.EntryType))]
+    ListManagement
 }

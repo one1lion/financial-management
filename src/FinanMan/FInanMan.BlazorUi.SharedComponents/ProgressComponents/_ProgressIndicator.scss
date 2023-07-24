@@ -1,0 +1,67 @@
+
+// Adapted from CodePen ProgressBar:
+//   https://codepen.io/alvaromontoro/pen/LYjZqzP?editors=1100
+
+@keyframes growProgressBar {
+    0%, 33% {
+        --pgPercentage: 0;
+    }
+
+    100% {
+        --pgPercentage: var(--value);
+    }
+}
+
+@property --pgPercentage {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+}
+
+@keyframes infiniteProgress {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    45%, 50% {
+        transform: translateX(0);
+    }
+
+    95%, 100% {
+        transform: translateX(100%);
+    }
+}
+
+@mixin progress-bar-base {
+    --stlib-progress-fill-color: var(--progress-fill-color, blue);
+    --stlib-progress-empty-color: var(--progress-empty-color, gray);
+    --stlib-progress-success-fill-color: var(--progress-success-fill-color, green);
+    --stlib-progress-fail-fill-color: var(--progress-fail-fill-color, red);
+    --stlib-progress-ring-inner-color: var(--progress-ring-inner-color, white);
+    --height: .4rem;
+    --width: 100%;
+    --fg: var(--stlib-progress-fill-color);
+    --bg: var(--stlib-progress-empty-color);
+    --pgPercentage: var(--value);
+    width: var(--width);
+    height: var(--height);
+    animation: growProgressBar 1s 1 forwards;
+
+    &.success {
+        --fg: var(--stlib-progress-success-fill-color);
+    }
+
+    &.failed {
+        --fg: var(--stlib-progress-fail-fill-color);
+    }
+
+    &:not(.init-fill) {
+        animation-duration: 0.01s;
+    }
+
+    .init-fill {
+        &::before {
+            counter-reset: percentage var(--value);
+        }
+    }
+}

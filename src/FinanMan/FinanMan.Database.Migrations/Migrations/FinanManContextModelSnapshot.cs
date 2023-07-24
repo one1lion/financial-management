@@ -33,6 +33,9 @@ namespace FinanMan.Database.Migrations.Migrations
                     b.Property<int>("AccountTypeId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ClosedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 

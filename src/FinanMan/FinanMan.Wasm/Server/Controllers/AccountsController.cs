@@ -1,5 +1,6 @@
 ﻿using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanMan.Server.Controllers;

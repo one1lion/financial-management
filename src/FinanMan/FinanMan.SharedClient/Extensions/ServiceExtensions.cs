@@ -8,7 +8,7 @@ public static class ServiceExtensions
 {
     public static IServiceCollection AddClientServices(this IServiceCollection services) =>
         services
-            .AddTransient(typeof(IAccountService), typeof(AccountService))
-            .AddTransient(typeof(ILookupListService), typeof(LookupItemService))
+            .AddTransient<IAccountService, AccountService>()
+            .AddTransient<ILookupListService, LookupItemService>()
             .AddTransient(typeof(ITransactionEntryService<>), typeof(TransactionEntryService<>));
 }

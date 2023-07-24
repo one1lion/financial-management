@@ -88,6 +88,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Name.
+        /// </summary>
+        public static string AccountName {
+            get {
+                return ResourceManager.GetString("AccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account:.
         /// </summary>
         public static string AccountNameRowHeader {
@@ -102,6 +111,33 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string AccountSummary {
             get {
                 return ResourceManager.GetString("AccountSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Type.
+        /// </summary>
+        public static string AccountType {
+            get {
+                return ResourceManager.GetString("AccountType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Account.
+        /// </summary>
+        public static string AddAccount {
+            get {
+                return ResourceManager.GetString("AddAccount", resourceCulture);
             }
         }
         
@@ -385,6 +421,24 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List Managment.
+        /// </summary>
+        public static string ListManagement {
+            get {
+                return ResourceManager.GetString("ListManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Management.
+        /// </summary>
+        public static string ListManagementTitleDisplay {
+            get {
+                return ResourceManager.GetString("ListManagementTitleDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
@@ -399,6 +453,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string LogIn {
             get {
                 return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lookup Lists.
+        /// </summary>
+        public static string LookupListTitle {
+            get {
+                return ResourceManager.GetString("LookupListTitle", resourceCulture);
             }
         }
         
@@ -457,6 +520,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No items to display.
+        /// </summary>
+        public static string NoItemsMessage {
+            get {
+                return ResourceManager.GetString("NoItemsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Sort.
         /// </summary>
         public static string NoSortText {
@@ -489,6 +561,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Date.
+        /// </summary>
+        public static string OpenDate {
+            get {
+                return ResourceManager.GetString("OpenDate", resourceCulture);
             }
         }
         
@@ -637,6 +718,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Starting Balance.
+        /// </summary>
+        public static string StartingBalance {
+            get {
+                return ResourceManager.GetString("StartingBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total:.
         /// </summary>
         public static string TotalRowHeader {
@@ -732,6 +822,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         

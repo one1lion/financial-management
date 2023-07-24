@@ -1,0 +1,36 @@
+<EditForm Model=_account @ref=_form>
+    <DataAnnotationsValidator />
+    <ValidationSummary class="text-danger" />
+    @if(_accountEntryResponse?.WasError ?? false)
+    {
+        @_accountEntryResponse.RenderError
+    }
+    <div class="form-group">
+        <label for="accountName">@SharedLocalizerService.AccountName</label>
+        <InputText id="accountName" class="form-control" @bind-Value=_account.AccountName />
+    </div>
+    <div class="form-group">
+        <label>@SharedLocalizerService.AccountType</label>
+        <InputSelect @bind-Value=_account.AccountTypeValueText>
+            <option value="">--Select Line Item Type--</option>
+            @if (_accountTypes is not null)
+            {
+                foreach (var curLiType in _accountTypes)
+                {
+                    <option value="@curLiType.ValueText">@curLiType.DisplayText</option>
+                }
+            }
+        </InputSelect>
+    </div>
+    
+    <div class="form-group">
+        <label for="openDate">@SharedLocalizerService.OpenDate</label>
+        <InputDate id="openDate" class="form-control" @bind-Value=_account.DateOpened />
+    </div>
+    
+    <div class="form-group">
+        <label for="startingBalance">@SharedLocalizerService.StartingBalance</label>
+        <InputNumber id="startingBalance" class="form-control" @bind-Value=_account.StartingBalance step=".01" />
+    </div>
+
+</EditForm>

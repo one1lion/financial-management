@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="Components\ListManagementComponents\AddAccountForm.razor" />
   </ItemGroup>
 
 

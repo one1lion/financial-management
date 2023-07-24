@@ -10,5 +10,9 @@
   {
     "outputFile": "ModalComponents/Modal.razor.css",
     "inputFile": "ModalComponents/Modal.razor.scss"
+  },
+  {
+    "outputFile": "ProgressComponents/ProgressBar.razor.css",
+    "inputFile": "ProgressComponents/ProgressBar.razor.scss"
   }
 ]

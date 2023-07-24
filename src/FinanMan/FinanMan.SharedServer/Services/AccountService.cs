@@ -4,16 +4,19 @@ using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FinanMan.SharedServer.Services;
 
 public class AccountService : IAccountService
 {
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
+    private readonly ILoggerFactory _loggerFactory;
 
-    public AccountService(IDbContextFactory<FinanManContext> dbContextFactory)
+    public AccountService(IDbContextFactory<FinanManContext> dbContextFactory, ILoggerFactory loggerFactory)
     {
         _dbContextFactory = dbContextFactory;
+        _loggerFactory = loggerFactory;
     }
 
     public async Task<ResponseModel<IEnumerable<AccountLookupViewModel>>?> GetAccountsAsync(CancellationToken ct = default)
@@ -89,9 +92,42 @@ public class AccountService : IAccountService
         return retResp;
     }
 
-    public Task<ResponseModel<AccountLookupViewModel>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)
+    public async Task<ResponseModelBase<int>?> CreateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var retResp = new ResponseModelBase<int>();
+
+        // TODO: Create a model validator and validate the view model
+
+        // If valid, perform the add
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+            using var context = await _dbContextFactory.CreateDbContextAsync(ct);
+            using var trans = await context.Database.BeginTransactionAsync(ct);
+
+            var newAccount = accountModel.Item;
+            newAccount.AccountType = default!;
+            await context.Accounts.AddAsync(newAccount, ct);
+            retResp.RecordCount = await context.SaveChangesAsync(ct);
+            await trans.CommitAsync(ct);
+            retResp.RecordId = newAccount.Id;
+        }
+        catch (Exception ex)
+        {
+            // Add an error to the return response
+            var msg = ex switch
+            {
+                TaskCanceledException _ => "The task to save the account was canceled",
+                OperationCanceledException _ => "The task to save the account was canceled",
+                _ => "An unexpected error occurred while saving the account"
+            };
+            retResp.AddError(msg);
+
+            var logger = _loggerFactory.CreateLogger<AccountService>();
+            logger.LogError(ex, "An error occurred while trying to add a new account: {msg}", msg);
+        }
+
+        return retResp;
     }
 
     public Task<ResponseModel<AccountLookupViewModel>?> UpdateAccountAsync(AccountLookupViewModel accountModel, CancellationToken ct = default)

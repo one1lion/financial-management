@@ -1,0 +1,6 @@
+<button @onclick=HandleClick>Do the load thing</button>
+@if (!string.IsNullOrWhiteSpace(_errMsg)) {
+    <p class="text-danger">
+        @_errMsg
+    </p>
+}

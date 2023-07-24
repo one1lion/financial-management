@@ -20,7 +20,7 @@ public class TransfersController : ControllerBase
     {
         return Ok(await _transactionEntryService.GetTransactionsAsync(sr, ps, aod, includeMarkedAsPurge, ct));
     }
-
+    
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetTransactionsAsync([FromRoute] int id, DateTime? aod = null, CancellationToken ct = default)
     {

@@ -120,6 +120,9 @@
   <data name="DepositsTitleDisplay" xml:space="preserve">
     <value>Enter Deposit Details</value>
   </data>
+  <data name="ListManagementTitleDisplay" xml:space="preserve">
+    <value>List Management</value>
+  </data>
   <data name="PaymentsTitleDisplay" xml:space="preserve">
     <value>Enter Payment Details</value>
   </data>

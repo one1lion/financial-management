@@ -1,8 +1,10 @@
 ﻿@page "/data-entry"
 @page "/data-entry/{EntType}"
+@page "/data-entry/{EntType}/{ListType}"
 
 @using FinanMan.BlazorUi.Components.AccountSummaryComponents
 @using FinanMan.BlazorUi.Components.DataEntryComponents
+@using FinanMan.BlazorUi.Components.ListManagementComponents
 @using FinanMan.Database.Models.Tables;
 @using FinanMan.Shared.General;
 @using FinanMan.Shared.LookupModels;
@@ -11,21 +13,25 @@
 <div id="dataEntryPage" class="page-content">
     <header>
         <ul class="data-entry-tabs">
-            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">@SharedLocalizerService.Payments</button></li>
-            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)">@SharedLocalizerService.Deposits</button></li>
-            <li><button type="button" class="tab-button invert@(_entryType == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">@SharedLocalizerService.Transfers</button></li>
+            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">@SharedLocalizerService.Payments</button></li>
+            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)">@SharedLocalizerService.Deposits</button></li>
+            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">@SharedLocalizerService.Transfers</button></li>
+            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.ListManagement ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.ListManagement)">@SharedLocalizerService.ListManagement</button></li>
         </ul>
     </header>
     <section class="data-entry-section">
-        <span class="title">@_entryType.GetDisplayText()</span>
+        <span class="title">@EntTypeVal.GetDisplayText()</span>
 
-        @switch (_entryType)
+        @switch (EntTypeVal)
         {
             case EntryType.Deposits:
                 <DepositEntry />
                 break;
             case EntryType.Transfers:
                 <TransferEntry />
+                break;
+            case EntryType.ListManagement:
+                <ListManagementPage ListType=ListTypeVal />
                 break;
             default:
                 <PaymentEntry />

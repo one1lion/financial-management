@@ -8,12 +8,12 @@ public abstract class BaseNotifyPropertyChanges : INotifyPropertyChanged, INotif
     public event PropertyChangedEventHandler? PropertyChanged;
     public event PropertyChangingEventHandler? PropertyChanging;
 
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = default)
+    protected void RaisePropertyChanged([CallerMemberName] string? propertyName = default)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected void OnPropertyChanging([CallerMemberName] string? propertyName = default)
+    protected void RaisePropertyChanging([CallerMemberName] string? propertyName = default)
     {
         PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
     }
@@ -25,9 +25,9 @@ public abstract class BaseNotifyPropertyChanges : INotifyPropertyChanged, INotif
             return false;
         }
 
-        OnPropertyChanging(propertyName);
+        RaisePropertyChanging(propertyName);
         field = value;
-        OnPropertyChanged(propertyName);
+        RaisePropertyChanged(propertyName);
         return true;
     }
 }

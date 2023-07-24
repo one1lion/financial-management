@@ -33,6 +33,13 @@ public partial class Index
             }); 
     }
 
+    private bool _doClickChangeThing;
+    private Task HandleComboClicked()
+    {
+        _doClickChangeThing = !_doClickChangeThing;
+        return InvokeAsync(StateHasChanged);
+    }
+
     public void Dispose()
     {
     }
