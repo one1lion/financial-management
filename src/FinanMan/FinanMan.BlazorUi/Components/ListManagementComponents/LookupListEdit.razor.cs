@@ -188,10 +188,7 @@ public partial class LookupListEdit
             return;
         }
 
-        // If we are here, the item was successfully created
-        _items.Add(_response.Data);
-
-        // TODO: If the process was successful, clear the new item name and selected categories
+        // If the process was successful, clear the new item name and selected categories
         _newItemName = string.Empty;
         _selectedCategories.Clear();
         if (_newItemInputRef.HasValue)
@@ -205,7 +202,6 @@ public partial class LookupListEdit
     {
         if (!_editing || _editItem is null || _editItem.DisplayText == item.DisplayText) { return; }
 
-        // TODO: Move the update response somewhere we have access to in the edit form
         _response = _lookupType switch
         {
             LookupListType.AccountTypes => await LookupListState.UpdateLookupItemAsync((LookupItemViewModel<LuAccountType>)_editItem),

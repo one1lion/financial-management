@@ -1,6 +1,7 @@
 ﻿using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
+using System.Text.Json;
 
 namespace FinanMan.BlazorUi.State;
 
@@ -114,16 +115,17 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
         }
         lookupItem.ValueText = resp.RecordId.ToString();
 
-        var foundItem = await GetLookupItem(lookupItem);
-        if (foundItem?.Data is not null)
+        var foundItem = GetLookupItems<TLookupItem>().FirstOrDefault(x => x.ValueText == lookupItem.ValueText);
+        if (foundItem is not null)
         {
-            foundItem.Data.Deleted = false;
+            foundItem.Deleted = false;
         }
         else
         {
             LookupItemCache.Add(lookupItem);
         }
         RaisePropertyChanged(nameof(LookupItemCache));
+
         return retResp;
     }
 

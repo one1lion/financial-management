@@ -90,8 +90,8 @@ public class LookupItemService : ILookupListService
             {
                 foundRec.Deleted = false;
                 foundRec.LastUpdated = DateTime.UtcNow;
-                foundRec.SortOrder = dataEntryViewModel.SortOrder;
 
+                retResp.RecordId = int.Parse(foundRec.ValueText);
                 retResp.RecordCount = await context.SaveChangesAsync(ct);
                 await UpdateSortOrderAsync(retResp, context, lookupList, ct);
                 await trans.CommitAsync(ct);
