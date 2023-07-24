@@ -1,0 +1,89 @@
+﻿@using System.Diagnostics.CodeAnalysis;
+@*
+    TODO: For Account Types, need a flag to set for "Increase on Payment"
+    TODO: For Payees, need to add UI for adding Categories
+*@
+<div id="listTypeItemsWrapper">
+    <table>
+        <colgroup id="name" />
+        <colgroup id="controls" />
+        <thead>
+            <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="name">@SharedLocalizerService.Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="@SharedLocalizerService.Name" @bind=_newItemName @bind:event="oninput" @onkeydown=HandleKeyDown @ref=_newItemInputRef />
+                        <button type="button" @onclick=HandleAddNewItemClicked>Add</button>
+                    </div>
+                    <p>
+                        @if (!string.IsNullOrWhiteSpace(_addNewError))
+                        {
+                            <span class="error">@_addNewError</span>
+                        }
+                    </p>
+                    @if (_response?.WasError ?? false)
+                    {
+                        @_response.RenderError
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="col">@SharedLocalizerService.Name</th>
+                <th scope="col"><label class="sr-only">@SharedLocalizerService.ControlButtonsColumnHeader</label></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (_loadingList || _items is null)
+            {
+                <tr>
+                    <td colspan="3" class="loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">@SharedLocalizerService.Loading</span>
+                    </td>
+                </tr>
+            }
+            else if (_items.Count == 0)
+            {
+                <tr>
+                    <td colspan="3" class="no-items">
+                        <span>@SharedLocalizerService.NoItemsMessage</span>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var curItem in _items.Where(x => !x.Deleted))
+                {
+                    var editedItem = _editing && _editItem?.ListItemId == curItem.ListItemId;
+                    <tr>
+                        @if (editedItem)
+                        {
+                            <input type="text" @bind=_editItem!.DisplayText @bind:event="oninput" @onkeydown=HandleKeyDown />
+                        }
+                        else
+                        {
+                            <td>@curItem.DisplayText</td>
+                        }
+                        <td>
+                            @if (editedItem)
+                            {
+                                <button class="btn btn-link" role="button" @onclick="_ => HandleConfirmSaveChanges(curItem)" aria-label="@SharedLocalizerService.Save"><i class="icon text-warning" aria-hidden="true">✔</i></button>
+                                <button class="btn btn-link" role="button" @onclick=HandleCancelChangesClicked aria-label="@SharedLocalizerService.Cancel"><i class="icon text-danger" aria-hidden="true">🗑</i></button>
+                            }
+                            else if (!_editing)
+                            {
+                                <button class="btn btn-link" role="button" @onclick="_ => HandleEditItemClicked(curItem)" aria-label="@SharedLocalizerService.Edit"><i class="icon text-warning" aria-hidden="true">✎</i></button>
+                                <button class="btn btn-link" role="button" @onclick="_ => HandleDeleteItemClicked(curItem)" aria-label="@SharedLocalizerService.Delete"><i class="icon text-danger" aria-hidden="true">✖</i></button>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

@@ -12,6 +12,7 @@
 }
 #dataEntryPage header .data-entry-tabs {
   display: flex;
+  align-items: stretch;
   gap: 1rem;
   list-style: none;
   padding: 0;
@@ -22,6 +23,7 @@
   border: none;
   padding: 0.6rem;
   width: 15ch;
+  height: 100%;
   box-shadow: 2px 2px 6px var(--border-glow), -4px -4px 6px var(--faint-border-glow);
 }
 #dataEntryPage header .data-entry-tabs button.active {

@@ -15,13 +15,13 @@ public class AccountLookupViewModel : LookupItemViewModel<Account>
             Item.AccountType.Id = value;
         }
     }
-    public string AccountType
+    public string? AccountType
     {
         get => Item.AccountType?.Name ?? string.Empty;
         set
         {
             if (Item.AccountType is null) { Item.AccountType = new(); }
-            Item.AccountType.Name = value;
+            Item.AccountType.Name = value ?? string.Empty;
         }
     }
 }

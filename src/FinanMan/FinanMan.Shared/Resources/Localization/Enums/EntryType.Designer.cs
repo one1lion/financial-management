@@ -70,6 +70,15 @@ namespace FinanMan.Shared.Resources.Localization.Enums {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List Management.
+        /// </summary>
+        internal static string ListManagementTitleDisplay {
+            get {
+                return ResourceManager.GetString("ListManagementTitleDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Payment Details.
         /// </summary>
         internal static string PaymentsTitleDisplay {

@@ -1,0 +1,19 @@
+﻿<div id="lookupTypesListWrapper">
+    <ul>
+        @foreach (var curLookup in Enum.GetValues<LookupListType>().Where(x => !x.IsExcluded()))
+        {
+            <li class="@(curLookup == ActiveLookupListType ? "active" : string.Empty)" @onclick="_ => HandleListTypeClicked(curLookup)">@curLookup.GetDisplayText()</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter] public LookupListType ActiveLookupListType { get; set; }
+    [Parameter] public EventCallback<LookupListType> ActiveLookupListTypeChanged { get; set; }
+
+    private async Task HandleListTypeClicked(LookupListType listType)
+    {
+        ActiveLookupListType = listType;
+        await ActiveLookupListTypeChanged.InvokeAsync(listType);
+    }
+}

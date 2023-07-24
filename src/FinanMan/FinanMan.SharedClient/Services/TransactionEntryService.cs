@@ -30,13 +30,11 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     public async Task<ResponseModelBase<int>> AddTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         var retResp = new ResponseModelBase<int>();
-        var successStatus = false;
         try
         {
             var resp = await _httpClient.PostAsJsonAsync($"{_controllerName}", dataEntryViewModel, ct);
             if (resp.IsSuccessStatusCode)
             {
-                successStatus = true;
                 retResp = await resp.Content.ReadFromJsonAsync<ResponseModelBase<int>>(cancellationToken: ct);
             }
             else
@@ -68,13 +66,11 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     public async Task<ResponseModelBase<int>> UpdateTransactionAsync(TDataEntryViewModel dataEntryViewModel, CancellationToken ct = default)
     {
         var retResp = new ResponseModelBase<int>();
-        var successStatus = false;
         try
         {
             var resp = await _httpClient.PutAsJsonAsync($"{_controllerName}", dataEntryViewModel, ct);
             if (resp.IsSuccessStatusCode)
             {
-                successStatus = true;
                 retResp = await resp.Content.ReadFromJsonAsync<ResponseModelBase<int>>(cancellationToken: ct);
             }
             else
@@ -106,13 +102,11 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
     public async Task<ResponseModelBase<int>> DeleteTransactionAsync(int id, CancellationToken ct = default)
     {
         var retResp = new ResponseModelBase<int>();
-        var successStatus = false;
         try
         {
             var resp = await _httpClient.DeleteAsync($"{_controllerName}/{id}", ct);
             if (resp.IsSuccessStatusCode)
             {
-                successStatus = true;
                 retResp = await resp.Content.ReadFromJsonAsync<ResponseModelBase<int>>(cancellationToken: ct);
             }
             else

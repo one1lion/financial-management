@@ -29,9 +29,15 @@ public partial class MainWindow : Window, IDisposable
     protected override void OnLocationChanged(EventArgs e)
     {
         base.OnLocationChanged(e);
-        // Try invoking this in a DragStart type of event
+        // Try invoking this in a DragStart type of event.  This collapses
+        // the active select element if there is one
         var uiState = App.ServiceProvider.GetRequiredService<IUiState>();
         uiState.CollapseAllSelectLists();
+
+        // This will notify the Blazor Web View control that the window position has changed
+        // which will make sure that newly expanded select elements will appear in the right
+        // place.
+        BlazWebView.WebView?.UpdateWindowPos();
     }
        
     private Task HandleInitialUiLoaded()

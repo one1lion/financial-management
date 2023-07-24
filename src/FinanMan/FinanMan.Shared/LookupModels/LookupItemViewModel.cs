@@ -1,15 +1,32 @@
 ﻿using FinanMan.Database.Models.Shared;
 using FinanMan.Database.Models.Tables;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace FinanMan.Shared.LookupModels;
 
 public class LookupItemViewModel<TItem> : LookupItemViewModel<int, TItem>
-    where TItem : class, ILookupItem<int>, IHasLookupListType, new() { }
+    where TItem : class, ILookupItem<int>, IHasLookupListType, new()
+{
+
+    public LookupItemViewModel() : base() { }
+    public LookupItemViewModel(TItem item) : base(item) { }
+}
 
 public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem>, IHasLookupListType
     where TItem : class, ILookupItem<TKey>, IHasLookupListType, new()
 {
+    public LookupItemViewModel() { }
+    public LookupItemViewModel(TItem item)
+    {
+        DisplayText = item.Name;
+        Id = item.Id;
+        LastUpdated = item.LastUpdated;
+        SortOrder = item.SortOrder;
+        Deleted = item.Deleted;
+        Item = item;
+    }
+
     [JsonIgnore]
     public LookupListType ListType => Type switch
     {
@@ -24,7 +41,8 @@ public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem
     };
     [JsonIgnore]
     public Type Type => typeof(TItem);
-    public TKey Id { 
+    public TKey Id
+    {
         get => Item.Id;
         set
         {
@@ -40,4 +58,11 @@ public class LookupItemViewModel<TKey, TItem> : ILookupItemViewModel<TKey, TItem
     public DateTime LastUpdated { get => Item.LastUpdated; set => Item.LastUpdated = value; }
 
     public TItem Item { get; set; } = new TItem();
+
+    public virtual object Clone()
+    {
+        var cloned = (LookupItemViewModel<TKey, TItem>)MemberwiseClone();
+        cloned.Item = JsonSerializer.Deserialize<TItem>(JsonSerializer.Serialize(Item)) ?? new();
+        return cloned;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
+using System.Text.Json;
 
 namespace FinanMan.BlazorUi.State;
 
@@ -23,22 +24,40 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
 
     public async Task InitializeAsync()
     {
-        if (_initialized || _initializing) {
-            while(!_initialized && _initializing)
+        if (_initialized || _initializing)
+        {
+            while (!_initialized && _initializing)
             {
                 await Task.Delay(200);
             }
-            return; 
+            return;
         }
         _initializing = true;
-        
-        var accountsResp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
-        var accountTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
-        var categoriesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
-        var depositReasonsResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
-        var lineItemTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
-        var payeesResp = await _lookupService.GetLookupItemsAsync<PayeeLookupViewModel>();
-        var recurrenceTypesResp = await _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
+
+        var accountsRespTask = _lookupService.GetLookupItemsAsync<AccountLookupViewModel>();
+        var accountTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuAccountType>>();
+        var categoriesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuCategory>>();
+        var depositReasonsRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuDepositReason>>();
+        var lineItemTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<LuLineItemType>>();
+        var payeesRespTask = _lookupService.GetLookupItemsAsync<PayeeLookupViewModel>();
+        var recurrenceTypesRespTask = _lookupService.GetLookupItemsAsync<LookupItemViewModel<RecurrenceType, LuRecurrenceType>>();
+
+        await Task.WhenAll(
+            accountsRespTask,
+            accountTypesRespTask,
+            categoriesRespTask,
+            depositReasonsRespTask,
+            lineItemTypesRespTask,
+            payeesRespTask,
+            recurrenceTypesRespTask);
+
+        var accountsResp = accountsRespTask.Result;
+        var accountTypesResp = accountTypesRespTask.Result;
+        var categoriesResp = categoriesRespTask.Result;
+        var depositReasonsResp = depositReasonsRespTask.Result;
+        var lineItemTypesResp = lineItemTypesRespTask.Result;
+        var payeesResp = payeesRespTask.Result;
+        var recurrenceTypesResp = recurrenceTypesRespTask.Result;
 
         // API request to get list items
         if (!accountsResp.WasError && (accountsResp.Data?.Any() ?? false))
@@ -79,4 +98,116 @@ public class LookupListState : BaseNotifyPropertyChanges, ILookupListState
     {
         return LookupItemCache.OfType<TLookupItem>();
     }
+
+    public async Task<ResponseModel<ILookupItemViewModel>> CreateLookupItemAsync<TLookupItem>(TLookupItem lookupItem)
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var retResp = new ResponseModel<ILookupItemViewModel>()
+        {
+            Data = lookupItem
+        };
+
+        var resp = await _lookupService.CreateLookupItemAsync(lookupItem);
+        if (resp.WasError)
+        {
+            retResp.AddErrors(resp);
+            return retResp;
+        }
+        lookupItem.ValueText = resp.RecordId.ToString();
+
+        var foundItem = GetLookupItems<TLookupItem>().FirstOrDefault(x => x.ValueText == lookupItem.ValueText);
+        if (foundItem is not null)
+        {
+            foundItem.Deleted = false;
+        }
+        else
+        {
+            LookupItemCache.Add(lookupItem);
+        }
+        RaisePropertyChanged(nameof(LookupItemCache));
+
+        return retResp;
+    }
+
+    public async Task RefreshListAsync<TLookupItem>()
+         where TLookupItem : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var mostRecentUpdated = LookupItemCache.OfType<TLookupItem>().Max(x => x.LastUpdated);
+        var resp = await _lookupService.GetLookupItemsAsync<AccountLookupViewModel>(asOfDate: mostRecentUpdated);
+        if (!(resp.Data?.Any() ?? false) || resp.WasError)
+        {
+            return;
+        }
+
+        // Find all returned items that already exist in the cache and remove them from the cache
+        var existingItems = resp.Data.Where(x => LookupItemCache.Any(y => y.ValueText == x.ValueText)).ToList();
+        if (existingItems.Any())
+        {
+            LookupItemCache.RemoveAll(x => existingItems.Any(y => y.ValueText == x.ValueText));
+        }
+
+        // Add all returned items to the cache
+        LookupItemCache.AddRange(resp.Data);
+        RaisePropertyChanged(nameof(LookupItemCache));
+    }
+
+    public async Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel lookupItem, CancellationToken ct = default)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var resp = await _lookupService.UpdateLookupItemAsync(lookupItem, ct);
+        if (resp.WasError) { return resp; }
+        var existLookupItem = GetLookupItems<TLookupItemViewModel>().FirstOrDefault(x => x.ListItemId == lookupItem.ListItemId);
+        if (existLookupItem is null)
+        {
+            var getResp = await _lookupService.GetLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
+
+            if (getResp.WasError || getResp.Data is null)
+            {
+                resp.AddError("The update was successful, however, the lookup item could not be retrieved nor updated in the local cache.  Please refresh the application to get the updated list of lookup items.");
+                resp.AddErrors(getResp);
+                return resp;
+            }
+
+            LookupItemCache.Add(getResp.Data);
+        }
+        else
+        {
+            existLookupItem.DisplayText = lookupItem.DisplayText;
+        }
+
+        RaisePropertyChanged(nameof(LookupItemCache));
+        return resp;
+    }
+
+    public async Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel lookupItem, CancellationToken ct)
+        where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+    {
+        var resp = await _lookupService.DeleteLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
+        if (resp.WasError) { return resp; }
+        var existLookupItem = GetLookupItems<TLookupItemViewModel>().FirstOrDefault(x => x.ListItemId == lookupItem.ListItemId);
+        if (existLookupItem is null)
+        {
+            var getResp = await GetLookupItem(lookupItem, ct);
+
+            if (getResp.WasError || getResp.Data is null)
+            {
+                resp.AddError("The delete was successful, however, the lookup item could not be retrieved nor updated in the local cache.  Please refresh the application to get the updated list of lookup items.");
+                resp.AddErrors(getResp);
+                return resp;
+            }
+
+            LookupItemCache.Add(getResp.Data);
+        }
+        else
+        {
+            existLookupItem.Deleted = true;
+        }
+
+        RaisePropertyChanged(nameof(LookupItemCache));
+
+        return resp;
+    }
+
+    private async Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(TLookupItemViewModel lookupItem, CancellationToken ct = default) where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
+        => await _lookupService.GetLookupItemAsync<TLookupItemViewModel>(int.Parse(lookupItem.ValueText), ct);
 }

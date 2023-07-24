@@ -5,7 +5,24 @@ using System.Text.Json.Serialization;
 
 namespace FinanMan.Shared.General;
 
-public class ResponseModelBase
+public interface IResponseModel
+{
+    List<string>? ErrorMessages { get; set; }
+    List<Exception>? Exceptions { get; set; }
+    List<ValidationFailure>? ValidationFailures { get; set; }
+    bool WasError { get; }
+    int RecordCount { get; set; }
+    void ClearErrors();
+    void AddError(string message);
+    void AddError(Exception ex);
+    void AddErrors(List<string>? messages);
+    void AddErrors(List<Exception>? exceptions);
+    void AddErrors(List<ValidationFailure>? messages);
+    void AddErrors(IResponseModel otherResponse);
+
+}
+
+public class ResponseModelBase : IResponseModel
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public List<string>? ErrorMessages { get; set; }
@@ -142,6 +159,14 @@ public class ResponseModelBase
         if (ValidationFailures is null) { ValidationFailures = new List<ValidationFailure>(); }
         ValidationFailures.AddRange(messages);
     }
+
+    public void AddErrors(IResponseModel otherResponse)
+    {
+        if (otherResponse.ErrorMessages?.Any() ?? false) { AddErrors(otherResponse.ErrorMessages); }
+        if (otherResponse.Exceptions?.Any() ?? false) { AddErrors(otherResponse.Exceptions); }
+        if (otherResponse.ValidationFailures?.Any() ?? false) { AddErrors(otherResponse.ValidationFailures); }
+    }
+
 }
 
 // ResponseModelBase`1.cs or ResponseModelBase-TKey.cs
@@ -163,5 +188,5 @@ public class ResponseModel<T, TKey> : ResponseModelBase<TKey>
   where T : class
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public T? ReturnObject { get; set; }
+    public T? Data { get; set; }
 }

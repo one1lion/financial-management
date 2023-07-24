@@ -23,8 +23,9 @@ public partial class PaymentEntry
     private EditForm? _lineItemEntryEditForm;
 
     private ResponseModelBase<int>? _currentResponse;
-    private bool _submitting;
     private InputDate<DateTime?>? _transDateInput;
+    private bool _submitting;
+    private bool _showAddAccount;
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,7 +33,7 @@ public partial class PaymentEntry
         _accounts = LookupListState.GetLookupItems<AccountLookupViewModel>().ToList();
         _payees = LookupListState.GetLookupItems<PayeeLookupViewModel>().ToList();
         _lineItemTypes = LookupListState.GetLookupItems<LookupItemViewModel<LuLineItemType>>().ToList();
-}
+    }
 
     public override Task SetParametersAsync(ParameterView parameters)
     {

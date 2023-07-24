@@ -1,4 +1,5 @@
 ﻿using FinanMan.Database;
+using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.ServiceInterfaces;
 using FinanMan.SharedServer.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ public static class ServiceExtensions
 
     public static IServiceCollection AddServerServices(this IServiceCollection services) =>
         services
-            .AddScoped(typeof(IAccountService), typeof(AccountService))
-            .AddScoped(typeof(ITransactionEntryService<>), typeof(TransactionEntryService<>))
-            .AddScoped(typeof(ILookupListService), typeof(LookupItemService));
+            .AddScoped<IAccountService, AccountService>()
+            .AddScoped<ILookupListService, LookupItemService>()
+            .AddScoped(typeof(ITransactionEntryService<>), typeof(TransactionEntryService<>));
 }

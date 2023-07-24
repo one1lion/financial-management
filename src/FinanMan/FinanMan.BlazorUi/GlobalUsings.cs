@@ -7,7 +7,6 @@ global using Microsoft.JSInterop;
 global using FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 global using FinanMan.BlazorUi.Shared;
 global using FinanMan.BlazorUi.SharedComponents.Card;
-global using FinanMan.BlazorUi.SharedComponents.CustomNavigationLockComponent;
 global using FinanMan.Database.Models.Shared;
 global using FinanMan.Shared;
 global using FinanMan.Shared.Enums;

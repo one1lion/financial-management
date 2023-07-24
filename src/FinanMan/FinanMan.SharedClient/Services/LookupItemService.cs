@@ -17,6 +17,15 @@ public class LookupItemService : ILookupListService
         _httpClient = httpClient;
     }
 
+    /// <summary>
+    /// Fetches a list of lookup items based on search parameters
+    /// </summary>
+    /// <typeparam name="TLookupItemViewModel">Type of LookupItemViewModel</typeparam>
+    /// <param name="startRecord">The starting record number</param>
+    /// <param name="pageSize">The number of records to retrieve</param>
+    /// <param name="asOfDate">The date to retrieve data as-of</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Returns ResponseModel of List of TLookupItemViewModel</returns>
     public async Task<ResponseModel<List<TLookupItemViewModel>>> GetLookupItemsAsync<TLookupItemViewModel>(int startRecord, int pageSize, DateTime? asOfDate, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
@@ -41,7 +50,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModel<TLookupItemViewModel>> GetLookupItem<TLookupItemViewModel>(int id, CancellationToken ct)
+    public async Task<ResponseModel<TLookupItemViewModel>> GetLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModel<TLookupItemViewModel>();
@@ -65,7 +74,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> AddLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)
+    public async Task<ResponseModelBase<int>> CreateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModelBase<int>();
@@ -97,10 +106,10 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> UpdateLookupItem<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)
+    public async Task<ResponseModel<ILookupItemViewModel>> UpdateLookupItemAsync<TLookupItemViewModel>(TLookupItemViewModel dataEntryViewModel, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
-        var retResp = new ResponseModelBase<int>();
+        var retResp = new ResponseModel<ILookupItemViewModel>();
         var typeInst = Activator.CreateInstance<TLookupItemViewModel>();
 
         try
@@ -112,10 +121,16 @@ public class LookupItemService : ILookupListService
                 return retResp;
             }
 
-            retResp = await resp.Content.ReadFromJsonAsync<ResponseModelBase<int>>(cancellationToken: ct) ?? new()
+            var typedResp = await resp.Content.ReadFromJsonAsync<ResponseModel<TLookupItemViewModel>>(cancellationToken: ct) ?? new()
             {
                 ErrorMessages = new() { $"The request to add the specified {dataEntryViewModel.ListType} was successful, however the response could not be parsed." }
             };
+
+            retResp.Data = typedResp.Data;
+            if(typedResp.WasError)
+            {
+                retResp.AddErrors(typedResp);
+            }
         }
         catch (Exception ex)
         {
@@ -129,7 +144,7 @@ public class LookupItemService : ILookupListService
         return retResp;
     }
 
-    public async Task<ResponseModelBase<int>> DeleteLookupItem<TLookupItemViewModel>(int id, CancellationToken ct)
+    public async Task<ResponseModelBase<int>> DeleteLookupItemAsync<TLookupItemViewModel>(int id, CancellationToken ct)
         where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         var retResp = new ResponseModelBase<int>();
