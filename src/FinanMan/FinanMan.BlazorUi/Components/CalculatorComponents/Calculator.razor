@@ -3,25 +3,27 @@
     <div id="calcContainer">
         <TemplatedModal Show=Show ShowChanged=HandleShowChanged>
             <ModalContent>
-                <span id="number">@numOutput</span>
+                <span id="numberOutput">@NumOutput</span>
                 <div class="calc-buttons">
-                    <button type="button" id="btn1">1</button>
-                    <button type="button" id="btn2">2</button>
-                    <button type="button" id="btn3">3</button>
-                    <button type="button" id="btn4">4</button>
-                    <button type="button" id="btn5">5</button>
-                    <button type="button" id="btn6">6</button>
-                    <button type="button" id="btn7">7</button>
-                    <button type="button" id="btn8">8</button>
-                    <button type="button" id="btn9">9</button>
-                    <button type="button" id="btn0">0</button>
+                    <button type="button" id="btn7" @onclick="_ => HandleNumberClicked(7)">7</button>
+                    <button type="button" id="btn8" @onclick="_ => HandleNumberClicked(8)">8</button>
+                    <button type="button" id="btn9" @onclick="_ => HandleNumberClicked(9)">9</button>
+                    <button type="button" id="btn4" @onclick="_ => HandleNumberClicked(4)">4</button>
+                    <button type="button" id="btn5" @onclick="_ => HandleNumberClicked(5)">5</button>
+                    <button type="button" id="btn6" @onclick="_ => HandleNumberClicked(6)">6</button>
+                    <button type="button" id="btn1" @onclick="_ => HandleNumberClicked(1)">1</button>
+                    <button type="button" id="btn2" @onclick="_ => HandleNumberClicked(2)">2</button>
+                    <button type="button" id="btn3" @onclick="_ => HandleNumberClicked(3)">3</button>
+                    <button type="button" id="btnNegate" @onclick=HandleNegateClicked>+/-</button>
+                    <button type="button" id="btn0" @onclick="_ => HandleNumberClicked(0)">0</button>
+                    <button type="button" id="btnDecimal" class="@(_decimalActive ? "active" : string.Empty)" disabled="@(_decimalPart > 0)" @onclick=HandlePeriodClicked>.</button>
                 </div>
                 <div>
                     <button id="calc">calc</button>
                     <button id="remove" @onclick=HandleRemove>remove</button>
                     <button id="plus">+</button>
                     <button id="minus">-</button>
-                    <button id="clear">clear all</button>
+                    <button id="clear" @onclick=HandleClearAllClicked>clear all</button>
                 </div>
             </ModalContent>
         </TemplatedModal>
