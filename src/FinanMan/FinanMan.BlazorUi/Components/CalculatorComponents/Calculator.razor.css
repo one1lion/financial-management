@@ -1,7 +1,28 @@
-﻿#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text {
+﻿#calcContainer ::deep:not(#numberOutput) {
+  user-select: none;
+}
+#calcContainer ::deep .modal-wrapper .dismiss-wrapper {
+  display: initial;
+  left: unset;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body {
+  padding-top: 0.6rem;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text :not(#numberOutput) {
+  user-select: none;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text #numberOutput {
+  padding: 0.4rem 0.6rem;
+  user-select: text;
+  border-radius: 0.4rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: Consolas;
+  cursor: text;
 }
 #calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons {
   display: grid;

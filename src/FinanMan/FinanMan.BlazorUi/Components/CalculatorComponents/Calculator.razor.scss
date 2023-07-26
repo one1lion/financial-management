@@ -1,13 +1,35 @@
 #calcContainer {
     ::deep {
+        &:not(#numberOutput) {
+            user-select: none;
+        }
+
         .modal-wrapper {
+            .dismiss-wrapper {
+                display: initial;
+                left: unset;
+            } 
             .modal-content {
                 .card {
                     .card-body {
+                        padding-top: .6rem;
                         .card-text {
                             display: flex;
                             flex-direction: column;
                             gap: .4rem;
+
+                            :not(#numberOutput) {
+                                user-select: none;
+                            }
+
+                            #numberOutput {
+                                padding: .4rem .6rem;
+                                user-select: text;
+                                border-radius: .4rem;
+                                background-color: rgba(0, 0, 0, .5);
+                                font-family: Consolas;
+                                cursor: text;
+                            }
 
                             .calc-buttons {
                                 display: grid;

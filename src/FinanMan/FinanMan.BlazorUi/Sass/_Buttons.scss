@@ -29,4 +29,17 @@ button, .btn {
         padding: 0;
         font-weight: 400;
     }
+
+    &[disabled], &[disabled="disabled"], &:disabled {
+        color: var(--button-disabled-foreground-color);
+        background-color: var(--button-disabled-background-color);
+        border-color: var(--button-disabled-border-color);
+        cursor: not-allowed;
+    }
+
+    &.active {
+        color: var(--button-active-foreground-color);
+        background-color: var(--button-active-background-color);
+        border-color: var(--button-active-border-color);
+    }
 }
