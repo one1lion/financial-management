@@ -8,11 +8,21 @@
             .dismiss-wrapper {
                 display: initial;
                 left: unset;
-            } 
+            }
+
             .modal-content {
                 .card {
+                    .card-header {
+                        .calc-output {
+                            display: grid;
+                            grid-template-rows: auto 1fr;
+                            gap: .4rem;
+                        }
+                    }
+
                     .card-body {
                         padding-top: .6rem;
+
                         .card-text {
                             display: flex;
                             flex-direction: column;

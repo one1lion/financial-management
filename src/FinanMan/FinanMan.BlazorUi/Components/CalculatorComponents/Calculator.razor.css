@@ -5,6 +5,11 @@
   display: initial;
   left: unset;
 }
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-header .calc-output {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.4rem;
+}
 #calcContainer ::deep .modal-wrapper .modal-content .card .card-body {
   padding-top: 0.6rem;
 }

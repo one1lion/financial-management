@@ -2,27 +2,35 @@
 {
     <div id="calcContainer">
         <TemplatedModal Show=Show ShowChanged=HandleShowChanged>
+            <ModalHeader>
+                <div class="calc-output">
+                    <span class="formula-output">@_formulaOutput</span>
+                    <span class="formula-output">
+                        @if (_currentValue.HasValue)
+                        {
+                            <text>@_currentValue</text>
+                        }
+                    </span>
+                </div>
+            </ModalHeader>
             <ModalContent>
                 <span id="numberOutput">@NumOutput</span>
                 <div class="calc-buttons">
-                    <button type="button" id="btn7" @onclick="_ => HandleNumberClicked(7)">7</button>
-                    <button type="button" id="btn8" @onclick="_ => HandleNumberClicked(8)">8</button>
-                    <button type="button" id="btn9" @onclick="_ => HandleNumberClicked(9)">9</button>
-                    <button type="button" id="btn4" @onclick="_ => HandleNumberClicked(4)">4</button>
-                    <button type="button" id="btn5" @onclick="_ => HandleNumberClicked(5)">5</button>
-                    <button type="button" id="btn6" @onclick="_ => HandleNumberClicked(6)">6</button>
-                    <button type="button" id="btn1" @onclick="_ => HandleNumberClicked(1)">1</button>
-                    <button type="button" id="btn2" @onclick="_ => HandleNumberClicked(2)">2</button>
-                    <button type="button" id="btn3" @onclick="_ => HandleNumberClicked(3)">3</button>
+                    @foreach(var key in _numPadItems)
+                    {
+                        <button type="button" id="btn@key" @onclick="_ => HandleNumberClicked(key)">@key</button>
+                    }
                     <button type="button" id="btnNegate" @onclick=HandleNegateClicked>+/-</button>
                     <button type="button" id="btn0" @onclick="_ => HandleNumberClicked(0)">0</button>
-                    <button type="button" id="btnDecimal" class="@(_decimalActive ? "active" : string.Empty)" disabled="@(_decimalPart > 0)" @onclick=HandlePeriodClicked>.</button>
+                    <button type="button" id="btnDecimal" class="@(_decimalActive ? "active" : null)" disabled="@(_decimalPart > 0)" @onclick=HandlePeriodClicked>.</button>
                 </div>
                 <div>
-                    <button id="calc">calc</button>
-                    <button id="remove" @onclick=HandleRemove>remove</button>
-                    <button id="plus">+</button>
-                    <button id="minus">-</button>
+                    <button id="remove" @onclick=HandleRemove>Remove</button>
+                    <button id="plus" class="@(_activeOp == Operator.Add ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Add)">@Operator.Add.GetDisplayText()</button>
+                    <button id="minus" class="@(_activeOp == Operator.Subtract ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Subtract)">@Operator.Subtract.GetDisplayText()</button>
+                    <button id="mult" class="@(_activeOp == Operator.Multiply ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Multiply)">@Operator.Multiply.GetDisplayText()</button>
+                    <button id="div" class="@(_activeOp == Operator.Divide ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Divide)">@Operator.Divide.GetDisplayText()</button>
+                    <button id="calc" @onclick="_ => HandleOperatorClicked(Operator.Submit)">@Operator.Submit.GetDisplayText()</button>
                     <button id="clear" @onclick=HandleClearAllClicked>clear all</button>
                 </div>
             </ModalContent>
