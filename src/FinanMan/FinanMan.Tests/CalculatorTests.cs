@@ -37,6 +37,21 @@ namespace FinanMan.Tests
         }
 
         [Fact]
+        public void NegationWorks()
+        {
+            // Arrange
+            var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
+
+            // Act
+            // apology: 'n' for negation is awkward, but we're already using '-' for subtract
+            renderedComponent.Enter("1 nn nn nn nn nn nn n"); // negated 13 times
+
+            // Assert
+            var display = renderedComponent.GetDisplay();
+            Assert.Equal("-1", display.NumOutput);
+        }
+
+        [Fact]
         public void BasicAdditionWorks()
         {
             // Arrange
