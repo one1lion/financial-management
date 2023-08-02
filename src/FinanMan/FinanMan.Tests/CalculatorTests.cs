@@ -18,7 +18,7 @@ namespace FinanMan.Tests
 
 
             // Assert
-            Assert.Equal("0", renderedComponent.Find("#numberOutput").InnerHtml); // Calculator should display '0' when first loaded
+            Assert.Equal("0", renderedComponent.GetDisplay()); // Calculator should display '0' when first loaded
         }
 
         [Fact]
@@ -29,10 +29,27 @@ namespace FinanMan.Tests
             var calculator = renderedComponent.Instance;
 
             // Act
-            renderedComponent.Find("#btn-1").Click();
+            renderedComponent.Enter("1");
 
             // Assert
-            Assert.Equal("1", renderedComponent.Find("#numberOutput").InnerHtml);
+            Assert.Equal("1", renderedComponent.GetDisplay());
+        }
+    }
+
+    public static class CalculatorTestExtensions
+    {
+        public static string GetDisplay(this IRenderedComponent<Calculator> component)
+        {
+            return component.Find("#numberOutput").InnerHtml;
+        }
+
+        public static void Enter(this IRenderedComponent<Calculator> component, string entries)
+        {
+            var buttonClicks = entries.ToCharArray();
+            foreach (var click in buttonClicks)
+            {
+                component.Find($"#btn-{click}").Click();
+            }
         }
     }
 }
