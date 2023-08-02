@@ -27,7 +27,6 @@ namespace FinanMan.Tests
         {
             // Arrange
             var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
-            var calculator = renderedComponent.Instance;
 
             // Act
             renderedComponent.Enter("1");
