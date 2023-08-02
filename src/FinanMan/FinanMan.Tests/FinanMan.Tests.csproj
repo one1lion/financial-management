@@ -7,13 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="UiTesting\**" />
-	  <Content Remove="UiTesting\**" />
-	  <EmbeddedResource Remove="UiTesting\**" />
-	  <None Remove="UiTesting\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Using Include="Bunit" />
 		<Using Include="Bunit.TestDoubles" />
 		<Using Include="Microsoft.Extensions.DependencyInjection" />
@@ -43,6 +36,10 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\FinanMan.BlazorUi\FinanMan.BlazorUi.csproj" />
 	  <ProjectReference Include="..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="UiTesting\" />
 	</ItemGroup>
 
 
