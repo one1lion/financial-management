@@ -13,59 +13,56 @@ namespace FinanMan.Tests
         [Fact]
         public void StartsAtZero()
         {
-            // Arrange + Act
-            var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
-
-
-            // Assert
-            var display = renderedComponent.GetDisplay();
-            Assert.Equal("0", display.CurrentValue); // Calculator should display '0' when first loaded
+            TestTheCalculator(
+                inputs: "",
+                numOutput: "0"
+                );
         }
 
         [Fact]
         public void PositiveNumberEntryWorks()
         {
-            // Arrange
-            var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
-
-            // Act
-            renderedComponent.Enter("1");
-
-            // Assert
-            var display = renderedComponent.GetDisplay();
-            Assert.Equal("1", display.NumOutput);
+            TestTheCalculator(
+                inputs: "12",
+                numOutput: "12"
+                );
         }
 
         [Fact]
         public void NegationWorks()
         {
-            // Arrange
-            var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
-
-            // Act
-            // apology: 'n' for negation is awkward, but we're already using '-' for subtract
-            renderedComponent.Enter("1 nn nn nn nn nn nn n"); // negated 13 times
-
-            // Assert
-            var display = renderedComponent.GetDisplay();
-            Assert.Equal("-1", display.NumOutput);
+            TestTheCalculator(
+                inputs: "1 nn nn nn nn nn nn n",
+                numOutput: "-1"
+                );
         }
 
         [Fact]
         public void BasicAdditionWorks()
+        {
+            TestTheCalculator(
+                inputs: "1 + 20 =",
+                currentValue: "21",
+                numOutput: "20",
+                formulaOutput: "1 + 20 = ");
+        }
+
+        private void TestTheCalculator(string inputs, string currentValue = null, string numOutput = null, string formulaOutput = null)
         {
             // Arrange
             var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
             var calculator = renderedComponent.Instance;
 
             // Act
-            renderedComponent.Enter("1 + 20 =");
+            renderedComponent.Enter(inputs);
 
             // Assert
             var display = renderedComponent.GetDisplay();
-            Assert.Equal("21", display.CurrentValue);
-            Assert.Equal("20", display.NumOutput); // for helpful debugging?
-            Assert.Equal("1 + 20 = ", display.FormulaOutput);
+
+            if (currentValue == null && numOutput == null && formulaOutput == null) throw new Exception("you must make an assertion");
+            if (currentValue != null) Assert.Equal(currentValue, display.CurrentValue);
+            if (numOutput != null) Assert.Equal(numOutput, display.NumOutput); // for helpful debugging?
+            if (formulaOutput != null) Assert.Equal(formulaOutput, display.FormulaOutput);
         }
     }
 
