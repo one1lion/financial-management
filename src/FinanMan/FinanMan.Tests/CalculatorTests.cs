@@ -8,29 +8,31 @@ using System.Threading.Tasks;
 
 namespace FinanMan.Tests
 {
-    public class CalculatorTests
+    public class CalculatorTests : TestContext
     {
         [Fact]
-        public void Test()
+        public void StartsAtZero()
         {
             // Arrange + Act
-            var calculator = new Calculator();
+            var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
+
 
             // Assert
-            Assert.Equal(0m, calculator.PublicNumOutput()); // Calculator should display '0' when first loaded
+            Assert.Equal("0", renderedComponent.Find("#numberOutput").InnerHtml); // Calculator should display '0' when first loaded
         }
-    }
 
-    // --------------------------------------------
-    // DIRTY STUFF BELOW - AVERT YOUR EYES
-
-    public static class CalculatorTestExtensions
-    {
-        public static decimal PublicNumOutput(this Calculator calculator)
+        [Fact]
+        public void PositiveNumberEntryWorks()
         {
-            var prop = typeof(Calculator).GetProperty("NumOutput", BindingFlags.NonPublic | BindingFlags.Instance);
-            var getter = prop.GetGetMethod(nonPublic: true);
-            return (decimal)getter.Invoke(calculator, null);
+            // Arrange
+            var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
+            var calculator = renderedComponent.Instance;
+
+            // Act
+            renderedComponent.Find("#btn-1").Click();
+
+            // Assert
+            Assert.Equal("1", renderedComponent.Find("#numberOutput").InnerHtml);
         }
     }
 }
