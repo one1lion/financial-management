@@ -1,16 +1,12 @@
-﻿using FinanMan.BlazorUi.Services;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 public partial class Calculator
 {
-    private CalculatorService _calculator = new();
-
     private readonly static int[] _numPadItems = new[]
     {
         7, 8, 9, 6, 5, 4, 3, 2, 1
     };
-
 
     private decimal NumOutput => decimal.Parse($"{_wholeNumber}{(_decimalPart > 0 ? $".{_decimalPart}" : string.Empty)}");
 
@@ -19,12 +15,11 @@ public partial class Calculator
 
     private bool _inputDirty = true;
 
-    private decimal? _currentValue;
+    private decimal? _currentValue = 0;
     private Operator? _prevOp;
     private Operator? _activeOp;
 
     private string _formulaOutput = string.Empty;
-    private string NextFormula => $"{_currentValue} {_activeOp?.GetDisplayText()} {NumOutput}";
 
     private bool _decimalActive = false;
 
@@ -107,7 +102,7 @@ public partial class Calculator
 
             // If we're submitting, use the previous operator if it exists, otherwise use the current operator
             _activeOp = op == Operator.Submit ? _prevOp : op;
-            if ((op == Operator.Submit && _currentValue is null) 
+            if ((op == Operator.Submit && _currentValue is null)
                 || (op != Operator.Submit && !_inputDirty)) { return; }
 
             if (_currentValue.HasValue)
@@ -167,5 +162,4 @@ public partial class Calculator
         [Display(Name = "=")]
         Submit
     }
-
 }

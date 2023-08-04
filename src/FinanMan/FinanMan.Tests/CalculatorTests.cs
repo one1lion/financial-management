@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanMan.Tests
 {
     public class CalculatorTests : TestContext
     {
+
         [Fact]
         public void StartsAtZero()
         {
@@ -47,7 +45,7 @@ namespace FinanMan.Tests
                 formulaOutput: "1 + 20 = ");
         }
 
-        private void TestTheCalculator(string inputs, string currentValue = null, string numOutput = null, string formulaOutput = null)
+        private void TestTheCalculator(string inputs, string? currentValue = null, string? numOutput = null, string? formulaOutput = null)
         {
             // Arrange
             var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
@@ -68,6 +66,16 @@ namespace FinanMan.Tests
 
     public static class CalculatorTestExtensions
     {
+        private static readonly Dictionary<char, string> _operatorMap = new()
+        {
+            { '+', "plus" },
+            { '-', "minus" },
+            { '*', "multipy" },
+            { '/', "divide" },
+            { '=', "submit" },
+            { '.', "decimal" },
+        };
+
         public static Result GetDisplay(this IRenderedComponent<Calculator> component)
         {
             var formulaOutput = component.Find("#formulaOutput").InnerHtml;
@@ -83,24 +91,24 @@ namespace FinanMan.Tests
 
         public class Result
         {
-            public string NumOutput { get; set; }
-            public string CurrentValue { get; set; }
-            public string FormulaOutput { get; set; }
+            public string? NumOutput { get; set; }
+            public string? CurrentValue { get; set; }
+            public string? FormulaOutput { get; set; }
         }
 
         public static void Enter(this IRenderedComponent<Calculator> component, string entries)
         {
             var buttonClicks = entries.ToCharArray()
-                .Where(x => x != ' '); // ignore ' ' for easier reading
+                .Where(x => x != ' ')
+                // ignore ' ' for easier reading
+                .Select(x => _operatorMap.TryGetValue(x, out var op) ? op : x.ToString());
 
             foreach (var click in buttonClicks)
             {
-                var allButtons = component.FindAll("button"); // do not try to move this inefficient line of code. We must re-find all buttons after each render (i.e. after each button click)
-                var button = allButtons.Single(x => x.Id == $"btn-{click}");
+                var button = component.Find($"button#btn-{click}"); // do not try to move this inefficient line of code. We must re-find all buttons after each render (i.e. after each button click)
                 button.Click();
             }
         }
 
     }
 }
-
