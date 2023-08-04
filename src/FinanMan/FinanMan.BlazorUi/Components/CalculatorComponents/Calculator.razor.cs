@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FinanMan.BlazorUi.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 public partial class Calculator
 {
+    private CalculatorService _calculator = new();
+
     private readonly static int[] _numPadItems = new[]
     {
         7, 8, 9, 6, 5, 4, 3, 2, 1
@@ -16,11 +19,12 @@ public partial class Calculator
 
     private bool _inputDirty = true;
 
-    private decimal? _currentValue = 0;
+    private decimal? _currentValue;
     private Operator? _prevOp;
     private Operator? _activeOp;
 
     private string _formulaOutput = string.Empty;
+    private string NextFormula => $"{_currentValue} {_activeOp?.GetDisplayText()} {NumOutput}";
 
     private bool _decimalActive = false;
 
