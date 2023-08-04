@@ -70,5 +70,9 @@
   {
     "outputFile": "Components/ListManagementComponents/ListManagementPage.razor.css",
     "inputFile": "Components/ListManagementComponents/ListManagementPage.razor.scss"
+  },
+  {
+    "outputFile": "Components/CalculatorComponents/Calculator.razor.css",
+    "inputFile": "Components/CalculatorComponents/Calculator.razor.scss"
   }
 ]

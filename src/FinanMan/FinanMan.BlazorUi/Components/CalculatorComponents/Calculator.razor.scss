@@ -1,0 +1,68 @@
+#calcContainer {
+    ::deep {
+        &:not(#numberOutput) {
+            user-select: none;
+        }
+
+        .modal-wrapper {
+            .dismiss-wrapper {
+                display: initial;
+                left: unset;
+            }
+
+            .modal-content {
+                .card {
+                    .card-header {
+                        .calc-output {
+                            display: grid;
+                            grid-template-rows: auto 1fr;
+                            gap: .4rem;
+                        }
+                    }
+
+                    .card-body {
+                        padding-top: .6rem;
+
+                        .card-text {
+                            display: flex;
+                            flex-direction: column;
+                            gap: .4rem;
+
+                            :not(#numberOutput) {
+                                user-select: none;
+                            }
+
+                            #numberOutput {
+                                padding: .4rem .6rem;
+                                user-select: text;
+                                border-radius: .4rem;
+                                background-color: rgba(0, 0, 0, .5);
+                                font-family: Consolas;
+                                cursor: text;
+                            }
+
+                            .calc-buttons {
+                                display: grid;
+                                grid-template-columns: repeat(3, 3ch);
+                                grid-template-rows: repeat(4, 3ch);
+                                gap: .4rem;
+                                justify-content: center;
+                                align-content: center;
+
+                                button {
+                                    padding: 0;
+                                    display: grid;
+                                    place-items: center;
+
+                                    &#btn0 {
+                                        grid-column: 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

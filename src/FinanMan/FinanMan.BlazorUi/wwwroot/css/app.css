@@ -24,14 +24,20 @@
   --list-item-hover-fg-color: var(--primary-text-color);
   --list-item-hover-bg-color: rgba(255, 255, 255, .2);
   /* Buttons */
-  --button-foreground-color: var(--primary-background-color);
-  --button-background-color: var(--light);
-  --button-hover-foreground-color: var(--light);
-  --button-hover-background-color: var(--primary-background-color);
   --button-border-color: var(--default-border-color);
   --button-border-style: 1px solid var(--button-border-color);
   --button-outline-style: 2px solid var(--default-border-color);
   --button-border-radius: .2rem;
+  --button-foreground-color: var(--primary-background-color);
+  --button-background-color: var(--light);
+  --button-hover-foreground-color: var(--light);
+  --button-hover-background-color: var(--primary-background-color);
+  --button-disabled-border-color: #ddd;
+  --button-disabled-foreground-color: #ddd;
+  --button-disabled-background-color: #333;
+  --button-active-border-color: #9E410E;
+  --button-active-foreground-color: var(--light);
+  --button-active-background-color: #9E410E;
   --button-padding: .3em 1em;
   --footer-background-color: #1D2933;
   --active-tab-button-background-color: #9E410E;
@@ -81,6 +87,17 @@ button.btn-link, .btn.btn-link {
   border: none;
   padding: 0;
   font-weight: 400;
+}
+button[disabled], button[disabled=disabled], button:disabled, .btn[disabled], .btn[disabled=disabled], .btn:disabled {
+  color: var(--button-disabled-foreground-color);
+  background-color: var(--button-disabled-background-color);
+  border-color: var(--button-disabled-border-color);
+  cursor: not-allowed;
+}
+button.active, .btn.active {
+  color: var(--button-active-foreground-color);
+  background-color: var(--button-active-background-color);
+  border-color: var(--button-active-border-color);
 }
 
 .form-group {
