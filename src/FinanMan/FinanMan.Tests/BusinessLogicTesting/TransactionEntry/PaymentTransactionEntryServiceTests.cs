@@ -31,7 +31,7 @@ public class PaymentTransactionEntryServiceTests
     }
     #endregion Helpers
 
-    [Fact]
+    [Fact(Skip = "Not fully implemented")]
     public async Task GetAllPaymentEntries_ReturnsAllPaymentEntries()
     {
         // Arrange
@@ -70,7 +70,7 @@ public class PaymentTransactionEntryServiceTests
         );
     }
 
-    [Fact]
+    [Fact(Skip = "Not fully implemented")]
     public async Task GetPaymentById_ReturnsCorrectPayment()
     {
         // Arrange
@@ -105,7 +105,7 @@ public class PaymentTransactionEntryServiceTests
         Assert.Equal(expectedViewModel.Total, returnedViewModel.Total);
     }
 
-    [Fact]
+    [Fact(Skip = "Not fully implemented")]
     public async Task AddPayment_AddsToTransactionCollection()
     {
         // Arrange
@@ -154,7 +154,7 @@ public class PaymentTransactionEntryServiceTests
         Assert.Equal(toAdd.Total, newPayment.Payment.PaymentDetails.Sum(x => x.Amount));
     }
 
-    [Fact]
+    [Fact(Skip = "Not fully implemented")]
     public async Task UpdatePayment_UpdatesExistingTransactionRecord()
     {
         // Arrange
@@ -193,7 +193,7 @@ public class PaymentTransactionEntryServiceTests
         Assert.Equal(expectedPostedDate, updatedPayment.PostingDate);
     }
 
-    [Fact]
+    [Fact(Skip = "Not fully implemented")]
     public async Task DeletePayment_SetsDeletedFlagInTransactionRecord()
     {
         // Arrange

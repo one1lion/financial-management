@@ -22,15 +22,15 @@
                     }
                     <button type="button" id="btn-n" @onclick=HandleNegateClicked>+/-</button>
                     <button type="button" id="btn-0" @onclick="_ => HandleNumberClicked(0)">0</button>
-                    <button type="button" id="btn-." class="@(_decimalActive ? "active" : null)" disabled="@(_decimalPart > 0)" @onclick=HandlePeriodClicked>.</button>
+                    <button type="button" id="btn-decimal" class="@(_decimalActive ? "active" : null)" disabled="@(_decimalPart > 0)" @onclick=HandlePeriodClicked>.</button>
                 </div>
                 <div>
                     <button id="remove" @onclick=HandleRemove>Remove</button>
-                    <button id="btn-+" class="@(_activeOp == Operator.Add ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Add)">@Operator.Add.GetDisplayText()</button>
-                    <button id="btn--" class="@(_activeOp == Operator.Subtract ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Subtract)">@Operator.Subtract.GetDisplayText()</button>
-                    <button id="btn-*" class="@(_activeOp == Operator.Multiply ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Multiply)">@Operator.Multiply.GetDisplayText()</button>
-                    <button id="btn-/" class="@(_activeOp == Operator.Divide ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Divide)">@Operator.Divide.GetDisplayText()</button>
-                    <button id="btn-=" @onclick="_ => HandleOperatorClicked(Operator.Submit)">@Operator.Submit.GetDisplayText()</button>
+                    <button id="btn-plus" class="@(_activeOp == Operator.Add ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Add)">@Operator.Add.GetDisplayText()</button>
+                    <button id="btn-minus" class="@(_activeOp == Operator.Subtract ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Subtract)">@Operator.Subtract.GetDisplayText()</button>
+                    <button id="btn-multiply" class="@(_activeOp == Operator.Multiply ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Multiply)">@Operator.Multiply.GetDisplayText()</button>
+                    <button id="btn-divide" class="@(_activeOp == Operator.Divide ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Divide)">@Operator.Divide.GetDisplayText()</button>
+                    <button id="btn-submit" @onclick="_ => HandleOperatorClicked(Operator.Submit)">@Operator.Submit.GetDisplayText()</button>
                     <button id="clear" @onclick=HandleClearAllClicked>clear all</button>
                 </div>
             </ModalContent>

@@ -8,7 +8,6 @@ public partial class Calculator
         7, 8, 9, 6, 5, 4, 3, 2, 1
     };
 
-
     private decimal NumOutput => decimal.Parse($"{_wholeNumber}{(_decimalPart > 0 ? $".{_decimalPart}" : string.Empty)}");
 
     private long _wholeNumber = 0;
