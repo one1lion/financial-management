@@ -54,7 +54,7 @@ namespace FinanMan.Tests
                 expectedNumOutput: "20",
                 expectedFormulaOutput: "2 - 20 = ");
         }
-        
+
         [Fact]
         public void BasicMultiplicationWorks()
         {
@@ -64,7 +64,7 @@ namespace FinanMan.Tests
                 expectedNumOutput: "20",
                 expectedFormulaOutput: "2 * 20 = ");
         }
-        
+
         [Fact]
         public void BasicDivisionWorks()
         {
@@ -74,7 +74,7 @@ namespace FinanMan.Tests
                 expectedNumOutput: "2",
                 expectedFormulaOutput: "20 / 2 = ");
         }
-        
+
         [Fact]
         public void DivideByZeroOutputWorks()
         {
@@ -83,6 +83,19 @@ namespace FinanMan.Tests
                 expectedCurrentValue: "0",
                 expectedNumOutput: "0",
                 expectedFormulaOutput: "20 / 0 = #DIV/0!");
+        }
+
+        [Theory]
+        [InlineData("1 + 22 + 4 =", "27", "4", "23 + 4 = ")]
+        [InlineData("1 + 22 + 4 + 21 =", "48", "21", "27 + 21 = ")]
+        [InlineData("1 + 22 * 4 =", "92", "4", "23 * 4 = ")]
+        public void ConsecutiveOperationsTotalCorrectly(string inputs, string? expectedCurrentValue = null, string? expectedNumOutput = null, string? expectedFormulaOutput = null)
+        {
+            TestTheCalculator(
+                inputs: inputs,
+                expectedCurrentValue: expectedCurrentValue,
+                expectedNumOutput: expectedNumOutput,
+                expectedFormulaOutput: expectedFormulaOutput);
         }
 
         /// <summary>
