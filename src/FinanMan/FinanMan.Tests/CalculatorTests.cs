@@ -74,6 +74,16 @@ namespace FinanMan.Tests
                 expectedNumOutput: "2",
                 expectedFormulaOutput: "20 / 2 = ");
         }
+        
+        [Fact]
+        public void DivideByZeroOutputWorks()
+        {
+            TestTheCalculator(
+                inputs: "20 / 0 =",
+                expectedCurrentValue: "0",
+                expectedNumOutput: "0",
+                expectedFormulaOutput: "20 / 0 = #DIV/0!");
+        }
 
         /// <summary>
         /// Presses the buttons in the calculator component that correspond to the input 

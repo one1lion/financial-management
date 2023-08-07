@@ -96,52 +96,47 @@ public partial class Calculator
 
     private void HandleOperatorClicked(Operator op)
     {
-        try
+        // TODO: After a submit, the next number pressed should replace current input
+
+        // If we're submitting, use the previous operator if it exists, otherwise use the current operator
+        _activeOp = op == Operator.Submit ? _prevOp : op;
+        if ((op == Operator.Submit && _currentValue is null)
+            || (op != Operator.Submit && !_inputDirty)) { return; }
+
+        if (_currentValue.HasValue)
         {
-            // TODO: After a submit, the next number pressed should replace current input
+            var opToUse = (op == Operator.Submit ? _activeOp : _prevOp) ?? op;
+            _formulaOutput = $"{_currentValue} {opToUse.GetDisplayText()} {NumOutput} = ";
+        }
 
-            // If we're submitting, use the previous operator if it exists, otherwise use the current operator
-            _activeOp = op == Operator.Submit ? _prevOp : op;
-            if ((op == Operator.Submit && _currentValue is null)
-                || (op != Operator.Submit && !_inputDirty)) { return; }
+        _currentValue ??= 0;
 
-            if (_currentValue.HasValue)
-            {
-                var opToUse = (op == Operator.Submit ? _activeOp : _prevOp) ?? op;
-                _formulaOutput = $"{_currentValue} {opToUse.GetDisplayText()} {NumOutput} = ";
-            }
-
-            _currentValue ??= 0;
-
+        if (_prevOp == Operator.Divide && NumOutput == 0)
+        {
+            _currentValue = 0;
+            _formulaOutput += "#DIV/0!";
+        }
+        else
+        {
             _currentValue = _prevOp switch
             {
                 Operator.Subtract => _currentValue - NumOutput,
                 Operator.Multiply => _currentValue * NumOutput,
-                Operator.Divide => NumOutput == 0 ? 0 : _currentValue / NumOutput,
+                Operator.Divide => _currentValue / NumOutput,
                 _ => _currentValue + NumOutput // Defaults to add
             };
+        }
 
-            _inputDirty = false;
-            if (op == Operator.Submit)
-            {
-                _activeOp = null;
-            }
-            else
-            {
-                _prevOp = op;
-            }
-        }
-        catch (Exception ex)
+        _inputDirty = false;
+        if (op == Operator.Submit)
         {
-            switch (ex)
-            {
-                case DivideByZeroException:
-                    _formulaOutput = "#Div/0!";
-                    break;
-                default:
-                    throw;
-            }
+            _activeOp = null;
         }
+        else
+        {
+            _prevOp = op;
+        }
+
 
         if (op != Operator.Submit)
         {
