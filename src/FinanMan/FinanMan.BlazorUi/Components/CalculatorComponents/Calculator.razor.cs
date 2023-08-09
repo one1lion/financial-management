@@ -1,21 +1,34 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 public partial class Calculator
 {
     private readonly static int[] _numPadItems = new[]
     {
-        7, 8, 9, 6, 5, 4, 3, 2, 1
+        7, 8, 9, 4, 5, 6, 1, 2, 3
     };
 
-    private decimal NumOutput => decimal.Parse($"{_wholeNumber}{(_decimalPart > 0 ? $".{_decimalPart}" : string.Empty)}");
+    private decimal DisplayedInputNum {
+        get => decimal.Parse($"{_wholeNumberPart}{(_decimalPart > 0 ? $".{_decimalPart}" : string.Empty)}");
+        set
+        {
+            _wholeNumberPart = (long)Math.Floor(value);
 
-    private long _wholeNumber = 0;
-    private long _decimalPart = 0;
+            var numParts = value.ToString().Split('.');
+            _decimalPart = numParts.Length > 1 ? long.Parse(numParts.Last()) : 0;
+        }
+    }
 
+    private long _wholeNumberPart;
+    private long _decimalPart;
+
+    /// <summary>
+    /// Used to identify whether the input has been changed since the last calculation.
+    /// </summary>
     private bool _inputDirty = true;
 
-    private decimal? _currentValue = 0;
+    private decimal? _currentCalculatedValue;
     private Operator? _prevOp;
     private Operator? _activeOp;
 
@@ -25,6 +38,11 @@ public partial class Calculator
 
     [Parameter] public bool Show { get; set; }
     [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        HandleClearAllClicked();
+    }
 
     private async Task HandleShowChanged(bool newShow)
     {
@@ -48,13 +66,19 @@ public partial class Calculator
         }
         else
         {
-            _wholeNumber = (_wholeNumber - _wholeNumber % 10) / 10;
+            _wholeNumberPart = (_wholeNumberPart - _wholeNumberPart % 10) / 10;
         }
         StateHasChanged();
     }
 
     private void HandleNumberClicked(int num)
     {
+        if(!_inputDirty)
+        {
+            // Reset the input number to 0
+            _wholeNumberPart = 0;
+            _decimalPart = 0;
+        }
         _inputDirty = true;
         if (_decimalActive)
         {
@@ -62,14 +86,14 @@ public partial class Calculator
         }
         else
         {
-            _wholeNumber = _wholeNumber * 10 + (_wholeNumber < 0 ? -1 : 1) * num;
+            _wholeNumberPart = _wholeNumberPart * 10 + (_wholeNumberPart < 0 ? -1 : 1) * num;
         }
         StateHasChanged();
     }
 
     private void HandleNegateClicked()
     {
-        _wholeNumber *= -1;
+        _wholeNumberPart *= -1;
     }
 
     private void HandlePeriodClicked()
@@ -79,7 +103,7 @@ public partial class Calculator
 
     private void HandleClearClicked()
     {
-        _wholeNumber = 0;
+        _wholeNumberPart = 0;
         _decimalPart = 0;
         _decimalActive = false;
     }
@@ -90,40 +114,45 @@ public partial class Calculator
         _inputDirty = true;
         _activeOp = null;
         _formulaOutput = string.Empty;
-        _currentValue = null;
+        _currentCalculatedValue = null;
         _prevOp = null;
     }
 
     private void HandleOperatorClicked(Operator op)
     {
-        // TODO: After a submit, the next number pressed should replace current input
-
-        // If we're submitting, use the previous operator if it exists, otherwise use the current operator
-        _activeOp = op == Operator.Submit ? _prevOp : op;
-        if ((op == Operator.Submit && _currentValue is null)
+        _activeOp = op;
+        if ((op == Operator.Submit && _currentCalculatedValue is null)
             || (op != Operator.Submit && !_inputDirty)) { return; }
 
-        if (_currentValue.HasValue)
+        if (!_prevOp.HasValue)
         {
-            var opToUse = (op == Operator.Submit ? _activeOp : _prevOp) ?? op;
-            _formulaOutput = $"{_currentValue} {opToUse.GetDisplayText()} {NumOutput} = ";
+            _prevOp = op;
+            _currentCalculatedValue = DisplayedInputNum;
+            _formulaOutput = $"{DisplayedInputNum} {_prevOp.Value.GetDisplayText()} ";
+            _inputDirty = false;
+            return;
         }
 
-        _currentValue ??= 0;
-
-        if (_prevOp == Operator.Divide && NumOutput == 0)
+        if (_currentCalculatedValue.HasValue && _prevOp.HasValue)
         {
-            _currentValue = 0;
+            _formulaOutput = $"{_currentCalculatedValue} {_prevOp.Value.GetDisplayText()} {DisplayedInputNum} = ";
+        }
+
+        _currentCalculatedValue ??= 0;
+
+        if (_prevOp == Operator.Divide && DisplayedInputNum == 0)
+        {
+            _currentCalculatedValue = 0;
             _formulaOutput += "#DIV/0!";
         }
         else
         {
-            _currentValue = _prevOp switch
+            _currentCalculatedValue = _prevOp switch
             {
-                Operator.Subtract => _currentValue - NumOutput,
-                Operator.Multiply => _currentValue * NumOutput,
-                Operator.Divide => _currentValue / NumOutput,
-                _ => _currentValue + NumOutput // Defaults to add
+                Operator.Subtract => _currentCalculatedValue - DisplayedInputNum,
+                Operator.Multiply => _currentCalculatedValue * DisplayedInputNum,
+                Operator.Divide => _currentCalculatedValue / DisplayedInputNum,
+                _ => _currentCalculatedValue + DisplayedInputNum // Defaults to add
             };
         }
 
@@ -131,6 +160,10 @@ public partial class Calculator
         if (op == Operator.Submit)
         {
             _activeOp = null;
+            DisplayedInputNum = _currentCalculatedValue ?? 0;
+            _decimalActive = false;
+            _inputDirty = true;
+            _prevOp = null;
         }
         else
         {
@@ -158,3 +191,40 @@ public partial class Calculator
         Submit
     }
 }
+
+
+/*
+Calculator logic
+- We have:
+  - Input
+  - Active Operator
+  - Previous Operator
+  - Current Calculated Value
+  - Formula Output
+  - Dirty Input Flag
+  - Decimal Active Flag
+- Various states:
+  - Initial State - The component has just rendered or Clear All is selected:
+    - The input is dirty
+    - The active operator is null
+    - The previous operator is null
+    - The current calculated value is null
+    - The formula output is empty
+    - The decimal active flag is false
+  - A number is selected after initial state:
+    - The input is dirty
+    - The active operator is null
+    - The previous operator is null
+    - The current calculated value is null
+    - The formula output is empty
+    - The decimal active flag is false
+  - An operator is selected after initial state:
+    - The input is dirty
+    - The active operator is the selected operator
+    - The previous operator is null
+    - The current calculated value is null
+    - The formula output is empty
+    - The decimal active flag is false
+  - A number is selected after an operator is selected:
+    - The input is dirty
+ */

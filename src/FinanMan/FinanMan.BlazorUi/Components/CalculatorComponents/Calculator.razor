@@ -5,16 +5,10 @@
             <ModalHeader>
                 <div class="calc-output">
                     <span class="formula-output" id="formulaOutput">@_formulaOutput</span>
-                    <span class="formula-output">
-                        @if (_currentValue.HasValue)
-                        {
-                            <span id="currentValue">@_currentValue</span>
-                        }
-                    </span>
                 </div>
             </ModalHeader>
             <ModalContent>
-                <span id="numberOutput">@NumOutput</span>
+                <span id="numberOutput">@DisplayedInputNum</span>
                 <div class="calc-buttons">
                     @foreach (var key in _numPadItems)
                     {

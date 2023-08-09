@@ -13,7 +13,7 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "",
-                expectedNumOutput: "0"
+                expectedInputNumDisplay: "0"
                 );
         }
 
@@ -22,7 +22,7 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "12",
-                expectedNumOutput: "12"
+                expectedInputNumDisplay: "12"
                 );
         }
 
@@ -31,7 +31,7 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "1 nn nn nn nn nn nn n",
-                expectedNumOutput: "-1"
+                expectedInputNumDisplay: "-1"
                 );
         }
 
@@ -40,8 +40,8 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "1 + 20 =",
-                expectedCurrentValue: "21",
-                expectedNumOutput: "20",
+                expectedCalculatedValue: "21",
+                expectedInputNumDisplay: "20",
                 expectedFormulaOutput: "1 + 20 = ");
         }
 
@@ -50,8 +50,8 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "2 - 20 =",
-                expectedCurrentValue: "-18",
-                expectedNumOutput: "20",
+                expectedCalculatedValue: "-18",
+                expectedInputNumDisplay: "20",
                 expectedFormulaOutput: "2 - 20 = ");
         }
 
@@ -60,8 +60,8 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "2 * 20 =",
-                expectedCurrentValue: "40",
-                expectedNumOutput: "20",
+                expectedCalculatedValue: "40",
+                expectedInputNumDisplay: "20",
                 expectedFormulaOutput: "2 * 20 = ");
         }
 
@@ -70,8 +70,8 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "20 / 2 =",
-                expectedCurrentValue: "10",
-                expectedNumOutput: "2",
+                expectedCalculatedValue: "10",
+                expectedInputNumDisplay: "2",
                 expectedFormulaOutput: "20 / 2 = ");
         }
 
@@ -80,8 +80,8 @@ namespace FinanMan.Tests
         {
             TestTheCalculator(
                 inputs: "20 / 0 =",
-                expectedCurrentValue: "0",
-                expectedNumOutput: "0",
+                expectedCalculatedValue: "0",
+                expectedInputNumDisplay: "0",
                 expectedFormulaOutput: "20 / 0 = #DIV/0!");
         }
 
@@ -89,14 +89,37 @@ namespace FinanMan.Tests
         [InlineData("1 + 22 + 4 =", "27", "4", "23 + 4 = ")]
         [InlineData("1 + 22 + 4 + 21 =", "48", "21", "27 + 21 = ")]
         [InlineData("1 + 22 * 4 =", "92", "4", "23 * 4 = ")]
-        public void ConsecutiveOperationsTotalCorrectly(string inputs, string? expectedCurrentValue = null, string? expectedNumOutput = null, string? expectedFormulaOutput = null)
+        public void ConsecutiveOperationsTotalCorrectly(string inputs, string? expectedCalculatedValue = null, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             TestTheCalculator(
                 inputs: inputs,
-                expectedCurrentValue: expectedCurrentValue,
-                expectedNumOutput: expectedNumOutput,
+                expectedCalculatedValue: expectedCalculatedValue,
+                expectedInputNumDisplay: expectedInputNumDisplay,
                 expectedFormulaOutput: expectedFormulaOutput);
         }
+
+        // Test for pushing operator buttons after equals button followed by another number
+        [Theory]
+        [InlineData("1 + 22 + 14 = + 5 =", "42", "5", "37 + 5 = ")]
+        [InlineData("1 + 22 - 14 = * 5 =", "45", "5", "9 * 5 = ")]
+        public void PressingOperationButtonAfterEqualsWork(string inputs, string? expectedCalculatedValue = null, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
+        {
+            TestTheCalculator(
+                inputs: inputs,
+                expectedCalculatedValue: expectedCalculatedValue,
+                expectedInputNumDisplay: expectedInputNumDisplay,
+                expectedFormulaOutput: expectedFormulaOutput);
+        }
+
+        // TODO: Test for Clear button only clearing current input and not total
+
+        // TODO: Test for pushing Clear all button
+
+        // TODO: Test for pushing operator button multiple times in a row
+
+        // TODO: Test for pushing different operator buttons consecutively uses the most recently pressed operator
+
+        // DukaDo: Test for everything I haven't thought of yet
 
         /// <summary>
         /// Presses the buttons in the calculator component that correspond to the input 
@@ -105,17 +128,17 @@ namespace FinanMan.Tests
         /// <param name="inputs">
         /// A string of characters that will be pressed in the calculator component.
         /// </param>
-        /// <param name="expectedCurrentValue">
+        /// <param name="expectedCalculatedValue">
         /// The expected value of the current value display.
         /// </param>
-        /// <param name="expectedNumOutput">
+        /// <param name="expectedInputNumDisplay">
         /// The expected value of the number output display.
         /// </param>
         /// <param name="expectedFormulaOutput">
         /// The expected value of the formula output display.
         /// </param>
         /// <exception cref="Exception"></exception>
-        private void TestTheCalculator(string inputs, string? expectedCurrentValue = null, string? expectedNumOutput = null, string? expectedFormulaOutput = null)
+        private void TestTheCalculator(string inputs, string? expectedCalculatedValue = null, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             // Arrange
             var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
@@ -127,9 +150,9 @@ namespace FinanMan.Tests
             // Assert
             var display = renderedComponent.GetDisplay();
 
-            if (expectedCurrentValue == null && expectedNumOutput == null && expectedFormulaOutput == null) throw new Exception("you must make an assertion");
-            if (expectedCurrentValue != null) Assert.Equal(expectedCurrentValue, display.CurrentValue);
-            if (expectedNumOutput != null) Assert.Equal(expectedNumOutput, display.NumOutput); // for helpful debugging?
+            if (expectedCalculatedValue == null && expectedInputNumDisplay == null && expectedFormulaOutput == null) throw new Exception("you must make an assertion");
+            if (expectedCalculatedValue != null) Assert.Equal(expectedCalculatedValue, display.CurrentValue);
+            if (expectedInputNumDisplay != null) Assert.Equal(expectedInputNumDisplay, display.NumOutput); // for helpful debugging?
             if (expectedFormulaOutput != null) Assert.Equal(expectedFormulaOutput, display.FormulaOutput);
         }
     }

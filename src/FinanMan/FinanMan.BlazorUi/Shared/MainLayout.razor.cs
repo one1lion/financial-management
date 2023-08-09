@@ -1,5 +1,4 @@
 using FinanMan.BlazorUi.JsInterop;
-using System.Diagnostics;
 using Timr = System.Timers.Timer;
 
 namespace FinanMan.BlazorUi.Shared;
@@ -23,7 +22,7 @@ public partial class MainLayout
         UiState.CollapseSelectLists += HandleCollapseSelectLists;
         var hold = UiState.SomeNum;
     }
-    
+
     private void HandleDebounceTimeout(object? sender, System.Timers.ElapsedEventArgs e)
     {
         _collapseDebounce.Stop();
