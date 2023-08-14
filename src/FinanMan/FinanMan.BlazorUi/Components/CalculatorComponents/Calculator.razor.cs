@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 public partial class Calculator
@@ -9,19 +8,20 @@ public partial class Calculator
         7, 8, 9, 4, 5, 6, 1, 2, 3
     };
 
-    private decimal DisplayedInputNum {
-        get => decimal.Parse($"{_wholeNumberPart}{(_decimalPart > 0 ? $".{_decimalPart}" : string.Empty)}");
+    private decimal DisplayedInputNum
+    {
+        get => decimal.Parse($"{_wholeNumberPart}{(!string.IsNullOrWhiteSpace(_decimalPart) ? $".{_decimalPart}" : string.Empty)}");
         set
         {
             _wholeNumberPart = (long)Math.Floor(value);
 
             var numParts = value.ToString().Split('.');
-            _decimalPart = numParts.Length > 1 ? long.Parse(numParts.Last()) : 0;
+            _decimalPart = numParts.Length > 1 ? numParts.Last().TrimEnd('0') : string.Empty;
         }
     }
 
     private long _wholeNumberPart;
-    private long _decimalPart;
+    private string _decimalPart = string.Empty;
 
     /// <summary>
     /// Used to identify whether the input has been changed since the last calculation.
@@ -59,34 +59,26 @@ public partial class Calculator
 
     private void HandleRemove()
     {
-        _decimalActive &= _decimalPart > 0;
-        if (_decimalActive)
-        {
-            _decimalPart = (_decimalPart - _decimalPart % 10) / 10;
-        }
-        else
-        {
-            _wholeNumberPart = (_wholeNumberPart - _wholeNumberPart % 10) / 10;
-        }
+
         StateHasChanged();
     }
 
     private void HandleNumberClicked(int num)
     {
-        if(!_inputDirty)
+        if (!_inputDirty)
         {
-            // Reset the input number to 0
-            _wholeNumberPart = 0;
-            _decimalPart = 0;
+            HandleClearClicked();
         }
+
         _inputDirty = true;
+
         if (_decimalActive)
         {
-            _decimalPart = _decimalPart * 10 + num;
+            _decimalPart += num;
         }
         else
         {
-            _wholeNumberPart = _wholeNumberPart * 10 + (_wholeNumberPart < 0 ? -1 : 1) * num;
+            _wholeNumberPart = _wholeNumberPart * 10 + num;
         }
         StateHasChanged();
     }
@@ -98,13 +90,13 @@ public partial class Calculator
 
     private void HandlePeriodClicked()
     {
-        _decimalActive = !_decimalActive || _decimalPart > 0;
+        _decimalActive = !_decimalActive || !string.IsNullOrWhiteSpace(_decimalPart);
     }
 
     private void HandleClearClicked()
     {
         _wholeNumberPart = 0;
-        _decimalPart = 0;
+        _decimalPart = string.Empty;
         _decimalActive = false;
     }
 
@@ -120,61 +112,54 @@ public partial class Calculator
 
     private void HandleOperatorClicked(Operator op)
     {
-        _activeOp = op;
-        if ((op == Operator.Submit && _currentCalculatedValue is null)
-            || (op != Operator.Submit && !_inputDirty)) { return; }
-
-        if (!_prevOp.HasValue)
+        switch (op)
         {
-            _prevOp = op;
-            _currentCalculatedValue = DisplayedInputNum;
-            _formulaOutput = $"{DisplayedInputNum} {_prevOp.Value.GetDisplayText()} ";
-            _inputDirty = false;
-            return;
-        }
+            case Operator.Submit:
+                var calcError = false;
+                // Perform the operation of the stored value with the previous operator and the current input value
+                switch (_prevOp)
+                {
+                    case Operator.Add:
+                        _currentCalculatedValue += DisplayedInputNum;
+                        break;
+                    case Operator.Subtract:
+                        _currentCalculatedValue -= DisplayedInputNum;
+                        break;
+                    case Operator.Multiply:
+                        _currentCalculatedValue *= DisplayedInputNum;
+                        break;
+                    case Operator.Divide:
+                        if (DisplayedInputNum == 0)
+                        {
+                            calcError = true;
+                            _formulaOutput = $"{_formulaOutput} {DisplayedInputNum} = #DIV/0!";
+                            _currentCalculatedValue = 0;
+                            HandleClearClicked();
+                        }
+                        else
+                        {
+                            _currentCalculatedValue /= DisplayedInputNum;
+                        }
+                        break;
+                }
 
-        if (_currentCalculatedValue.HasValue && _prevOp.HasValue)
-        {
-            _formulaOutput = $"{_currentCalculatedValue} {_prevOp.Value.GetDisplayText()} {DisplayedInputNum} = ";
+                if (!calcError)
+                {
+                    _formulaOutput = $"{_formulaOutput} {DisplayedInputNum} = ";
+                    DisplayedInputNum = _currentCalculatedValue ?? 0m;
+                }
+                break;
         }
-
-        _currentCalculatedValue ??= 0;
-
-        if (_prevOp == Operator.Divide && DisplayedInputNum == 0)
-        {
-            _currentCalculatedValue = 0;
-            _formulaOutput += "#DIV/0!";
-        }
-        else
-        {
-            _currentCalculatedValue = _prevOp switch
-            {
-                Operator.Subtract => _currentCalculatedValue - DisplayedInputNum,
-                Operator.Multiply => _currentCalculatedValue * DisplayedInputNum,
-                Operator.Divide => _currentCalculatedValue / DisplayedInputNum,
-                _ => _currentCalculatedValue + DisplayedInputNum // Defaults to add
-            };
-        }
-
-        _inputDirty = false;
-        if (op == Operator.Submit)
-        {
-            _activeOp = null;
-            DisplayedInputNum = _currentCalculatedValue ?? 0;
-            _decimalActive = false;
-            _inputDirty = true;
-            _prevOp = null;
-        }
-        else
-        {
-            _prevOp = op;
-        }
-
 
         if (op != Operator.Submit)
         {
+            _activeOp = op;
+            _currentCalculatedValue = DisplayedInputNum;
+            _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
             HandleClearClicked();
         }
+
+        _prevOp = op;
     }
 
     private enum Operator

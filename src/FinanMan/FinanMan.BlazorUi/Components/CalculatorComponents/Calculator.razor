@@ -14,9 +14,9 @@
                     {
                         <button type="button" id="btn-@key" @onclick="_ => HandleNumberClicked(key)">@key</button>
                     }
-                    <button type="button" id="btn-n" @onclick=HandleNegateClicked>+/-</button>
+                    <button type="button" id="btn-n" class="@(DisplayedInputNum < 0 ? "active" : null)" @onclick=HandleNegateClicked>+/-</button>
                     <button type="button" id="btn-0" @onclick="_ => HandleNumberClicked(0)">0</button>
-                    <button type="button" id="btn-decimal" class="@(_decimalActive ? "active" : null)" disabled="@(_decimalPart > 0)" @onclick=HandlePeriodClicked>.</button>
+                    <button type="button" id="btn-decimal" class="@(_decimalActive ? "active" : null)" disabled="@(!string.IsNullOrWhiteSpace(_decimalPart))" @onclick=HandlePeriodClicked>.</button>
                 </div>
                 <div>
                     <button id="remove" @onclick=HandleRemove>Remove</button>
