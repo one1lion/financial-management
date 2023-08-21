@@ -74,5 +74,9 @@
   {
     "outputFile": "Components/CalculatorComponents/Calculator.razor.css",
     "inputFile": "Components/CalculatorComponents/Calculator.razor.scss"
+  },
+  {
+    "outputFile": "ResearchingIssues.razor.css",
+    "inputFile": "ResearchingIssues.razor.scss"
   }
 ]

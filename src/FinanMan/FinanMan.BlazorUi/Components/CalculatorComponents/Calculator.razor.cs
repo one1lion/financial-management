@@ -22,6 +22,7 @@ public partial class Calculator
 
     private long _wholeNumberPart;
     private string _decimalPart = string.Empty;
+    PreviousOperator _lastOperation;
 
     /// <summary>
     /// Used to identify whether the input has been changed since the last calculation.
@@ -112,49 +113,61 @@ public partial class Calculator
 
     private void HandleOperatorClicked(Operator op)
     {
-        switch (op)
+        var optToUse = op == Operator.Submit ? _activeOp : _prevOp;
+        if (optToUse.HasValue && _currentCalculatedValue.HasValue)
         {
-            case Operator.Submit:
-                var calcError = false;
-                // Perform the operation of the stored value with the previous operator and the current input value
-                switch (_prevOp)
-                {
-                    case Operator.Add:
-                        _currentCalculatedValue += DisplayedInputNum;
-                        break;
-                    case Operator.Subtract:
-                        _currentCalculatedValue -= DisplayedInputNum;
-                        break;
-                    case Operator.Multiply:
-                        _currentCalculatedValue *= DisplayedInputNum;
-                        break;
-                    case Operator.Divide:
-                        if (DisplayedInputNum == 0)
-                        {
-                            calcError = true;
-                            _formulaOutput = $"{_formulaOutput} {DisplayedInputNum} = #DIV/0!";
-                            _currentCalculatedValue = 0;
-                            HandleClearClicked();
-                        }
-                        else
-                        {
-                            _currentCalculatedValue /= DisplayedInputNum;
-                        }
-                        break;
-                }
+            var calcError = false;
+            var valToUse = (_prevOp == Operator.Submit && op == Operator.Submit) ? _lastOperation.LastValue : DisplayedInputNum;
+            if (op == Operator.Submit)
+            {
+                _lastOperation.LastValue = valToUse;
+                _formulaOutput = $"{_currentCalculatedValue} {optToUse.Value.GetDisplayText()}";
+            }
+            else
+            {
+                _lastOperation.Operator = optToUse.Value;
+            }
 
-                if (!calcError)
-                {
-                    _formulaOutput = $"{_formulaOutput} {DisplayedInputNum} = ";
-                    DisplayedInputNum = _currentCalculatedValue ?? 0m;
-                }
-                break;
+            // Perform the operation of the stored value with the previous operator and the current input value
+            switch (optToUse)
+            {
+                case Operator.Add:
+                    _currentCalculatedValue += valToUse;
+                    break;
+                case Operator.Subtract:
+                    _currentCalculatedValue -= valToUse;
+                    break;
+                case Operator.Multiply:
+                    _currentCalculatedValue *= valToUse;
+                    break;
+                case Operator.Divide:
+                    if (valToUse == 0)
+                    {
+                        calcError = true;
+                        _formulaOutput = $"{_formulaOutput} {valToUse} = #DIV/0!";
+                        _currentCalculatedValue = 0;
+                        HandleClearClicked();
+                    }
+                    else
+                    {
+                        _currentCalculatedValue /= valToUse;
+                    }
+                    break;
+            }
+
+            if (!calcError)
+            {
+                _formulaOutput = $"{_formulaOutput} {valToUse} = ";
+                DisplayedInputNum = _currentCalculatedValue ?? 0m;
+            }
         }
 
         if (op != Operator.Submit)
         {
             _activeOp = op;
             _currentCalculatedValue = DisplayedInputNum;
+            _lastOperation.LastValue = _currentCalculatedValue ?? 0;
+            _lastOperation.Operator = op;
             _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
             HandleClearClicked();
         }
@@ -175,8 +188,13 @@ public partial class Calculator
         [Display(Name = "=")]
         Submit
     }
-}
 
+    private struct PreviousOperator
+    {
+        public Operator Operator { get; set; }
+        public decimal LastValue { get; set; }
+    }
+}
 
 /*
 Calculator logic

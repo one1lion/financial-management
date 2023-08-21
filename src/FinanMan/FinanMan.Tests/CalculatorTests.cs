@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace FinanMan.Tests
 {
@@ -88,9 +89,10 @@ namespace FinanMan.Tests
         }
 
         [Theory]
-        [InlineData("1 + 22 + 4 =", "27", "23 + 4 = ", Skip = "Not yet implemented")]
-        [InlineData("1 + 22 + 4 + 21 =", "48", "27 + 21 = ", Skip = "Not yet implemented")]
-        [InlineData("1 + 22 * 4 =", "92", "23 * 4 = ", Skip = "Not yet implemented")]
+        [InlineData("1 + 22 + ", "0", "23 +")]
+        [InlineData("1 + 22 + 4 =", "27", "23 + 4 = ")]
+        [InlineData("1 + 22 + 4 + 21 =", "48", "27 + 21 = ")]
+        [InlineData("1 + 22 * 4 =", "92", "23 * 4 = ")]
         public void ConsecutiveOperationsTotalCorrectly(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             TestTheCalculator(
@@ -101,8 +103,8 @@ namespace FinanMan.Tests
 
         // Test for pushing operator buttons after equals button followed by another number
         [Theory]
-        [InlineData("1 + 22 + 14 = + 5 =", "42", "37 + 5 = ", Skip = "Not yet implemented")]
-        [InlineData("1 + 22 - 14 = * 5 =", "45", "9 * 5 = ", Skip = "Not yet implemented")]
+        [InlineData("1 + 22 + 14 = + 5 =", "42", "37 + 5 = ")]
+        [InlineData("1 + 22 - 14 = * 5 =", "45", "9 * 5 = ")]
         public void PressingOperationButtonAfterEqualsWork(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             TestTheCalculator(
@@ -111,11 +113,24 @@ namespace FinanMan.Tests
                 expectedFormulaOutput: expectedFormulaOutput);
         }
 
+        // TODO: Test for pushing submit button multiple times in a row after performing a calculation repeats the last operation using the new calculated value and previous input value
+        [Theory]
+        [InlineData("5 =", "5", "")]
+        [InlineData("5 = = = = = =", "5", "")]
+        [InlineData("5 + 2 = = = =", "13", "11 + 2 = ")]
+        public void PressingSubmitButtonMultipleTimesWork(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
+        {
+            TestTheCalculator(
+                inputs: inputs,
+                expectedInputNumDisplay: expectedInputNumDisplay,
+                expectedFormulaOutput: expectedFormulaOutput);
+        }
+
+        // TODO: Test for what should happen when Submit is the first button pressed after loading
+
         // TODO: Test for Clear button only clearing current input and not total
 
         // TODO: Test for pushing Clear all button
-
-        // TODO: Test for pushing operator button multiple times in a row
 
         // TODO: Test for pushing different operator buttons consecutively uses the most recently pressed operator
 
