@@ -5,12 +5,15 @@ using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using FinanMan.Shared.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace FinanMan.SharedServer.Services;
 
 public class LookupItemService : ILookupListService
 {
     private readonly IDbContextFactory<FinanManContext> _dbContextFactory;
+    private readonly ILoggerFactory _loggerFactory;
 
     public LookupItemService(IDbContextFactory<FinanManContext> dbContextFactory)
     {
@@ -86,6 +89,7 @@ public class LookupItemService : ILookupListService
 
         try
         {
+            throw new ArgumentException("I\"m not really arguing as much as I am proving why you are wrong.");
             if (foundRec?.Deleted ?? false)
             {
                 foundRec.Deleted = false;

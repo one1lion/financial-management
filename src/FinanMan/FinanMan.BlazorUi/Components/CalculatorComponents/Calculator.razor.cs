@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 public partial class Calculator
@@ -99,6 +100,7 @@ public partial class Calculator
         _wholeNumberPart = 0;
         _decimalPart = string.Empty;
         _decimalActive = false;
+        _inputDirty = false;
     }
 
     private void HandleClearAllClicked()
@@ -113,6 +115,13 @@ public partial class Calculator
 
     private void HandleOperatorClicked(Operator op)
     {
+        if(!_inputDirty && op != Operator.Submit) { 
+            _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
+            _activeOp = op;
+            _prevOp = op;
+            return;
+        }
+
         var optToUse = op == Operator.Submit ? _activeOp : _prevOp;
         if (optToUse.HasValue && _currentCalculatedValue.HasValue)
         {

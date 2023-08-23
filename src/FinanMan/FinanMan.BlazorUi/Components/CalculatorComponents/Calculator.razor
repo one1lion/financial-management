@@ -8,7 +8,12 @@
                 </div>
             </ModalHeader>
             <ModalContent>
-                <span id="numberOutput">@DisplayedInputNum</span>
+                <span id="numberOutput">
+                    @if (_inputDirty)
+                    {
+                        @DisplayedInputNum
+                    }
+                </span>
                 <div class="calc-buttons">
                     @foreach (var key in _numPadItems)
                     {
