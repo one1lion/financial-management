@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace FinanMan.Tests
 {
@@ -131,7 +130,8 @@ namespace FinanMan.Tests
         [InlineData("1 * + 3 =", "4", "1 + 3 = ")]
         [InlineData("1 + 2 = * + 4 =", "7", "3 + 4 = ")]
         [InlineData("1 + 2 * + 4 =", "7", "3 + 4 = ")]
-        [InlineData("1 + 2 * + 4 = + - ", "", "7 -")]
+        [InlineData("1 + 2 * + 4 = + - ", "0", "7 -")]
+        [InlineData("1 + 2 * + 4 = + - =", "0", "7 -")] // This ends up performing the operation 7 - 7 =
         public void PressingConsecutiveOperatorsWork(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             TestTheCalculator(
@@ -140,7 +140,15 @@ namespace FinanMan.Tests
                 expectedFormulaOutput: expectedFormulaOutput);
         }
 
-        // TODO: Test for what should happen when Submit is the first button pressed after loading
+        // Test for what should happen when Submit is the first button pressed after loading
+        [Fact]
+        public void SubmitFirstButtonPressedAfterLoadingTest()
+        {
+            TestTheCalculator(
+                inputs: "= ",
+                expectedInputNumDisplay: "0",
+                expectedFormulaOutput: "");
+        }
 
         // TODO: Test for Clear button only clearing current input and not total
 

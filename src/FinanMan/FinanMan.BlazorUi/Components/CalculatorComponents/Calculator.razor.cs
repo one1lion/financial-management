@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
+
 public partial class Calculator
 {
     private readonly static int[] _numPadItems = new[]
@@ -45,7 +45,7 @@ public partial class Calculator
     {
         HandleClearAllClicked();
     }
-
+    
     private async Task HandleShowChanged(bool newShow)
     {
         if (Show == newShow) { return; }
@@ -61,7 +61,6 @@ public partial class Calculator
 
     private void HandleRemove()
     {
-
         StateHasChanged();
     }
 
@@ -115,11 +114,29 @@ public partial class Calculator
 
     private void HandleOperatorClicked(Operator op)
     {
-        if(!_inputDirty && op != Operator.Submit) { 
-            _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
-            _activeOp = op;
-            _prevOp = op;
-            return;
+        if (!_inputDirty)
+        {
+            switch (op)
+            {
+                case Operator.Submit:
+                    // When the displayed formula ends with an operator other than submit,
+                    // we want to use the last operator
+                    if(_formulaOutput.Trim().EndsWith(Operator.Submit.GetDisplayText()))
+                    {
+                        DisplayedInputNum = _currentCalculatedValue ?? 0;
+                    }
+                    else
+                    {
+                        // Do nothing if the formula ends with an operator and the current input is not dirty
+                        return;
+                    }
+                    break;
+                default:
+                    _activeOp = op;
+                    _prevOp = op;
+                    _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
+                    return;
+            }
         }
 
         var optToUse = op == Operator.Submit ? _activeOp : _prevOp;
@@ -179,6 +196,7 @@ public partial class Calculator
             _lastOperation.Operator = op;
             _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
             HandleClearClicked();
+            DisplayedInputNum = 0m;
         }
 
         _prevOp = op;
@@ -192,7 +210,7 @@ public partial class Calculator
         Subtract,
         [Display(Name = "*")]
         Multiply,
-        [Display(Name = "/")]
+        [Display(Name = "&div;")]
         Divide,
         [Display(Name = "=")]
         Submit
