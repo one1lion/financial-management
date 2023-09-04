@@ -14,5 +14,9 @@
   {
     "outputFile": "ProgressComponents/ProgressBar.razor.css",
     "inputFile": "ProgressComponents/ProgressBar.razor.scss"
+  },
+  {
+    "outputFile": "DraggableComponents/DraggableContainer.razor.css",
+    "inputFile": "DraggableComponents/DraggableContainer.razor.scss"
   }
 ]

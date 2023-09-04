@@ -1,4 +1,5 @@
 ﻿@using FinanMan.BlazorUi.Components.CalculatorComponents
+@using FinanMan.BlazorUi.SharedComponents.DraggableComponents
 
 <header class="top-bar">
     <button type="button" @onclick="_ => _showCalc = true">
@@ -8,7 +9,9 @@
     </button>
 </header>
 
-<Calculator @bind-Show=_showCalc />
+<DraggableContainer>
+    <Calculator @bind-Show=_showCalc />
+</DraggableContainer>
 
 @code {
     private bool _showCalc;
