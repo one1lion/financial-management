@@ -31,17 +31,76 @@
 }
 #calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 3ch);
-  grid-template-rows: repeat(4, 3ch);
+  grid-template: "btnRemove btnDivide   btnMultiply btnMinus" "btn7      btn8        btn9        btnPlus" "btn4      btn5        btn6        btnPlus" "btn1      btn2        btn3        btnSubmit" "btnNegate btn0        btnDecimal  btnSubmit" "btnClear  btnClear    btnClearAll btnClearAll";
+  grid-template-columns: repeat(4, 3ch);
+  grid-template-rows: repeat(6, 3ch);
   gap: 0.4rem;
   justify-content: center;
   align-content: center;
+  padding: 0 4rem;
 }
 #calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button {
   padding: 0;
   display: grid;
   place-items: center;
 }
-#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn0 {
-  grid-column: 2;
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-0 {
+  grid-area: btn0;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-1 {
+  grid-area: btn1;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-2 {
+  grid-area: btn2;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-3 {
+  grid-area: btn3;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-4 {
+  grid-area: btn4;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-5 {
+  grid-area: btn5;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-6 {
+  grid-area: btn6;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-7 {
+  grid-area: btn7;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-8 {
+  grid-area: btn8;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-9 {
+  grid-area: btn9;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-n {
+  grid-area: btnNegate;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-decimal {
+  grid-area: btnDecimal;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-divide {
+  grid-area: btnDivide;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-multiply {
+  grid-area: btnMultiply;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-plus {
+  grid-area: btnPlus;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-minus {
+  grid-area: btnMinus;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-submit {
+  grid-area: btnSubmit;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-remove {
+  grid-area: btnRemove;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-clear {
+  grid-area: btnClear;
+}
+#calcContainer ::deep .modal-wrapper .modal-content .card .card-body .card-text .calc-buttons button#btn-clearAll {
+  grid-area: btnClearAll;
 }
