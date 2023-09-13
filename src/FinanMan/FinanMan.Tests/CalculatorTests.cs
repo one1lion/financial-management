@@ -75,7 +75,7 @@ namespace FinanMan.Tests
             TestTheCalculator(
                 inputs: "20 / 2 =",
                 expectedInputNumDisplay: "10",
-                expectedFormulaOutput: "20 / 2 = ");
+                expectedFormulaOutput: "20 ÷ 2 = ");
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace FinanMan.Tests
             TestTheCalculator(
                 inputs: "20 / 0 =",
                 expectedInputNumDisplay: "0",
-                expectedFormulaOutput: "20 / 0 = #DIV/0!");
+                expectedFormulaOutput: "20 ÷ 0 = #DIV/0!");
         }
 
         [Theory]

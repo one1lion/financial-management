@@ -1,6 +1,4 @@
 ﻿using FinanMan.Database.Models.Shared;
-using FinanMan.Database.Models.Tables;
-using FinanMan.Shared.Enums;
 using FinanMan.Shared.LookupModels;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;

@@ -7,7 +7,7 @@ public partial class SampleIsolatedJsComponent
 {
     [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
     private Task<IJSObjectReference>? _module;
-    private Task<IJSObjectReference> Module => _module ??= JsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/FinanMan.BlazorUi.SharedComponents/js/MyInterop.js").AsTask();
+    private Task<IJSObjectReference> Module => _module ??= JsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/FinanMan.BlazorUi.SharedComponents/js/MyInterop/MyInterop.js").AsTask();
 
     private string? _errMsg;
 

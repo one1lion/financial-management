@@ -9,105 +9,103 @@
                 display: initial;
                 left: unset;
             }
+        }
 
-            .modal-content {
-                .card {
-                    .card-header {
-                        .calc-output {
-                            display: grid;
-                            grid-template-rows: auto 1fr;
-                            gap: .4rem;
-                        }
+        .card {
+            .card-header {
+                .calc-output {
+                    display: grid;
+                    grid-template-rows: auto 1fr;
+                    gap: .4rem;
+                }
+            }
+
+            .card-body {
+                padding-top: .6rem;
+
+                .card-text {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .4rem;
+
+                    :not(#numberOutput) {
+                        user-select: none;
                     }
 
-                    .card-body {
-                        padding-top: .6rem;
+                    #numberOutput {
+                        padding: .4rem .6rem;
+                        user-select: text;
+                        border-radius: .4rem;
+                        background-color: rgba(0, 0, 0, .5);
+                        font-family: Consolas;
+                        cursor: text;
+                    }
 
-                        .card-text {
-                            display: flex;
-                            flex-direction: column;
-                            gap: .4rem;
+                    .calc-buttons {
+                        display: grid;
+                        grid-template:
+                            'btnRemove btnDivide   btnMultiply btnMinus' 
+                            'btn7      btn8        btn9        btnPlus' 
+                            'btn4      btn5        btn6        btnPlus' 
+                            'btn1      btn2        btn3        btnSubmit' 
+                            'btnNegate btn0        btnDecimal  btnSubmit' 
+                            'btnClear  btnClear    btnClearAll btnClearAll';
+                        grid-template-columns: repeat(4, 3ch);
+                        grid-template-rows: repeat(6, 3ch);
+                        gap: .4rem;
+                        justify-content: center;
+                        align-content: center;
+                        padding: 0 4rem;
 
-                            :not(#numberOutput) {
-                                user-select: none;
-                            }
+                        button {
+                            padding: 0;
+                            display: grid;
+                            place-items: center;
 
-                            #numberOutput {
-                                padding: .4rem .6rem;
-                                user-select: text;
-                                border-radius: .4rem;
-                                background-color: rgba(0, 0, 0, .5);
-                                font-family: Consolas;
-                                cursor: text;
-                            }
-
-                            .calc-buttons {
-                                display: grid;
-                                grid-template:
-                                    'btnRemove btnDivide   btnMultiply btnMinus' 
-                                    'btn7      btn8        btn9        btnPlus' 
-                                    'btn4      btn5        btn6        btnPlus' 
-                                    'btn1      btn2        btn3        btnSubmit' 
-                                    'btnNegate btn0        btnDecimal  btnSubmit'
-                                    'btnClear  btnClear    btnClearAll btnClearAll';
-                                grid-template-columns: repeat(4, 3ch);
-                                grid-template-rows: repeat(6, 3ch);
-                                gap: .4rem;
-                                justify-content: center;
-                                align-content: center;
-                                padding: 0 4rem;
-
-                                button {
-                                    padding: 0;
-                                    display: grid;
-                                    place-items: center;
-
-                                    @for $i from 0 through 9 {
-                                        &#btn-#{$i} {
-                                            grid-area: btn#{$i};
-                                        }
-                                    }
-
-                                    &#btn-n {
-                                        grid-area: btnNegate;
-                                    }
-
-                                    &#btn-decimal {
-                                        grid-area: btnDecimal;
-                                    }
-
-                                    &#btn-divide {
-                                        grid-area: btnDivide;
-                                    }
-
-                                    &#btn-multiply {
-                                        grid-area: btnMultiply;
-                                    }
-
-                                    &#btn-plus {
-                                        grid-area: btnPlus;
-                                    }
-
-                                    &#btn-minus {
-                                        grid-area: btnMinus;
-                                    }
-
-                                    &#btn-submit {
-                                        grid-area: btnSubmit;
-                                    }
-
-                                    &#btn-remove {
-                                        grid-area: btnRemove;
-                                    }
-
-                                    &#btn-clear {
-                                        grid-area: btnClear;
-                                    }
-
-                                    &#btn-clearAll {
-                                        grid-area: btnClearAll;
-                                    }
+                            @for $i from 0 through 9 {
+                                &#btn-#{$i} {
+                                    grid-area: btn#{$i};
                                 }
+                            }
+
+                            &#btn-n {
+                                grid-area: btnNegate;
+                            }
+
+                            &#btn-decimal {
+                                grid-area: btnDecimal;
+                            }
+
+                            &#btn-divide {
+                                grid-area: btnDivide;
+                            }
+
+                            &#btn-multiply {
+                                grid-area: btnMultiply;
+                            }
+
+                            &#btn-plus {
+                                grid-area: btnPlus;
+                            }
+
+                            &#btn-minus {
+                                grid-area: btnMinus;
+                            }
+
+                            &#btn-submit {
+                                grid-area: btnSubmit;
+                            }
+
+                            &#btn-remove {
+                                grid-area: btnRemove;
+                            }
+
+                            &#btn-clear {
+                                grid-area: btnClear;
+                            }
+
+                            &#btn-clearAll {
+                                grid-area: btnClearAll;
                             }
                         }
                     }
