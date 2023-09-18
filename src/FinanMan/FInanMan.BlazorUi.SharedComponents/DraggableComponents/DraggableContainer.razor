@@ -1,15 +1,16 @@
-<div class="drag-area-wrapper"
-     style="visibility: visible;@(_dragging ? "position: fixed; inset: 0;transform: unset;" : PositionStyles)"
+<div class="drag-area-wrapper@(applyDragging ? " dragging" : null)"
+     style="visibility: visible;@(applyDragging ? "position: fixed; inset: 0;transform: unset;" : PositionStyles)"
      @ondragover=HandleDragOver>
     <div id="draggableContainer-@_id"
          class="draggable-container"
-         style="visibility:visible;@(_dragging ? PositionStyles : "position: block;")">
+         style="visibility:visible;@(applyDragging ? PositionStyles : "position: block;")">
         <div class="draggable-area"
              draggable="true"
              @onmousedown=HandleMouseDown
-             @ondragstart=HandleDragStart
-             @ondragend=HandleDragEnd>
-            Draggable Area
+             @onmouseup=HandleMouseUp
+             @ondragend=HandleDragEnd
+             ondragstart="dukaSoftFuncs.handleDraggableContainerDragStart(event)">
+            Draggable Area - Dragging: @(_dragging)
         </div>
         <div class="draggable-content">
             @ChildContent

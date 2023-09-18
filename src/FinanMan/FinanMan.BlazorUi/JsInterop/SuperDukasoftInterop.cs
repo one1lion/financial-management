@@ -5,4 +5,9 @@ public static class SuperDukasoftInterop
     {
         return jsRuntime.InvokeVoidAsync("dukaSoftFuncs.collapseSelectLists");
     }
+
+    public static ValueTask HandleDraggableContainerDragStart(IJSRuntime jsRuntime, DragEventArgs e)
+    {
+        return jsRuntime.InvokeVoidAsync("dukaSoftFuncs.handleDraggableContainerDragStart", e);
+    }
 }

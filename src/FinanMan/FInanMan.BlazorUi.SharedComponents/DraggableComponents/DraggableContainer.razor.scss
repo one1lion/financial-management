@@ -5,12 +5,20 @@
     transform: translate(-50%, -50%);
     z-index: 1000;
 
+    &.dragging {
+        cursor: move !important;
+    }
+
     .draggable-container {
         background-color: var(--draggable-container-background-color);
 
         .draggable-area {
             user-select: none;
             cursor: move;
+
+            &:active {
+                cursor: grabbing;
+            }
         }
     }
 }
