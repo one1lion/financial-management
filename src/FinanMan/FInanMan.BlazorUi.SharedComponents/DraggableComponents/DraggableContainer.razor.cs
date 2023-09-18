@@ -23,7 +23,6 @@ public partial class DraggableContainer
     private string PositionStyles => _left.HasValue ? $"position: absolute;left: {_left}px; top: {_top}px; transform: unset" : string.Empty;
     private bool applyDragging => _dragging && _left.HasValue;
 
-
     private double? _left;
     private double? _top;
 
@@ -32,12 +31,17 @@ public partial class DraggableContainer
     private double? _offsetLeft;
     private double? _offsetTop;
 
-    private Task HandleMouseDown(MouseEventArgs e)
+    private ElementReference _draggableContainerElemRef;
+    private Task<IJSObjectReference>? _module;
+    private Task<IJSObjectReference> Module => _module ??= JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/FinanMan.BlazorUi.SharedComponents/js/DraggableComponents/DraggableContainer.js").AsTask();
+
+    private async Task HandleMouseDown(MouseEventArgs e)
     {
+        var module = await Module;
+        await module.InvokeVoidAsync("capturePointerEvents", _draggableContainerElemRef);
         _dragging = true;
         _offsetLeft = e.OffsetX;
         _offsetTop = e.OffsetY;
-        return Task.CompletedTask;
     }
 
     private Task HandleMouseUp(MouseEventArgs e)
