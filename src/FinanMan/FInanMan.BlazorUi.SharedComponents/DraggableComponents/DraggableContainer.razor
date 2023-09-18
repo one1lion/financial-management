@@ -1,4 +1,4 @@
-<div class="drag-area-wrapper@(applyDragging ? " dragging" : null)"
+<div class="@($"drag-area-wrapper{(applyDragging ? " dragging" : null)}{(!string.IsNullOrWhiteSpace(AdditionalCssClasses) ? $" {AdditionalCssClasses}" : null)}")"
      style="visibility: visible;@(applyDragging ? "position: fixed; inset: 0;transform: unset;" : PositionStyles)"
      @ondragover=HandleDragOver
      @ref=_draggableContainerElemRef>

@@ -9,7 +9,7 @@
     </button>
 </header>
 
-<DraggableContainer>
+<DraggableContainer AdditionalCssClasses="@(_showCalc ? null : "hide-me")">
     <Calculator @bind-Show=_showCalc />
 </DraggableContainer>
 

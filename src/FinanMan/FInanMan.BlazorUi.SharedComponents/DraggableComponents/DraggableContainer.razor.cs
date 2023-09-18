@@ -17,6 +17,10 @@ public partial class DraggableContainer
     /// The content to be displayed in the draggable container.
     /// </summary>
     [Parameter, AllowNull] public RenderFragment ChildContent { get; set; }
+    /// <summary>
+    /// Additional CSS classes to be applied to the container.
+    /// </summary>
+    [Parameter] public string? AdditionalCssClasses { get; set; }
 
     private readonly string _id = Guid.NewGuid().ToString();
 

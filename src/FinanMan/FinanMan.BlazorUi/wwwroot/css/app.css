@@ -226,5 +226,8 @@ i.icon {
 /* Style Draggable Component Here */
 .draggable-container {
   z-index: calc(var(--modal-z-index) + 1);
-  border: 5px solid pink;
+}
+
+.hide-me {
+  display: none;
 }
