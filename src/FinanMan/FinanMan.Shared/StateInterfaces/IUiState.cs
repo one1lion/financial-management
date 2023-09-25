@@ -26,5 +26,5 @@ public interface IUiState : INotifyPropertyChanged, INotifyPropertyChanging
     void RaiseInitialUiLoadComplete();
     void DisplayFlyout(RenderFragment? content);
     void CollapseFlyout();
-    void ShowMessageDialog(string message, string? title = null, string okButtonText = "OK");
+    void ShowMessageDialog(RenderFragment message, RenderFragment? title = null, RenderFragment? okButtonText = null);
 }

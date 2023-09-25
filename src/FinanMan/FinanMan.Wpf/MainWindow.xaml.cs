@@ -22,15 +22,6 @@ public partial class MainWindow : Window, IDisposable
         _uiState = services.GetRequiredService<IUiState>();
         _uiState.InitialUiLoadComplete += HandleInitialUiLoaded;
         _uiState.SomeNum = 33;
-        try
-        {
-
-        }
-        catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
-        {
-
-            throw;
-        }
     }
 
     protected override void OnLocationChanged(EventArgs e)

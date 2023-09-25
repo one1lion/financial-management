@@ -3,7 +3,7 @@
 namespace FinanMan.Shared.General;
 public struct MessageDialogParameters
 {
-    public string? Title { get; set; }
-    public string Message { get; set; }
-    public string OkButtonText { get; set; }
+    public RenderFragment? Title { get; set; }
+    public RenderFragment Message { get; set; }
+    public RenderFragment OkButtonText { get; set; }
 }

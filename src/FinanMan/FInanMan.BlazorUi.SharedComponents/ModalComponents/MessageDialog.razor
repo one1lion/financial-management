@@ -3,21 +3,28 @@
 <Modal @bind-Show=Show @bind-Show:after=HandleShowChanged>
     <Card>
         <CardHeader>
-            @if (!string.IsNullOrWhiteSpace(HeaderContent))
+            @if (HeaderContent is not null)
             {
                 <h3 class="header-text">
-                    @((MarkupString)HeaderContent)
+                    @HeaderContent
                 </h3>
             }
         </CardHeader>
         <CardBody>
             <CardText>
-                @((MarkupString)BodyContent)
+                @BodyContent
             </CardText>
         </CardBody>
         <CardFooter>
             <button type="button" class="btn btn-primary" @onclick=HandleOkClicked>
-                @((MarkupString)OkButtonContent)
+                @if(OkButtonContent is null)
+                {
+                   <text>OK</text>   
+                }
+                else
+                {
+                    @OkButtonContent
+                }
             </button>
         </CardFooter>
     </Card>
@@ -27,9 +34,9 @@
     [Parameter] public bool Show { get; set; }
     [Parameter] public EventCallback<bool> ShowChanged { get; set; }
 
-    [Parameter] public string? HeaderContent { get; set; }
-    [Parameter, EditorRequired] public required string BodyContent { get; set; }
-    [Parameter] public string OkButtonContent { get; set; } = "OK";
+    [Parameter] public RenderFragment? HeaderContent { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment BodyContent { get; set; }
+    [Parameter] public RenderFragment? OkButtonContent { get; set; }
 
     private Task HandleOkClicked()
     {
