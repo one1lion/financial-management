@@ -25,7 +25,7 @@ public partial class Index
     private void HandleContactUsClicked()
     {
         UiState.CollapseFlyout();
-        UiState.ShowFlyout(
+        UiState.DisplayFlyout(
             (builder) =>
             {
                 builder.OpenComponent<ContactUsFlyoutContent>(0);

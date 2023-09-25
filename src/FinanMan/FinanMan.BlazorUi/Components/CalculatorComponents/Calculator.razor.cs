@@ -40,12 +40,13 @@ public partial class Calculator
 
     [Parameter] public bool Show { get; set; }
     [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    [Parameter] public EventCallback OnDismissed { get; set; }
 
     protected override void OnInitialized()
     {
         HandleClearAllClicked();
     }
-    
+
     private async Task HandleShowChanged(bool newShow)
     {
         if (Show == newShow) { return; }
@@ -121,7 +122,7 @@ public partial class Calculator
                 case Operator.Submit:
                     // When the displayed formula ends with an operator other than submit,
                     // we want to use the last operator
-                    if(_formulaOutput.Trim().EndsWith(Operator.Submit.GetDisplayText()))
+                    if (_formulaOutput.Trim().EndsWith(Operator.Submit.GetDisplayText()))
                     {
                         DisplayedInputNum = _currentCalculatedValue ?? 0;
                     }
@@ -200,6 +201,15 @@ public partial class Calculator
         }
 
         _prevOp = op;
+    }
+
+    private async Task HandleDismissClicked()
+    {
+        await HandleShowChanged(false);
+        if (OnDismissed.HasDelegate)
+        {
+            await OnDismissed.InvokeAsync();
+        }
     }
 
     private enum Operator

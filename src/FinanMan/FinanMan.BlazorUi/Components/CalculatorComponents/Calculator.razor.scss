@@ -18,6 +18,17 @@
                     grid-template-rows: auto 1fr;
                     gap: .4rem;
                 }
+
+                .dismiss-button {
+                    position: absolute;
+                    right: 1rem;
+                    top: 0;
+                    background: var(--primary-background-color);
+                    border: none;
+                    padding: .1rem;
+                    margin: 0;
+                    color: var(--primary-color);
+                }
             }
 
             .card-body {
@@ -44,12 +55,7 @@
                     .calc-buttons {
                         display: grid;
                         grid-template:
-                            'btnRemove btnDivide   btnMultiply btnMinus' 
-                            'btn7      btn8        btn9        btnPlus' 
-                            'btn4      btn5        btn6        btnPlus' 
-                            'btn1      btn2        btn3        btnSubmit' 
-                            'btnNegate btn0        btnDecimal  btnSubmit' 
-                            'btnClear  btnClear    btnClearAll btnClearAll';
+                            'btnRemove btnDivide   btnMultiply btnMinus' 'btn7      btn8        btn9        btnPlus' 'btn4      btn5        btn6        btnPlus' 'btn1      btn2        btn3        btnSubmit' 'btnNegate btn0        btnDecimal  btnSubmit' 'btnClear  btnClear    btnClearAll btnClearAll';
                         grid-template-columns: repeat(4, 3ch);
                         grid-template-rows: repeat(6, 3ch);
                         gap: .4rem;

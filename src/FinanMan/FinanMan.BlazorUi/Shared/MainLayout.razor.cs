@@ -31,7 +31,7 @@ public partial class MainLayout
 
     private void HandleUiPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(UiState.FlyoutVisible))
+        if (e.PropertyName == nameof(UiState.FlyoutVisible) || e.PropertyName == nameof(UiState.MessageDialogVisible))
         {
             StateHasChanged();
         }
@@ -51,7 +51,7 @@ public partial class MainLayout
     {
         if (newShow)
         {
-            UiState.ShowFlyout(UiState.FlyoutContent);
+            UiState.DisplayFlyout(UiState.FlyoutContent);
         }
         else
         {

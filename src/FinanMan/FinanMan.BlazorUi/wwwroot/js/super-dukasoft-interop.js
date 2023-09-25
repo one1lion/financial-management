@@ -7,7 +7,6 @@ window.dukaSoftFuncs = {
         }
     },
     handleDraggableContainerDragStart: function (event) {
-        console.log("We're dragon");
         event.dataTransfer.setDragImage(new Image(), 0, 0);
     }
 };

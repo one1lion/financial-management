@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using FinanMan.Shared.General;
+using Microsoft.AspNetCore.Components;
 using System.ComponentModel;
 
 namespace FinanMan.Shared.StateInterfaces;
@@ -14,11 +15,16 @@ public interface IUiState : INotifyPropertyChanged, INotifyPropertyChanging
     bool FlyoutVisible { get; }
     string ActiveLanguage { get; }
 
+    bool MessageDialogVisible { get; set; }
+    MessageDialogParameters MessageDialogParameters { get; set; }
+
+
     bool InitialUiLoaded { get; }
 
     void SetLanguage(string language);
     void CollapseAllSelectLists();
     void RaiseInitialUiLoadComplete();
-    void ShowFlyout(RenderFragment? content);
+    void DisplayFlyout(RenderFragment? content);
     void CollapseFlyout();
+    void ShowMessageDialog(string message, string? title = null, string okButtonText = "OK");
 }

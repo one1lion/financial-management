@@ -10,6 +10,16 @@
   grid-template-rows: auto 1fr;
   gap: 0.4rem;
 }
+#calcContainer ::deep .card .card-header .dismiss-button {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  background: var(--primary-background-color);
+  border: none;
+  padding: 0.1rem;
+  margin: 0;
+  color: var(--primary-color);
+}
 #calcContainer ::deep .card .card-body {
   padding-top: 0.6rem;
 }

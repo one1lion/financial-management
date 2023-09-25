@@ -1,0 +1,15 @@
+using System.Diagnostics.CodeAnalysis;
+
+namespace FinanMan.BlazorUi.Shared;
+
+public partial class TopBar
+{
+    [Inject, AllowNull] private IUiState UiState { get; set; }
+
+    private bool _showCalc;
+
+    private void ShowMessageDialog()
+    {
+        UiState.ShowMessageDialog("Title", "Message", "OK");
+    }
+}
