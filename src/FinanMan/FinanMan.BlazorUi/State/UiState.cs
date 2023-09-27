@@ -1,5 +1,4 @@
 ﻿using FinanMan.Shared.General;
-using Ganss.Xss;
 using System.Globalization;
 
 namespace FinanMan.BlazorUi.State;
@@ -61,7 +60,8 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
     public void DisplayFlyout(RenderFragment? content)
     {
         FlyoutContent = content;
-        if (content is null) { 
+        if (content is null)
+        {
             CollapseFlyout();
             return;
         }

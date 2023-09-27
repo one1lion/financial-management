@@ -60,6 +60,9 @@
   --muted-color: #777;
   /* Draggable Container */
   --draggable-container-background-color: var(--primary-background-color);
+  /* Borders for Active Items */
+  --border-active: #fff;
+  --border-inactive: #1d2c33;
 }
 
 button, .btn {

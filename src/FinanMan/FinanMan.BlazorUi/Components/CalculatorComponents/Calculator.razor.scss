@@ -1,6 +1,8 @@
 #calcContainer {
+    outline: 1px solid var(--border-inactive);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
     &:focus-within {
-        outline: 1px solid pink;
+        outline: 1px solid var(--border-active);
     }
 
     ::deep {
@@ -17,10 +19,9 @@
 
         .card {
             .card-header {
+                padding-bottom: 0;
                 .calc-output {
-                    display: grid;
-                    grid-template-rows: auto 1fr;
-                    gap: .4rem;
+                    margin-top: 1rem;
                 }
 
                 .dismiss-button {
@@ -29,20 +30,19 @@
                     top: 0;
                     background: var(--primary-background-color);
                     border: none;
-                    padding: .1rem .2rem;
-                    margin: 0;
+                    padding: calc(.1rem - 1px) .2rem .1rem .2rem;
+                    margin: 1px;
                     color: var(--primary-color);
                 }
             }
 
             .card-body {
-                padding-top: .6rem;
 
                 .card-text {
                     display: flex;
                     flex-direction: column;
                     gap: .4rem;
-
+                    padding-top: 0;
                     :not(#numberOutput) {
                         user-select: none;
                     }
