@@ -1,4 +1,8 @@
 #calcContainer {
+    &:focus-within {
+        outline: 1px solid pink;
+    }
+
     ::deep {
         &:not(#numberOutput) {
             user-select: none;
@@ -21,11 +25,11 @@
 
                 .dismiss-button {
                     position: absolute;
-                    right: 1rem;
+                    right: .2rem;
                     top: 0;
                     background: var(--primary-background-color);
                     border: none;
-                    padding: .1rem;
+                    padding: .1rem .2rem;
                     margin: 0;
                     color: var(--primary-color);
                 }

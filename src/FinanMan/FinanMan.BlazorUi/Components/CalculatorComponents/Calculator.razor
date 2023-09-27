@@ -37,39 +37,5 @@
                 </CardText>
             </CardBody>
         </Card>
-@* 
-        <TemplatedModal Show=Show ShowChanged=HandleShowChanged>
-            <ModalHeader>
-                <div class="calc-output">
-                    <span class="formula-output" id="formulaOutput">@_formulaOutput</span>
-                </div>
-            </ModalHeader>
-            <ModalContent>
-                <span id="numberOutput">
-                    @DisplayedInputNum
-                </span>
-                <div class="calc-buttons">
-                    <button id="btn-remove" @onclick=HandleRemove title="Backspace">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7.95 19L3 12l4.95-7H21v14H7.95Zm3.45-3l2.6-2.6l2.6 2.6l1.4-1.4l-2.6-2.6L18 9.4L16.6 8L14 10.6L11.4 8L10 9.4l2.6 2.6l-2.6 2.6l1.4 1.4Z" />
-                        </svg>
-                    </button>
-                    <button id="btn-divide" class="@(_activeOp == Operator.Divide ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Divide)" title="Divide">@((MarkupString)Operator.Divide.GetDisplayText())</button>
-                    <button id="btn-multiply" class="@(_activeOp == Operator.Multiply ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Multiply)" title="Multiply">@Operator.Multiply.GetDisplayText()</button>
-                    <button id="btn-plus" class="@(_activeOp == Operator.Add ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Add)" title="Add">@Operator.Add.GetDisplayText()</button>
-                    <button id="btn-minus" class="@(_activeOp == Operator.Subtract ? "active" : null)" @onclick="_ => HandleOperatorClicked(Operator.Subtract)" title="Subtract">@Operator.Subtract.GetDisplayText()</button>
-                    <button id="btn-submit" @onclick="_ => HandleOperatorClicked(Operator.Submit)">@Operator.Submit.GetDisplayText()</button>
-                    @foreach (var key in _numPadItems)
-                    {
-                        <button type="button" id="btn-@key" @onclick="_ => HandleNumberClicked(key)">@key</button>
-                    }
-                    <button type="button" id="btn-n" class="@(DisplayedInputNum < 0 ? "active" : null)" @onclick=HandleNegateClicked>+/-</button>
-                    <button type="button" id="btn-0" @onclick="_ => HandleNumberClicked(0)">0</button>
-                    <button type="button" id="btn-decimal" class="@(_decimalActive ? "active" : null)" disabled="@(!string.IsNullOrWhiteSpace(_decimalPart))" @onclick=HandlePeriodClicked>.</button>
-                    <button type="button" id="btn-clear" @onclick=HandleClearClicked>Clear</button>
-                    <button type="button" id="btn-clearAll" @onclick=HandleClearAllClicked>Clear All</button>
-                </div>
-            </ModalContent>
-        </TemplatedModal> *@
     </div>
 }

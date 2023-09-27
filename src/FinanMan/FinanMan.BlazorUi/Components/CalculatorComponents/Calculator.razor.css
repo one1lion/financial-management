@@ -1,4 +1,7 @@
-﻿#calcContainer ::deep:not(#numberOutput) {
+﻿#calcContainer:focus-within {
+  outline: 1px solid pink;
+}
+#calcContainer ::deep:not(#numberOutput) {
   user-select: none;
 }
 #calcContainer ::deep .modal-wrapper .dismiss-wrapper {
@@ -12,11 +15,11 @@
 }
 #calcContainer ::deep .card .card-header .dismiss-button {
   position: absolute;
-  right: 1rem;
+  right: 0.2rem;
   top: 0;
   background: var(--primary-background-color);
   border: none;
-  padding: 0.1rem;
+  padding: 0.1rem 0.2rem;
   margin: 0;
   color: var(--primary-color);
 }

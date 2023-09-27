@@ -41,5 +41,4 @@ public partial class App : Application
 
         Resources.Add("services", ServiceProvider);
     }
-
 }
