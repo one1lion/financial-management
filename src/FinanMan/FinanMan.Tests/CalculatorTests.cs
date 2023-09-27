@@ -1,6 +1,7 @@
 ﻿using FinanMan.BlazorUi.Components.CalculatorComponents;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace FinanMan.Tests
@@ -210,7 +211,7 @@ namespace FinanMan.Tests
                 NumOutput = numOutput
             };
         }
-
+        
         public class Result
         {
             public string? NumOutput { get; set; }

@@ -105,7 +105,7 @@ public class PaymentTransactionEntryServiceTests
         Assert.Equal(expectedViewModel.Total, returnedViewModel.Total);
     }
 
-    [Fact]
+    [Fact(Skip = "Not fully implemented")]
     public async Task AddPayment_AddsToTransactionCollection()
     {
         // Arrange

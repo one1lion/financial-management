@@ -62,6 +62,15 @@ public partial class Calculator
 
     private void HandleRemove()
     {
+        _decimalActive &= _decimalPart.Length > 0;
+        if (_decimalPart.Length > 0)
+        {
+            _decimalPart = _decimalPart.Length == 1 ? string.Empty : _decimalPart[..^1];
+        }
+        else
+        {
+            _wholeNumberPart = (_wholeNumberPart - _wholeNumberPart % 10) / 10;
+        }
         StateHasChanged();
     }
 

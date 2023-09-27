@@ -11,7 +11,7 @@
             <CardBody>
                 <CardText>
                     <span id="numberOutput">
-                        @DisplayedInputNum
+                        @($"{DisplayedInputNum}{(_decimalActive && _decimalPart.Length == 0 ? "." : string.Empty)}")
                     </span>
                     <div class="calc-buttons">
                         <button id="btn-remove" @onclick=HandleRemove title="Backspace">
