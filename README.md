@@ -10,7 +10,33 @@ Welcome to the repository for the Financial Management Tracker Application.  Thi
 
 The Financial Management Tracker is an application that allows us to track financial events related to various accounts and services.
 
-## Requirements
+## Getting Started
+
+1. Clone the repo.
+
+### In Visual Studio
+2. Set the FinanMan.Database.Migrations as the startup project
+3. (Optional) Set the connection strings in Secrets for the the Migrations to point to your database (the app is currently configured to use SQLServer, and it default to use localdb).
+```json
+{
+  "ConnectionStrings":
+  {
+    "DefaultConnection": "Server=.;Database=FinancialManagement;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true"
+  }
+}
+```
+4. Perform the database update using either dotnet CLI or Package. (see [Microsoft Docs](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli#create-your-database-and-schema) for information on how to run an update.
+5. Choose your application type by setting the project as the startup project
+  a. Blazor WASM: FinanMan.Server project
+  b. Blazor Server: FinanMan.ServerOnly
+  c. Android, iOS, Mac, Tizen, Windows: FinanMan.Maui + Choose the correct run target.  This may also require extra configuration
+  d. Windows: FinanMan.Wpf
+
+### In Visual Studio Code
+-- TODO
+
+# App Design Thoughts
+## What we want the app to do
 
 The Financial Management Tracker application should be able to: 
  - Allow users to track various financial accounts and the transactions and balances
