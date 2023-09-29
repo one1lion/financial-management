@@ -1,0 +1,80 @@
+parameters:
+  - name: buildType
+    type: string
+  - name: feed
+    type: string
+  - name: branch
+    type: string
+
+steps:
+
+- checkout: self
+- checkout: templates
+- checkout: MyPackages
+
+# Generate Building ID
+- task: PowerShell@2
+  condition: "eq('${{ parameters.buildType }}', 'CI')"
+  displayName: "Generate Building ID"
+  inputs:
+    targetType: inline
+    script: |
+      $bid = $(Build.BuildId) % 10000
+      if($Version -eq $null) { Write-Output "##vso[task.setvariable variable=Version;isOutput=true]$bid" }"}
+      Write-Host "Building Version $Version"
+
+# Clean out the packages
+- script: rmdir C:\some\direct\path /s /q | true
+
+# Setup nuget 
+- powershell: copy-item MyPackages\Nuget.Config.${{ parameters.buildType }} MyPackages\Nuget.Config
+- powershell: copy-item ActualApp\Nuget.Config.${{ parameters.buildType }} ActualApp\Nuget.Config
+
+- task: UseDotNet@2
+  displayName: "Use .NET Core SDK"
+  inputs:
+    packageType: sdk
+    version: 7.x
+    includePreviewVersions: true
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: NuGetAuthenticate@0
+  displayName: "NuGet Authenticate"
+  inputs:
+    nuGetServiceConnections: ${{ parameters.feed }}
+
+- task: Bash@3
+  inputs:
+    targetType: inline
+    script: 'env | sort'
+
+# Build some needed tool that needs to run for each of the .csproj builds
+- template: path/to/ToolTemplate.yml@MyPackages
+  inputs:
+    buildType: '${{ parameters.buildType }}'
+    feed: ${{ parameters.feed }}
+    branch: ${{ parameters.branch }}
+
+- task: PowerShell@2
+  condition: eq('${{ parameters.buildType }}', 'DEV')
+  continueOnError: true
+  displayName: "Verify Localization Tools"
+  inputs:
+    targetType: inline
+    script: |
+      Tool1
+      Tool2   
+      Tool3
+
+- template: path/to/FirstPackageTemplate.yml@MyPackages
+  inputs:
+    buildType: '${{ parameters.buildType }}'
+    feed: ${{ parameters.feed }}
+    branch: ${{ parameters.branch }}
+
+- template: path/to/SecondPackageTemplate.yml@MyPackages
+  inputs:
+    buildType: '${{ parameters.buildType }}'
+    feed: ${{ parameters.feed }}
+    branch: ${{ parameters.branch }}
+

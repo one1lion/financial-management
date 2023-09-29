@@ -8,6 +8,10 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<Version Condition="$(SharedComponentsVersion) != ''">$(SharedComponentsVersion)</Version>
+		<Version Condition="$(SharedComponentsVersion) == ''">1.0.0-dev</Version>
+	</PropertyGroup>
 	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
 	</ItemGroup>
