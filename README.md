@@ -25,7 +25,7 @@ The Financial Management Tracker is an application that allows us to track finan
   }
 }
 ```
-4. Perform the database update using either dotnet CLI or Package. (see (Microsoft Docs)[https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli#create-your-database-and-schema] for information on how to run an update.
+4. Perform the database update using either dotnet CLI or Package. (see [Microsoft Docs](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli#create-your-database-and-schema) for information on how to run an update.
 5. Choose your application type by setting the project as the startup project
   a. Blazor WASM: FinanMan.Server project
   b. Blazor Server: FinanMan.ServerOnly
