@@ -43,22 +43,26 @@ namespace FinanMan.Tests
                 );
         }
 
-        [Fact]
-        public void BasicAdditionWorks()
+        [Theory]
+        [InlineData("1 + 20 = ", "21", "1 + 20 = ")]
+        [InlineData(". 1236 + 9 = ", "9.1236", "0.1236 + 9 = ")]
+        public void BasicAdditionWorks(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             TestTheCalculator(
-                inputs: "1 + 20 =",
-                expectedInputNumDisplay: "21",
-                expectedFormulaOutput: "1 + 20 = ");
+                inputs: inputs,
+                expectedInputNumDisplay: expectedInputNumDisplay,
+                expectedFormulaOutput: expectedFormulaOutput);
         }
 
-        [Fact]
-        public void BasicSubtractWorks()
+        [Theory]
+        [InlineData("2 - 20 =", "-18", "2 - 20 = ")]
+        [InlineData(". 1236 - 9 = ", "-8.8764", "0.1236 - 9 = ")]
+        public void BasicSubtractWorks(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
         {
             TestTheCalculator(
-                inputs: "2 - 20 =",
-                expectedInputNumDisplay: "-18",
-                expectedFormulaOutput: "2 - 20 = ");
+                inputs: inputs,
+                expectedInputNumDisplay: expectedInputNumDisplay,
+                expectedFormulaOutput: expectedFormulaOutput);
         }
 
         [Fact]
