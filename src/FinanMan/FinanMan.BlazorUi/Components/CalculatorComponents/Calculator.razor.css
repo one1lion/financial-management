@@ -1,9 +1,19 @@
 ﻿#calcContainer {
   outline: 1px solid var(--border-inactive);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
 }
-#calcContainer:focus-within {
+#calcContainer[data-active], #calcContainer[data-active=true], #calcContainer:focus-within {
   outline: 1px solid var(--border-active);
+}
+#calcContainer .focus-button {
+  position: absolute;
+  opacity: 0;
+  height: 1px;
+  width: 1px;
+  outline: none;
+  padding: 0;
+  margin: 0;
 }
 #calcContainer ::deep:not(#numberOutput) {
   user-select: none;

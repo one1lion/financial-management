@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FinanMan.BlazorUi.SharedComponents.JsInterop;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 
 public partial class Calculator
 {
+    [Inject, AllowNull] private MyIsolatedModule MyIsolatedModule { get; set; }
+
     private readonly static int[] _numPadItems = new[]
     {
         7, 8, 9, 4, 5, 6, 1, 2, 3
@@ -24,12 +28,13 @@ public partial class Calculator
     private long _wholeNumberPart;
     private string _decimalPart = string.Empty;
     PreviousOperator _lastOperation;
+    private ElementReference _focusButtonRef;
 
     /// <summary>
     /// Used to identify whether the input has been changed since the last calculation.
     /// </summary>
     private bool _inputDirty = true;
-
+    private bool _active;
     private decimal? _currentCalculatedValue;
     private Operator? _prevOp;
     private Operator? _activeOp;
@@ -47,6 +52,7 @@ public partial class Calculator
         HandleClearAllClicked();
     }
 
+    #region Handlers
     private async Task HandleShowChanged(bool newShow)
     {
         if (Show == newShow) { return; }
@@ -221,6 +227,29 @@ public partial class Calculator
         }
     }
 
+    private async Task HandleContainerClicked()
+    {
+        if (_focusButtonRef.Context is not null)
+        {
+            await _focusButtonRef.FocusAsync();
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private Task HandleMouseDown()
+    {
+        _active = true;
+        return MyIsolatedModule.CapturePointerEvents(_focusButtonRef).AsTask();
+    }
+
+    private Task HandleMouseUp()
+    {
+        _active = false;
+        return MyIsolatedModule.ReleasePointerEvents(_focusButtonRef).AsTask();
+    }
+    #endregion Handlers
+
+    #region Helpers
     private enum Operator
     {
         [Display(Name = "+")]
@@ -240,6 +269,7 @@ public partial class Calculator
         public Operator Operator { get; set; }
         public decimal LastValue { get; set; }
     }
+    #endregion Helpers
 }
 
 /*

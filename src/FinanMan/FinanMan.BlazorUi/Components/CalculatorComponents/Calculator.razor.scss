@@ -1,8 +1,20 @@
 #calcContainer {
     outline: 1px solid var(--border-inactive);
     box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-    &:focus-within {
+    user-select: none;
+
+    &[data-active], &[data-active=true], &:focus-within {
         outline: 1px solid var(--border-active);
+    }
+
+    .focus-button {
+        position: absolute;
+        opacity: 0;
+        height: 1px;
+        width: 1px;
+        outline: none;
+        padding: 0;
+        margin: 0;
     }
 
     ::deep {
@@ -20,6 +32,7 @@
         .card {
             .card-header {
                 padding-bottom: 0;
+
                 .calc-output {
                     margin-top: 1rem;
                 }
@@ -43,6 +56,7 @@
                     flex-direction: column;
                     gap: .4rem;
                     padding-top: 0;
+
                     :not(#numberOutput) {
                         user-select: none;
                     }

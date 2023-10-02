@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using FinanMan.BlazorUi.SharedComponents.JsInterop;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;
@@ -11,8 +12,7 @@ namespace FinanMan.BlazorUi.SharedComponents.DraggableComponents;
 /// </summary>
 public partial class DraggableContainer
 {
-    [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
-
+    [Inject, AllowNull] private MyIsolatedModule MyIsolatedModule { get; set; }
     /// <summary>
     /// The content to be displayed in the draggable container.
     /// </summary>
@@ -36,13 +36,10 @@ public partial class DraggableContainer
     private double? _offsetTop;
 
     private ElementReference _draggableContainerElemRef;
-    private Task<IJSObjectReference>? _module;
-    private Task<IJSObjectReference> Module => _module ??= JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/FinanMan.BlazorUi.SharedComponents/js/DraggableComponents/DraggableContainer.js").AsTask();
 
     private async Task HandleMouseDown(MouseEventArgs e)
     {
-        var module = await Module;
-        await module.InvokeVoidAsync("capturePointerEvents", _draggableContainerElemRef);
+        await MyIsolatedModule.CapturePointerEvents(_draggableContainerElemRef);
         _dragging = true;
         _offsetLeft = e.OffsetX;
         _offsetTop = e.OffsetY;

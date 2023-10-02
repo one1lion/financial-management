@@ -26,10 +26,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="wwwroot\DraggableComponents\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="compilerconfig.json" />
 		<None Include="ProgressComponents\ProgressBar.razor" />
 	</ItemGroup>
@@ -41,6 +37,14 @@
 
 	<ItemGroup>
 		<TypeScriptCompile Include="JsInterop\**\*.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="wwwroot\DraggableComponents\**" />
+	  <Content Remove="wwwroot\DraggableComponents\**" />
+	  <EmbeddedResource Remove="wwwroot\DraggableComponents\**" />
+	  <None Remove="wwwroot\DraggableComponents\**" />
+	  <TypeScriptCompile Remove="wwwroot\DraggableComponents\**" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -14,7 +14,6 @@
   top: 0;
   left: 0;
   right: 0;
-  user-select: none;
   cursor: move !important;
   padding: 0.2rem 0.4rem;
 }
