@@ -35,6 +35,11 @@
 
                 .calc-output {
                     margin-top: 1rem;
+
+                    #formulaOutput {
+                        display: block;
+                        min-height: 1ch;
+                    }
                 }
 
                 .dismiss-button {

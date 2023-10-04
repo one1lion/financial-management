@@ -28,6 +28,10 @@
 #calcContainer ::deep .card .card-header .calc-output {
   margin-top: 1rem;
 }
+#calcContainer ::deep .card .card-header .calc-output #formulaOutput {
+  display: block;
+  min-height: 1ch;
+}
 #calcContainer ::deep .card .card-header .dismiss-button {
   position: absolute;
   right: 0.2rem;

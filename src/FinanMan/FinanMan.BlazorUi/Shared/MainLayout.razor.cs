@@ -44,7 +44,7 @@ public partial class MainLayout
 
         if (_moving) { return; }
         _moving = true;
-        await SuperDukasoftInterop.CollapseSelectLists(JsRuntime).AsTask();
+        await SuperDukaSoftInterop.CollapseSelectLists(JsRuntime).AsTask();
     }
 
     private void HandleFlyoutShowChanged(bool newShow)

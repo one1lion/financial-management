@@ -8,12 +8,15 @@
                 class="focus-button" 
                 aria-hidden="true"
                 @onmouseup=HandleMouseUp
+                @onkeydown="e => HandleKeyPress(e)"
                 @ref=_focusButtonRef></button>
         <Card>
             <CardHeader>
                 <button type="button" class="dismiss-button" @onclick=HandleDismissClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>&times;</button>
                 <div class="calc-output">
-                    <span class="formula-output" id="formulaOutput">@_formulaOutput</span>
+                    <span class="formula-output" id="formulaOutput">
+                        @((MarkupString)_formulaOutput) &nbsp;
+                    </span>
                 </div>
             </CardHeader>
             <CardBody>
@@ -38,7 +41,7 @@
                         }
                         <button type="button" id="btn-n" class="@(DisplayedInputNum < 0 ? "active" : null)" @onclick=HandleNegateClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>+/-</button>
                         <button type="button" id="btn-0" @onclick="_ => HandleNumberClicked(0)" @onclick:stopPropagation=true @onmousedown:stopPropagation=true>0</button>
-                        <button type="button" id="btn-decimal" class="@(_decimalActive ? "active" : null)" disabled="@(!string.IsNullOrWhiteSpace(_decimalPart))" @onclick=HandlePeriodClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>.</button>
+                        <button type="button" id="btn-decimal" class="@(_decimalActive ? "active" : null)" disabled="@(!string.IsNullOrWhiteSpace(_decimalPart))" @onclick=HandleDecimalClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>.</button>
                         <button type="button" id="btn-clear" @onclick=HandleClearClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>Clear</button>
                         <button type="button" id="btn-clearAll" @onclick=HandleClearAllClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>Clear All</button>
                     </div>

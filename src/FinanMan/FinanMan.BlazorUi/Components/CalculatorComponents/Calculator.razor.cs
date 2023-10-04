@@ -1,12 +1,17 @@
-﻿using FinanMan.BlazorUi.SharedComponents.JsInterop;
+﻿using FinanMan.BlazorUi.JsInterop;
+using FinanMan.BlazorUi.SharedComponents.JsInterop;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 
 public partial class Calculator
 {
+    private static readonly Regex _allowedKeys = AllowedKeysRegEx();
+
     [Inject, AllowNull] private MyIsolatedModule MyIsolatedModule { get; set; }
+    [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
 
     private readonly static int[] _numPadItems = new[]
     {
@@ -105,7 +110,7 @@ public partial class Calculator
         _wholeNumberPart *= -1;
     }
 
-    private void HandlePeriodClicked()
+    private void HandleDecimalClicked()
     {
         _decimalActive = !_decimalActive || !string.IsNullOrWhiteSpace(_decimalPart);
     }
@@ -247,6 +252,65 @@ public partial class Calculator
         _active = false;
         return MyIsolatedModule.ReleasePointerEvents(_focusButtonRef).AsTask();
     }
+
+    private void HandleKeyPress(KeyboardEventArgs e, bool submitOnEnter = true)
+    {
+        if (!_allowedKeys.IsMatch(e.Key.ToLower()))
+        {
+            Console.WriteLine($"Ignored key press: {e.Key}");
+            return;
+        }
+
+        Console.WriteLine($"Key pressed: {e.Key}");
+
+        switch (e.Key.ToLower())
+        {
+            case "escape":
+                HandleClearAllClicked();
+                break;
+            case "delete":
+                HandleClearClicked();
+                break;
+            case "backspace":
+                HandleRemove();
+                break;
+            case "enter":
+                if (submitOnEnter)
+                {
+                    HandleOperatorClicked(Operator.Submit);
+                }
+                break;
+            case "c":
+                if (!e.CtrlKey) { return; }
+                SuperDukaSoftInterop.CopyTextToClipboard(JsRuntime, DisplayedInputNum.ToString());
+                break;
+            case "+":
+                HandleOperatorClicked(Operator.Add);
+                break;
+            case "-":
+                HandleOperatorClicked(Operator.Subtract);
+                break;
+            case "*":
+                HandleOperatorClicked(Operator.Multiply);
+                break;
+            case "/":
+                HandleOperatorClicked(Operator.Divide);
+                break;
+            case "=":
+                HandleOperatorClicked(Operator.Submit);
+                break;
+            case ".":
+            case ",":
+                HandleDecimalClicked();
+                break;
+            default:
+                if (int.TryParse(e.Key, out var num))
+                {
+                    HandleNumberClicked(num);
+                }
+                break;
+        }
+    }
     #endregion Handlers
 
     #region Helpers
@@ -269,6 +333,9 @@ public partial class Calculator
         public Operator Operator { get; set; }
         public decimal LastValue { get; set; }
     }
+
+    [GeneratedRegex(@"^([0-9\.,\+\-\*\/\=]|escape|delete|enter|backspace|c)$")]
+    private static partial Regex AllowedKeysRegEx();
     #endregion Helpers
 }
 
