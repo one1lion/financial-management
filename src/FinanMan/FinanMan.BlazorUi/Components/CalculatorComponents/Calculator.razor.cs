@@ -11,7 +11,7 @@ public partial class Calculator : IDisposable
 {
     private static readonly Regex _allowedKeys = AllowedKeysRegEx();
 
-    [Inject, AllowNull] private MyIsolatedModule MyIsolatedModule { get; set; }
+    [Inject, AllowNull] private IMyIsolatedModule MyIsolatedModule { get; set; }
     [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
 
     [CascadingParameter] public DraggableContainer? DraggableContainer { get; set; }

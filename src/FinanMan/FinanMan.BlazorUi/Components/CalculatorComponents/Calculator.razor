@@ -15,7 +15,10 @@
                 <button type="button" class="dismiss-button" @onclick=HandleDismissClicked @onclick:stopPropagation=true @onmousedown:stopPropagation=true>&times;</button>
                 <div class="calc-output">
                     <span class="formula-output" id="formulaOutput">
-                        @((MarkupString)_formulaOutput) &nbsp;
+                        @((MarkupString)_formulaOutput)
+                    </span>
+                    <span class="formula-output">
+                        &nbsp;
                     </span>
                 </div>
             </CardHeader>

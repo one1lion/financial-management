@@ -6,7 +6,7 @@ namespace FinanMan.BlazorUi.SharedComponents.JsInterop;
 /// <summary>
 /// Represents an isolated module for capturing and releasing pointer events for a specified element.
 /// </summary>
-public class MyIsolatedModule
+public class MyIsolatedModule : IMyIsolatedModule
 {
     private ValueTask<IJSObjectReference>? _module;
     private readonly IJSRuntime _jsRuntime;
