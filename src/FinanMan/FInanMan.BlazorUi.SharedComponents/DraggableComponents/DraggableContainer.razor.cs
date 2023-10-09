@@ -22,6 +22,15 @@ public partial class DraggableContainer
     /// </summary>
     [Parameter] public string? AdditionalCssClasses { get; set; }
 
+    /// <summary>
+    /// The action to be performed when the container is dragged.
+    /// </summary>
+    public event Func<Task>? OnDragStart;
+    /// <summary>
+    /// The action to be performed when the container is dropped.
+    /// </summary>
+    public event Func<Task>? OnDragEnd;
+
     private readonly string _id = Guid.NewGuid().ToString();
 
     private string PositionStyles => _left.HasValue ? $"position: absolute;left: {_left}px; top: {_top}px; transform: unset" : string.Empty;
@@ -43,11 +52,13 @@ public partial class DraggableContainer
         _dragging = true;
         _offsetLeft = e.OffsetX;
         _offsetTop = e.OffsetY;
+        OnDragStart?.Invoke();
     }
 
     private Task HandleMouseUp(MouseEventArgs e)
     {
         _dragging = false;
+        OnDragEnd?.Invoke();
         return Task.CompletedTask;
     }
 
@@ -62,6 +73,7 @@ public partial class DraggableContainer
     private async Task HandleDragEnd()
     {
         _dragging = false;
+        OnDragEnd?.Invoke();
         await InvokeAsync(StateHasChanged);
     }
 }

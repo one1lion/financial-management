@@ -1,4 +1,5 @@
 ﻿using FinanMan.BlazorUi.JsInterop;
+using FinanMan.BlazorUi.SharedComponents.DraggableComponents;
 using FinanMan.BlazorUi.SharedComponents.JsInterop;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -6,17 +7,17 @@ using System.Text.RegularExpressions;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
 
-public partial class Calculator
+public partial class Calculator : IDisposable
 {
     private static readonly Regex _allowedKeys = AllowedKeysRegEx();
 
     [Inject, AllowNull] private MyIsolatedModule MyIsolatedModule { get; set; }
     [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
 
-    private readonly static int[] _numPadItems = new[]
-    {
-        7, 8, 9, 4, 5, 6, 1, 2, 3
-    };
+    [CascadingParameter] public DraggableContainer? DraggableContainer { get; set; }
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    [Parameter] public EventCallback OnDismissed { get; set; }
 
     private decimal DisplayedInputNum
     {
@@ -48,13 +49,39 @@ public partial class Calculator
 
     private bool _decimalActive = false;
 
-    [Parameter] public bool Show { get; set; }
-    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
-    [Parameter] public EventCallback OnDismissed { get; set; }
-
     protected override void OnInitialized()
     {
         HandleClearAllClicked();
+        if (DraggableContainer is not null)
+        {
+            DraggableContainer.OnDragEnd += HandleContainerClicked;
+        }
+    }
+
+    private bool _prevShow;
+    private bool _resetFocus;
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (Show != _prevShow)
+        {
+            _prevShow = Show;
+
+            if (Show)
+            {
+                _resetFocus = true;
+            }
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_resetFocus && _focusButtonRef.Context is not null)
+        {
+            _resetFocus = false;
+            await _focusButtonRef.FocusAsync();
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     #region Handlers
@@ -253,17 +280,15 @@ public partial class Calculator
         return MyIsolatedModule.ReleasePointerEvents(_focusButtonRef).AsTask();
     }
 
-    private void HandleKeyPress(KeyboardEventArgs e, bool submitOnEnter = true)
+    private void HandleKeyPress(KeyboardEventArgs e)
     {
-        if (!_allowedKeys.IsMatch(e.Key.ToLower()))
+        var key = e.Key.ToLower();
+        if (!_allowedKeys.IsMatch(key))
         {
-            Console.WriteLine($"Ignored key press: {e.Key}");
             return;
         }
 
-        Console.WriteLine($"Key pressed: {e.Key}");
-
-        switch (e.Key.ToLower())
+        switch (key)
         {
             case "escape":
                 HandleClearAllClicked();
@@ -275,14 +300,14 @@ public partial class Calculator
                 HandleRemove();
                 break;
             case "enter":
-                if (submitOnEnter)
-                {
-                    HandleOperatorClicked(Operator.Submit);
-                }
+                HandleOperatorClicked(Operator.Submit);
                 break;
             case "c":
                 if (!e.CtrlKey) { return; }
                 SuperDukaSoftInterop.CopyTextToClipboard(JsRuntime, DisplayedInputNum.ToString());
+                break;
+            case "n":
+                HandleNegateClicked();
                 break;
             case "+":
                 HandleOperatorClicked(Operator.Add);
@@ -304,6 +329,25 @@ public partial class Calculator
                 HandleDecimalClicked();
                 break;
             default:
+                if (key.StartsWith("arrow"))
+                {
+                    switch (key.Replace("arrow", string.Empty))
+                    {
+                        case "up":
+                            Console.WriteLine("Moving on up");
+                            break;
+                        case "down":
+                            Console.WriteLine("Moving on down");
+                            break;
+                        case "left":
+                            Console.WriteLine("Moving on left");
+                            break;
+                        case "right":
+                            Console.WriteLine("Moving on right");
+                            break;
+                    }
+                    break;
+                }
                 if (int.TryParse(e.Key, out var num))
                 {
                     HandleNumberClicked(num);
@@ -334,9 +378,17 @@ public partial class Calculator
         public decimal LastValue { get; set; }
     }
 
-    [GeneratedRegex(@"^([0-9\.,\+\-\*\/\=]|escape|delete|enter|backspace|c)$")]
+    [GeneratedRegex(@"^([0-9\.,\+\-\*\/\=]|escape|delete|enter|backspace|c|n|arrow.+)$")]
     private static partial Regex AllowedKeysRegEx();
     #endregion Helpers
+
+    public void Dispose()
+    {
+        if (DraggableContainer is not null)
+        {
+            DraggableContainer.OnDragEnd -= HandleContainerClicked;
+        }
+    }
 }
 
 /*
