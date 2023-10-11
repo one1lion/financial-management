@@ -33,12 +33,16 @@ public class CalculatorTests : TestContext
             expectedInputNumDisplay: "12");
     }
 
-    [Fact]
-    public void DecimalNumberEntryWorks()
+    [Theory]
+    [InlineData("1 . 0 5", "1.05", "")]
+    [InlineData(". 1236", "0.1236", "")]
+    [InlineData("1 + . 1236", "0.1236", "1 +")]
+    public void DecimalNumberEntryWorks(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
     {
         TestTheCalculator(
-            inputs: "1 . 0 5",
-            expectedInputNumDisplay: "1.05");
+            inputs: inputs,
+            expectedInputNumDisplay: expectedInputNumDisplay,
+            expectedFormulaOutput: expectedFormulaOutput);
     }
 
     [Fact]

@@ -138,6 +138,13 @@ public partial class Calculator : IDisposable
 
     private void HandleDecimalClicked()
     {
+        if (!_inputDirty)
+        {
+            HandleClearClicked();
+        }
+
+        _inputDirty = true;
+
         _decimalActive = !_decimalActive || !string.IsNullOrWhiteSpace(_decimalPart);
     }
 
@@ -208,10 +215,6 @@ public partial class Calculator : IDisposable
                     _currentCalculatedValue += valToUse;
                     break;
                 case Operator.Subtract:
-                    if(valToUse.ToString().Contains('.') || (_currentCalculatedValue?.ToString().Contains('.') ?? false))
-                    {
-                        Console.WriteLine($"Current Value: {_currentCalculatedValue} | Value to Subtract: {valToUse} | Difference: {_currentCalculatedValue - valToUse}");
-                    }
                     _currentCalculatedValue -= valToUse;
                     break;
                 case Operator.Multiply:
