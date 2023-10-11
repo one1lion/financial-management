@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\FInanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
 		<ProjectReference Include="..\FinanMan.BlazorUi\FinanMan.BlazorUi.csproj" />
 		<ProjectReference Include="..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
 	</ItemGroup>

@@ -179,6 +179,22 @@ public class CalculatorTests : TestContext
             expectedFormulaOutput: expectedFormulaOutput);
     }
 
+    // Test to make sure that after submitting a calculation, the next number entered will replace the previous result
+    [Theory]
+    [InlineData("5 + 2 = 3", "3", "")]
+    [InlineData("5 + 2 = 3 + ", "0", "3 +")]
+    [InlineData("5 + 2 = 3 + 4 = ", "7", "3 + 4 = ")]
+    [InlineData("5 + 2 = 3 + 4 = 5", "5", "")]
+    [InlineData("5 + 2 = 3 + 4 = 5 + ", "0", "5 +")]
+    [InlineData("5 + 2 = .", "0.", "")]
+    public void InputClearsAfterSubmitAndInputingNewNumber(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
+    {
+        TestTheCalculator(
+            inputs: inputs,
+            expectedInputNumDisplay: expectedInputNumDisplay,
+            expectedFormulaOutput: expectedFormulaOutput);
+    }
+
     // TODO: Test for Clear button only clearing current input and not total
 
     // TODO: Test for pushing Clear all button

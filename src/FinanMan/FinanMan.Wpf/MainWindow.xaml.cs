@@ -1,6 +1,8 @@
 ﻿using FinanMan.Shared.StateInterfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 

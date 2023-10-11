@@ -66,10 +66,7 @@ public partial class Calculator : IDisposable
         {
             _prevShow = Show;
 
-            if (Show)
-            {
-                _resetFocus = true;
-            }
+            if (Show) { _resetFocus = true; }
         }
     }
 
@@ -113,10 +110,7 @@ public partial class Calculator : IDisposable
 
     private void HandleNumberClicked(int num)
     {
-        if (!_inputDirty)
-        {
-            HandleClearClicked();
-        }
+        ClearIfDirty();
 
         _inputDirty = true;
 
@@ -138,10 +132,7 @@ public partial class Calculator : IDisposable
 
     private void HandleDecimalClicked()
     {
-        if (!_inputDirty)
-        {
-            HandleClearClicked();
-        }
+        ClearIfDirty();
 
         _inputDirty = true;
 
@@ -251,6 +242,10 @@ public partial class Calculator : IDisposable
             _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
             HandleClearClicked();
             DisplayedInputNum = 0m;
+        }
+        else
+        {
+            _inputDirty = false;
         }
 
         _prevOp = op;
@@ -386,6 +381,22 @@ public partial class Calculator : IDisposable
 
     [GeneratedRegex(@"^([0-9\.,\+\-\*\/\=]|escape|delete|enter|backspace|c|n|arrow.+)$")]
     private static partial Regex AllowedKeysRegEx();
+
+    private bool ClearIfDirty()
+    {
+        Console.WriteLine($"ClearIfDirty: {_inputDirty} | {_prevOp}");
+        switch (_inputDirty, _prevOp)
+        { 
+            case (false, Operator.Submit):
+                HandleClearAllClicked();
+                break;
+            case (false, _):
+                HandleClearClicked();
+                break;
+        }
+
+        return _inputDirty;
+    }
     #endregion Helpers
 
     public void Dispose()

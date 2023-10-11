@@ -1,4 +1,5 @@
 using FinanMan.BlazorUi.Extensions;
+using FinanMan.BlazorUi.SharedComponents.Extensions;
 using FinanMan.Shared.Extensions;
 using FinanMan.SharedServer.Extensions;
 
@@ -14,7 +15,8 @@ builder.Services.SetupDbContext(config);
 builder.Services.AddFinanManLocalization()
     .AddStateManagement()
     .AddServerServices()
-    .AddFluentValidation();
+    .AddFluentValidation()
+    .AddJavaScriptModules();
 
 var app = builder.Build();
 
