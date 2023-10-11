@@ -24,8 +24,7 @@ public partial class Calculator : IDisposable
         get => decimal.Parse($"{_wholeNumberPart}{(!string.IsNullOrWhiteSpace(_decimalPart) ? $".{_decimalPart}" : string.Empty)}");
         set
         {
-            _wholeNumberPart = (long)Math.Floor(value);
-
+            _wholeNumberPart = (long)Math.Round(value, MidpointRounding.ToZero);
             var numParts = value.ToString().Split('.');
             _decimalPart = numParts.Length > 1 ? numParts.Last().TrimEnd('0') : string.Empty;
         }
@@ -168,7 +167,7 @@ public partial class Calculator : IDisposable
             {
                 case Operator.Submit:
                     // When the displayed formula ends with an operator other than submit,
-                    // we want to use the last operator
+                    // we want to use the current value in the value display
                     if (_formulaOutput.Trim().EndsWith(Operator.Submit.GetDisplayText()))
                     {
                         DisplayedInputNum = _currentCalculatedValue ?? 0;
@@ -209,6 +208,10 @@ public partial class Calculator : IDisposable
                     _currentCalculatedValue += valToUse;
                     break;
                 case Operator.Subtract:
+                    if(valToUse.ToString().Contains('.') || (_currentCalculatedValue?.ToString().Contains('.') ?? false))
+                    {
+                        Console.WriteLine($"Current Value: {_currentCalculatedValue} | Value to Subtract: {valToUse} | Difference: {_currentCalculatedValue - valToUse}");
+                    }
                     _currentCalculatedValue -= valToUse;
                     break;
                 case Operator.Multiply:

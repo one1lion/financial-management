@@ -162,6 +162,19 @@ public class CalculatorTests : TestContext
             expectedFormulaOutput: "");
     }
 
+    [Theory]
+    [InlineData("1 + ", "0", "1 +")]
+    [InlineData("1 - ", "0", "1 -")]
+    [InlineData("1 * ", "0", "1 *")]
+    [InlineData("1 / ", "0", "1 ÷")]
+    public void DisplayedInputZeroesOutOnNonSubmitOperatorPressed(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
+    {
+        TestTheCalculator(
+            inputs: inputs,
+            expectedInputNumDisplay: expectedInputNumDisplay,
+            expectedFormulaOutput: expectedFormulaOutput);
+    }
+
     // TODO: Test for Clear button only clearing current input and not total
 
     // TODO: Test for pushing Clear all button
@@ -187,7 +200,7 @@ public class CalculatorTests : TestContext
         // Arrange
         var renderedComponent = RenderComponent<Calculator>(parameters => parameters.Add(p => p.Show, true));
         var calculator = renderedComponent.Instance;
-        
+
         // Act
         renderedComponent.Enter(inputs);
 

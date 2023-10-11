@@ -12,7 +12,7 @@ namespace FinanMan.BlazorUi.SharedComponents.DraggableComponents;
 /// </summary>
 public partial class DraggableContainer
 {
-    [Inject, AllowNull] private MyIsolatedModule MyIsolatedModule { get; set; }
+    [Inject, AllowNull] private IMyIsolatedModule MyIsolatedModule { get; set; }
     /// <summary>
     /// The content to be displayed in the draggable container.
     /// </summary>
