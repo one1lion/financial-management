@@ -26,6 +26,7 @@
   padding-bottom: 0;
 }
 #calcContainer ::deep .card .card-header .calc-output {
+  display: flex;
   margin-top: 1rem;
 }
 #calcContainer ::deep .card .card-header .calc-output #formulaOutput {
