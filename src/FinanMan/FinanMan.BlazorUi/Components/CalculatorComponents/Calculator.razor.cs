@@ -161,7 +161,6 @@ public partial class Calculator : IDisposable
     {
         if (op == Operator.Submit && !_prevOp.HasValue)
         {
-            Console.WriteLine("No previous operator, setting current calculated value to displayed input");
             _currentCalculatedValue = DisplayedInputNum;
             _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
         }
@@ -344,17 +343,26 @@ public partial class Calculator : IDisposable
                 {
                     switch (key.Replace("arrow", string.Empty))
                     {
+                        // TODO: Implement Arrow Keys moving around the calculator buttons
                         case "up":
+#if DEBUG                            
                             Console.WriteLine("Moving on up");
+#endif
                             break;
                         case "down":
+#if DEBUG                            
                             Console.WriteLine("Moving on down");
+#endif
                             break;
                         case "left":
+#if DEBUG                            
                             Console.WriteLine("Moving on left");
+#endif
                             break;
                         case "right":
+#if DEBUG                            
                             Console.WriteLine("Moving on right");
+#endif
                             break;
                     }
                     break;
@@ -394,7 +402,6 @@ public partial class Calculator : IDisposable
 
     private bool ClearIfDirty()
     {
-        Console.WriteLine($"ClearIfDirty: {_inputDirty} | {_prevOp}");
         switch (_inputDirty, _prevOp)
         {
             case (false, Operator.Submit):

@@ -17,12 +17,4 @@ public static class AccountJsInterop
     {
         return jsRuntime.InvokeVoidAsync("accountJsFuncs.someFunction2", withParams);
     }
-
-    [JSInvokable]
-    public static string SomeFunction3(string withParams)
-    {
-        var val = $"SomeFunction3 was called with {withParams}";
-        Console.WriteLine($"From C#: {val}");
-        return val;
-    }
 }
