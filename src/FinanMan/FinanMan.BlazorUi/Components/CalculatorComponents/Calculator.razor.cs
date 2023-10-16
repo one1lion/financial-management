@@ -157,7 +157,7 @@ public partial class Calculator : IDisposable
         _prevOp = null;
     }
 
-    private void HandleOperatorClicked(Operator op)
+    private async void HandleOperatorClicked(Operator op)
     {
         if (!_inputDirty)
         {
@@ -177,6 +177,10 @@ public partial class Calculator : IDisposable
                     }
                     break;
                 default:
+                    if(_prevOp == Operator.Submit)
+                    {
+                        HandleClearClicked();
+                    }
                     _activeOp = op;
                     _prevOp = op;
                     _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";

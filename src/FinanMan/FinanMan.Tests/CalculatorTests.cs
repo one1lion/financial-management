@@ -147,7 +147,7 @@ public class CalculatorTests : TestContext
     [InlineData("1 + 2 = * + 4 =", "7", "3 + 4 = ")]
     [InlineData("1 + 2 * + 4 =", "7", "3 + 4 = ")]
     [InlineData("1 + 2 * + 4 = + - ", "0", "7 -")]
-    [InlineData("1 + 2 * + 4 = + - =", "0", "7 -")] // This ends up performing the operation 7 - 7 =
+    [InlineData("1 + 2 * + 4 = + - =", "0", "7 -")]
     public void PressingConsecutiveOperatorsWork(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
     {
         TestTheCalculator(
