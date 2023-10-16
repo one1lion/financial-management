@@ -87,3 +87,12 @@ h4 {
 i.icon {
     font-style: normal;
 }
+
+/* Style Draggable Component Here */
+.draggable-container {
+    z-index: calc(var(--modal-z-index) + 1);
+}
+
+.hide-me {
+    display: none;
+}

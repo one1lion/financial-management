@@ -1,4 +1,5 @@
 ﻿using FinanMan.BlazorUi.Extensions;
+using FinanMan.BlazorUi.SharedComponents.Extensions;
 using FinanMan.BlazorUi.State;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.StateInterfaces;
@@ -35,11 +36,11 @@ public partial class App : Application
             .AddScoped<ITransactionsState, TransactionsState>()
             .AddSingleton<IUiState, UiState>()
             .AddFinanManLocalization()
-            .AddClientServices();
+            .AddClientServices()
+            .AddJavaScriptModules();
 
         ServiceProvider = services.BuildServiceProvider();
 
         Resources.Add("services", ServiceProvider);
     }
-
 }

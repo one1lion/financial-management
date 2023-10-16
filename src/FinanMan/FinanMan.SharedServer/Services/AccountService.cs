@@ -58,7 +58,6 @@ public class AccountService : IAccountService
                 .ThenInclude(x => x.Transfer)
             .Include(x => x.Transfers)
                 .ThenInclude(x => x.Transaction);
-
         var retModel = new List<AccountSummaryViewModel>();
 
         foreach (var account in accounts)

@@ -11,6 +11,8 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
     private RenderFragment? _flyoutContent;
     private bool _flyoutVisible;
     private string _activeLanguage = "en-US";
+    private bool _messageDialogVisible;
+    private MessageDialogParameters _messageDialogParameters;
     #endregion Backing Fields
 
     public RenderFragment? FlyoutContent { get => _flyoutContent; private set => _flyoutContent = value; }
@@ -24,6 +26,8 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
     public int SomeNum { get; set; }
 
     public bool InitialUiLoaded { get; private set; }
+    public bool MessageDialogVisible { get => _messageDialogVisible; set => SetField(ref _messageDialogVisible, value); }
+    public MessageDialogParameters MessageDialogParameters { get => _messageDialogParameters; set => SetField(ref _messageDialogParameters, value); }
 
     public void SetLanguage(string language)
     {
@@ -53,10 +57,11 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
         CollapseSelectLists?.Invoke();
     }
 
-    public void ShowFlyout(RenderFragment? content)
+    public void DisplayFlyout(RenderFragment? content)
     {
         FlyoutContent = content;
-        if (content is null) { 
+        if (content is null)
+        {
             CollapseFlyout();
             return;
         }
@@ -73,5 +78,23 @@ public class UiState : BaseNotifyPropertyChanges, IUiState
         if (InitialUiLoaded) { return; }
         InitialUiLoaded = true;
         InitialUiLoadComplete?.Invoke();
+    }
+
+    public void ShowMessageDialog(RenderFragment message, RenderFragment? title = null, RenderFragment? okButtonCaption = null)
+    {
+        okButtonCaption ??= builder =>
+        {
+            var curElem = 0;
+            builder.OpenElement(curElem++, "text");
+            builder.AddContent(curElem++, "OK");
+            builder.CloseElement();
+        };
+        MessageDialogParameters = new MessageDialogParameters
+        {
+            Message = message,
+            Title = title,
+            OkButtonText = okButtonCaption
+        };
+        MessageDialogVisible = true;
     }
 }

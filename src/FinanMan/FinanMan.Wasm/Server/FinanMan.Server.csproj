@@ -13,7 +13,9 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
-		<ProjectReference Include="..\Client\FinanMan.Client.csproj" />
+		<ProjectReference Include="..\Client\FinanMan.Client.csproj">
+		  <Aliases></Aliases>
+		</ProjectReference>
 	</ItemGroup>
 
 </Project>

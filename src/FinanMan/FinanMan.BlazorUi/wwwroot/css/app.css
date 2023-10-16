@@ -58,6 +58,11 @@
   --danger-color: #DC3545;
   --warning-color: #FFC107;
   --muted-color: #777;
+  /* Draggable Container */
+  --draggable-container-background-color: var(--primary-background-color);
+  /* Borders for Active Items */
+  --border-active: #fff;
+  --border-inactive: #1d2c33;
 }
 
 button, .btn {
@@ -219,4 +224,13 @@ h4 {
 
 i.icon {
   font-style: normal;
+}
+
+/* Style Draggable Component Here */
+.draggable-container {
+  z-index: calc(var(--modal-z-index) + 1);
+}
+
+.hide-me {
+  display: none;
 }

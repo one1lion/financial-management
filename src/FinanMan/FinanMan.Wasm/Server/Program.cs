@@ -31,7 +31,7 @@ app.UseCors(
     options =>
     {
 #if DEBUG
-        options.WithOrigins("https://localhost:7176, https://0.0.0.0");
+        options.WithOrigins("https://localhost:7176, https://0.0.0.0, http://0.0.0.0");
 #endif
         options.AllowAnyMethod()
             .AllowAnyHeader()

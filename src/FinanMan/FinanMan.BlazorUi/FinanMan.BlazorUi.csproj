@@ -1,44 +1,61 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <TypeScriptTarget>ES6</TypeScriptTarget>
+	</PropertyGroup>
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <TypeScriptTarget>ES6</TypeScriptTarget>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="compilerconfig.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
-    <None Include="Components\ListManagementComponents\AddAccountForm.razor" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="compilerconfig.json" />
+		<None Include="Components\ListManagementComponents\AddAccountForm.razor" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.2.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\FinanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
+		<ProjectReference Include="..\FinanMan.Shared\FinanMan.Shared.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FinanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
-    <ProjectReference Include="..\FinanMan.Shared\FinanMan.Shared.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<UpToDateCheckInput Remove="components\transactionhistorycomponents\ConfirmDeleteTransactionModal.razor" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-  </ItemGroup>
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="components\transactionhistorycomponents\ConfirmDeleteTransactionModal.razor" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <UpToDateCheckInput Remove="components\transactionhistorycomponents\ConfirmDeleteTransactionModal.razor" />
-  </ItemGroup>
+	<ItemGroup>
+	  <Content Update="wwwroot\js\super-dukasoft-interop.js">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="components\transactionhistorycomponents\ConfirmDeleteTransactionModal.razor" />
-  </ItemGroup>
+	<ItemGroup>
+	  <TypeScriptCompile Update="wwwroot\js\super-dukasoft-interop.ts">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </TypeScriptCompile>
+	</ItemGroup>
 
 </Project>

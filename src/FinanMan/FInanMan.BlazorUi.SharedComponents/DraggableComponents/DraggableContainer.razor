@@ -1,0 +1,24 @@
+<div class="@($"drag-area-wrapper{(applyDragging ? " dragging" : null)}{(!string.IsNullOrWhiteSpace(AdditionalCssClasses) ? $" {AdditionalCssClasses}" : null)}")"
+     style="visibility: visible;@(applyDragging ? "position: fixed; inset: 0;transform: unset;" : PositionStyles)"
+     @ondragover=HandleDragOver
+     @onmouseup=HandleMouseUp
+     @ref=_draggableContainerElemRef>
+    <div id="draggableContainer-@_id"
+         class="draggable-container"
+         style="visibility:visible;@(applyDragging ? PositionStyles : "position: block;")">
+        <div class="draggable-area"
+             draggable="true"
+             @onmousedown=HandleMouseDown
+             @onmouseup=HandleMouseUp
+             @ondragend=HandleDragEnd
+             ondragstart="dukaSoftFuncs.handleDraggableContainerDragStart(event)">
+            <hr />
+            <hr />
+        </div>
+        <div class="draggable-content">
+            <CascadingValue Value=this>
+                @ChildContent
+            </CascadingValue>
+        </div>
+    </div>
+</div>

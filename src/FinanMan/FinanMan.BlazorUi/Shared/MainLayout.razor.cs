@@ -1,5 +1,4 @@
 using FinanMan.BlazorUi.JsInterop;
-using System.Diagnostics;
 using Timr = System.Timers.Timer;
 
 namespace FinanMan.BlazorUi.Shared;
@@ -23,7 +22,7 @@ public partial class MainLayout
         UiState.CollapseSelectLists += HandleCollapseSelectLists;
         var hold = UiState.SomeNum;
     }
-    
+
     private void HandleDebounceTimeout(object? sender, System.Timers.ElapsedEventArgs e)
     {
         _collapseDebounce.Stop();
@@ -32,7 +31,7 @@ public partial class MainLayout
 
     private void HandleUiPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(UiState.FlyoutVisible))
+        if (e.PropertyName == nameof(UiState.FlyoutVisible) || e.PropertyName == nameof(UiState.MessageDialogVisible))
         {
             StateHasChanged();
         }
@@ -45,14 +44,14 @@ public partial class MainLayout
 
         if (_moving) { return; }
         _moving = true;
-        await SuperDukasoftInterop.CollapseSelectLists(JsRuntime).AsTask();
+        await SuperDukaSoftInterop.CollapseSelectLists(JsRuntime).AsTask();
     }
 
     private void HandleFlyoutShowChanged(bool newShow)
     {
         if (newShow)
         {
-            UiState.ShowFlyout(UiState.FlyoutContent);
+            UiState.DisplayFlyout(UiState.FlyoutContent);
         }
         else
         {

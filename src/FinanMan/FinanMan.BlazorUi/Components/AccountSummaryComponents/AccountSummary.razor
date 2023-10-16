@@ -1,7 +1,7 @@
 ﻿<aside id="accountSummary" class="account-summary-wrapper">
     <Card AdditionalCssClasses="account-summary-card">
         <CardHeader>
-            @SharedLocalizerService.AccountSummary
+            @SharedLocalizerService.AccountSummary <button @onclick=RefreshAccountSummaryAsync>Refresh</button>
         </CardHeader>
         <CardBody>
             @if (_accountSummariesResp?.WasError ?? false)
