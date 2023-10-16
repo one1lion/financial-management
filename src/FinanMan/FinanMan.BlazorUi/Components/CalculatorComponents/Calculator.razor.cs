@@ -72,7 +72,7 @@ public partial class Calculator : IDisposable
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(_resetFocus && _focusButtonRef.Context is not null)
+        if (_resetFocus && _focusButtonRef.Context is not null)
         {
             _resetFocus = false;
             await _focusButtonRef.FocusAsync();
@@ -157,9 +157,15 @@ public partial class Calculator : IDisposable
         _prevOp = null;
     }
 
-    private async void HandleOperatorClicked(Operator op)
+    private void HandleOperatorClicked(Operator op)
     {
-        if (!_inputDirty)
+        if (op == Operator.Submit && !_prevOp.HasValue)
+        {
+            Console.WriteLine("No previous operator, setting current calculated value to displayed input");
+            _currentCalculatedValue = DisplayedInputNum;
+            _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
+        }
+        else if (!_inputDirty)
         {
             switch (op)
             {
@@ -177,7 +183,7 @@ public partial class Calculator : IDisposable
                     }
                     break;
                 default:
-                    if(_prevOp == Operator.Submit)
+                    if (_prevOp == Operator.Submit)
                     {
                         HandleClearClicked();
                     }
@@ -390,7 +396,7 @@ public partial class Calculator : IDisposable
     {
         Console.WriteLine($"ClearIfDirty: {_inputDirty} | {_prevOp}");
         switch (_inputDirty, _prevOp)
-        { 
+        {
             case (false, Operator.Submit):
                 HandleClearAllClicked();
                 break;

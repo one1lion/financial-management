@@ -130,8 +130,8 @@ public class CalculatorTests : TestContext
 
     // Test for pushing submit button multiple times in a row after performing a calculation repeats the last operation using the new calculated value and previous input value
     [Theory]
-    [InlineData("5 =", "5", "")]
-    [InlineData("5 = = = = = =", "5", "")]
+    [InlineData("5 =", "5", "5 =")]
+    [InlineData("5 = = = = = =", "5", "5 =")]
     [InlineData("5 + 2 = = = =", "13", "11 + 2 = ")]
     public void PressingSubmitButtonMultipleTimesWork(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
     {
@@ -163,7 +163,7 @@ public class CalculatorTests : TestContext
         TestTheCalculator(
             inputs: "= ",
             expectedInputNumDisplay: "0",
-            expectedFormulaOutput: "");
+            expectedFormulaOutput: "0 =");
     }
 
     [Theory]
@@ -188,6 +188,30 @@ public class CalculatorTests : TestContext
     [InlineData("5 + 2 = 3 + 4 = 5 + ", "0", "5 +")]
     [InlineData("5 + 2 = .", "0.", "")]
     public void InputClearsAfterSubmitAndInputingNewNumber(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
+    {
+        TestTheCalculator(
+            inputs: inputs,
+            expectedInputNumDisplay: expectedInputNumDisplay,
+            expectedFormulaOutput: expectedFormulaOutput);
+    }
+
+    // Test for pressing submit as the first operator outputs the input number =
+    [Theory]
+    [InlineData("= ", "0", "0 =")]
+    [InlineData("5 = ", "5", "5 =")]
+    public void SubmitAsFirstOperatorOutputsInputNumberEquals(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
+    {
+        TestTheCalculator(
+            inputs: inputs,
+            expectedInputNumDisplay: expectedInputNumDisplay,
+            expectedFormulaOutput: expectedFormulaOutput);
+    }
+
+    // Test for pressing submit as the first operator, then pressing another non-submit operator
+    [Theory]
+    [InlineData("= + ", "0", "0 +")]
+    [InlineData("5 = - ", "0", "5 -")]
+    public void SubmitAsFirstOperatorThenAnotherOperator(string inputs, string? expectedInputNumDisplay = null, string? expectedFormulaOutput = null)
     {
         TestTheCalculator(
             inputs: inputs,
