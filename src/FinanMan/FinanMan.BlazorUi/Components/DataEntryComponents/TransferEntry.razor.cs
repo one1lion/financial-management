@@ -14,7 +14,11 @@ public partial class TransferEntry
 
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
-    private InputDate<DateTime?>? _transDateInput;
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable CS0649 // Field 'TransferEntry._pmtDateInputRef' is never assigned to, and will always have its default value null
+    private InputDate<DateTime?>? _transDateInputRef;
+#pragma warning restore CS0649 // Field 'TransferEntry._pmtDateInputRef' is never assigned to, and will always have its default value null
+#pragma warning restore IDE0044 // Add readonly modifier
 
     private TransferEntryViewModel _editTransfer = new();
     private List<AccountLookupViewModel>? _accounts;
@@ -36,6 +40,8 @@ public partial class TransferEntry
 
     private async Task HandleTransferSubmitted()
     {
+        if (_submitting) { return; }
+
         _currentResponse = default;
         _submitting = true;
         _editTransfer.UpdateAccountName(_accounts ?? new());
@@ -43,9 +49,9 @@ public partial class TransferEntry
         if (!_currentResponse.WasError)
         {
             _editTransfer = new();
-            if (_transDateInput is not null && _transDateInput.Element.HasValue)
+            if (_transDateInputRef is not null && _transDateInputRef.Element.HasValue)
             {
-                await _transDateInput.Element.Value.FocusAsync();
+                await _transDateInputRef.Element.Value.FocusAsync();
             }
             await TransactionsState.RefreshTransactionHistoryAsync();
         }
