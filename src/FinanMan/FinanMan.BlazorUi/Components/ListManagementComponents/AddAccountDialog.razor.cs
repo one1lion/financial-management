@@ -1,6 +1,4 @@
-﻿using FinanMan.BlazorUi.State;
-using FinanMan.Database.Models.Tables;
-using FinanMan.Shared.DataEntryModels;
+﻿using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
 using System.Diagnostics.CodeAnalysis;
@@ -11,21 +9,7 @@ public partial class AddAccountDialog
     [Inject, AllowNull] private ILookupListState LookupListState { get; set; }
     [Inject, AllowNull] private ITransactionsState TransactionsState { get; set; }
 
-    [Parameter]
-    public bool Show
-    {
-        get => _prevShow;
-        set
-        {
-            if (value == _prevShow) { return; }
-
-            _prevShow = value;
-            if (ShowChanged.HasDelegate)
-            {
-                ShowChanged.InvokeAsync(value);
-            }
-        }
-    }
+    [Parameter] public bool Show { get; set; }
     [Parameter] public EventCallback<bool> ShowChanged { get; set; }
 
     private bool _prevShow;
@@ -34,9 +18,37 @@ public partial class AddAccountDialog
     private AddAccountForm? _accountFormRef;
     private ResponseModel<AccountEntryViewModel>? _responseModel;
 
+    protected override void OnInitialized()
+    {
+        _prevShow = Show;
+        Console.WriteLine($"Prev Show set to: {_prevShow}");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        if (Show != _prevShow)
+        {
+            await HandleShowChanged();
+        }
+    }
+
+    private Task HandleShowChanged()
+    {
+        if (Show == _prevShow) { return Task.CompletedTask; }
+
+        _prevShow = Show;
+        if (ShowChanged.HasDelegate)
+        {
+            return ShowChanged.InvokeAsync(Show);
+        }
+
+        return Task.CompletedTask;
+    }
+
     private async Task HandleConfirmClicked()
     {
-        if(_accountFormRef is null || _accountCreated) { return; }
+        if (_accountFormRef is null || _accountCreated) { return; }
 
         _submitting = true;
         var success = await _accountFormRef.SubmitFormAsync();

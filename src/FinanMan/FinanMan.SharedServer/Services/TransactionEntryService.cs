@@ -244,6 +244,7 @@ public class TransactionEntryService<TDataEntryViewModel> : ITransactionEntrySer
 public static class FinanManContextExtensions
 {
     public static IQueryable<Transaction> TransactionQuery(this FinanManContext context, bool includeLookups = true)
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         => includeLookups ?
         context.Transactions
             .Include(x => x.Account)
@@ -266,4 +267,5 @@ public static class FinanManContextExtensions
              .ThenInclude(x => x.Payee)
          .Include(x => x.Transfer)
              .ThenInclude(x => x.TargetAccount);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 }

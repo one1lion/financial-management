@@ -12,8 +12,6 @@ public class AccountService : IAccountService
 {
     private readonly HttpClient _httpClient;
 
-    public readonly ICollection<object> MyCollection;
-
     public AccountService(HttpClient httpClient)
     {
         _httpClient = httpClient;
