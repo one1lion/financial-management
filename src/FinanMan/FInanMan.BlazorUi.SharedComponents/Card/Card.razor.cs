@@ -16,14 +16,18 @@ namespace FinanMan.BlazorUi.SharedComponents.Card;
 /// </remarks>
 public partial class Card
 {
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object>? Attributes { get; set; }
+    /// <summary>
+    /// The content to display in the card
+    /// </summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <summary>
+    /// Additional css classes to apply to the card
+    /// </summary>
+    [Parameter] public string? AdditionalCssClasses { get; set; }
+    /// <summary>
+    /// Additional attributes to apply to the card
+    /// </summary>
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? Attributes { get; set; }
 
     private string CssClasses => $"card{(string.IsNullOrWhiteSpace(AdditionalCssClasses) ? string.Empty : $" {AdditionalCssClasses}")}";
 }

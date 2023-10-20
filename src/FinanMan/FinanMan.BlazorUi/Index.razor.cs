@@ -7,9 +7,6 @@ public partial class Index
 {
     [Inject] private IUiState UiState { get; set; } = default!;
 
-    private DepositEntryViewModel _newDeposit = new();
-    private EditContext _editContext = default!;
-
     protected override void OnInitialized()
     {
     }

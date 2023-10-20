@@ -47,6 +47,7 @@ public class AccountService : IAccountService
         var retResp = new ResponseModel<IEnumerable<AccountSummaryViewModel>>();
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         var accounts = context.Accounts.AsNoTracking()
             .Include(x => x.AccountType)
             .Include(x => x.Transactions)
@@ -58,6 +59,7 @@ public class AccountService : IAccountService
                 .ThenInclude(x => x.Transfer)
             .Include(x => x.Transfers)
                 .ThenInclude(x => x.Transaction);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         var retModel = new List<AccountSummaryViewModel>();
 
         foreach (var account in accounts)
@@ -77,6 +79,7 @@ public class AccountService : IAccountService
         var retResp = new ResponseModel<AccountSummaryViewModel>();
         using var context = await _dbContextFactory.CreateDbContextAsync(ct);
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         retResp.Data = (await context.Accounts.AsNoTracking()
             .Include(x => x.Transactions)
                 .ThenInclude(x => x.Payment)
@@ -87,6 +90,7 @@ public class AccountService : IAccountService
                 .ThenInclude(x => x.Transfer)
             .FirstOrDefaultAsync(ct))?
             .ToAccountSummaryModel();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         return retResp;
     }

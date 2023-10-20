@@ -2,6 +2,9 @@
 
 namespace FinanMan.BlazorUi.SharedComponents.JsInterop;
 
+/// <summary>
+/// The interface for the isolated JavaScript module
+/// </summary>
 public interface IMyIsolatedModule
 {
     /// <summary>

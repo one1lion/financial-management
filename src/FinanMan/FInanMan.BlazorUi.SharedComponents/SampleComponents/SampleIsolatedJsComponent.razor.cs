@@ -3,6 +3,10 @@ using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;
 
 namespace FinanMan.BlazorUi.SharedComponents.SampleComponents;
+
+/// <summary>
+/// A shareable Isolated JavaScript component that will render html markup
+/// </summary>
 public partial class SampleIsolatedJsComponent
 {
     [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
@@ -10,7 +14,7 @@ public partial class SampleIsolatedJsComponent
     private Task<IJSObjectReference> Module => _module ??= JsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/FinanMan.BlazorUi.SharedComponents/js/MyInterop/MyInterop.js").AsTask();
 
     private string? _errMsg;
-
+    
     private async Task HandleClick()
     {
         try

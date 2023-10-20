@@ -23,7 +23,11 @@ public partial class PaymentEntry
     private EditForm? _lineItemEntryEditForm;
 
     private ResponseModelBase<int>? _currentResponse;
-    private InputDate<DateTime?>? _transDateInput;
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable CS0649 // Field 'PaymentEntry._pmtDateInput' is never assigned to, and will always have its default value null
+    private InputDate<DateTime?>? _pmtDateInputRef;
+#pragma warning restore CS0649 // Field 'PaymentEntry._pmtDateInput' is never assigned to, and will always have its default value null
+#pragma warning restore IDE0044 // Add readonly modifier
     private bool _submitting;
     private bool _showAddAccount;
 
@@ -53,6 +57,8 @@ public partial class PaymentEntry
             return;
         }
 
+        if (_submitting) { return; }
+
         _currentResponse = default;
         _submitting = true;
         var lookups = (_accounts ?? new()).OfType<ILookupItemViewModel>().Union(_payees ?? new());
@@ -61,9 +67,9 @@ public partial class PaymentEntry
         if (!_currentResponse.WasError)
         {
             _editPayment = new();
-            if (_transDateInput is not null && _transDateInput.Element.HasValue)
+            if (_pmtDateInputRef is not null && _pmtDateInputRef.Element.HasValue)
             {
-                await _transDateInput.Element.Value.FocusAsync();
+                await _pmtDateInputRef.Element.Value.FocusAsync();
             }
             await TransactionsState.RefreshTransactionHistoryAsync();
         }
