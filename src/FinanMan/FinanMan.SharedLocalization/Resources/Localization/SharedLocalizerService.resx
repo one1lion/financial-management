@@ -219,11 +219,14 @@
   <data name="GetStartedButtonText" xml:space="preserve">
     <value>Get Started</value>
   </data>
+  <data name="HeroPreviewImageAltText" xml:space="preserve">
+    <value>Preview of the Financial Management Application data entry UI.</value>
+  </data>
   <data name="HeroSubtitle" xml:space="preserve">
-    <value>The Cool Way</value>
+    <value>Streamline your financial goals with our user-friendly app. Effortlessly track sour account balances to maximize your net worth. Experience the convenience of managing your finances with our innovative solution.</value>
   </data>
   <data name="HeroTitle" xml:space="preserve">
-    <value>Manage Your Financials</value>
+    <value>Get your finances on track with the Financial Management Tracker</value>
   </data>
   <data name="IndexTitle" xml:space="preserve">
     <value>Financial Management Tracker</value>

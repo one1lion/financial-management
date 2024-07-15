@@ -5,27 +5,14 @@
     grid-template-rows: auto 1fr auto;
 
     .hero {
-        background-image: url('/_content/FinanMan.BlazorUi/imgs/piggy-bank.jpg');
-        background-size: 3084px;
-        background-repeat: no-repeat;
-        border-bottom: 1px solid var(--default-border-color);
-        background-position: center;
         position: relative;
         width: 100%;
 
-        .hero-filter {
-            position: absolute;
-            background-color: rgba(#1D2933, .38);
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-        }
-
         .content {
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: 1fr minmax(480px, calc(50vw - 3rem));
             gap: 2rem;
-            align-items: flex-start;
+            align-items: center;
             padding: 2rem 4rem 4rem 4rem;
             z-index: 2;
 
@@ -44,6 +31,15 @@
                 }
             }
 
+            .app-preview-wrapper {
+                width: 100%;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            } 
+            
             ::deep {
                 .login-form-wrapper {
                     z-index: 2;

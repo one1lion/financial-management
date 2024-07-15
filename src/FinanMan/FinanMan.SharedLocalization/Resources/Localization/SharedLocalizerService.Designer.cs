@@ -367,7 +367,16 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Cool Way.
+        ///   Looks up a localized string similar to Preview of the Financial Management Application data entry UI..
+        /// </summary>
+        public static string HeroPreviewImageAltText {
+            get {
+                return ResourceManager.GetString("HeroPreviewImageAltText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Streamline your financial goals with our user-friendly app. Effortlessly track sour account balances to maximize your net worth. Experience the convenience of managing your finances with our innovative solution..
         /// </summary>
         public static string HeroSubtitle {
             get {
@@ -376,7 +385,7 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Your Financials.
+        ///   Looks up a localized string similar to Get your finances on track with the Financial Management Tracker.
         /// </summary>
         public static string HeroTitle {
             get {
