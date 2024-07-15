@@ -178,6 +178,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A hand holding out a card to another hand receiving the card. A card reader is in the receiver&apos;s other hand..
+        /// </summary>
+        public static string CardTransactionImageAltText {
+            get {
+                return ResourceManager.GetString("CardTransactionImageAltText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ClearFilter.
         /// </summary>
         public static string ClearFilter {
@@ -228,6 +237,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string ControlButtonsColumnHeader {
             get {
                 return ResourceManager.GetString("ControlButtonsColumnHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright © {0}.  All Rights Reserved..
+        /// </summary>
+        public static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
             }
         }
         
@@ -295,6 +313,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track money coming in from external sources to your tracked accounts..
+        /// </summary>
+        public static string DepositsOverviewDescription {
+            get {
+                return ResourceManager.GetString("DepositsOverviewDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detail.
         /// </summary>
         public static string Detail {
@@ -354,6 +381,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string ForgotPassword {
             get {
                 return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A pencil and a calculator sitting on top of a filled out general ledger form..
+        /// </summary>
+        public static string GeneralLedgerImageAltText {
+            get {
+                return ResourceManager.GetString("GeneralLedgerImageAltText", resourceCulture);
             }
         }
         
@@ -628,6 +664,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track money going out of your tracked accounts to external sources..
+        /// </summary>
+        public static string PaymentsOverviewDescription {
+            get {
+                return ResourceManager.GetString("PaymentsOverviewDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pending.
         /// </summary>
         public static string Pending {
@@ -646,20 +691,11 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plan your savings for future spending.
+        ///   Looks up a localized string similar to A hand holding a gold coin above a blue piggy bank..
         /// </summary>
-        public static string PlanBodyContent {
+        public static string PiggyBankImageAltText {
             get {
-                return ResourceManager.GetString("PlanBodyContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Plan.
-        /// </summary>
-        public static string PlanHeader {
-            get {
-                return ResourceManager.GetString("PlanHeader", resourceCulture);
+                return ResourceManager.GetString("PiggyBankImageAltText", resourceCulture);
             }
         }
         
@@ -669,6 +705,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string PostedDateLabel {
             get {
                 return ResourceManager.GetString("PostedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
             }
         }
         
@@ -696,6 +741,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Map.
+        /// </summary>
+        public static string SiteMap {
+            get {
+                return ResourceManager.GetString("SiteMap", resourceCulture);
             }
         }
         
@@ -745,20 +799,20 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track your financial accounts and the related transactions and balances.
+        ///   Looks up a localized string similar to Track Transactions.
         /// </summary>
-        public static string TrackBodyContent {
+        public static string TrackTransactionsHeader {
             get {
-                return ResourceManager.GetString("TrackBodyContent", resourceCulture);
+                return ResourceManager.GetString("TrackTransactionsHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track.
+        ///   Looks up a localized string similar to See what your money is doing by tracking all of your transactions..
         /// </summary>
-        public static string TrackHeader {
+        public static string TrackTransactionsSubTitle {
             get {
-                return ResourceManager.GetString("TrackHeader", resourceCulture);
+                return ResourceManager.GetString("TrackTransactionsSubTitle", resourceCulture);
             }
         }
         
@@ -768,6 +822,24 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string TransactionHistory {
             get {
                 return ResourceManager.GetString("TransactionHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Your Transaction History.
+        /// </summary>
+        public static string TransactionHistoryHeader {
+            get {
+                return ResourceManager.GetString("TransactionHistoryHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wondering how you managed to lose track of $500 this month? View all of your transactions using our easy to read Transaction History list..
+        /// </summary>
+        public static string TransactionHistorySubTitle {
+            get {
+                return ResourceManager.GetString("TransactionHistorySubTitle", resourceCulture);
             }
         }
         
@@ -817,6 +889,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track money moving between your tracked accounts..
+        /// </summary>
+        public static string TransfersOverviewDescription {
+            get {
+                return ResourceManager.GetString("TransfersOverviewDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Update {
@@ -840,24 +921,6 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Watch your money grow (or shrink if you don’t manage it well...which you should since you’re using this app!).
-        /// </summary>
-        public static string WatchBodyContent {
-            get {
-                return ResourceManager.GetString("WatchBodyContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Watch.
-        /// </summary>
-        public static string WatchHeader {
-            get {
-                return ResourceManager.GetString("WatchHeader", resourceCulture);
             }
         }
     }

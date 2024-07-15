@@ -156,6 +156,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CardTransactionImageAltText" xml:space="preserve">
+    <value>A hand holding out a card to another hand receiving the card. A card reader is in the receiver's other hand.</value>
+  </data>
   <data name="ClearFilter" xml:space="preserve">
     <value>ClearFilter</value>
   </data>
@@ -173,6 +176,10 @@
   </data>
   <data name="ControlButtonsColumnHeader" xml:space="preserve">
     <value>Control Buttons</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright © {0}.  All Rights Reserved.</value>
+    <comment>{0} is the copyright validity period</comment>
   </data>
   <data name="CoreValues" xml:space="preserve">
     <value>Core Values</value>
@@ -195,6 +202,9 @@
   <data name="Deposits" xml:space="preserve">
     <value>Deposits</value>
   </data>
+  <data name="DepositsOverviewDescription" xml:space="preserve">
+    <value>Track money coming in from external sources to your tracked accounts.</value>
+  </data>
   <data name="Detail" xml:space="preserve">
     <value>Detail</value>
   </data>
@@ -215,6 +225,9 @@
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot your username or password?</value>
+  </data>
+  <data name="GeneralLedgerImageAltText" xml:space="preserve">
+    <value>A pencil and a calculator sitting on top of a filled out general ledger form.</value>
   </data>
   <data name="GetStartedButtonText" xml:space="preserve">
     <value>Get Started</value>
@@ -306,20 +319,23 @@
   <data name="Payments" xml:space="preserve">
     <value>Payments</value>
   </data>
+  <data name="PaymentsOverviewDescription" xml:space="preserve">
+    <value>Track money going out of your tracked accounts to external sources.</value>
+  </data>
   <data name="Pending" xml:space="preserve">
     <value>Pending</value>
   </data>
   <data name="PendingColumnHeader" xml:space="preserve">
     <value>Pending</value>
   </data>
-  <data name="PlanBodyContent" xml:space="preserve">
-    <value>Plan your savings for future spending</value>
-  </data>
-  <data name="PlanHeader" xml:space="preserve">
-    <value>Plan</value>
+  <data name="PiggyBankImageAltText" xml:space="preserve">
+    <value>A hand holding a gold coin above a blue piggy bank.</value>
   </data>
   <data name="PostedDateLabel" xml:space="preserve">
     <value>Posted Date</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
@@ -329,6 +345,9 @@
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Need an account? Sign up.</value>
+  </data>
+  <data name="SiteMap" xml:space="preserve">
+    <value>Site Map</value>
   </data>
   <data name="SortAscending" xml:space="preserve">
     <value>Sort Ascending</value>
@@ -345,14 +364,20 @@
   <data name="TotalRowHeader" xml:space="preserve">
     <value>Total:</value>
   </data>
-  <data name="TrackBodyContent" xml:space="preserve">
-    <value>Track your financial accounts and the related transactions and balances</value>
+  <data name="TrackTransactionsHeader" xml:space="preserve">
+    <value>Track Transactions</value>
   </data>
-  <data name="TrackHeader" xml:space="preserve">
-    <value>Track</value>
+  <data name="TrackTransactionsSubTitle" xml:space="preserve">
+    <value>See what your money is doing by tracking all of your transactions.</value>
   </data>
   <data name="TransactionHistory" xml:space="preserve">
     <value>Transaction History</value>
+  </data>
+  <data name="TransactionHistoryHeader" xml:space="preserve">
+    <value>View Your Transaction History</value>
+  </data>
+  <data name="TransactionHistorySubTitle" xml:space="preserve">
+    <value>Wondering how you managed to lose track of $500 this month? View all of your transactions using our easy to read Transaction History list.</value>
   </data>
   <data name="TransactionHistoryTableDescription" xml:space="preserve">
     <value>A listing of transaction history items.</value>
@@ -369,6 +394,9 @@
   <data name="Transfers" xml:space="preserve">
     <value>Transfers</value>
   </data>
+  <data name="TransfersOverviewDescription" xml:space="preserve">
+    <value>Track money moving between your tracked accounts.</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -377,11 +405,5 @@
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
-  </data>
-  <data name="WatchBodyContent" xml:space="preserve">
-    <value>Watch your money grow (or shrink if you don’t manage it well...which you should since you’re using this app!)</value>
-  </data>
-  <data name="WatchHeader" xml:space="preserve">
-    <value>Watch</value>
   </data>
 </root>
