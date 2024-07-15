@@ -4,13 +4,13 @@
     --light: #f0f3f0;
     --primary-text-color: #f0f3f0;
     --primary-background-color: #{$darkteal};
-    --font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif, serif;
-    --default-border-color: #D7F5FA;
+    --font-family: "Segoe UI", Arial, sans-serif, serif; 
     --link-color: #D7F5FA;
     --topbar-height: 3.3rem;
     --topbar-background-color: #020305;
     --topbar-foreground-color: var(--primary-text-color);
     --border-glow: rgba(255,255,255,.3); // Cyberpunk Theme: #{$bubblegum};
+    --default-border-color: #D7F5FA;
     --faint-border-glow: rgba(255, 255, 255, .1);
     /* Cards */
     --card-background-color: var(--primary-background-color);
@@ -65,5 +65,4 @@
     /* Borders for Active Items */
     --border-active: #fff;
     --border-inactive: #1d2c33;
-
 }

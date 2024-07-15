@@ -1,6 +1,45 @@
-﻿.top-bar {
+﻿@import "../Sass/BreakPointVariables";
+
+.top-bar {
     height: var(--topbar-height);
-    background-color: var(--topbar-background-color);
+    background: transparent;
     color: var(--topbar-foreground-color);
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    ::deep {
+        .app-brand, .app-links {
+            padding: 0 1rem;
+        }
+    }
+}
+
+@media (max-width: #{$bp-smoll}) {
+    .top-bar {
+        ::deep {
+            .app-brand {
+                svg {
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-min}) {
+    .top-bar {
+        ::deep {
+            .app-brand {
+            }
+        }
+    }
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-min}) {
+    .top-bar {
+        ::deep {
+            .app-brand {
+            }
+        }
+    }
 }

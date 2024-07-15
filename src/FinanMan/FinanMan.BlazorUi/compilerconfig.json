@@ -78,5 +78,13 @@
   {
     "outputFile": "ResearchingIssues.razor.css",
     "inputFile": "ResearchingIssues.razor.scss"
+  },
+  {
+    "outputFile": "Shared/AppBrand.razor.css",
+    "inputFile": "Shared/AppBrand.razor.scss"
+  },
+  {
+    "outputFile": "Shared/AppBarLinks.razor.css",
+    "inputFile": "Shared/AppBarLinks.razor.scss"
   }
 ]

@@ -1,6 +1,11 @@
 ﻿.top-bar {
   height: var(--topbar-height);
-  background-color: var(--topbar-background-color);
+  background: transparent;
   color: var(--topbar-foreground-color);
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.top-bar ::deep .app-brand, .top-bar ::deep .app-links {
+  padding: 0 1rem;
 }

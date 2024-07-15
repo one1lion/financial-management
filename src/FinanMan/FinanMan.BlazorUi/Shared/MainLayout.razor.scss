@@ -12,9 +12,11 @@
         }
     }
 
-    main.content {
-        grid-area: m;
-        overflow: auto;
-        position: relative;
+    main {
+        &.content {
+            grid-area: m;
+            overflow: auto;
+            position: relative;
+        }
     }
 }
