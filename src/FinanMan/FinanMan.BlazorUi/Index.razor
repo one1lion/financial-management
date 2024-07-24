@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using FinanMan.BlazorUi.FlyoutContentComponents
+@using FinanMan.BlazorUi.SharedComponents.AccordionListComponents
 @using FinanMan.Shared.DataEntryModels
 @using System.Globalization
 @using FinanMan.SharedLocalization.Extensions
@@ -91,32 +92,34 @@
         <span class="section-sub-title">
             @SharedLocalizerService.TransactionHistorySubTitle
         </span>
-        <div class="card-wrapper">
-            
+        <div class="preview-image-wrapper">
+            <img src="_content/FinanMan.BlazorUi/imgs/transaction-history-chart-preview.png" alt="@SharedLocalizerService.ViewTransactionHistoryChartAltText" />
+            <img src="_content/FinanMan.BlazorUi/imgs/transaction-history-grid-preview.png" alt="@SharedLocalizerService.ViewTransactionHistoryGridAltText" />
         </div>
         <button type="button">
             @SharedLocalizerService.GetStartedButtonText
         </button>
     </section>
     <footer>
-        <section>
-            <span class="header">
-                <a href="data-entry">
-                    @SharedLocalizerService.DataEntry
-                </a>
-            </span>
+        <section class="ar-logo-wrapper">
+            <Logo LogoType=LogoType.Svg ShowShadow=true ShaddowColor="rgba(244, 244, 234, .2)" />
+            <span class="company-name">Automated Realms</span>
+            <span class="tag-line">Enhancing Life Through Automation</span>
+        </section>
+        <section class="app-page-links">
             <ul>
-                <li>@SharedLocalizerService.Payment</li>
-                <li>@SharedLocalizerService.Deposit</li>
-                <li>@SharedLocalizerService.Transfer</li>
+                <li>@SharedLocalizerService.ContactUs</li>
+                <li>@SharedLocalizerService.About</li>
+                <li>@SharedLocalizerService.Privacy</li>
+                <li>@SharedLocalizerService.SiteMap</li>
             </ul>
         </section>
-        <section>
-            <span class="header">@SharedLocalizerService.About</span>
+        <section class="social-links">
             <ul>
-                <li>@SharedLocalizerService.AboutAutomatedRealms</li>
-                <li>@SharedLocalizerService.CoreValues</li>
-                <li><button type="button" @onclick=HandleContactUsClicked>@SharedLocalizerService.ContactUs</button></li>
+                <li><i class="social-icon ri ri-twitter-x-fill" /> <span class="social-title">X</span></li>
+                <li><i class="social-icon ri ri-facebook-box-fill" /> <span class="social-title">Facebook</span></li>
+                <li><i class="social-icon ri ri-github-fill" /> <span class="social-title">GitHub</span></li>
+                <li><i class="social-icon ri ri-linkedin-box-fill" /> <span class="social-title">LinkedIn</span></li>
             </ul>
         </section>
     </footer>

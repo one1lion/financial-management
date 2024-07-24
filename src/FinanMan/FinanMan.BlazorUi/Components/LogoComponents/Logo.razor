@@ -1,0 +1,56 @@
+@using System.Diagnostics.CodeAnalysis;
+
+<div id="@($"{_id}-wrapper")" class="logo-wrapper" style="@($"{(string.IsNullOrWhiteSpace(Size) ? null : $"--size:{Size}")};{(string.IsNullOrWhiteSpace(ShaddowColor) ? null : $" --color2:{ShaddowColor}")}" )">
+    @switch (LogoType)
+    {
+        case LogoType.Png:
+            <img src="@ImageSrc" alt="@SharedLocalizerService.AutomatedRealmsLogoAltText" class="logo">
+            break;
+        case LogoType.Svg:
+        case LogoType.AnimatedSvg:
+            <svg id="@($"{_id}-logo")" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 198.36 228.21" @ref=_logoSvg>
+                <defs>
+                    <linearGradient id="@($"{_id}-gradient_bottom_right")" x1="45.5" y1="28" x2="151.5" y2="122.5" gradientUnits="userSpaceOnUse">
+                        <stop offset="0.140139" stop-color="#652B84"/>
+                        <stop offset="0.581463" stop-color="#3B194E"/>
+                        <stop offset="1" stop-color="#100716"/>
+                    </linearGradient>
+                    <linearGradient id="@($"{_id}-gradient_bottom_left")" x1="19.5" y1="148" x2="130.824" y2="60.9731" gradientUnits="userSpaceOnUse">
+                        <stop offset="0.140139" stop-color="#652B84"/>
+                        <stop offset="0.581463" stop-color="#3B194E"/>
+                        <stop offset="1" stop-color="#100716"/>
+                    </linearGradient>
+                    <linearGradient id="@($"{_id}-gradient_top_left")" x1="53" y1="76" x2="154.552" y2="173.51" gradientUnits="userSpaceOnUse">
+                        <stop offset="0.140139" stop-color="#652B84"/>
+                        <stop offset="0.581463" stop-color="#3B194E"/>
+                        <stop offset="1" stop-color="#100716"/>
+                    </linearGradient>
+                    <linearGradient id="@($"{_id}-gradient_top_right")" x1="176" y1="57" x2="73.1828" y2="154.77" gradientUnits="userSpaceOnUse">
+                        <stop offset="0.140139" stop-color="#652B84"/>
+                        <stop offset="0.581463" stop-color="#3B194E"/>
+                        <stop offset="1" stop-color="#100716"/>
+                    </linearGradient>
+                </defs>
+                <g class="cls-5">
+                    @if (ShowShadow)
+                    {
+                        <g id="@($"{_id}-Layer_0")">
+                            <g id="@($"{_id}-Layer_1-0")">
+                                <ellipse class="color2" cx="103" cy="206.1" rx="95.06" ry="22.11" />
+                            </g>
+                            <g id="@($"{_id}-Layer_1-1")">
+                                <ellipse class="elipse" cx="103" cy="206.1" rx="95.06" ry="22.11" />
+                            </g>
+                        </g>
+                    }
+                    <g id="@($"{_id}-Layer_1")">
+                        <path d="M151.082 123.38C151.532 121.08 151.882 118.74 152.142 116.37C157.032 70.9604 124.182 30.1704 78.7623 25.2804C66.8123 23.9904 55.1723 25.3204 44.4323 28.8004C57.3323 11.5004 77.7823 0.440364 100.342 0.0103637C100.372 0.0103637 100.412 0.0103637 100.442 0.0103637C103.412 -0.0396363 106.432 0.0903637 109.462 0.420364C112.332 0.730364 115.142 1.21036 117.892 1.84036C152.732 9.83036 176.842 42.7904 172.922 79.1904C171.032 96.7404 162.952 112.11 151.082 123.38Z" fill="@($"url(#{_id}-gradient_bottom_right)")"/>
+                        <path d="M130.452 59.2004C128.252 58.4004 125.992 57.6804 123.692 57.0604C79.5923 45.1404 34.1923 71.2304 22.2723 115.33C19.1323 126.94 18.6323 138.64 20.3923 149.79C5.3123 134.35 -2.4177 112.43 0.672303 90.0804C0.672303 90.0504 0.672303 90.0104 0.682303 89.9804C1.0923 87.0304 1.6923 84.0804 2.4923 81.1304C3.2423 78.3404 4.1523 75.6404 5.2123 73.0304C18.5423 39.8704 54.8623 21.1804 90.2123 30.7404C107.252 35.3404 121.182 45.7204 130.452 59.2104V59.2004Z" fill="@($"url(#{_id}-gradient_bottom_left)")"/>
+                        <path d="M54.1423 74.4803C53.3623 76.6903 52.6623 78.9503 52.0523 81.2603C40.4823 125.45 66.9223 170.65 111.112 182.22C122.742 185.27 134.452 185.68 145.582 183.83C130.252 199.03 108.392 206.93 86.0223 204.01C85.9923 204.01 85.9523 204.01 85.9223 204C82.9723 203.61 80.0123 203.04 77.0623 202.26C74.2723 201.53 71.5523 200.64 68.9323 199.6C35.6623 186.53 16.7023 150.36 25.9823 114.94C30.4523 97.8703 40.7223 83.8603 54.1323 74.4803H54.1423Z" fill="@($"url(#{_id}-gradient_top_left)")"/>
+                        <path d="M70.4723 152.22C72.7223 152.89 75.0123 153.46 77.3523 153.95C122.082 163.19 165.842 134.41 175.072 89.6703C177.502 77.9003 177.302 66.1903 174.872 55.1603C190.852 69.6703 199.892 91.0903 198.142 113.58C198.142 113.61 198.142 113.65 198.142 113.68C197.912 116.65 197.492 119.63 196.872 122.62C196.292 125.45 195.542 128.2 194.642 130.87C183.342 164.78 148.212 185.61 112.352 178.21C95.0623 174.64 80.5423 165.12 70.4723 152.22Z" fill="@($"url(#{_id}-gradient_top_right)")"/>
+                    </g>
+                </g>
+            </svg>
+            break;
+    }
+</div>

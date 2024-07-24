@@ -1,0 +1,37 @@
+<CascadingValue Value=this>
+    @ChildContent
+</CascadingValue>
+
+<ul>
+    @if (_children.Count == 0)
+    {
+        <li>No items</li>
+    }
+    else
+    {
+        <li>@ItemCountDisplay</li>
+
+        foreach (var item in _children)
+        {
+            @item.Render
+        }
+    }
+</ul>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private List<AccordionListItem> _children = new();
+    private string ItemCountDisplay => $"{_children.Count} item{(_children.Count != 1 ? "s" : null)}";
+
+    public void RegisterChild(AccordionListItem child)
+    {
+        if (!_children.Any(x => x.Id == child.Id))
+        {
+            _children.Add(child);
+            StateHasChanged();
+        }
+    }
+
+    public Task Rerender() => InvokeAsync(StateHasChanged);
+}

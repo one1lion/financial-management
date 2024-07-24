@@ -153,6 +153,9 @@
   <data name="AmountRowHeader" xml:space="preserve">
     <value>Amount:</value>
   </data>
+  <data name="AutomatedRealmsLogoAltText" xml:space="preserve">
+    <value>The Automated Realms Logo.  4 petals spiraling around a central point.</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -405,5 +408,11 @@
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="ViewTransactionHistoryChartAltText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ViewTransactionHistoryGridAltText" xml:space="preserve">
+    <value />
   </data>
 </root>

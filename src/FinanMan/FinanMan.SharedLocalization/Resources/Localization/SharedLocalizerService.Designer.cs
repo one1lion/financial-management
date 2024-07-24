@@ -169,6 +169,15 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Automated Realms Logo.  4 petals spiraling around a central point..
+        /// </summary>
+        public static string AutomatedRealmsLogoAltText {
+            get {
+                return ResourceManager.GetString("AutomatedRealmsLogoAltText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -921,6 +930,24 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         public static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ViewTransactionHistoryChartAltText {
+            get {
+                return ResourceManager.GetString("ViewTransactionHistoryChartAltText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ViewTransactionHistoryGridAltText {
+            get {
+                return ResourceManager.GetString("ViewTransactionHistoryGridAltText", resourceCulture);
             }
         }
     }

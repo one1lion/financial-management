@@ -1,0 +1,41 @@
+@using System.Diagnostics.CodeAnalysis
+
+@code {
+    [CascadingParameter, AllowNull] private AccordionList Parent { get; set; }
+    [Parameter] public bool Expanded { get; set; }
+    [Parameter] public EventCallback<bool> ExpandedChanged { get; set; }
+    [Parameter, EditorRequired, AllowNull] public RenderFragment HeaderContent { get; set; }
+    [Parameter, EditorRequired, AllowNull] public RenderFragment BodyContent { get; set; }
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    public Guid Id { get; } = Guid.NewGuid();
+
+    public RenderFragment Render => @<li id="listItem-@(Id)" class="@(Expanded ? "expanded" : null)" @onclick=HandleToggleExpanded>
+        <div class="header" @onclick:stopPropagation=true>
+            @HeaderContent
+        </div>
+        <div class="body" @onclick:stopPropagation=true>
+            @BodyContent
+        </div>
+        @if (FooterContent is not null)
+        {
+            <div class="footer" @onclick:stopPropagation=true>
+                @FooterContent
+            </div>
+        }
+    </li>;
+
+    protected override void OnInitialized()
+    {
+        Parent.RegisterChild(this);
+    }
+
+    private async Task HandleToggleExpanded()
+    {
+        Expanded = !Expanded;
+        await Task.WhenAny(
+            ExpandedChanged.HasDelegate ? ExpandedChanged.InvokeAsync(Expanded) : Task.CompletedTask,
+            Parent.Rerender()
+        );
+    }
+}
