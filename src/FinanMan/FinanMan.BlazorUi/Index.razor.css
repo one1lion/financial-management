@@ -1,81 +1,123 @@
 ﻿.index-page {
   height: 100%;
+  width: var(--default-content-max-width);
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  overflow-x: clip;
 }
-.index-page .hero {
+.index-page #hero {
   position: relative;
-  width: 100%;
-}
-.index-page .hero .content {
   display: grid;
-  grid-template-columns: 1fr minmax(480px, calc(50vw - 3rem));
+  grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
   gap: 2rem;
   align-items: center;
-  padding: 2rem 4rem 4rem 4rem;
+  padding: var(--default-padding);
   z-index: 2;
 }
-.index-page .hero .content .title {
+.index-page #hero .title-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   overflow-y: auto;
-  font-size: 4rem;
   height: 100%;
+  gap: 1em;
   z-index: 2;
 }
-.index-page .hero .content .title .sub-title {
-  align-self: flex-end;
-  font-size: 1.5rem;
+.index-page #hero .title-wrapper .title {
+  font-size: var(--font-size-h1);
 }
-.index-page .hero .content .app-preview-wrapper {
+.index-page #hero .title-wrapper .sub-title {
+  font-size: var(--font-size-caption);
+}
+.index-page #hero .title-wrapper button {
+  align-self: flex-start;
+}
+.index-page #hero .app-preview-wrapper {
   width: 100%;
 }
-.index-page .hero .content .app-preview-wrapper img {
+.index-page #hero .app-preview-wrapper img {
   width: 100%;
   height: auto;
 }
-.index-page .hero .content ::deep .login-form-wrapper {
+.index-page #hero ::deep .login-form-wrapper {
   z-index: 2;
 }
-.index-page .content {
-  padding: 2.4rem;
+.index-page section.content {
+  padding: var(--default-padding);
+  justify-content: space-between;
 }
-.index-page .content .card-wrapper {
+.index-page section.content .section-title {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  margin: 0 auto;
+  margin: 0;
+  margin-bottom: 0.8rem;
 }
-.index-page .content .card-wrapper ::deep .card {
+.index-page section.content .section-sub-title-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.6rem;
+}
+.index-page section.content .card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2em;
+}
+.index-page section.content .card-wrapper ::deep .card {
   border-radius: 0.6rem;
-  width: 25ch;
   box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
   border-color: var(--primary-text-color);
-}
-.index-page .content .card-wrapper ::deep .card .card-header, .index-page .content .card-wrapper ::deep .card .card-text, .index-page .content .card-wrapper ::deep .card .card-footer {
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-}
-.index-page .content .card-wrapper ::deep .card .card-header {
-  font-size: 2rem;
-  padding-top: 0.8rem;
-}
-.index-page .content .card-wrapper ::deep .card .card-footer {
   display: flex;
-  padding: 0.6rem 1.6rem;
+  justify-content: space-between;
+  overflow: clip;
 }
-.index-page .content .card-wrapper ::deep .card .card-footer button {
-  padding: 0.6rem 0;
-  width: 100%;
-  font-size: 1rem;
-  font-weight: bold;
+.index-page section.content .card-wrapper ::deep .card .card-header {
+  padding: 0;
+  font-size: 0;
+  border: none;
+  flex: 0;
+}
+.index-page section.content .card-wrapper ::deep .card .card-header img {
+  width: 50%;
+  min-width: 320px;
+  height: auto;
+}
+.index-page section.content .card-wrapper ::deep .card .card-body {
+  display: grid;
+  align-items: center;
+  max-width: 50%;
+}
+.index-page section.content .card-wrapper ::deep .card .card-body .card-text {
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  border: none;
+  flex-direction: column;
+  gap: 1em;
+}
+.index-page section.content .card-wrapper ::deep .card .card-body .card-text .title {
+  font-size: var(--font-size-h2);
+}
+.index-page section.content .card-wrapper ::deep .card:nth-of-type(even) {
+  flex-direction: row-reverse;
+}
+.index-page section.content .card-wrapper ::deep .card:nth-of-type(even) .card-header {
+  display: flex;
+  justify-content: flex-end;
+}
+.index-page section.content .card-wrapper ::deep .card .card-footer {
+  display: none;
+}
+.index-page section#secViewTransactionHist .preview-image-wrapper img {
+  width: var(--default-content-max-width);
 }
 .index-page footer {
   display: flex;
   gap: 2rem;
-  padding: 1.6rem;
+  padding: var(--default-padding);
   background-color: var(--footer-background-color);
   border-top: 1px solid var(--default-border-color);
   font-size: 1.2rem;

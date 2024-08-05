@@ -430,7 +430,7 @@ namespace FinanMan.SharedLocalization.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Get your finances on track with the Financial Management Tracker.
+        ///   Looks up a localized string similar to Get your finances on track.
         /// </summary>
         public static string HeroTitle {
             get {

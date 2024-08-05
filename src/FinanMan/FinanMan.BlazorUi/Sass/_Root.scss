@@ -1,6 +1,8 @@
 ﻿@import "ColorVariables";
+@import "FontSizing";
 
 :root {
+    --base-font-size: 16px;
     --light: #f0f3f0;
     --primary-text-color: #f0f3f0;
     --primary-background-color: #{$darkteal};
@@ -12,6 +14,8 @@
     --border-glow: rgba(255,255,255,.3); // Cyberpunk Theme: #{$bubblegum};
     --default-border-color: #D7F5FA;
     --faint-border-glow: rgba(255, 255, 255, .1);
+    --default-padding: 2.4rem;
+    --default-content-max-width: calc(100vw - var(--default-padding) * 2);
     /* Cards */
     --card-background-color: var(--primary-background-color);
     --card-foreground-color: var(--primary-text-color);
@@ -57,6 +61,7 @@
     --font-size-h2: 1.5em;
     --font-size-h3: 1.17em;
     --font-size-h4: 1em;
+    --font-size-caption: var(--base-font-size);
     /* Default z-index */
     --flyout-z-index: 2;
     --modal-z-index: calc(var(--flyout-z-index) + 1);

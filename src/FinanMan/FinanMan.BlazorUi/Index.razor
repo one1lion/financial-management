@@ -9,25 +9,26 @@
 <PageTitle>@SharedLocalizerService.IndexTitle</PageTitle>
 
 <article class="page index-page">
-    <header class="hero">
-        <div class="content">
-            <div class="title">
-                @SharedLocalizerService.HeroTitle
-                <span class="sub-title">@SharedLocalizerService.HeroSubtitle</span>
-                <button id="btnHeroGetStarted" class="btn btn-primary">Get Started</button>
-            </div>
-            <div class="app-preview-wrapper">
-                <img src="_content/FinanMan.BlazorUi/imgs/app-preview.png" alt="@SharedLocalizerService.HeroPreviewImageAltText" />
-            </div>
+    <header id="hero">
+        <div class="title-wrapper">
+            <span class="title">@SharedLocalizerService.HeroTitle</span>
+            <span class="sub-title">@SharedLocalizerService.HeroSubtitle</span>
+            <button id="btnHeroGetStarted" class="btn btn-primary">Get Started</button>
+        </div>
+        <div class="app-preview-wrapper">
+            <img src="_content/FinanMan.BlazorUi/imgs/app-preview.png" alt="@SharedLocalizerService.HeroPreviewImageAltText" />
         </div>
     </header>
     <section id="secTrackTransactions" class="content">
         <h1 class="section-title">
             @SharedLocalizerService.TrackTransactionsHeader
         </h1>
-        <span class="section-sub-title">
-            @SharedLocalizerService.TrackTransactionsSubTitle
-        </span>
+
+        <div class="section-sub-title-wrapper">
+            <span class="section-sub-title">
+                @SharedLocalizerService.TrackTransactionsSubTitle
+            </span>
+        </div>
         <div class="card-wrapper">
             <Card>
                 <CardHeader>
@@ -35,10 +36,10 @@
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        <span>
+                        <span class="title">
                             @SharedLocalizerService.Deposits
                         </span>
-                        <span>
+                        <span class="content">
                             @SharedLocalizerService.DepositsOverviewDescription
                         </span>
                     </CardText>
@@ -52,10 +53,10 @@
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        <span>
+                        <span class="title">
                             @SharedLocalizerService.Payments
                         </span>
-                        <span>
+                        <span class="content">
                             @SharedLocalizerService.PaymentsOverviewDescription
                         </span>
                     </CardText>
@@ -69,10 +70,10 @@
                 </CardHeader>
                 <CardBody>
                     <CardText>
-                        <span>
+                        <span class="title">
                             @SharedLocalizerService.Transfers
                         </span>
-                        <span>
+                        <span class="content">
                             @SharedLocalizerService.DepositsOverviewDescription
                         </span>
                     </CardText>
@@ -85,13 +86,15 @@
             @SharedLocalizerService.GetStartedButtonText
         </button>
     </section>
-    <section id="secTrackTransactions" class="content">
+    <section id="secViewTransactionHist" class="content">
         <h1 class="section-title">
             @SharedLocalizerService.TransactionHistoryHeader
         </h1>
-        <span class="section-sub-title">
-            @SharedLocalizerService.TransactionHistorySubTitle
-        </span>
+        <div class="section-sub-title-wrapper">
+            <span class="section-sub-title">
+                @SharedLocalizerService.TransactionHistorySubTitle
+            </span>
+        </div>
         <div class="preview-image-wrapper">
             <img src="_content/FinanMan.BlazorUi/imgs/transaction-history-chart-preview.png" alt="@SharedLocalizerService.ViewTransactionHistoryChartAltText" />
             <img src="_content/FinanMan.BlazorUi/imgs/transaction-history-grid-preview.png" alt="@SharedLocalizerService.ViewTransactionHistoryGridAltText" />

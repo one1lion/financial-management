@@ -1,9 +1,9 @@
-﻿using FinanMan.BlazorUi.SharedComponents.JsInterop;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using FinanMan.BlazorUi.SharedComponents.JsInterop;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace FinanMan.BlazorUi.SharedComponents.DraggableComponents;
 

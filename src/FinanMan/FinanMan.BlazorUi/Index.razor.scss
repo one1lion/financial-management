@@ -1,90 +1,146 @@
 ﻿.index-page {
     height: 100%;
+    width: var(--default-content-max-width);
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    overflow-x: clip;
 
-    .hero {
+    #hero {
         position: relative;
-        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
+        gap: 2rem;
+        align-items: center;
+        padding: var(--default-padding);
+        z-index: 2;
 
-        .content {
-            display: grid;
-            grid-template-columns: 1fr minmax(480px, calc(50vw - 3rem));
-            gap: 2rem;
-            align-items: center;
-            padding: 2rem 4rem 4rem 4rem;
+        .title-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+            height: 100%;
+            gap: 1em;
             z-index: 2;
 
             .title {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                overflow-y: auto;
-                font-size: 4rem;
-                height: 100%;
-                z-index: 2;
-
-                .sub-title {
-                    align-self: flex-end;
-                    font-size: 1.5rem;
-                }
+                font-size: var(--font-size-h1);
             }
 
-            .app-preview-wrapper {
-                width: 100%;
+            .sub-title {
+                font-size: var(--font-size-caption);
+            }
 
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            } 
-            
-            ::deep {
-                .login-form-wrapper {
-                    z-index: 2;
-                }
+            button {
+                align-self: flex-start;
+            }
+        }
+
+        .app-preview-wrapper {
+            width: 100%;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        ::deep {
+            .login-form-wrapper {
+                z-index: 2;
             }
         }
     }
 
-    .content {
-        padding: 2.4rem;
+    section {
+        &.content {
+            padding: var(--default-padding);
+            justify-content: space-between;
 
-        .card-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 0 auto;
+            .section-title {
+                display: flex;
+                justify-content: center;
+                margin: 0;
+                margin-bottom: .8rem;
+            }
 
-            ::deep {
-                .card {
-                    border-radius: .6rem;
-                    width: 25ch;
-                    box-shadow: 2px 2px 4px rgba(255, 255, 255, .2);
-                    border-color: var(--primary-text-color);
+            .section-sub-title-wrapper {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 1.6rem;
+            }
 
-                    .card-header, .card-text, .card-footer {
-                        padding-left: 1.2rem;
-                        padding-right: 1.2rem;
-                    }
+            .card-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: stretch;
+                gap: 2em;
 
-                    .card-header {
-                        font-size: 2rem;
-                        padding-top: .8rem;
-                    }
-
-                    .card-footer {
+                ::deep {
+                    .card {
+                        border-radius: .6rem;
+                        box-shadow: 2px 2px 4px rgba(255, 255, 255, .2);
+                        border-color: var(--primary-text-color);
                         display: flex;
-                        padding: .6rem 1.6rem;
+                        justify-content: space-between;
+                        overflow: clip;
 
-                        button {
-                            padding: .6rem 0;
-                            width: 100%;
-                            font-size: 1rem;
-                            font-weight: bold;
+                        .card-header {
+                            padding: 0;
+                            font-size: 0;
+                            border: none;
+                            flex: 0;
+
+                            img {
+                                width: 50%;
+                                min-width: 320px;
+                                height: auto;
+                            }
+                        }
+
+                        .card-body {
+                            display: grid;
+                            align-items: center;
+                            max-width: 50%;
+
+                            .card-text {
+                                display: flex;
+                                justify-content: flex-end;
+                                padding-left: 1.2em;
+                                padding-right: 1.2em;
+                                border: none;
+                                flex-direction: column;
+                                gap: 1em;
+
+                                .title {
+                                    font-size: var(--font-size-h2);
+                                }
+                            }
+                        }
+
+                        &:nth-of-type(even) {
+                            flex-direction: row-reverse;
+
+                            .card-header {
+                                display: flex;
+                                justify-content: flex-end;
+                            }
+                        }
+
+                        .card-footer {
+                            display: none;
                         }
                     }
+                }
+            }
+        }
+
+        &#secViewTransactionHist {
+            .preview-image-wrapper {
+                img {
+                    width: var(--default-content-max-width);
                 }
             }
         }
@@ -93,7 +149,7 @@
     footer {
         display: flex;
         gap: 2rem;
-        padding: 1.6rem;
+        padding: var(--default-padding);
         background-color: var(--footer-background-color);
         border-top: 1px solid var(--default-border-color);
         font-size: 1.2rem;
