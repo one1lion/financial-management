@@ -142,8 +142,23 @@
 
         &#secViewTransactionHist {
             .preview-image-wrapper {
+                --picture-top-offset: 5rem;
+                --picture-left-offset: 10rem;
+                position: relative;
+                padding-bottom: var(--picture-top-offset);
+
                 img {
-                    width: var(--default-content-max-width);
+                    width: calc(var(--default-content-max-width) - var(--picture-left-offset));
+
+                    &:first-of-type {
+                        transform: translateX(var(--picture-left-offset));
+                    }
+
+                    &:last-of-type {
+                        position: absolute;
+                        top: var(--picture-top-offset);
+                        left: 0;
+                    }
                 }
             }
         }
