@@ -1,10 +1,8 @@
 ﻿.index-page {
     height: 100%;
-    width: var(--default-content-max-width);
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    overflow-x: clip;
 
     #hero {
         position: relative;
@@ -25,11 +23,11 @@
             z-index: 2;
 
             .title {
-                font-size: var(--font-size-h1);
+                font-size: var(--font-size-h2);
             }
 
             .sub-title {
-                font-size: var(--font-size-caption);
+                font-size: var(--font-size-small);
             }
 
             button {
@@ -63,6 +61,8 @@
                 justify-content: center;
                 margin: 0;
                 margin-bottom: .8rem;
+                font-size: var(--font-size-h2);
+                font-weight: normal;
             }
 
             .section-sub-title-wrapper {
@@ -95,7 +95,7 @@
 
                             img {
                                 width: 50%;
-                                min-width: 320px;
+                                min-width: 365px;
                                 height: auto;
                             }
                         }
@@ -115,7 +115,10 @@
                                 gap: 1em;
 
                                 .title {
+                                    margin: 0;
+                                    padding: 0;
                                     font-size: var(--font-size-h2);
+                                    font-weight: normal;
                                 }
                             }
                         }

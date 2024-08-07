@@ -2,7 +2,7 @@
 @import "FontSizing";
 
 :root {
-    --base-font-size: 16px;
+    --base-font-size: #{$base-font-size};
     --light: #f0f3f0;
     --primary-text-color: #f0f3f0;
     --primary-background-color: #{$darkteal};
@@ -57,11 +57,15 @@
     --table-header-background-hover-color: rgba(255, 255, 255, .05);
     --table-footer-background-color: #1D2933;
     /* Fonts */
-    --font-size-h1: 2em;
-    --font-size-h2: 1.5em;
-    --font-size-h3: 1.17em;
-    --font-size-h4: 1em;
-    --font-size-caption: var(--base-font-size);
+    --font-size-h1: #{$font-size-h1};
+    --font-size-h2: #{$font-size-h2};
+    --font-size-h3: #{$font-size-h3};
+    --font-size-h4: #{$font-size-h4};
+    --font-size-h5: #{$font-size-h5};
+    --font-size-h6: #{$font-size-h6};
+    --font-size-body: #{$font-size-body};
+    --font-size-small: #{$font-size-small};
+    --font-size-caption: #{$font-size-caption};
     /* Default z-index */
     --flyout-z-index: 2;
     --modal-z-index: calc(var(--flyout-z-index) + 1);

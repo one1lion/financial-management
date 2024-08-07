@@ -1,10 +1,8 @@
 ﻿.index-page {
   height: 100%;
-  width: var(--default-content-max-width);
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  overflow-x: clip;
 }
 .index-page #hero {
   position: relative;
@@ -25,10 +23,10 @@
   z-index: 2;
 }
 .index-page #hero .title-wrapper .title {
-  font-size: var(--font-size-h1);
+  font-size: var(--font-size-h2);
 }
 .index-page #hero .title-wrapper .sub-title {
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-small);
 }
 .index-page #hero .title-wrapper button {
   align-self: flex-start;
@@ -52,6 +50,8 @@
   justify-content: center;
   margin: 0;
   margin-bottom: 0.8rem;
+  font-size: var(--font-size-h2);
+  font-weight: normal;
 }
 .index-page section.content .section-sub-title-wrapper {
   display: flex;
@@ -81,7 +81,7 @@
 }
 .index-page section.content .card-wrapper ::deep .card .card-header img {
   width: 50%;
-  min-width: 320px;
+  min-width: 365px;
   height: auto;
 }
 .index-page section.content .card-wrapper ::deep .card .card-body {
@@ -99,7 +99,10 @@
   gap: 1em;
 }
 .index-page section.content .card-wrapper ::deep .card .card-body .card-text .title {
+  margin: 0;
+  padding: 0;
   font-size: var(--font-size-h2);
+  font-weight: normal;
 }
 .index-page section.content .card-wrapper ::deep .card:nth-of-type(even) {
   flex-direction: row-reverse;
