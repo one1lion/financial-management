@@ -12,6 +12,8 @@ public partial class Logo
     private const string _imageUrlPattern = "_content/FinanMan.BlazorUi/imgs/{0}.png";
     private string ImageSrc => string.Format(_imageUrlPattern, ShowShadow ? "ARlogo_NoText_md" : "ARlogo_NoText_NoShadow");
 
+    private string Styles => $"{(string.IsNullOrWhiteSpace(Size) ? null : $"--size:{Size}")};{(string.IsNullOrWhiteSpace(ShaddowColor) ? null : $" --color2:{ShaddowColor}")}";
+
     private ElementReference? _logoSvg;
 
 }

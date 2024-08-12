@@ -41,6 +41,17 @@
 .index-page #hero ::deep .login-form-wrapper {
   z-index: 2;
 }
+.index-page section {
+  /* 
+      TODO: Since the --default-content-max-width is based on 100vw,
+      we will not get a fixed width (maybe somewhere around 900 or so)
+      for the content section.  Change this to a fixed width in order 
+      to get a fixed max-width for the content. Then for regular width 
+      property, use the calc based on 100vw.
+
+  */
+  max-width: var(--default-content-max-width);
+}
 .index-page section.content {
   padding: var(--default-padding);
   justify-content: space-between;
