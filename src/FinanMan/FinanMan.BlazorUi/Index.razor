@@ -104,25 +104,54 @@
             @SharedLocalizerService.GetStartedButtonText
         </button>
     </section>
-    <footer>
-        <section class="ar-logo-wrapper">
-            <Logo Size="13rem" LogoType=LogoType.Svg ShowShadow=true ShaddowColor="rgba(244, 244, 234, .2)" />
-        </section>
-        <section class="app-page-links">
-            <ul>
-                <li>@SharedLocalizerService.ContactUs</li>
-                <li>@SharedLocalizerService.About</li>
-                <li>@SharedLocalizerService.Privacy</li>
-                <li>@SharedLocalizerService.SiteMap</li>
-            </ul>
-        </section>
-        <section class="social-links">
-            <ul>
-                <li><i class="social-icon ri ri-twitter-x-fill" /> <span class="social-title">X</span></li>
-                <li><i class="social-icon ri ri-facebook-box-fill" /> <span class="social-title">Facebook</span></li>
-                <li><i class="social-icon ri ri-github-fill" /> <span class="social-title">GitHub</span></li>
-                <li><i class="social-icon ri ri-linkedin-box-fill" /> <span class="social-title">LinkedIn</span></li>
-            </ul>
-        </section>
+    <footer class="@(_socialDisplayToggle ? " other-layout" : null)">
+        <div class="footer-content">
+            <section class="ar-logo-wrapper">
+                <Logo Size="13rem" LogoType=LogoType.Svg ShowShadow=true ShadowColor="rgba(244, 244, 234, .2)" />
+            </section>
+
+            <section class="app-page-links">
+                <ul>
+                    <li><a href="#!">@SharedLocalizerService.ContactUs</a></li>
+                    <li><a href="#!">@SharedLocalizerService.About</a></li>
+                    <li><a href="#!">@SharedLocalizerService.Privacy</a></li>
+                    <li><a href="#!">@SharedLocalizerService.SiteMap</a></li>
+                </ul>
+            </section>
+
+            <section class="social-links">
+                <ul>
+                    <li><a href="#!"><i class="social-icon ri ri-twitter-x-fill" /> <span class="social-title">X</span></a></li>
+                    <li><a href="#!"><i class="social-icon ri ri-facebook-box-fill" /> <span class="social-title">Facebook</span></a></li>
+                    <li><a href="#!"><i class="social-icon ri ri-github-fill" /> <span class="social-title">GitHub</span></a></li>
+                    <li><a href="#!"><i class="social-icon ri ri-linkedin-box-fill" /> <span class="social-title">LinkedIn</span></a></li>
+                </ul>
+            </section>
+        </div>
+        <div class="disclaimer">
+            <span>@string.Format(SharedLocalizerService.Copyright, DateTime.Now.Year)</span>
+        </div>
     </footer>
 </article>
+
+@{
+    #if DEBUG
+}
+    <style>
+        .debug {
+            position: fixed;
+            bottom: 1rem;
+            right: 2rem;
+            z-index: 1001;
+        }
+            .debug:not(:hover) {
+                opacity: 0.05;
+            }
+    </style>
+
+    <div class="debug">
+        <button type="button" class="btn btn-small btn-link" @onclick="_ => _socialDisplayToggle = !_socialDisplayToggle">Toggle Social Layout</button>
+    </div>
+@{
+    #endif
+}

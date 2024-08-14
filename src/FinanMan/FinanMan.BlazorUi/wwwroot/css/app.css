@@ -47,7 +47,7 @@
   --button-pressed-foreground-color: #F3F3F3;
   --button-pressed-background-color: #200D29;
   --button-padding: .3em 1em;
-  --footer-background-color: #1D2933;
+  --footer-background-color: #03060A;
   --active-tab-button-background-color: #9E410E;
   --active-tab-button-foreground-color: var(--light);
   /* Tables */
@@ -76,6 +76,8 @@
   /* Borders for Active Items */
   --border-active: #fff;
   --border-inactive: #1d2c33;
+  /* Other Sizing */
+  --footer-content-width: 768px;
 }
 
 button, .btn {

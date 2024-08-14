@@ -6,6 +6,7 @@ namespace FinanMan.BlazorUi;
 public partial class Index
 {
     [Inject] private IUiState UiState { get; set; } = default!;
+    private bool _socialDisplayToggle;
 
     protected override void OnInitialized()
     {
@@ -41,3 +42,10 @@ public partial class Index
     {
     }
 }
+
+
+#if DEBUG
+public partial class Index
+{
+}
+#endif

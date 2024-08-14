@@ -1,11 +1,12 @@
 ﻿@import "ColorVariables";
 @import "FontSizing";
+@import "BreakPointVariables";
 
 :root {
     --base-font-size: #{$base-font-size};
     --light: #f0f3f0;
     --primary-text-color: #f0f3f0;
-    --primary-background-color: #{$darkteal};
+    --primary-background-color: #{$jet-black};
     --font-family: "Segoe UI", Arial, sans-serif, serif;
     --link-color: #D7F5FA;
     --topbar-height: 3.3rem;
@@ -49,7 +50,7 @@
     --button-pressed-foreground-color: #{$white-smoke};
     --button-pressed-background-color: #{$purple3};
     --button-padding: .3em 1em;
-    --footer-background-color: #1D2933;
+    --footer-background-color: #{$jet-black};
     --active-tab-button-background-color: #9E410E;
     --active-tab-button-foreground-color: var(--light);
     /* Tables */
@@ -78,4 +79,6 @@
     /* Borders for Active Items */
     --border-active: #fff;
     --border-inactive: #1d2c33;
+    /* Other Sizing */
+    --footer-content-width: #{$bp-medium-max};
 }
