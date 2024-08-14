@@ -183,7 +183,6 @@
         font-size: var(--font-size-small);
         color: var(--default-text-color);
 
-
         .footer-content {
             display: grid;
             gap: 6rem;
@@ -220,12 +219,26 @@
         }
 
         &.other-layout {
-            .social-links {
-                display: flex;
-                gap: 2rem;
+            position: relative;
 
-                .social-title {
-                    display: none;
+            .footer-content {
+                grid-template-columns: repeat(2, auto);
+
+                .social-links {
+                    position: absolute;
+                    top: .4rem;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    ul {
+                        display: flex;
+                        gap: 2rem;
+                        align-items: flex-start;
+                        justify-content: center;
+                    }
+
+                    .social-title {
+                        display: none;
+                    }
                 }
             }
         }
