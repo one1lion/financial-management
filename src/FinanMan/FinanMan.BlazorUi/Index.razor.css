@@ -170,6 +170,9 @@
   margin-top: 1rem;
   text-align: center;
 }
+.index-page footer.no-title .footer-content .social-links .social-title {
+  display: none;
+}
 .index-page footer.other-layout {
   position: relative;
 }

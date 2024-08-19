@@ -218,6 +218,16 @@
             text-align: center;
         }
 
+        &.no-title {
+            .footer-content {
+                .social-links {
+                    .social-title {
+                        display: none;
+                    }
+                }
+            }
+        }
+
         &.other-layout {
             position: relative;
 
@@ -229,6 +239,7 @@
                     top: .4rem;
                     left: 50%;
                     transform: translateX(-50%);
+
                     ul {
                         display: flex;
                         gap: 2rem;
