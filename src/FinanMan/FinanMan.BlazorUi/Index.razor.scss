@@ -53,8 +53,9 @@
         }
     }
 
-    section {
-        /* 
+    ::deep {
+        section {
+            /* 
             TODO: Since the --default-content-max-width is based on 100vw,
             we will not get a fixed width (maybe somewhere around 900 or so)
             for the content section.  Change this to a fixed width in order 
@@ -62,35 +63,34 @@
             property, use the calc based on 100vw.
 
         */
-        max-width: var(--default-content-max-width);
+            max-width: var(--default-content-max-width);
 
-        &.content {
-            padding: var(--default-padding);
-            justify-content: space-between;
+            &.content {
+                padding: var(--default-padding);
+                justify-content: space-between;
 
-            .section-title {
-                display: flex;
-                justify-content: center;
-                margin: 0;
-                margin-bottom: .8rem;
-                font-size: var(--font-size-h2);
-                font-weight: normal;
-            }
+                .section-title {
+                    display: flex;
+                    justify-content: center;
+                    margin: 0;
+                    margin-bottom: .8rem;
+                    font-size: var(--font-size-h2);
+                    font-weight: normal;
+                }
 
-            .section-sub-title-wrapper {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 1.6rem;
-            }
+                .section-sub-title-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 1.6rem;
+                }
 
-            .card-wrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: stretch;
-                gap: 2em;
+                .card-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: stretch;
+                    gap: 2em;
 
-                ::deep {
                     .card {
                         border-radius: .6rem;
                         box-shadow: 2px 2px 4px rgba(255, 255, 255, .2);
@@ -174,81 +174,81 @@
                 }
             }
         }
-    }
 
-    footer {
-        padding: var(--default-padding);
-        background-color: var(--footer-background-color);
-        border-top: 1px solid var(--default-border-color);
-        font-size: var(--font-size-small);
-        color: var(--default-text-color);
+        footer {
+            padding: var(--default-padding);
+            background-color: var(--footer-background-color);
+            border-top: 1px solid var(--default-border-color);
+            font-size: var(--font-size-small);
+            color: var(--default-text-color);
 
-        .footer-content {
-            display: grid;
-            gap: 6rem;
-            grid-template-columns: repeat(3, auto);
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            width: var(--footer-content-width);
+            .footer-content {
+                display: grid;
+                gap: 6rem;
+                grid-template-columns: repeat(3, auto);
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+                width: var(--footer-content-width);
 
-            .ar-logo-wrapper {
-                ::deep {
-                    .logo-wrapper {
-                        svg {
-                            .text-group {
-                                /*display: none;*/
+                .ar-logo-wrapper {
+                    ::deep {
+                        .logo-wrapper {
+                            svg {
+                                .text-group {
+                                    /*display: none;*/
+                                }
                             }
+                        }
+                    }
+                }
+
+                .app-page-links, .social-links {
+                    ul {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
+            }
+
+            .disclaimer {
+                margin-top: 1rem;
+                text-align: center;
+            }
+
+            &.no-title {
+                .footer-content {
+                    .social-links {
+                        .social-title {
+                            display: none;
                         }
                     }
                 }
             }
 
-            .app-page-links, .social-links {
-                ul {
-                    list-style: none;
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-        }
+            &.other-layout {
+                position: relative;
 
-        .disclaimer {
-            margin-top: 1rem;
-            text-align: center;
-        }
+                .footer-content {
+                    grid-template-columns: repeat(2, auto);
 
-        &.no-title {
-            .footer-content {
-                .social-links {
-                    .social-title {
-                        display: none;
-                    }
-                }
-            }
-        }
+                    .social-links {
+                        position: absolute;
+                        top: .4rem;
+                        left: 50%;
+                        transform: translateX(-50%);
 
-        &.other-layout {
-            position: relative;
+                        ul {
+                            display: flex;
+                            gap: 2rem;
+                            align-items: flex-start;
+                            justify-content: center;
+                        }
 
-            .footer-content {
-                grid-template-columns: repeat(2, auto);
-
-                .social-links {
-                    position: absolute;
-                    top: .4rem;
-                    left: 50%;
-                    transform: translateX(-50%);
-
-                    ul {
-                        display: flex;
-                        gap: 2rem;
-                        align-items: flex-start;
-                        justify-content: center;
-                    }
-
-                    .social-title {
-                        display: none;
+                        .social-title {
+                            display: none;
+                        }
                     }
                 }
             }
@@ -256,5 +256,14 @@
     }
 }
 
-@media (min-width: #{$bp-medium-max}) {
+@media (max-width: #{$bp-smoll-max}) {
+}
+
+@media (min-width: #{$bp-medium-min}) {
+}
+
+@media (min-width: #{$bp-large-min}) {
+}
+
+@media (min-width: #{$bp-medium-min}) {
 }

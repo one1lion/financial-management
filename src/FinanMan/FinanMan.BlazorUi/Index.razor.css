@@ -41,7 +41,7 @@
 .index-page #hero ::deep .login-form-wrapper {
   z-index: 2;
 }
-.index-page section {
+.index-page ::deep section {
   /* 
       TODO: Since the --default-content-max-width is based on 100vw,
       we will not get a fixed width (maybe somewhere around 900 or so)
@@ -52,11 +52,11 @@
   */
   max-width: var(--default-content-max-width);
 }
-.index-page section.content {
+.index-page ::deep section.content {
   padding: var(--default-padding);
   justify-content: space-between;
 }
-.index-page section.content .section-title {
+.index-page ::deep section.content .section-title {
   display: flex;
   justify-content: center;
   margin: 0;
@@ -64,19 +64,19 @@
   font-size: var(--font-size-h2);
   font-weight: normal;
 }
-.index-page section.content .section-sub-title-wrapper {
+.index-page ::deep section.content .section-sub-title-wrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 1.6rem;
 }
-.index-page section.content .card-wrapper {
+.index-page ::deep section.content .card-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
   gap: 2em;
 }
-.index-page section.content .card-wrapper ::deep .card {
+.index-page ::deep section.content .card-wrapper .card {
   border-radius: 0.6rem;
   box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
   border-color: var(--primary-text-color);
@@ -84,23 +84,23 @@
   justify-content: space-between;
   overflow: clip;
 }
-.index-page section.content .card-wrapper ::deep .card .card-header {
+.index-page ::deep section.content .card-wrapper .card .card-header {
   padding: 0;
   font-size: 0;
   border: none;
   flex: 0;
 }
-.index-page section.content .card-wrapper ::deep .card .card-header img {
+.index-page ::deep section.content .card-wrapper .card .card-header img {
   width: 50%;
   min-width: 365px;
   height: auto;
 }
-.index-page section.content .card-wrapper ::deep .card .card-body {
+.index-page ::deep section.content .card-wrapper .card .card-body {
   display: grid;
   align-items: center;
   max-width: 50%;
 }
-.index-page section.content .card-wrapper ::deep .card .card-body .card-text {
+.index-page ::deep section.content .card-wrapper .card .card-body .card-text {
   display: flex;
   justify-content: flex-end;
   padding-left: 1.2em;
@@ -109,47 +109,47 @@
   flex-direction: column;
   gap: 1em;
 }
-.index-page section.content .card-wrapper ::deep .card .card-body .card-text .title {
+.index-page ::deep section.content .card-wrapper .card .card-body .card-text .title {
   margin: 0;
   padding: 0;
   font-size: var(--font-size-h2);
   font-weight: normal;
 }
-.index-page section.content .card-wrapper ::deep .card:nth-of-type(even) {
+.index-page ::deep section.content .card-wrapper .card:nth-of-type(even) {
   flex-direction: row-reverse;
 }
-.index-page section.content .card-wrapper ::deep .card:nth-of-type(even) .card-header {
+.index-page ::deep section.content .card-wrapper .card:nth-of-type(even) .card-header {
   display: flex;
   justify-content: flex-end;
 }
-.index-page section.content .card-wrapper ::deep .card .card-footer {
+.index-page ::deep section.content .card-wrapper .card .card-footer {
   display: none;
 }
-.index-page section#secViewTransactionHist .preview-image-wrapper {
+.index-page ::deep#secViewTransactionHist .preview-image-wrapper {
   --picture-top-offset: 5rem;
   --picture-left-offset: 10rem;
   position: relative;
   padding-bottom: var(--picture-top-offset);
 }
-.index-page section#secViewTransactionHist .preview-image-wrapper img {
+.index-page ::deep#secViewTransactionHist .preview-image-wrapper img {
   width: calc(var(--default-content-max-width) - var(--picture-left-offset));
 }
-.index-page section#secViewTransactionHist .preview-image-wrapper img:first-of-type {
+.index-page ::deep#secViewTransactionHist .preview-image-wrapper img:first-of-type {
   transform: translateX(var(--picture-left-offset));
 }
-.index-page section#secViewTransactionHist .preview-image-wrapper img:last-of-type {
+.index-page ::deep#secViewTransactionHist .preview-image-wrapper img:last-of-type {
   position: absolute;
   top: var(--picture-top-offset);
   left: 0;
 }
-.index-page footer {
+.index-page ::deep footer {
   padding: var(--default-padding);
   background-color: var(--footer-background-color);
   border-top: 1px solid var(--default-border-color);
   font-size: var(--font-size-small);
   color: var(--default-text-color);
 }
-.index-page footer .footer-content {
+.index-page ::deep footer .footer-content {
   display: grid;
   gap: 6rem;
   grid-template-columns: repeat(3, auto);
@@ -158,39 +158,39 @@
   margin: 0 auto;
   width: var(--footer-content-width);
 }
-.index-page footer .footer-content .ar-logo-wrapper ::deep .logo-wrapper svg .text-group {
+.index-page ::deep footer .footer-content .ar-logo-wrapper ::deep .logo-wrapper svg .text-group {
   /*display: none;*/
 }
-.index-page footer .footer-content .app-page-links ul, .index-page footer .footer-content .social-links ul {
+.index-page ::deep footer .footer-content .app-page-links ul, .index-page ::deep footer .footer-content .social-links ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.index-page footer .disclaimer {
+.index-page ::deep footer .disclaimer {
   margin-top: 1rem;
   text-align: center;
 }
-.index-page footer.no-title .footer-content .social-links .social-title {
+.index-page ::deep footer.no-title .footer-content .social-links .social-title {
   display: none;
 }
-.index-page footer.other-layout {
+.index-page ::deep footer.other-layout {
   position: relative;
 }
-.index-page footer.other-layout .footer-content {
+.index-page ::deep footer.other-layout .footer-content {
   grid-template-columns: repeat(2, auto);
 }
-.index-page footer.other-layout .footer-content .social-links {
+.index-page ::deep footer.other-layout .footer-content .social-links {
   position: absolute;
   top: 0.4rem;
   left: 50%;
   transform: translateX(-50%);
 }
-.index-page footer.other-layout .footer-content .social-links ul {
+.index-page ::deep footer.other-layout .footer-content .social-links ul {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
   justify-content: center;
 }
-.index-page footer.other-layout .footer-content .social-links .social-title {
+.index-page ::deep footer.other-layout .footer-content .social-links .social-title {
   display: none;
 }

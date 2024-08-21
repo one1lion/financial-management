@@ -1,9 +1,13 @@
 ﻿@page "/"
+@using System.Globalization
+
+@using FinanMan.BlazorUi.Components.MainPageComponents
 @using FinanMan.BlazorUi.FlyoutContentComponents
 @using FinanMan.BlazorUi.SharedComponents.AccordionListComponents
+
 @using FinanMan.Shared.DataEntryModels
-@using System.Globalization
 @using FinanMan.SharedLocalization.Extensions
+
 @implements IDisposable
 
 <PageTitle>@SharedLocalizerService.IndexTitle</PageTitle>
@@ -19,119 +23,12 @@
             <img src="_content/FinanMan.BlazorUi/imgs/app-preview.png" alt="@SharedLocalizerService.HeroPreviewImageAltText" />
         </div>
     </header>
-    <section id="secTrackTransactions" class="content">
-        <h1 class="section-title">
-            @SharedLocalizerService.TrackTransactionsHeader
-        </h1>
 
-        <div class="section-sub-title-wrapper">
-            <span class="section-sub-title">
-                @SharedLocalizerService.TrackTransactionsSubTitle
-            </span>
-        </div>
-        <div class="card-wrapper">
-            <Card>
-                <CardHeader>
-                    <img src="_content/FinanMan.BlazorUi/imgs/piggy-bank.png" alt="@SharedLocalizerService.PiggyBankImageAltText" />
-                </CardHeader>
-                <CardBody>
-                    <CardText>
-                        <h2 class="title">
-                            @SharedLocalizerService.Deposits
-                        </h2>
-                        <span class="content">
-                            @SharedLocalizerService.DepositsOverviewDescription
-                        </span>
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                </CardFooter>
-            </Card>
-            <Card>
-                <CardHeader>
-                    <img src="_content/FinanMan.BlazorUi/imgs/card-transaction.png" alt="@SharedLocalizerService.CardTransactionImageAltText" />
-                </CardHeader>
-                <CardBody>
-                    <CardText>
-                        <h2 class="title">
-                            @SharedLocalizerService.Payments
-                        </h2>
-                        <span class="content">
-                            @SharedLocalizerService.PaymentsOverviewDescription
-                        </span>
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                </CardFooter>
-            </Card>
-            <Card>
-                <CardHeader>
-                    <img src="_content/FinanMan.BlazorUi/imgs/general-ledger.png" alt="@SharedLocalizerService.GeneralLedgerImageAltText" />
-                </CardHeader>
-                <CardBody>
-                    <CardText>
-                        <h2 class="title">
-                            @SharedLocalizerService.Transfers
-                        </h2>
-                        <span class="content">
-                            @SharedLocalizerService.DepositsOverviewDescription
-                        </span>
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                </CardFooter>
-            </Card>
-        </div>
-        <button type="button">
-            @SharedLocalizerService.GetStartedButtonText
-        </button>
-    </section>
-    <section id="secViewTransactionHist" class="content">
-        <h1 class="section-title">
-            @SharedLocalizerService.TransactionHistoryHeader
-        </h1>
-        <div class="section-sub-title-wrapper">
-            <span class="section-sub-title">
-                @SharedLocalizerService.TransactionHistorySubTitle
-            </span>
-        </div>
-        <div class="preview-image-wrapper">
-            <img src="_content/FinanMan.BlazorUi/imgs/transaction-history-chart-preview.png" alt="@SharedLocalizerService.ViewTransactionHistoryChartAltText" />
-            <img src="_content/FinanMan.BlazorUi/imgs/transaction-history-grid-preview.png" alt="@SharedLocalizerService.ViewTransactionHistoryGridAltText" />
-        </div>
-        <div class="clear-fix"></div>
-        <button type="button">
-            @SharedLocalizerService.GetStartedButtonText
-        </button>
-    </section>
-    <footer class="@SocialsClass">
-        <div class="footer-content">
-            <section class="ar-logo-wrapper">
-                <Logo Size="13rem" LogoType=LogoType.Svg ShowShadow=true ShadowColor="rgba(244, 244, 234, .2)" />
-            </section>
-
-            <section class="app-page-links">
-                <ul>
-                    <li><a href="#!">@SharedLocalizerService.ContactUs</a></li>
-                    <li><a href="#!">@SharedLocalizerService.About</a></li>
-                    <li><a href="#!">@SharedLocalizerService.Privacy</a></li>
-                    <li><a href="#!">@SharedLocalizerService.SiteMap</a></li>
-                </ul>
-            </section>
-
-            <section class="social-links">
-                <ul>
-                    <li><a href="#!"><i class="social-icon ri ri-twitter-x-fill" /> <span class="social-title">X</span></a></li>
-                    <li><a href="#!"><i class="social-icon ri ri-facebook-box-fill" /> <span class="social-title">Facebook</span></a></li>
-                    <li><a href="#!"><i class="social-icon ri ri-github-fill" /> <span class="social-title">GitHub</span></a></li>
-                    <li><a href="#!"><i class="social-icon ri ri-linkedin-box-fill" /> <span class="social-title">LinkedIn</span></a></li>
-                </ul>
-            </section>
-        </div>
-        <div class="disclaimer">
-            <span>@string.Format(SharedLocalizerService.Copyright, DateTime.Now.Year)</span>
-        </div>
-    </footer>
+    <TrackTransactionsSection />
+    
+    <ViewTransactionHistorySection />
+   
+    <Footer class="@SocialsClass" />
 </article>
 
 @{

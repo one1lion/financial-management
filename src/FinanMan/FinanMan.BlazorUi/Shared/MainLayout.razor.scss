@@ -1,4 +1,6 @@
-﻿.dukasoft-content-wrapper {
+﻿@import '../Sass/BreakPointVariables';
+
+.dukasoft-content-wrapper {
     display: grid;
     grid-template-areas: 'tb' 'm';
     grid-template-rows: auto 1fr;
