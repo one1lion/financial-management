@@ -86,5 +86,9 @@
   {
     "outputFile": "Shared/AppBarLinks.razor.css",
     "inputFile": "Shared/AppBarLinks.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Footer.razor.css",
+    "inputFile": "Shared/Footer.razor.scss"
   }
 ]

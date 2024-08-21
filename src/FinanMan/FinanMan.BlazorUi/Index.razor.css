@@ -125,72 +125,20 @@
 .index-page ::deep section.content .card-wrapper .card .card-footer {
   display: none;
 }
-.index-page ::deep#secViewTransactionHist .preview-image-wrapper {
+.index-page ::deep section#secViewTransactionHist .preview-image-wrapper {
   --picture-top-offset: 5rem;
   --picture-left-offset: 10rem;
   position: relative;
   padding-bottom: var(--picture-top-offset);
 }
-.index-page ::deep#secViewTransactionHist .preview-image-wrapper img {
+.index-page ::deep section#secViewTransactionHist .preview-image-wrapper img {
   width: calc(var(--default-content-max-width) - var(--picture-left-offset));
 }
-.index-page ::deep#secViewTransactionHist .preview-image-wrapper img:first-of-type {
+.index-page ::deep section#secViewTransactionHist .preview-image-wrapper img:first-of-type {
   transform: translateX(var(--picture-left-offset));
 }
-.index-page ::deep#secViewTransactionHist .preview-image-wrapper img:last-of-type {
+.index-page ::deep section#secViewTransactionHist .preview-image-wrapper img:last-of-type {
   position: absolute;
   top: var(--picture-top-offset);
   left: 0;
-}
-.index-page ::deep footer {
-  padding: var(--default-padding);
-  background-color: var(--footer-background-color);
-  border-top: 1px solid var(--default-border-color);
-  font-size: var(--font-size-small);
-  color: var(--default-text-color);
-}
-.index-page ::deep footer .footer-content {
-  display: grid;
-  gap: 6rem;
-  grid-template-columns: repeat(3, auto);
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: var(--footer-content-width);
-}
-.index-page ::deep footer .footer-content .ar-logo-wrapper ::deep .logo-wrapper svg .text-group {
-  /*display: none;*/
-}
-.index-page ::deep footer .footer-content .app-page-links ul, .index-page ::deep footer .footer-content .social-links ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.index-page ::deep footer .disclaimer {
-  margin-top: 1rem;
-  text-align: center;
-}
-.index-page ::deep footer.no-title .footer-content .social-links .social-title {
-  display: none;
-}
-.index-page ::deep footer.other-layout {
-  position: relative;
-}
-.index-page ::deep footer.other-layout .footer-content {
-  grid-template-columns: repeat(2, auto);
-}
-.index-page ::deep footer.other-layout .footer-content .social-links {
-  position: absolute;
-  top: 0.4rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.index-page ::deep footer.other-layout .footer-content .social-links ul {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  justify-content: center;
-}
-.index-page ::deep footer.other-layout .footer-content .social-links .social-title {
-  display: none;
 }
