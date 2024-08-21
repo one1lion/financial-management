@@ -1,0 +1,37 @@
+﻿#hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
+  gap: 2rem;
+  align-items: center;
+  padding: var(--default-padding);
+  z-index: 2;
+}
+#hero .title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  height: 100%;
+  gap: 1em;
+  z-index: 2;
+}
+#hero .title-wrapper .title {
+  font-size: var(--font-size-h2);
+}
+#hero .title-wrapper .sub-title {
+  font-size: var(--font-size-small);
+}
+#hero .title-wrapper button {
+  align-self: flex-start;
+}
+#hero .app-preview-wrapper {
+  width: 100%;
+}
+#hero .app-preview-wrapper img {
+  width: 100%;
+  height: auto;
+}
+#hero ::deep .login-form-wrapper {
+  z-index: 2;
+}

@@ -6,53 +6,6 @@
     display: grid;
     grid-template-rows: auto 1fr auto;
 
-    #hero {
-        position: relative;
-        display: grid;
-        grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
-        gap: 2rem;
-        align-items: center;
-        padding: var(--default-padding);
-        z-index: 2;
-
-        .title-wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-y: auto;
-            height: 100%;
-            gap: 1em;
-            z-index: 2;
-
-            .title {
-                font-size: var(--font-size-h2);
-            }
-
-            .sub-title {
-                font-size: var(--font-size-small);
-            }
-
-            button {
-                align-self: flex-start;
-            }
-        }
-
-        .app-preview-wrapper {
-            width: 100%;
-
-            img {
-                width: 100%;
-                height: auto;
-            }
-        }
-
-        ::deep {
-            .login-form-wrapper {
-                z-index: 2;
-            }
-        }
-    }
-
     ::deep {
         section {
             /* 

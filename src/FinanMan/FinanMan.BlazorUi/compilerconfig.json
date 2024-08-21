@@ -98,5 +98,9 @@
   {
     "outputFile": "Components/MainPageComponents/TrackTransactionsSection.razor.css",
     "inputFile": "Components/MainPageComponents/TrackTransactionsSection.razor.scss"
+  },
+  {
+    "outputFile": "Components/MainPageComponents/MainPageHero.razor.css",
+    "inputFile": "Components/MainPageComponents/MainPageHero.razor.scss"
   }
 ]
