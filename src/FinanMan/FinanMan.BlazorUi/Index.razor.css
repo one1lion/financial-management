@@ -43,12 +43,11 @@
 }
 .index-page ::deep section {
   /* 
-      TODO: Since the --default-content-max-width is based on 100vw,
-      we will not get a fixed width (maybe somewhere around 900 or so)
-      for the content section.  Change this to a fixed width in order 
-      to get a fixed max-width for the content. Then for regular width 
-      property, use the calc based on 100vw.
-
+  TODO: Since the --default-content-max-width is based on 100vw,
+  we will not get a fixed width (maybe somewhere around 900 or so)
+  for the content section.  Change this to a fixed width in order 
+  to get a fixed max-width for the content. Then for regular width 
+  property, use the calc based on 100vw.
   */
   max-width: var(--default-content-max-width);
 }
@@ -68,77 +67,4 @@
   display: flex;
   justify-content: center;
   margin-bottom: 1.6rem;
-}
-.index-page ::deep section.content .card-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2em;
-}
-.index-page ::deep section.content .card-wrapper .card {
-  border-radius: 0.6rem;
-  box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
-  border-color: var(--primary-text-color);
-  display: flex;
-  justify-content: space-between;
-  overflow: clip;
-}
-.index-page ::deep section.content .card-wrapper .card .card-header {
-  padding: 0;
-  font-size: 0;
-  border: none;
-  flex: 0;
-}
-.index-page ::deep section.content .card-wrapper .card .card-header img {
-  width: 50%;
-  min-width: 365px;
-  height: auto;
-}
-.index-page ::deep section.content .card-wrapper .card .card-body {
-  display: grid;
-  align-items: center;
-  max-width: 50%;
-}
-.index-page ::deep section.content .card-wrapper .card .card-body .card-text {
-  display: flex;
-  justify-content: flex-end;
-  padding-left: 1.2em;
-  padding-right: 1.2em;
-  border: none;
-  flex-direction: column;
-  gap: 1em;
-}
-.index-page ::deep section.content .card-wrapper .card .card-body .card-text .title {
-  margin: 0;
-  padding: 0;
-  font-size: var(--font-size-h2);
-  font-weight: normal;
-}
-.index-page ::deep section.content .card-wrapper .card:nth-of-type(even) {
-  flex-direction: row-reverse;
-}
-.index-page ::deep section.content .card-wrapper .card:nth-of-type(even) .card-header {
-  display: flex;
-  justify-content: flex-end;
-}
-.index-page ::deep section.content .card-wrapper .card .card-footer {
-  display: none;
-}
-.index-page ::deep section#secViewTransactionHist .preview-image-wrapper {
-  --picture-top-offset: 5rem;
-  --picture-left-offset: 10rem;
-  position: relative;
-  padding-bottom: var(--picture-top-offset);
-}
-.index-page ::deep section#secViewTransactionHist .preview-image-wrapper img {
-  width: calc(var(--default-content-max-width) - var(--picture-left-offset));
-}
-.index-page ::deep section#secViewTransactionHist .preview-image-wrapper img:first-of-type {
-  transform: translateX(var(--picture-left-offset));
-}
-.index-page ::deep section#secViewTransactionHist .preview-image-wrapper img:last-of-type {
-  position: absolute;
-  top: var(--picture-top-offset);
-  left: 0;
 }

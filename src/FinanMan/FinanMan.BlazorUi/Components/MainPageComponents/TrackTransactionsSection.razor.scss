@@ -1,0 +1,69 @@
+#secTrackTransactions {
+    .card-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        gap: 2em;
+
+        ::deep {
+            .card {
+                border-radius: .6rem;
+                box-shadow: 2px 2px 4px rgba(255, 255, 255, .2);
+                border-color: var(--primary-text-color);
+                display: flex;
+                justify-content: space-between;
+                overflow: clip;
+
+                .card-header {
+                    padding: 0;
+                    font-size: 0;
+                    border: none;
+                    flex: 0;
+
+                    img {
+                        width: 50%;
+                        min-width: 365px;
+                        height: auto;
+                    }
+                }
+
+                .card-body {
+                    display: grid;
+                    align-items: center;
+                    max-width: 50%;
+
+                    .card-text {
+                        display: flex;
+                        justify-content: flex-end;
+                        padding-left: 1.2em;
+                        padding-right: 1.2em;
+                        border: none;
+                        flex-direction: column;
+                        gap: 1em;
+
+                        .title {
+                            margin: 0;
+                            padding: 0;
+                            font-size: var(--font-size-h2);
+                            font-weight: normal;
+                        }
+                    }
+                }
+
+                &:nth-of-type(even) {
+                    flex-direction: row-reverse;
+
+                    .card-header {
+                        display: flex;
+                        justify-content: flex-end;
+                    }
+                }
+
+                .card-footer {
+                    display: none;
+                }
+            }
+        }
+    }
+}

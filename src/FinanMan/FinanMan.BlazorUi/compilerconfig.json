@@ -90,5 +90,13 @@
   {
     "outputFile": "Shared/Footer.razor.css",
     "inputFile": "Shared/Footer.razor.scss"
+  },
+  {
+    "outputFile": "Components/MainPageComponents/ViewTransactionHistorySection.razor.css",
+    "inputFile": "Components/MainPageComponents/ViewTransactionHistorySection.razor.scss"
+  },
+  {
+    "outputFile": "Components/MainPageComponents/TrackTransactionsSection.razor.css",
+    "inputFile": "Components/MainPageComponents/TrackTransactionsSection.razor.scss"
   }
 ]
