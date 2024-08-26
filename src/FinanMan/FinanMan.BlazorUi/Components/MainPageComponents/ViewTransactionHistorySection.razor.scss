@@ -1,3 +1,5 @@
+@import '../../Sass/BreakPointVariables';
+
 #secViewTransactionHist {
     .preview-image-wrapper {
         --picture-top-offset: 5rem;
@@ -18,5 +20,17 @@
                 left: 0;
             }
         }
+    }
+}
+
+@container (max-width: #{$bp-smoll-max}) {
+    #secViewTransactionHist {
+        background-color: pink;
+    }
+}
+
+@container (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    #secViewTransactionHist {
+        background-color: blue;
     }
 }

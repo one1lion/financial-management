@@ -5,6 +5,7 @@
     gap: .25em;
     text-decoration: none;
     color: var(--light);
+    z-index: 3;
 
     .app-title {
         font-size: var(--font-size-h2);

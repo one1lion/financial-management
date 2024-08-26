@@ -1,3 +1,5 @@
+@import '../Sass/BreakPointVariables';
+
 footer {
     padding: var(--default-padding);
     background-color: var(--footer-background-color);
@@ -75,4 +77,10 @@ footer {
             }
         }
     }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
 }

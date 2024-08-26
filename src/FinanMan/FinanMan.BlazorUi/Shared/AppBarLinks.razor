@@ -1,8 +1,17 @@
-<div class="app-links">
-    <ul>
-        <li class="link">About</li>
-        <li class="link">Contact Us</li>
-        <li class="link">Log in</li>
-    </ul>
-    <button class="btn btn-primary">Get Started</button>
+<div class="app-links@(_expanded ? " expanded" : null)" @onclick="_ => _expanded = false">
+    <button class="hamburger-button" @onclick="_ => _expanded = !_expanded" @onclick:stopPropagation=true>
+        <i class="ri-menu-line"></i>
+    </button>
+    <div class="menu-contents" @onclick:stopPropagation=true>
+        <ul>
+            <li class="link">About</li>
+            <li class="link">Contact Us</li>
+            <li class="link">Log in</li>
+        </ul>
+        <button class="btn btn-primary">Get Started</button>
+    </div>
 </div>
+
+@code {
+    private bool _expanded;
+}

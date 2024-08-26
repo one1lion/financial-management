@@ -1,3 +1,5 @@
+@import '../../Sass/BreakPointVariables';
+
 #hero {
     position: relative;
     display: grid;
@@ -43,4 +45,10 @@
             z-index: 2;
         }
     }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
 }

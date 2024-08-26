@@ -5,6 +5,9 @@
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    container-type: inline-size;
+    container-name: card;
+    overflow: auto;
 
     ::deep {
         section {
@@ -43,11 +46,5 @@
 @media (max-width: #{$bp-smoll-max}) {
 }
 
-@media (min-width: #{$bp-medium-min}) {
-}
-
-@media (min-width: #{$bp-large-min}) {
-}
-
-@media (min-width: #{$bp-medium-min}) {
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
 }

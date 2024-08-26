@@ -1,13 +1,26 @@
 ﻿.app-links {
+  position: relative;
+}
+.app-links .hamburger-button {
+  position: absolute;
+  top: calc(var(--topbar-height) / 2);
+  transform: translateY(-50%);
+  display: none;
+  background-color: rgba(30, 30, 30, 0.5);
+  height: calc(var(--topbar-height) - 0.6em);
+  width: calc(var(--topbar-height) - 0.6em);
+}
+.app-links .hamburger-button:not(:focus):not(:hover) {
+  background-color: rgba(30, 30, 30, 0.2);
+}
+.app-links .menu-contents {
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   gap: 0.75em;
 }
-.app-links ul {
+.app-links .menu-contents ul {
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   list-style-type: none;

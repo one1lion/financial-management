@@ -3,6 +3,9 @@
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  container-type: inline-size;
+  container-name: card;
+  overflow: auto;
 }
 .index-page ::deep section {
   /* 

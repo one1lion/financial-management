@@ -1,21 +1,37 @@
 .app-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: .75em;
+    position: relative;
 
-    ul {
+    .hamburger-button {
+        position: absolute;
+        top: calc(var(--topbar-height) / 2);
+        transform: translateY(-50%);
+        display: none;
+        background-color: rgba(#1e1e1e, .5);
+        height: calc(var(--topbar-height) - .6em);
+        width: calc(var(--topbar-height) - .6em);
+
+        &:not(:focus):not(:hover) {
+            background-color: rgba(#1e1e1e, .2);
+        }
+    }
+
+    .menu-contents {
         display: flex;
-        flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        gap: 1em;
-        font-weight: 600;
-        text-transform: uppercase;
-        white-space: nowrap;
+        gap: .75em;
+
+        ul {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            gap: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
     }
 }
