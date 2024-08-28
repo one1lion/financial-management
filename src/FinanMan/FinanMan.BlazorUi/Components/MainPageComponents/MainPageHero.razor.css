@@ -35,3 +35,29 @@
 #hero ::deep .login-form-wrapper {
   z-index: 2;
 }
+
+@media (max-width: 480px) {
+  #hero {
+    grid-template-columns: 1fr;
+    grid-template-areas: "hp" "tc";
+    gap: 1rem;
+    width: 100vw;
+    padding: 0;
+  }
+  #hero .title-wrapper {
+    padding: var(--default-padding-mobile);
+    grid-area: tc;
+  }
+  #hero .title-wrapper .title {
+    font-size: var(--font-size-h3);
+  }
+  #hero .title-wrapper .sub-title {
+    font-size: var(--font-size-small);
+  }
+  #hero .app-preview-wrapper {
+    grid-area: hp;
+  }
+  #hero .app-preview-wrapper img {
+    width: 100vw;
+  }
+}

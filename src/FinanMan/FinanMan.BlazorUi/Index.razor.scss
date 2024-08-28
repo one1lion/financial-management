@@ -44,6 +44,22 @@
 }
 
 @media (max-width: #{$bp-smoll-max}) {
+    .index-page {
+        ::deep {
+            section {
+                width: 100vw;
+
+                &.content {
+                    padding: var(--default-padding-mobile);
+                }
+            }
+
+            footer {
+                padding: var(--default-padding-mobile);
+                width: 100vw;
+            }
+        }
+    }
 }
 
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
