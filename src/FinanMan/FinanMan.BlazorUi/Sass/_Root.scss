@@ -13,11 +13,12 @@
     --topbar-background-color: #020305;
     --topbar-foreground-color: var(--primary-text-color);
     --border-glow: rgba(255,255,255,.3); // Cyberpunk Theme: #{$bubblegum};
-    --default-border-color: #D7F5FA;
+    --default-border-color: #{$purple4};
     --faint-border-glow: rgba(255, 255, 255, .1);
     --default-padding: 2.4rem;
     --default-padding-mobile: .5rem;
     --default-content-max-width: calc(100vw - var(--default-padding) * 2);
+    --section-background-color: #{$some-dark-color};
     /* Cards */
     --card-background-color: var(--primary-background-color);
     --card-foreground-color: var(--primary-text-color);
@@ -80,6 +81,13 @@
     /* Borders for Active Items */
     --border-active: #fff;
     --border-inactive: #1d2c33;
+    --border-gradient: linear-gradient(45deg, #{$purple1} 0%, #{$purple5} 50%, #{$purple1} 100%);
     /* Other Sizing */
     --footer-content-width: #{$bp-medium-max};
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+    :root {
+        --base-font-size: #{$base-font-size-mobile};
+    }
 }

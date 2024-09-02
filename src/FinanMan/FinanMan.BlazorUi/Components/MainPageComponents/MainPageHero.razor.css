@@ -24,6 +24,7 @@
 }
 #hero .title-wrapper button {
   align-self: flex-start;
+  font-size: var(--font-size-h6);
 }
 #hero .app-preview-wrapper {
   width: 100%;
@@ -38,26 +39,37 @@
 
 @media (max-width: 480px) {
   #hero {
+    position: relative;
     grid-template-columns: 1fr;
     grid-template-areas: "hp" "tc";
-    gap: 1rem;
+    gap: 0.4rem;
     width: 100vw;
-    padding: 0;
+    padding: var(--default-padding-mobile);
+    padding-bottom: 0.7em;
   }
   #hero .title-wrapper {
-    padding: var(--default-padding-mobile);
     grid-area: tc;
+    gap: 0.5rem;
   }
   #hero .title-wrapper .title {
     font-size: var(--font-size-h3);
   }
   #hero .title-wrapper .sub-title {
-    font-size: var(--font-size-small);
+    font-size: var(--base-font-size);
+  }
+  #hero .title-wrapper #btnHeroGetStarted {
+    margin-top: 0.3em;
+    align-self: center;
   }
   #hero .app-preview-wrapper {
     grid-area: hp;
+    padding: 0.2rem;
+    background: var(--border-gradient);
+    border-radius: 0.4rem;
+    display: grid;
+    place-items: center;
   }
   #hero .app-preview-wrapper img {
-    width: 100vw;
+    border-radius: 0.3rem;
   }
 }

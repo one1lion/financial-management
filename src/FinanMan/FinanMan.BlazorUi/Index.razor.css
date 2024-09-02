@@ -38,9 +38,13 @@
 @media (max-width: 480px) {
   .index-page ::deep section {
     width: 100vw;
+    max-width: unset;
   }
   .index-page ::deep section.content {
     padding: var(--default-padding-mobile);
+  }
+  .index-page ::deep section.content:nth-of-type(odd) {
+    background-color: var(--section-background-color);
   }
   .index-page ::deep footer {
     padding: var(--default-padding-mobile);

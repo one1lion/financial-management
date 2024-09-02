@@ -16,13 +16,5 @@
   left: 0;
 }
 
-@container (max-width: 480px) {
-  #secViewTransactionHist {
-    background-color: pink;
-  }
-}
-@container (min-width: 480.1px) and (max-width: 930px) {
-  #secViewTransactionHist {
-    background-color: blue;
-  }
-}
+@container (max-width: 480px) {}
+@container (min-width: 480.1px) and (max-width: 930px) {}

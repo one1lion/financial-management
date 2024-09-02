@@ -48,9 +48,14 @@
         ::deep {
             section {
                 width: 100vw;
+                max-width: unset;
 
                 &.content {
                     padding: var(--default-padding-mobile);
+
+                    &:nth-of-type(odd) {
+                        background-color: var(--section-background-color);
+                    }
                 }
             }
 

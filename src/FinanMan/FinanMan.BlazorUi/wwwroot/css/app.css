@@ -10,11 +10,12 @@
   --topbar-background-color: #020305;
   --topbar-foreground-color: var(--primary-text-color);
   --border-glow: rgba(255,255,255,.3);
-  --default-border-color: #D7F5FA;
+  --default-border-color: #530296;
   --faint-border-glow: rgba(255, 255, 255, .1);
   --default-padding: 2.4rem;
   --default-padding-mobile: .5rem;
   --default-content-max-width: calc(100vw - var(--default-padding) * 2);
+  --section-background-color: #0e0e0f;
   /* Cards */
   --card-background-color: var(--primary-background-color);
   --card-foreground-color: var(--primary-text-color);
@@ -77,10 +78,16 @@
   /* Borders for Active Items */
   --border-active: #fff;
   --border-inactive: #1d2c33;
+  --border-gradient: linear-gradient(45deg, #34005C 0%, #7900B8 50%, #34005C 100%);
   /* Other Sizing */
   --footer-content-width: 930px;
 }
 
+@media (max-width: 480px) {
+  :root {
+    --base-font-size: 14px;
+  }
+}
 button, .btn {
   color: var(--button-foreground-color);
   background-color: var(--button-background-color);

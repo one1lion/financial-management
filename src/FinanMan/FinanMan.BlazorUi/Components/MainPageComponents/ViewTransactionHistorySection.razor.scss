@@ -25,12 +25,10 @@
 
 @container (max-width: #{$bp-smoll-max}) {
     #secViewTransactionHist {
-        background-color: pink;
     }
 }
 
 @container (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
     #secViewTransactionHist {
-        background-color: blue;
     }
 }
