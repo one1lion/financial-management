@@ -25,11 +25,6 @@
         .sub-title {
             font-size: var(--font-size-small);
         }
-
-        button {
-            align-self: flex-start;
-            font-size: var(--font-size-h6);
-        }
     }
 
     .app-preview-wrapper {
@@ -68,11 +63,6 @@
 
             .sub-title {
                 font-size: var(--base-font-size);
-            }
-
-            #btnHeroGetStarted {
-                margin-top: .3em;
-                align-self: center;
             }
         }
 

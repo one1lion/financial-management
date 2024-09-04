@@ -10,6 +10,11 @@
     overflow: auto;
 
     ::deep {
+        .getting-started-button {
+            align-self: flex-start;
+            font-size: var(--font-size-h6);
+        }
+
         section {
             /* 
             TODO: Since the --default-content-max-width is based on 100vw,
@@ -46,12 +51,23 @@
 @media (max-width: #{$bp-smoll-max}) {
     .index-page {
         ::deep {
+            .getting-started-button {
+                margin-top: .3em;
+                align-self: center;
+            }
+
             section {
                 width: 100vw;
                 max-width: unset;
 
                 &.content {
                     padding: var(--default-padding-mobile);
+                    padding-bottom: 0.7em;
+
+                    .section-title {
+                        font-size: var(--font-size-h3);
+                        justify-content: flex-start;
+                    }
 
                     &:nth-of-type(odd) {
                         background-color: var(--section-background-color);

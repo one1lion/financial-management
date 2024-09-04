@@ -22,10 +22,6 @@
 #hero .title-wrapper .sub-title {
   font-size: var(--font-size-small);
 }
-#hero .title-wrapper button {
-  align-self: flex-start;
-  font-size: var(--font-size-h6);
-}
 #hero .app-preview-wrapper {
   width: 100%;
 }
@@ -56,10 +52,6 @@
   }
   #hero .title-wrapper .sub-title {
     font-size: var(--base-font-size);
-  }
-  #hero .title-wrapper #btnHeroGetStarted {
-    margin-top: 0.3em;
-    align-self: center;
   }
   #hero .app-preview-wrapper {
     grid-area: hp;

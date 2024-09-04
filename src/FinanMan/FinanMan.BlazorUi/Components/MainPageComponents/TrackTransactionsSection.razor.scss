@@ -71,6 +71,45 @@
 }
 
 @media (max-width: #{$bp-smoll-max}) {
+    #secTrackTransactions {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        gap: 1em;
+
+        .card-wrapper {
+            display: flex;
+            align-items: center;
+
+            ::deep {
+                .card {
+                    flex-direction: column;
+                    gap: 1em;
+                    width: 30ch;
+
+                    .card-header {
+                        img {
+                            width: 100%;
+                            min-width: 100%;
+                        }
+                    }
+
+                    .card-body {
+                        max-width: 100%;
+
+                        .card-text {
+                            justify-content: flex-start;
+                            padding-top: 0;
+                        }
+                    }
+
+                    &:nth-of-type(even) {
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {

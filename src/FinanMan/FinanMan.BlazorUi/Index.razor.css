@@ -7,6 +7,10 @@
   container-name: card;
   overflow: auto;
 }
+.index-page ::deep .getting-started-button {
+  align-self: flex-start;
+  font-size: var(--font-size-h6);
+}
 .index-page ::deep section {
   /* 
   TODO: Since the --default-content-max-width is based on 100vw,
@@ -36,12 +40,21 @@
 }
 
 @media (max-width: 480px) {
+  .index-page ::deep .getting-started-button {
+    margin-top: 0.3em;
+    align-self: center;
+  }
   .index-page ::deep section {
     width: 100vw;
     max-width: unset;
   }
   .index-page ::deep section.content {
     padding: var(--default-padding-mobile);
+    padding-bottom: 0.7em;
+  }
+  .index-page ::deep section.content .section-title {
+    font-size: var(--font-size-h3);
+    justify-content: flex-start;
   }
   .index-page ::deep section.content:nth-of-type(odd) {
     background-color: var(--section-background-color);
