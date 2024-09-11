@@ -51,6 +51,10 @@
   .index-page ::deep section.content {
     padding: var(--default-padding-mobile);
     padding-bottom: 0.7em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 1em;
   }
   .index-page ::deep section.content .section-title {
     font-size: var(--font-size-h3);

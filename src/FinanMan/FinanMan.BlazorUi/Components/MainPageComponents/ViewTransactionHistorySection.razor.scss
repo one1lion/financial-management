@@ -11,24 +11,42 @@
             width: calc(var(--default-content-max-width) - var(--picture-left-offset));
 
             &:first-of-type {
-                transform: translateX(var(--picture-left-offset));
             }
 
             &:last-of-type {
                 position: absolute;
-                top: var(--picture-top-offset);
                 left: 0;
+                top: var(--picture-top-offset);
+                transform: translateX(var(--picture-left-offset));
             }
         }
     }
 }
 
-@container (max-width: #{$bp-smoll-max}) {
+@media (max-width: #{$bp-smoll-max}) {
     #secViewTransactionHist {
+        .preview-image-wrapper {
+            height: 14ch;
+            width: auto;
+            margin: 0 auto;
+            img {
+                --picture-top-offset: 2rem;
+                --picture-left-offset: 1rem;
+                
+
+                &:first-of-type {
+                    transform: translateX(calc(-1 * var(--picture-left-offset)));
+                }
+
+                &:last-of-type {
+                    top: var(--picture-top-offset);
+                }
+            }
+        }
     }
 }
 
-@container (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
     #secViewTransactionHist {
     }
 }

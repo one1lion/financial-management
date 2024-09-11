@@ -56,12 +56,6 @@
 }
 
 @media (max-width: 480px) {
-  #secTrackTransactions {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    gap: 1em;
-  }
   #secTrackTransactions .card-wrapper {
     display: flex;
     align-items: center;

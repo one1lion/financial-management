@@ -40,6 +40,13 @@ public partial class Index
         return InvokeAsync(StateHasChanged);
     }
 
+    private Task HandleGettingStartedClicked(MouseEventArgs e)
+    {
+        // TODO: Handle Getting Started Clicked
+        Console.WriteLine("Getting Started was clicked");
+        return Task.CompletedTask;
+    }
+
     public void Dispose()
     {
     }

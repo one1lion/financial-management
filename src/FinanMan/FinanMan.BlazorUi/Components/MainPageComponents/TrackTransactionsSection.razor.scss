@@ -72,11 +72,6 @@
 
 @media (max-width: #{$bp-smoll-max}) {
     #secTrackTransactions {
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        gap: 1em;
-
         .card-wrapper {
             display: flex;
             align-items: center;

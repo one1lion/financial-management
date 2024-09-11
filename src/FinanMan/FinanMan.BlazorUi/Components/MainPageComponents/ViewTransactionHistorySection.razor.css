@@ -7,14 +7,27 @@
 #secViewTransactionHist .preview-image-wrapper img {
   width: calc(var(--default-content-max-width) - var(--picture-left-offset));
 }
-#secViewTransactionHist .preview-image-wrapper img:first-of-type {
-  transform: translateX(var(--picture-left-offset));
-}
 #secViewTransactionHist .preview-image-wrapper img:last-of-type {
   position: absolute;
-  top: var(--picture-top-offset);
   left: 0;
+  top: var(--picture-top-offset);
+  transform: translateX(var(--picture-left-offset));
 }
 
-@container (max-width: 480px) {}
-@container (min-width: 480.1px) and (max-width: 930px) {}
+@media (max-width: 480px) {
+  #secViewTransactionHist .preview-image-wrapper {
+    height: 14ch;
+    width: auto;
+    margin: 0 auto;
+  }
+  #secViewTransactionHist .preview-image-wrapper img {
+    --picture-top-offset: 2rem;
+    --picture-left-offset: 1rem;
+  }
+  #secViewTransactionHist .preview-image-wrapper img:first-of-type {
+    transform: translateX(calc(-1 * var(--picture-left-offset)));
+  }
+  #secViewTransactionHist .preview-image-wrapper img:last-of-type {
+    top: var(--picture-top-offset);
+  }
+}

@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace FinanMan.Maui;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : ContentPage, IDisposable
 {
     private readonly static string[] _rtlCultureCodes = new string[] { "ar", "fa", "he", "ur" };
 
@@ -24,5 +24,8 @@ public partial class MainPage : ContentPage
         return Task.CompletedTask;
     }
 
-    
+    public void Dispose()
+    {
+        _uiState.ActiveLanguageChanged -= HandleActiveLangaugeChanged;
+    }
 }
