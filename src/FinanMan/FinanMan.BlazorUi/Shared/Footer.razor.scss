@@ -16,6 +16,10 @@ footer {
         margin: 0 auto;
         width: var(--footer-content-width);
 
+        section {
+            width: unset;
+        }
+
         .ar-logo-wrapper {
             ::deep {
                 .logo-wrapper {
@@ -56,8 +60,6 @@ footer {
         position: relative;
 
         .footer-content {
-            grid-template-columns: repeat(2, auto);
-
             .social-links {
                 position: absolute;
                 top: .4rem;
@@ -80,7 +82,68 @@ footer {
 }
 
 @media (max-width: #{$bp-smoll-max}) {
+    footer {
+        --logo-bleed-margin: 3.5rem;
+        margin-top: var(--logo-bleed-margin);
 
+        .footer-content {
+            grid-template-areas:
+                'lo lo' 'al sl';
+            grid-template-columns: repeat(2, 1fr);
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 0;
+            width: unset;
+            margin-top: calc(-1 * var(--logo-bleed-margin));
+
+            .ar-logo-wrapper {
+                grid-area: lo;
+                justify-self: center;
+
+                ::deep {
+                    .logo-wrapper {
+                        svg {
+                            .text-group {
+                            }
+                        }
+                    }
+                }
+            }
+
+            .app-page-links {
+                grid-area: al;
+            }
+
+            .social-links {
+                grid-area: sl;
+                justify-self: flex-end;
+            }
+        }
+
+        .disclaimer {
+        }
+
+        &.no-title {
+            .footer-content {
+                .social-links {
+                    .social-title {
+                    }
+                }
+            }
+        }
+
+        &.other-layout {
+            .footer-content {
+                .social-links {
+                    ul {
+                    }
+
+                    .social-title {
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {

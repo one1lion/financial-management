@@ -10,9 +10,6 @@
         img {
             width: calc(var(--default-content-max-width) - var(--picture-left-offset));
 
-            &:first-of-type {
-            }
-
             &:last-of-type {
                 position: absolute;
                 left: 0;

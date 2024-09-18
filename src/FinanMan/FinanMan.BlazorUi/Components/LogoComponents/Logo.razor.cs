@@ -6,6 +6,8 @@ public partial class Logo
     [Parameter] public string Size { get; set; } = "6rem";
     [Parameter] public string ShadowColor { get; set; } = "rgba(44, 44, 44, .2)";
     [Parameter] public bool ShowShadow { get; set; } = true;
+    [Parameter] public bool ShowText { get; set; } = true;
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object?>? AdditionalAttributes { get; set; }
 
     private readonly string _id = Guid.NewGuid().ToString().Split('-').First();
 
