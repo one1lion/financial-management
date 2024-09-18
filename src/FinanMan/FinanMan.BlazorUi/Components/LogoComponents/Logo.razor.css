@@ -1,46 +1,45 @@
 ﻿.logo-wrapper {
-  --my-color1: var(--color1, #652b84);
-  --my-color2: var(--color2, rgba(144, 144, 144, .2));
-  --size: 1rem;
+  --o1l-use-color1: var(--o1l-color1, #652b84);
+  --o1l-use-color2: var(--o1l-color2, rgba(144, 144, 144, .2));
+  --o1l-use-text-color: var(--o1l-text-color, currentColor);
+  --o1l-use-size: var(--o1l-size, 1em);
   height: auto;
-  width: var(--size);
+  width: var(--o1l-use-size);
   user-select: none;
+}
+.logo-wrapper[class*=text-] {
+  display: flex;
+  gap: 1em;
+}
+.logo-wrapper[class*=text-].text-below {
+  flex-direction: column;
+  align-items: center;
+}
+.logo-wrapper[class*=text-].text-right {
+  align-items: flex-end;
+}
+.logo-wrapper[class*=text-].text-right .text-graphic {
+  transform: translateY(-0.8em);
 }
 
 .color1 {
-  fill: var(--my-color1);
-}
-
-.color2 {
-  fill: var(--my-color2);
+  fill: var(--o1l-use-color1);
 }
 
 #shadow {
   opacity: 0.15;
 }
 
-.cls-1, .cls-2, .cls-3, .cls-4, .elipse {
+.elipse {
   mix-blend-mode: multiply;
   opacity: 0.84;
-}
-.cls-1.cls-1, .cls-2.cls-1, .cls-3.cls-1, .cls-4.cls-1, .elipse.cls-1 {
-  fill: url(#linear-gradient-3);
-}
-.cls-1.cls-2, .cls-2.cls-2, .cls-3.cls-2, .cls-4.cls-2, .elipse.cls-2 {
-  fill: url(#linear-gradient-5);
-}
-.cls-1.cls-3, .cls-2.cls-3, .cls-3.cls-3, .cls-4.cls-3, .elipse.cls-3 {
-  fill: url(#linear-gradient-2);
-}
-.cls-1.cls-4, .cls-2.cls-4, .cls-3.cls-4, .cls-4.cls-4, .elipse.cls-4 {
-  fill: url(#linear-gradient-4);
-}
-.cls-1.cls-5, .cls-2.cls-5, .cls-3.cls-5, .cls-4.cls-5, .elipse.cls-5 {
-  isolation: isolate;
-}
-.cls-1.elipse, .cls-2.elipse, .cls-3.elipse, .cls-4.elipse, .elipse.elipse {
   fill: url(#linear-gradient);
   opacity: 0.15;
+}
+
+.text-path {
+  color: var(--o1l-use-text-color);
+  fill: currentColor;
 }
 
 @keyframes oscillate {
