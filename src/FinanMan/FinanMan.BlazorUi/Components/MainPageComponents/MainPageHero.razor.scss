@@ -6,7 +6,6 @@
     grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
     gap: 2rem;
     align-items: center;
-    padding: var(--default-padding);
     z-index: 2;
 
     .title-wrapper {
@@ -50,12 +49,11 @@
         grid-template-areas: 'hp' 'tc';
         gap: .4rem;
         width: 100vw;
-        padding: var(--default-padding-mobile);
-        padding-bottom: .7em;
 
         .title-wrapper {
             grid-area: tc;
             gap: .5rem;
+            padding: var(--default-padding-mobile);
 
             .title {
                 font-size: var(--font-size-h3);

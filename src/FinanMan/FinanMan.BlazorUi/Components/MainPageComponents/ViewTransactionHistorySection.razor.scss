@@ -23,13 +23,12 @@
 @media (max-width: #{$bp-smoll-max}) {
     #secViewTransactionHist {
         .preview-image-wrapper {
-            height: 14ch;
+            --picture-top-offset: 2rem;
+            --picture-left-offset: 1rem;
             width: auto;
             margin: 0 auto;
+
             img {
-                --picture-top-offset: 2rem;
-                --picture-left-offset: 1rem;
-                
 
                 &:first-of-type {
                     transform: translateX(calc(-1 * var(--picture-left-offset)));
