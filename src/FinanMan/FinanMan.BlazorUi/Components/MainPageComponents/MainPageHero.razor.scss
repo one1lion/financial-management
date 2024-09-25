@@ -42,7 +42,7 @@
     }
 }
 
-@media (max-width: #{$bp-smoll-max}) {
+@mixin narrow-hero {
     #hero {
         position: relative;
         grid-template-columns: 1fr;
@@ -79,5 +79,10 @@
     }
 }
 
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-hero;
+}
+
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-hero;
 }

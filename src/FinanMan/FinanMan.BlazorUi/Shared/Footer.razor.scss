@@ -80,7 +80,7 @@ footer {
     }
 }
 
-@media (max-width: #{$bp-smoll-max}) {
+@mixin narrow-footer {
     footer {
         --logo-bleed-margin: 3.5rem;
         margin-top: var(--logo-bleed-margin);
@@ -145,5 +145,10 @@ footer {
     }
 }
 
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-footer;
+}
+
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-footer;
 }

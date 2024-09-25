@@ -81,3 +81,28 @@
     flex-direction: column;
   }
 }
+@media (min-width: 480.1px) and (max-width: 930px) {
+  #secTrackTransactions .card-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  #secTrackTransactions .card-wrapper ::deep .card {
+    flex-direction: column;
+    gap: 1em;
+    width: 30ch;
+  }
+  #secTrackTransactions .card-wrapper ::deep .card .card-header img {
+    width: 100%;
+    min-width: 100%;
+  }
+  #secTrackTransactions .card-wrapper ::deep .card .card-body {
+    max-width: 100%;
+  }
+  #secTrackTransactions .card-wrapper ::deep .card .card-body .card-text {
+    justify-content: flex-start;
+    padding-top: 0;
+  }
+  #secTrackTransactions .card-wrapper ::deep .card:nth-of-type(even) {
+    flex-direction: column;
+  }
+}

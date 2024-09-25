@@ -71,7 +71,7 @@
     }
 }
 
-@media (max-width: #{$bp-smoll-max}) {
+@mixin narrow-section {
     #secTrackTransactions {
         .card-wrapper {
             display: flex;
@@ -108,5 +108,10 @@
     }
 }
 
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-section;
+}
+
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-section;
 }

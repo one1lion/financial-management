@@ -76,3 +76,29 @@ footer.other-layout .footer-content .social-links .social-title {
     justify-self: flex-end;
   }
 }
+@media (min-width: 480.1px) and (max-width: 930px) {
+  footer {
+    --logo-bleed-margin: 3.5rem;
+    margin-top: var(--logo-bleed-margin);
+  }
+  footer .footer-content {
+    grid-template-areas: "lo lo" "al sl";
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0;
+    width: unset;
+    margin-top: calc(-1 * var(--logo-bleed-margin));
+  }
+  footer .footer-content .ar-logo-wrapper {
+    grid-area: lo;
+    justify-self: center;
+  }
+  footer .footer-content .app-page-links {
+    grid-area: al;
+  }
+  footer .footer-content .social-links {
+    grid-area: sl;
+    justify-self: flex-end;
+  }
+}

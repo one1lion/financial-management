@@ -20,7 +20,7 @@
     }
 }
 
-@media (max-width: #{$bp-smoll-max}) {
+@mixin narrow-section {
     #secViewTransactionHist {
         .preview-image-wrapper {
             --picture-top-offset: 2rem;
@@ -42,7 +42,10 @@
     }
 }
 
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-section;
+}
+
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
-    #secViewTransactionHist {
-    }
+    @include narrow-section;
 }

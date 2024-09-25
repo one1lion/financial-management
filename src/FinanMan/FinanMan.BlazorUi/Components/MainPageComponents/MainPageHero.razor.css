@@ -63,3 +63,34 @@
     border-radius: 0.3rem;
   }
 }
+@media (min-width: 480.1px) and (max-width: 930px) {
+  #hero {
+    position: relative;
+    grid-template-columns: 1fr;
+    grid-template-areas: "hp" "tc";
+    gap: 0.4rem;
+    width: 100vw;
+  }
+  #hero .title-wrapper {
+    grid-area: tc;
+    gap: 0.5rem;
+    padding: var(--default-padding-mobile);
+  }
+  #hero .title-wrapper .title {
+    font-size: var(--font-size-h3);
+  }
+  #hero .title-wrapper .sub-title {
+    font-size: var(--base-font-size);
+  }
+  #hero .app-preview-wrapper {
+    grid-area: hp;
+    padding: 0.2rem;
+    background: var(--border-gradient);
+    border-radius: 0.4rem;
+    display: grid;
+    place-items: center;
+  }
+  #hero .app-preview-wrapper img {
+    border-radius: 0.3rem;
+  }
+}
