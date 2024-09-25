@@ -19,6 +19,7 @@
   /* Cards */
   --card-background-color: var(--primary-background-color);
   --card-foreground-color: var(--primary-text-color);
+  --card-background-gradient: linear-gradient(90deg, #200D29, #34005C 100%);
   --card-border-color: var(--primary-background-color);
   /* Inputs */
   --input-border-color: var(--default-border-color);

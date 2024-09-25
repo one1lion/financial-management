@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   overflow: clip;
+  background: var(--card-background-gradient);
 }
 #secTrackTransactions .card-wrapper ::deep .card .card-header {
   padding: 0;
