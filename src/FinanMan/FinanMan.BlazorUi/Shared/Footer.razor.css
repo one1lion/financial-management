@@ -11,7 +11,8 @@ footer .footer-content {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  width: var(--footer-content-width);
+  /*width: var(--footer-content-width);*/
+  width: min(100vw - var(--default-padding) * 2, var(--default-content-max-width));
 }
 footer .footer-content section {
   width: unset;
@@ -61,7 +62,7 @@ footer.other-layout .footer-content .social-links .social-title {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0;
-    width: unset;
+    row-gap: 1rem;
     margin-top: calc(-1 * var(--logo-bleed-margin));
   }
   footer .footer-content .ar-logo-wrapper {
@@ -87,7 +88,7 @@ footer.other-layout .footer-content .social-links .social-title {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0;
-    width: unset;
+    row-gap: 1rem;
     margin-top: calc(-1 * var(--logo-bleed-margin));
   }
   footer .footer-content .ar-logo-wrapper {
@@ -100,5 +101,13 @@ footer.other-layout .footer-content .social-links .social-title {
   footer .footer-content .social-links {
     grid-area: sl;
     justify-self: flex-end;
+  }
+}
+@media (min-width: 930.1px) {
+  footer {
+    padding: 1rem 0 0.4rem 0;
+  }
+  footer .footer-content .social-links ul {
+    gap: 3rem;
   }
 }

@@ -17,7 +17,7 @@
     --faint-border-glow: rgba(255, 255, 255, .1);
     --default-padding: 2.4rem;
     --default-padding-mobile: .5rem;
-    --default-content-max-width: calc(100vw - var(--default-padding) * 2);
+    --default-content-max-width: 180ch;
     --section-background-color: #{$some-dark-color};
     /* Cards */
     --card-background-color: var(--primary-background-color);

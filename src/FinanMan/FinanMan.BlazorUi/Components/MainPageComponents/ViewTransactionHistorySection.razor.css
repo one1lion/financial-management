@@ -5,7 +5,7 @@
   padding-bottom: var(--picture-top-offset);
 }
 #secViewTransactionHist .preview-image-wrapper img {
-  width: calc(var(--default-content-max-width) - var(--picture-left-offset));
+  width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
 }
 #secViewTransactionHist .preview-image-wrapper img:last-of-type {
   position: absolute;

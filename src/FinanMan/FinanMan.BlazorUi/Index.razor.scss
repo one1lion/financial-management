@@ -16,18 +16,14 @@
         }
 
         section {
-            /* 
-            TODO: Since the --default-content-max-width is based on 100vw,
-            we will not get a fixed width (maybe somewhere around 900 or so)
-            for the content section.  Change this to a fixed width in order 
-            to get a fixed max-width for the content. Then for regular width 
-            property, use the calc based on 100vw.
-            */
-            max-width: var(--default-content-max-width);
-
             &.content {
-                padding: var(--default-padding);
-                justify-content: space-between;
+                display: grid;
+                grid-template-columns: 1fr min(calc(100vw - var(--default-padding) * 2), var(--default-content-max-width)) 1fr;
+                justify-content: flex-start;
+
+                > * {
+                    grid-column: 2;
+                }
 
                 .section-title {
                     display: flex;
@@ -42,6 +38,15 @@
                     display: flex;
                     justify-content: center;
                     margin-bottom: 1.6rem;
+                }
+
+                .getting-started-button {
+                    justify-self: center;
+                    margin: 1ch 0;
+                }
+
+                &:nth-of-type(odd) {
+                    background-color: var(--section-background-color);
                 }
             }
         }
@@ -70,12 +75,8 @@
 
                     .section-title {
                         font-size: var(--font-size-h3);
-                        justify-content: flex-start;
                     }
 
-                    &:nth-of-type(odd) {
-                        background-color: var(--section-background-color);
-                    }
                 }
             }
 
@@ -89,6 +90,18 @@
 
 @media (max-width: #{$bp-smoll-max}) {
     @include narrow-index-page;
+
+    .index-page {
+        ::deep {
+            section {
+                &.content {
+                    .section-title, .section-sub-title-wrapper {
+                        justify-content: flex-start;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {

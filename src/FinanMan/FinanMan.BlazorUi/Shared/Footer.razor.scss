@@ -13,7 +13,8 @@ footer {
         justify-content: center;
         align-items: center;
         margin: 0 auto;
-        width: var(--footer-content-width);
+        /*width: var(--footer-content-width);*/
+        width: min(calc(100vw - var(--default-padding) * 2), var(--default-content-max-width));
 
         section {
             width: unset;
@@ -92,7 +93,7 @@ footer {
             align-items: flex-start;
             justify-content: flex-start;
             gap: 0;
-            width: unset;
+            row-gap: 1rem;
             margin-top: calc(-1 * var(--logo-bleed-margin));
 
             .ar-logo-wrapper {
@@ -151,4 +152,18 @@ footer {
 
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
     @include narrow-footer;
+}
+
+@media (min-width: #{$bp-large-min}) {
+    footer {
+        padding: 1rem 0 .4rem 0;
+
+        .footer-content {
+            .social-links {
+                ul {
+                    gap: 3rem;
+                }
+            }
+        }
+    }
 }

@@ -3,6 +3,7 @@
   display: grid;
   grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
   gap: 2rem;
+  padding: var(--default-padding);
   align-items: center;
   z-index: 2;
 }
@@ -39,6 +40,7 @@
     grid-template-areas: "hp" "tc";
     gap: 0.4rem;
     width: 100vw;
+    padding: 0;
   }
   #hero .title-wrapper {
     grid-area: tc;
@@ -70,6 +72,7 @@
     grid-template-areas: "hp" "tc";
     gap: 0.4rem;
     width: 100vw;
+    padding: 0;
   }
   #hero .title-wrapper {
     grid-area: tc;
