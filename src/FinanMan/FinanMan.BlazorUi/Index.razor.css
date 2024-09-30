@@ -68,3 +68,32 @@
     width: 100vw;
   }
 }
+@media (min-width: 480.1px) and (max-width: 930px) {
+  .index-page ::deep .getting-started-button {
+    margin-top: 0.3em;
+    align-self: center;
+  }
+  .index-page ::deep section {
+    width: 100vw;
+    max-width: unset;
+  }
+  .index-page ::deep section.content {
+    padding: var(--default-padding-mobile);
+    padding-bottom: 0.7em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 1em;
+  }
+  .index-page ::deep section.content .section-title {
+    font-size: var(--font-size-h3);
+    justify-content: flex-start;
+  }
+  .index-page ::deep section.content:nth-of-type(odd) {
+    background-color: var(--section-background-color);
+  }
+  .index-page ::deep footer {
+    padding: var(--default-padding-mobile);
+    width: 100vw;
+  }
+}

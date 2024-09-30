@@ -48,7 +48,7 @@
     }
 }
 
-@media (max-width: #{$bp-smoll-max}) {
+@mixin narrow-index-page {
     .index-page {
         ::deep {
             .getting-started-button {
@@ -87,5 +87,10 @@
     }
 }
 
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-index-page;
+}
+
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-index-page;
 }
