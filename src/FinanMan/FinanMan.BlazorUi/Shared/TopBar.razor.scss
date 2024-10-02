@@ -1,6 +1,143 @@
-﻿.top-bar {
+﻿@import "../Sass/BreakPointVariables";
+
+.top-bar {
     height: var(--topbar-height);
-    background-color: var(--topbar-background-color);
+    background: transparent;
     color: var(--topbar-foreground-color);
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    ::deep {
+        .app-brand, .app-links {
+            padding: 0 1rem;
+        }
+    }
+}
+
+@mixin narrow-topbar {
+    .top-bar {
+        ::deep {
+            .app-brand, .app-links {
+                padding: 0 .5rem;
+            }
+
+            .app-brand {
+                .app-title {
+                    font-size: var(--font-size-body);
+                }
+
+                svg {
+                    width: 1.8em;
+                }
+            }
+
+            .app-links {
+                position: fixed;
+                inset: 0;
+                bottom: 0;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: flex-start;
+                padding-top: 1rem;
+
+                .hamburger-button {
+                    display: initial;
+                    z-index: 2;
+                    outline: 1px solid var(--default-border-color);
+
+                    &:not(:focus) {
+                        outline: none;
+                    }
+                }
+
+                .menu-contents {
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    top: var(--topbar-height);
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    background-color: var(--primary-background-color);
+                    background: linear-gradient(180deg, #34005C 0%, #190d1e 100%);
+                    overflow: hidden;
+                    max-height: 40ch;
+                    transition: max-height linear .4s;
+
+                    ul {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        width: 100%;
+                        gap: 0;
+
+                        li {
+                            width: 100%;
+                            padding: .5em 1em;
+
+                            &:not(:last-of-type) {
+                                border-bottom: 1px solid var(--faint-border-glow);
+                            }
+                        }
+                    }
+
+                    button {
+                        display: none;
+                        margin-left: 1em;
+                    }
+                }
+
+                &:not(.expanded) {
+                    bottom: calc(100vh - var(--topbar-height));
+
+                    .menu-contents {
+                        max-height: 0;
+                        transition: max-height linear .2s;
+                    }
+                }
+
+                &.expanded {
+                    background-color: rgba(0,0,0,.8);
+
+                    .hamburger-button {
+                        &:not(:focus):not(:hover) {
+                            background-color: rgba(#1e1e1e, .5);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-topbar;
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-topbar;
+
+    .top-bar {
+        ::deep {
+            .app-brand {
+                .app-title {
+                    font-size: var(--font-size-h5);
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: #{$bp-large-min}) and (max-width: #{$bp-large-max}) {
+    .top-bar {
+        ::deep {
+            .app-brand {
+                .app-title {
+                    font-size: var(--font-size-h3);
+                }
+            }
+        }
+    }
 }

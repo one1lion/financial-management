@@ -1,0 +1,68 @@
+
+<section id="secTrackTransactions" class="content">
+    <h1 class="section-title">
+        @SharedLocalizerService.TrackTransactionsHeader
+    </h1>
+
+    <div class="section-sub-title-wrapper">
+        <span class="section-sub-title">
+            @SharedLocalizerService.TrackTransactionsSubTitle
+        </span>
+    </div>
+    <div class="card-wrapper">
+        <Card>
+            <CardHeader>
+                <img src="_content/FinanMan.BlazorUi/imgs/piggy-bank.png" alt="@SharedLocalizerService.PiggyBankImageAltText" />
+            </CardHeader>
+            <CardBody>
+                <CardText>
+                    <h2 class="title">
+                        @SharedLocalizerService.Deposits
+                    </h2>
+                    <span class="content">
+                        @SharedLocalizerService.DepositsOverviewDescription
+                    </span>
+                </CardText>
+            </CardBody>
+            <CardFooter>
+            </CardFooter>
+        </Card>
+        <Card>
+            <CardHeader>
+                <img src="_content/FinanMan.BlazorUi/imgs/card-transaction.png" alt="@SharedLocalizerService.CardTransactionImageAltText" />
+            </CardHeader>
+            <CardBody>
+                <CardText>
+                    <h2 class="title">
+                        @SharedLocalizerService.Payments
+                    </h2>
+                    <span class="content">
+                        @SharedLocalizerService.PaymentsOverviewDescription
+                    </span>
+                </CardText>
+            </CardBody>
+            <CardFooter>
+            </CardFooter>
+        </Card>
+        <Card>
+            <CardHeader>
+                <img src="_content/FinanMan.BlazorUi/imgs/general-ledger.png" alt="@SharedLocalizerService.GeneralLedgerImageAltText" />
+            </CardHeader>
+            <CardBody>
+                <CardText>
+                    <h2 class="title">
+                        @SharedLocalizerService.Transfers
+                    </h2>
+                    <span class="content">
+                        @SharedLocalizerService.DepositsOverviewDescription
+                    </span>
+                </CardText>
+            </CardBody>
+            <CardFooter>
+            </CardFooter>
+        </Card>
+    </div>
+    <button type="button" class="btn btn-primary getting-started-button" @onclick=HandleGetStartedClicked>
+        @SharedLocalizerService.GetStartedButtonText
+    </button>
+</section>

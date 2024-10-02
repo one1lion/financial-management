@@ -1,0 +1,28 @@
+.app-brand {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .25em;
+    text-decoration: none;
+    color: var(--light);
+    z-index: 3;
+
+    .app-title {
+        font-size: var(--font-size-h2);
+        padding: 0 .25rem;
+        white-space: nowrap;
+    }
+
+    .app-icon {
+        height: var(--font-size-h2);
+        width: var(--font-size-h2);
+    }
+
+    &:focus {
+        outline: none;
+
+        .app-title {
+            outline: 1px solid var(--default-border-color);
+        }
+    }
+}

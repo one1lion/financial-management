@@ -1,10 +1,13 @@
 using FinanMan.BlazorUi.FlyoutContentComponents;
-using FinanMan.Shared.DataEntryModels;
 
 namespace FinanMan.BlazorUi;
 
 public partial class Index
 {
+#if !DEBUG
+    private string? SocialsClass => null;
+#endif 
+
     [Inject] private IUiState UiState { get; set; } = default!;
 
     protected override void OnInitialized()
@@ -27,7 +30,7 @@ public partial class Index
             {
                 builder.OpenComponent<ContactUsFlyoutContent>(0);
                 builder.CloseComponent();
-            }); 
+            });
     }
 
     private bool _doClickChangeThing;
@@ -37,7 +40,38 @@ public partial class Index
         return InvokeAsync(StateHasChanged);
     }
 
+    private Task HandleGettingStartedClicked(MouseEventArgs e)
+    {
+        // TODO: Handle Getting Started Clicked
+        Console.WriteLine("Getting Started was clicked");
+        return Task.CompletedTask;
+    }
+
     public void Dispose()
     {
     }
 }
+
+
+#if DEBUG
+public partial class Index
+{
+    private enum TriState
+    {
+        Neutral,
+        Off,
+        On
+    }
+
+    private TriState _socialDisplayToggle;
+    private string? SocialsClass => _socialDisplayToggle switch
+    {
+        TriState.Neutral => null,
+        TriState.Off => "no-title",
+        TriState.On => "other-layout",
+        _ => throw new ArgumentOutOfRangeException()
+    };
+
+
+}
+#endif

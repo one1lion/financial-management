@@ -1,0 +1,79 @@
+﻿.logo-wrapper {
+  --o1l-use-color1: var(--o1l-color1, #652b84);
+  --o1l-use-color2: var(--o1l-color2, rgba(144, 144, 144, .2));
+  --o1l-use-text-color: var(--o1l-text-color, currentColor);
+  --o1l-use-size: var(--o1l-size, 1em);
+  height: auto;
+  width: var(--o1l-use-size);
+  user-select: none;
+}
+.logo-wrapper[class*=text-] {
+  display: flex;
+  gap: 1em;
+}
+.logo-wrapper[class*=text-].text-below {
+  flex-direction: column;
+  align-items: center;
+}
+.logo-wrapper[class*=text-].text-right {
+  align-items: flex-end;
+}
+.logo-wrapper[class*=text-].text-right .text-graphic {
+  transform: translateY(-0.8em);
+}
+
+.color1 {
+  fill: var(--o1l-use-color1);
+}
+
+#shadow {
+  opacity: 0.15;
+}
+
+.elipse {
+  mix-blend-mode: multiply;
+  opacity: 0.84;
+  fill: url(#linear-gradient);
+  opacity: 0.15;
+}
+
+.text-path {
+  color: var(--o1l-use-text-color);
+  fill: currentColor;
+}
+
+@keyframes oscillate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes tremor {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+.tremor {
+  animation: oscillate 2s infinite, tremor 0.3s infinite;
+}
+
+::deep .particle {
+  fill: pink;
+}
+::deep .particle.animate-move {
+  animation: moveToCenter 5s infinite;
+}
+
+@keyframes moveToCenter {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(calc(50% - 99px), calc(50% - 114px));
+  }
+}

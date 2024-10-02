@@ -166,7 +166,6 @@ public class ResponseModelBase : IResponseModel
         if (otherResponse.Exceptions?.Any() ?? false) { AddErrors(otherResponse.Exceptions); }
         if (otherResponse.ValidationFailures?.Any() ?? false) { AddErrors(otherResponse.ValidationFailures); }
     }
-
 }
 
 // ResponseModelBase`1.cs or ResponseModelBase-TKey.cs

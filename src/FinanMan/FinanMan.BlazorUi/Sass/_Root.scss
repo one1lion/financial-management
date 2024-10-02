@@ -1,20 +1,28 @@
 ﻿@import "ColorVariables";
+@import "FontSizing";
+@import "BreakPointVariables";
 
 :root {
+    --base-font-size: #{$base-font-size};
     --light: #f0f3f0;
     --primary-text-color: #f0f3f0;
-    --primary-background-color: #{$darkteal};
-    --font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif, serif;
-    --default-border-color: #D7F5FA;
+    --primary-background-color: #{$jet-black};
+    --font-family: "Segoe UI", Arial, sans-serif, serif;
     --link-color: #D7F5FA;
     --topbar-height: 3.3rem;
     --topbar-background-color: #020305;
     --topbar-foreground-color: var(--primary-text-color);
     --border-glow: rgba(255,255,255,.3); // Cyberpunk Theme: #{$bubblegum};
+    --default-border-color: #{$purple4};
     --faint-border-glow: rgba(255, 255, 255, .1);
+    --default-padding: 2.4rem;
+    --default-padding-mobile: .5rem;
+    --default-content-max-width: 180ch;
+    --section-background-color: #{$some-dark-color};
     /* Cards */
     --card-background-color: var(--primary-background-color);
     --card-foreground-color: var(--primary-text-color);
+    --card-background-gradient: linear-gradient(90deg, #{$purple3}, #{$purple1} 100%);
     --card-border-color: var(--primary-background-color);
     /* Inputs */
     --input-border-color: var(--default-border-color);
@@ -26,22 +34,26 @@
     --list-item-hover-fg-color: var(--primary-text-color);
     --list-item-hover-bg-color: rgba(255, 255, 255, .2);
     /* Buttons */
-    --button-border-color: var(--default-border-color);
+    --button-border-color: transparent;
+    --button-outline-color: #{$purple4};
     --button-border-style: 1px solid var(--button-border-color);
-    --button-outline-style: 2px solid var(--default-border-color);
+    --button-outline-style: 2px solid var(--button-outline-color);
     --button-border-radius: .2rem;
-    --button-foreground-color: var(--primary-background-color);
-    --button-background-color: var(--light);
-    --button-hover-foreground-color: var(--light);
-    --button-hover-background-color: var(--primary-background-color);
-    --button-disabled-border-color: #ddd;
-    --button-disabled-foreground-color: #ddd;
-    --button-disabled-background-color: #333;
-    --button-active-border-color: #9E410E;
-    --button-active-foreground-color: var(--light);
-    --button-active-background-color: #9E410E;
+    --button-foreground-color: #{$white-smoke};
+    --button-background-color: #{$purple1};
+    --button-disabled-border-color: transparent;
+    --button-disabled-foreground-color: #{$dim-gray};
+    --button-disabled-background-color: #{$purple2};
+    --button-hover-foreground-color: #{$white-smoke};
+    --button-hover-background-color: #{$purple4};
+    --button-active-border-color: transparent;
+    --button-active-foreground-color: #{$white-smoke};
+    --button-active-background-color: var(--button-background-color);
+    --button-pressed-border-color: transparent;
+    --button-pressed-foreground-color: #{$white-smoke};
+    --button-pressed-background-color: #{$purple3};
     --button-padding: .3em 1em;
-    --footer-background-color: #1D2933;
+    --footer-background-color: #{$jet-black};
     --active-tab-button-background-color: #9E410E;
     --active-tab-button-foreground-color: var(--light);
     /* Tables */
@@ -49,10 +61,15 @@
     --table-header-background-hover-color: rgba(255, 255, 255, .05);
     --table-footer-background-color: #1D2933;
     /* Fonts */
-    --font-size-h1: 2em;
-    --font-size-h2: 1.5em;
-    --font-size-h3: 1.17em;
-    --font-size-h4: 1em;
+    --font-size-h1: #{$font-size-h1};
+    --font-size-h2: #{$font-size-h2};
+    --font-size-h3: #{$font-size-h3};
+    --font-size-h4: #{$font-size-h4};
+    --font-size-h5: #{$font-size-h5};
+    --font-size-h6: #{$font-size-h6};
+    --font-size-body: #{$font-size-body};
+    --font-size-small: #{$font-size-small};
+    --font-size-caption: #{$font-size-caption};
     /* Default z-index */
     --flyout-z-index: 2;
     --modal-z-index: calc(var(--flyout-z-index) + 1);
@@ -65,5 +82,13 @@
     /* Borders for Active Items */
     --border-active: #fff;
     --border-inactive: #1d2c33;
+    --border-gradient: linear-gradient(45deg, #{$purple1} 0%, #{$purple5} 50%, #{$purple1} 100%);
+    /* Other Sizing */
+    --footer-content-width: #{$bp-medium-max};
+}
 
+@media (max-width: #{$bp-smoll-max}) {
+    :root {
+        --base-font-size: #{$base-font-size-mobile};
+    }
 }
