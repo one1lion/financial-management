@@ -279,3 +279,10 @@ i.icon {
 .clear-fix {
   clear: both;
 }
+
+@media (min-width: 1920.1px) {
+  body {
+    --base-font-size: 24px;
+    font-size: var(--base-font-size);
+  }
+}

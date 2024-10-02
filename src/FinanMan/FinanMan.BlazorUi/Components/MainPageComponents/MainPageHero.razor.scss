@@ -3,10 +3,12 @@
 #hero {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50vw - 3rem));
+    grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50% - 3rem));
     gap: 2rem;
     padding: var(--default-padding);
     align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
     z-index: 2;
 
     .title-wrapper {

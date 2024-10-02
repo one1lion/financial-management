@@ -1,4 +1,6 @@
-﻿body, html {
+﻿@import '../Sass/BreakPointVariables';
+
+body, html {
     margin: 0;
     padding: 0;
     font-family: var(--font-family);
@@ -112,5 +114,11 @@ i.icon {
 
 .clear-fix {
     clear: both;
+}
 
+@media (min-width: #{$bp-xlarge-min}) {
+    body {
+        --base-font-size: 24px;
+        font-size: var(--base-font-size);
+    }
 }
