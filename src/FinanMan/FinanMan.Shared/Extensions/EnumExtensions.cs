@@ -5,7 +5,8 @@ namespace FinanMan.Shared.Extensions;
 
 public static class EnumExtensions
 {
-    public static string GetDisplayText<TEnum>(this TEnum enumMem, bool shortVersion = false) where TEnum : Enum
+    public static string GetDisplayText<TEnum>(this TEnum enumMem, bool shortVersion = false)
+        where TEnum : Enum
     {
         var enumType = typeof(TEnum);
         var memInfos = enumType.GetMember(enumMem.ToString());

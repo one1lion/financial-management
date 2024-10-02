@@ -1,0 +1,92 @@
+@import '../../Sass/BreakPointVariables';
+
+#hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr minmax(calc(390px - var(--default-padding) - 2rem), calc(50% - 3rem));
+    gap: 2rem;
+    padding: var(--default-padding);
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
+    z-index: 2;
+
+    .title-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-y: auto;
+        height: 100%;
+        gap: 1em;
+        z-index: 2;
+
+        .title {
+            font-size: var(--font-size-h2);
+        }
+
+        .sub-title {
+            font-size: var(--font-size-small);
+        }
+    }
+
+    .app-preview-wrapper {
+        width: 100%;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    ::deep {
+        .login-form-wrapper {
+            z-index: 2;
+        }
+    }
+}
+
+@mixin narrow-hero {
+    #hero {
+        position: relative;
+        grid-template-columns: 1fr;
+        grid-template-areas: 'hp' 'tc';
+        gap: .4rem;
+        width: 100vw;
+        padding: 0;
+
+        .title-wrapper {
+            grid-area: tc;
+            gap: .5rem;
+            padding: var(--default-padding-mobile);
+
+            .title {
+                font-size: var(--font-size-h3);
+            }
+
+            .sub-title {
+                font-size: var(--base-font-size);
+            }
+        }
+
+        .app-preview-wrapper {
+            grid-area: hp;
+            padding: .2rem;
+            background: var(--border-gradient);
+            border-radius: .4rem;
+            display: grid;
+            place-items: center;
+
+            img {
+                border-radius: .3rem;
+            }
+        }
+    }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-hero;
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-hero;
+}

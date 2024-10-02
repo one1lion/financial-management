@@ -2,19 +2,19 @@
 
 // Get user input
 Console.Write("Projected Gross Annual Income: ");
-decimal projectedGrossAnnualIncome = decimal.Parse(Console.ReadLine());
+decimal projectedGrossAnnualIncome = decimal.Parse(Console.ReadLine() ?? "0");
 
 Console.Write("Projected Business Expenses: ");
-decimal projectedBusinessExpenses = decimal.Parse(Console.ReadLine());
+decimal projectedBusinessExpenses = decimal.Parse(Console.ReadLine() ?? "0");
 
 Console.Write("Taxes Paid Year-to-Date: ");
-decimal taxesPaidYearToDate = decimal.Parse(Console.ReadLine());
+decimal taxesPaidYearToDate = decimal.Parse(Console.ReadLine() ?? "0");
 
 Console.Write("Additional W2 Salary: ");
-decimal additionalW2Salary = decimal.Parse(Console.ReadLine());
+decimal additionalW2Salary = decimal.Parse(Console.ReadLine() ?? "0");
 
 Console.Write("State/Zip Code: ");
-string stateZipCode = Console.ReadLine();
+string stateZipCode = Console.ReadLine() ?? string.Empty;
 
 // Calculate taxable income
 decimal taxableIncome = projectedGrossAnnualIncome - projectedBusinessExpenses - taxesPaidYearToDate - additionalW2Salary;

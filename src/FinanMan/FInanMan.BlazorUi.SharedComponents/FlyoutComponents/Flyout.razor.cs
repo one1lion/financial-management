@@ -4,13 +4,26 @@ namespace FinanMan.BlazorUi.SharedComponents.FlyoutComponents;
 
 public partial class Flyout
 {
+    /// <summary>
+    /// The content to display in the flyout
+    /// </summary>
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <summary>
+    /// Whether or not the flyout is shown
+    /// </summary>
     [Parameter] public bool Show { get; set; }
+    /// <summary>
+    /// The event callback for when the show property changes
+    /// </summary>
     [Parameter] public EventCallback<bool> ShowChanged { get; set; }
-
+    /// <summary>
+    /// The method indicating whether or not the flyout can be closed
+    /// </summary>
     public Func<Task<bool>>? CanClose { get; set; }
 
     private bool _show;
+
+    /// <inheritdoc/>
     protected override Task OnParametersSetAsync()
     {
         if (Show != _show)

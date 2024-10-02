@@ -139,10 +139,12 @@ public class PaymentTransactionEntryServiceTests
 
         // Get the new record back from in-memory db
         context = new FinanManContext(contextOptions);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         var newPayment = context.Transactions
             .Include(e => e.Payment)
             .ThenInclude(e => e.PaymentDetails)
             .FirstOrDefault(e => e.Id == result.RecordId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         // The records (Transaction and Payment) exists in the database
         Assert.NotNull(newPayment);

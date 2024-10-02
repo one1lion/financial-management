@@ -21,15 +21,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="HtmlSanitizer" Version="8.0.692" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
-		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.0.4">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.2.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,6 +41,14 @@
 
 	<ItemGroup>
 		<TypeScriptCompile Include="JsInterop\**\*.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="wwwroot\DraggableComponents\**" />
+	  <Content Remove="wwwroot\DraggableComponents\**" />
+	  <EmbeddedResource Remove="wwwroot\DraggableComponents\**" />
+	  <None Remove="wwwroot\DraggableComponents\**" />
+	  <TypeScriptCompile Remove="wwwroot\DraggableComponents\**" />
 	</ItemGroup>
 
 	<ItemGroup>

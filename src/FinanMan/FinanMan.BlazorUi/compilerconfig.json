@@ -74,5 +74,37 @@
   {
     "outputFile": "Components/CalculatorComponents/Calculator.razor.css",
     "inputFile": "Components/CalculatorComponents/Calculator.razor.scss"
+  },
+  {
+    "outputFile": "ResearchingIssues.razor.css",
+    "inputFile": "ResearchingIssues.razor.scss"
+  },
+  {
+    "outputFile": "Shared/AppBrand.razor.css",
+    "inputFile": "Shared/AppBrand.razor.scss"
+  },
+  {
+    "outputFile": "Shared/AppBarLinks.razor.css",
+    "inputFile": "Shared/AppBarLinks.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Footer.razor.css",
+    "inputFile": "Shared/Footer.razor.scss"
+  },
+  {
+    "outputFile": "Components/MainPageComponents/ViewTransactionHistorySection.razor.css",
+    "inputFile": "Components/MainPageComponents/ViewTransactionHistorySection.razor.scss"
+  },
+  {
+    "outputFile": "Components/MainPageComponents/TrackTransactionsSection.razor.css",
+    "inputFile": "Components/MainPageComponents/TrackTransactionsSection.razor.scss"
+  },
+  {
+    "outputFile": "Components/MainPageComponents/MainPageHero.razor.css",
+    "inputFile": "Components/MainPageComponents/MainPageHero.razor.scss"
+  },
+  {
+    "outputFile": "Components/LogoComponents/Logo.razor.css",
+    "inputFile": "Components/LogoComponents/Logo.razor.scss"
   }
 ]

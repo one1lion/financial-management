@@ -1,4 +1,5 @@
-﻿using FinanMan.BlazorUi.State;
+﻿using FinanMan.BlazorUi.SharedComponents.Extensions;
+using FinanMan.BlazorUi.State;
 using FinanMan.Shared.Extensions;
 using FinanMan.Shared.StateInterfaces;
 using FinanMan.SharedClient.Extensions;
@@ -38,7 +39,8 @@ public static class MauiProgram
             .AddScoped<ITransactionsState, TransactionsState>()
             .AddSingleton<IUiState, UiState>()
             .AddFinanManLocalization()
-            .AddClientServices();
+            .AddClientServices()
+            .AddJavaScriptModules();
 
 
         return builder.Build();

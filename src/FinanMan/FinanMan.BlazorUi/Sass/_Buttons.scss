@@ -37,9 +37,15 @@ button, .btn {
         cursor: not-allowed;
     }
 
-    &.active {
+    &.active, &:active {
         color: var(--button-active-foreground-color);
         background-color: var(--button-active-background-color);
         border-color: var(--button-active-border-color);
+    }
+
+    &[pressed], &.pressed {
+        color: var(--button-pressed-foreground-color);
+        background-color: var(--button-pressed-background-color);
+        border-color: var(--button-pressed-border-color);
     }
 }

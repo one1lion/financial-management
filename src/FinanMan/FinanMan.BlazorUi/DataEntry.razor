@@ -12,13 +12,14 @@
 
 <div id="dataEntryPage" class="page-content">
     <header>
-        <ul class="data-entry-tabs">
-            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)">@SharedLocalizerService.Payments</button></li>
-            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)">@SharedLocalizerService.Deposits</button></li>
-            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)">@SharedLocalizerService.Transfers</button></li>
-            <li><button type="button" class="tab-button invert@(EntTypeVal == EntryType.ListManagement ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.ListManagement)">@SharedLocalizerService.ListManagement</button></li>
+        <ul class="data-entry-tabs" role="tablist">
+            <li role="tab"><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Payments ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Payments)" aria-select="@((EntTypeVal == EntryType.Payments).ToString().ToLower())">@SharedLocalizerService.Payments</button></li>
+            <li role="tab"><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Deposits ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Deposits)" aria-select="@((EntTypeVal == EntryType.Deposits).ToString().ToLower())">@SharedLocalizerService.Deposits</button></li>
+            <li role="tab"><button type="button" class="tab-button invert@(EntTypeVal == EntryType.Transfers ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.Transfers)" aria-select="@((EntTypeVal == EntryType.Transfers).ToString().ToLower())">@SharedLocalizerService.Transfers</button></li>
+            <li role="tab"><button type="button" class="tab-button invert@(EntTypeVal == EntryType.ListManagement ? " active" : string.Empty)" @onclick="_ => HandleEntryTabClicked(EntryType.ListManagement)" aria-select="@((EntTypeVal == EntryType.ListManagement).ToString().ToLower())">@SharedLocalizerService.ListManagement</button></li>
         </ul>
     </header>
+    
     <section class="data-entry-section">
         <span class="title">@EntTypeVal.GetDisplayText()</span>
 

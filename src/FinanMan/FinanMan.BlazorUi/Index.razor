@@ -1,92 +1,50 @@
 ﻿@page "/"
-@using FinanMan.BlazorUi.FlyoutContentComponents
-@using FinanMan.Shared.DataEntryModels
 @using System.Globalization
+
+@using FinanMan.BlazorUi.Components.MainPageComponents
+@using FinanMan.BlazorUi.FlyoutContentComponents
+@using FinanMan.BlazorUi.SharedComponents.AccordionListComponents
+
+@using FinanMan.Shared.DataEntryModels
 @using FinanMan.SharedLocalization.Extensions
+
 @implements IDisposable
 
 <PageTitle>@SharedLocalizerService.IndexTitle</PageTitle>
 
 <article class="page index-page">
-    <header class="hero">
-        <div class="hero-filter"></div>
-        <div class="content">
-            <div class="title">
-                @SharedLocalizerService.HeroTitle
-                <span class="sub-title">@SharedLocalizerService.HeroSubtitle</span>
-            </div>
-            <LoginForm />
-        </div>
-    </header>
-    <section class="content">
-        <div class="card-wrapper">
-            <Card>
-                <CardHeader>
-                    @SharedLocalizerService.TrackHeader
-                </CardHeader>
-                <CardBody>
-                    <CardText>
-                        @SharedLocalizerService.TrackBodyContent
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                    <button type="button">
-                        @SharedLocalizerService.GetStartedButtonText
-                    </button>
-                </CardFooter>
-            </Card>
-            <Card>
-                <CardHeader>
-                    @SharedLocalizerService.WatchHeader
-                </CardHeader>
-                <CardBody>
-                    <CardText>
-                        @SharedLocalizerService.WatchBodyContent
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                    <button type="button">
-                        @SharedLocalizerService.GetStartedButtonText
-                    </button>
-                </CardFooter>
-            </Card>
-            <Card>
-                <CardHeader>
-                    @SharedLocalizerService.PlanHeader
-                </CardHeader>
-                <CardBody>
-                    <CardText>
-                        @SharedLocalizerService.PlanBodyContent
-                    </CardText>
-                </CardBody>
-                <CardFooter>
-                    <button type="button">
-                        @SharedLocalizerService.GetStartedButtonText
-                    </button>
-                </CardFooter>
-            </Card>
-        </div>
-    </section>
-    <footer>
-        <section>
-            <span class="header">
-                <a href="data-entry">
-                    @SharedLocalizerService.DataEntry
-                </a>
-            </span>
-            <ul>
-                <li>@SharedLocalizerService.Payment</li>
-                <li>@SharedLocalizerService.Deposit</li>
-                <li>@SharedLocalizerService.Transfer</li>
-            </ul>
-        </section>
-        <section>
-            <span class="header">@SharedLocalizerService.About</span>
-            <ul>
-                <li>@SharedLocalizerService.AboutAutomatedRealms</li>
-                <li>@SharedLocalizerService.CoreValues</li>
-                <li><button type="button" @onclick=HandleContactUsClicked>@SharedLocalizerService.ContactUs</button></li>
-            </ul>
-        </section>
-    </footer>
+    <MainPageHero />
+
+    <TrackTransactionsSection OnGettingStartedClicked=HandleGettingStartedClicked />
+    
+    <ViewTransactionHistorySection />
+   
+    <Footer class="@SocialsClass" />
 </article>
+
+@{
+    #if DEBUG
+}
+    <style>
+        .debug {
+            position: fixed;
+            bottom: 1rem;
+            right: 2rem;
+            z-index: 1001;
+        }
+            .debug:not(:hover) {
+                opacity: 0.05;
+            }
+    </style>
+
+    <div class="debug">
+        <button type="button" class="btn btn-small btn-link" 
+                @onclick="_ => _socialDisplayToggle = _socialDisplayToggle switch {
+                            TriState.Neutral => TriState.Off,
+                            TriState.Off => TriState.On,
+                            _ => TriState.Neutral,
+                          } ">Toggle Social Layout</button>
+    </div>
+@{
+    #endif
+}

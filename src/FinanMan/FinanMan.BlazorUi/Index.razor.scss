@@ -1,106 +1,109 @@
-﻿.index-page {
+﻿@import './Sass/BreakPointVariables';
+
+.index-page {
     height: 100%;
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    container-type: inline-size;
+    container-name: card;
+    overflow: auto;
 
-    .hero {
-        background-image: url('/_content/FinanMan.BlazorUi/imgs/piggy-bank.jpg');
-        background-size: 3084px;
-        background-repeat: no-repeat;
-        border-bottom: 1px solid var(--default-border-color);
-        background-position: center;
-        position: relative;
-        width: 100%;
-
-        .hero-filter {
-            position: absolute;
-            background-color: rgba(#1D2933, .38);
-            height: 100%;
-            width: 100%;
-            z-index: 1;
+    ::deep {
+        .getting-started-button {
+            align-self: flex-start;
+            font-size: var(--font-size-h6);
         }
 
-        .content {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 2rem;
-            align-items: flex-start;
-            padding: 2rem 4rem 4rem 4rem;
-            z-index: 2;
+        section {
+            &.content {
+                display: grid;
+                grid-template-columns: 1fr min(calc(100vw - var(--default-padding) * 2), var(--default-content-max-width)) 1fr;
+                justify-content: flex-start;
 
-            .title {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                overflow-y: auto;
-                font-size: 4rem;
-                height: 100%;
-                z-index: 2;
-
-                .sub-title {
-                    align-self: flex-end;
-                    font-size: 1.5rem;
+                > * {
+                    grid-column: 2;
                 }
-            }
 
-            ::deep {
-                .login-form-wrapper {
-                    z-index: 2;
+                .section-title {
+                    display: flex;
+                    justify-content: center;
+                    margin: 0;
+                    margin-bottom: .8rem;
+                    font-size: var(--font-size-h2);
+                    font-weight: normal;
                 }
-            }
-        }
-    }
 
-    .content {
-        padding: 2.4rem;
+                .section-sub-title-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 1.6rem;
+                }
 
-        .card-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 0 auto;
+                .getting-started-button {
+                    justify-self: center;
+                    margin: 1ch 0;
+                }
 
-            ::deep {
-                .card {
-                    border-radius: .6rem;
-                    width: 25ch;
-                    box-shadow: 2px 2px 4px rgba(255, 255, 255, .2);
-                    border-color: var(--primary-text-color);
-
-                    .card-header, .card-text, .card-footer {
-                        padding-left: 1.2rem;
-                        padding-right: 1.2rem;
-                    }
-
-                    .card-header {
-                        font-size: 2rem;
-                        padding-top: .8rem;
-                    }
-
-                    .card-footer {
-                        display: flex;
-                        padding: .6rem 1.6rem;
-
-                        button {
-                            padding: .6rem 0;
-                            width: 100%;
-                            font-size: 1rem;
-                            font-weight: bold;
-                        }
-                    }
+                &:nth-of-type(odd) {
+                    background-color: var(--section-background-color);
                 }
             }
         }
     }
+}
 
-    footer {
-        display: flex;
-        gap: 2rem;
-        padding: 1.6rem;
-        background-color: var(--footer-background-color);
-        border-top: 1px solid var(--default-border-color);
-        font-size: 1.2rem;
-        color: var(--default-text-color);
+@mixin narrow-index-page {
+    .index-page {
+        ::deep {
+            .getting-started-button {
+                margin-top: .3em;
+                align-self: center;
+            }
+
+            section {
+                width: 100vw;
+                max-width: unset;
+
+                &.content {
+                    padding: var(--default-padding-mobile);
+                    padding-bottom: 0.7em;
+                    display: flex;
+                    flex-direction: column;
+                    align-content: center;
+                    gap: 1em;
+
+                    .section-title {
+                        font-size: var(--font-size-h3);
+                    }
+
+                }
+            }
+
+            footer {
+                padding: var(--default-padding-mobile);
+                width: 100vw;
+            }
+        }
     }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-index-page;
+
+    .index-page {
+        ::deep {
+            section {
+                &.content {
+                    .section-title, .section-sub-title-wrapper {
+                        justify-content: flex-start;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-index-page;
 }

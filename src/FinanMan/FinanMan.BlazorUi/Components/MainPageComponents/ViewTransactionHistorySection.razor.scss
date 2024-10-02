@@ -1,0 +1,69 @@
+@import '../../Sass/BreakPointVariables';
+
+#secViewTransactionHist {
+    --max-image-width: 980px;
+
+    .preview-image-wrapper {
+        --picture-top-offset: 3rem;
+        --picture-left-offset: 6rem;
+        position: relative;
+        padding-bottom: var(--picture-top-offset);
+        width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
+        max-width: 980px;
+        margin: 0 auto;
+
+        img {
+            width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
+            max-width: 980px;
+
+            &:first-of-type {
+                margin: 0 auto;
+                transform: translateX(calc(-1 * var(--picture-left-offset) / 2))
+            }
+
+            &:last-of-type {
+                position: absolute;
+                left: 50%;
+                top: var(--picture-top-offset);
+                transform: translateX(calc(-50% + var(--picture-left-offset) / 2));
+            }
+        }
+    }
+}
+
+@mixin narrow-section {
+    #secViewTransactionHist {
+        .preview-image-wrapper {
+            --picture-top-offset: 2rem;
+            --picture-left-offset: 1rem;
+            width: auto;
+            margin: 0 auto;
+
+            img {
+
+                &:first-of-type {
+                    transform: translateX(calc(-1 * var(--picture-left-offset)));
+                }
+
+                &:last-of-type {
+                    top: var(--picture-top-offset);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+    @include narrow-section;
+}
+
+@media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
+    @include narrow-section;
+
+    #secViewTransactionHist {
+        .preview-image-wrapper {
+            --picture-top-offset: 3rem;
+            --picture-left-offset: 3rem;
+        }
+    }
+}

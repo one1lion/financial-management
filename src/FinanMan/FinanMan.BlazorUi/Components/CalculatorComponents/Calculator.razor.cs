@@ -1,21 +1,46 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FinanMan.BlazorUi.JsInterop;
+using FinanMan.BlazorUi.SharedComponents.DraggableComponents;
+using FinanMan.BlazorUi.SharedComponents.JsInterop;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace FinanMan.BlazorUi.Components.CalculatorComponents;
-public partial class Calculator
+
+public partial class Calculator : IDisposable
 {
-    private readonly static int[] _numPadItems = new[]
+    private static readonly Regex _allowedKeys = AllowedKeysRegEx();
+
+    [Inject, AllowNull] private IMyIsolatedModule MyIsolatedModule { get; set; }
+    [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
+
+    [CascadingParameter] public DraggableContainer? DraggableContainer { get; set; }
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    [Parameter] public EventCallback OnDismissed { get; set; }
+
+    private decimal DisplayedInputNum
     {
-        7, 8, 9, 6, 5, 4, 3, 2, 1
-    };
+        get => decimal.Parse($"{_wholeNumberPart}{(!string.IsNullOrWhiteSpace(_decimalPart) ? $".{_decimalPart}" : string.Empty)}");
+        set
+        {
+            _wholeNumberPart = (long)Math.Round(value, MidpointRounding.ToZero);
+            var numParts = value.ToString().Split('.');
+            _decimalPart = numParts.Length > 1 ? numParts.Last().TrimEnd('0') : string.Empty;
+        }
+    }
 
-    private decimal NumOutput => decimal.Parse($"{_wholeNumber}{(_decimalPart > 0 ? $".{_decimalPart}" : string.Empty)}");
+    private long _wholeNumberPart;
+    private string _decimalPart = string.Empty;
+    PreviousOperator _lastOperation;
+    private ElementReference _focusButtonRef;
 
-    private long _wholeNumber = 0;
-    private long _decimalPart = 0;
-
+    /// <summary>
+    /// Used to identify whether the input has been changed since the last calculation.
+    /// </summary>
     private bool _inputDirty = true;
-
-    private decimal? _currentValue = 0;
+    private bool _active;
+    private decimal? _currentCalculatedValue;
     private Operator? _prevOp;
     private Operator? _activeOp;
 
@@ -23,9 +48,39 @@ public partial class Calculator
 
     private bool _decimalActive = false;
 
-    [Parameter] public bool Show { get; set; }
-    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    protected override void OnInitialized()
+    {
+        HandleClearAllClicked();
+        if (DraggableContainer is not null)
+        {
+            DraggableContainer.OnDragEnd += HandleContainerClicked;
+        }
+    }
 
+    private bool _prevShow;
+    private bool _resetFocus;
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (Show != _prevShow)
+        {
+            _prevShow = Show;
+
+            if (Show) { _resetFocus = true; }
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_resetFocus && _focusButtonRef.Context is not null)
+        {
+            _resetFocus = false;
+            await _focusButtonRef.FocusAsync();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    #region Handlers
     private async Task HandleShowChanged(bool newShow)
     {
         if (Show == newShow) { return; }
@@ -41,47 +96,55 @@ public partial class Calculator
 
     private void HandleRemove()
     {
-        _decimalActive &= _decimalPart > 0;
-        if (_decimalActive)
+        _decimalActive &= _decimalPart.Length > 0;
+        if (_decimalPart.Length > 0)
         {
-            _decimalPart = (_decimalPart - _decimalPart % 10) / 10;
+            _decimalPart = _decimalPart.Length == 1 ? string.Empty : _decimalPart[..^1];
         }
         else
         {
-            _wholeNumber = (_wholeNumber - _wholeNumber % 10) / 10;
+            _wholeNumberPart = (_wholeNumberPart - _wholeNumberPart % 10) / 10;
         }
         StateHasChanged();
     }
 
     private void HandleNumberClicked(int num)
     {
+        ClearIfDirty();
+
         _inputDirty = true;
+
         if (_decimalActive)
         {
-            _decimalPart = _decimalPart * 10 + num;
+            _decimalPart += num;
         }
         else
         {
-            _wholeNumber = _wholeNumber * 10 + (_wholeNumber < 0 ? -1 : 1) * num;
+            _wholeNumberPart = _wholeNumberPart * 10 + num;
         }
         StateHasChanged();
     }
 
     private void HandleNegateClicked()
     {
-        _wholeNumber *= -1;
+        _wholeNumberPart *= -1;
     }
 
-    private void HandlePeriodClicked()
+    private void HandleDecimalClicked()
     {
-        _decimalActive = !_decimalActive || _decimalPart > 0;
+        ClearIfDirty();
+
+        _inputDirty = true;
+
+        _decimalActive = !_decimalActive || !string.IsNullOrWhiteSpace(_decimalPart);
     }
 
     private void HandleClearClicked()
     {
-        _wholeNumber = 0;
-        _decimalPart = 0;
+        _wholeNumberPart = 0;
+        _decimalPart = string.Empty;
         _decimalActive = false;
+        _inputDirty = false;
     }
 
     private void HandleClearAllClicked()
@@ -90,65 +153,230 @@ public partial class Calculator
         _inputDirty = true;
         _activeOp = null;
         _formulaOutput = string.Empty;
-        _currentValue = null;
+        _currentCalculatedValue = null;
         _prevOp = null;
     }
 
     private void HandleOperatorClicked(Operator op)
     {
-        try
+        if (op == Operator.Submit && !_prevOp.HasValue)
         {
-            // TODO: After a submit, the next number pressed should replace current input
-
-            // If we're submitting, use the previous operator if it exists, otherwise use the current operator
-            _activeOp = op == Operator.Submit ? _prevOp : op;
-            if ((op == Operator.Submit && _currentValue is null) 
-                || (op != Operator.Submit && !_inputDirty)) { return; }
-
-            if (_currentValue.HasValue)
+            _currentCalculatedValue = DisplayedInputNum;
+            _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
+        }
+        else if (!_inputDirty)
+        {
+            switch (op)
             {
-                var opToUse = (op == Operator.Submit ? _activeOp : _prevOp) ?? op;
-                _formulaOutput = $"{_currentValue} {opToUse.GetDisplayText()} {NumOutput} = ";
+                case Operator.Submit:
+                    // When the displayed formula ends with an operator other than submit,
+                    // we want to use the current value in the value display
+                    if (_formulaOutput.Trim().EndsWith(Operator.Submit.GetDisplayText()))
+                    {
+                        DisplayedInputNum = _currentCalculatedValue ?? 0;
+                    }
+                    else
+                    {
+                        // Do nothing if the formula ends with an operator and the current input is not dirty
+                        return;
+                    }
+                    break;
+                default:
+                    if (_prevOp == Operator.Submit)
+                    {
+                        HandleClearClicked();
+                    }
+                    _activeOp = op;
+                    _prevOp = op;
+                    _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
+                    return;
             }
+        }
 
-            _currentValue ??= 0;
-
-            _currentValue = _prevOp switch
-            {
-                Operator.Subtract => _currentValue - NumOutput,
-                Operator.Multiply => _currentValue * NumOutput,
-                Operator.Divide => NumOutput == 0 ? 0 : _currentValue / NumOutput,
-                _ => _currentValue + NumOutput // Defaults to add
-            };
-
-            _inputDirty = false;
+        var optToUse = op == Operator.Submit ? _activeOp : _prevOp;
+        if (optToUse.HasValue && _currentCalculatedValue.HasValue)
+        {
+            var calcError = false;
+            var valToUse = (_prevOp == Operator.Submit && op == Operator.Submit) ? _lastOperation.LastValue : DisplayedInputNum;
             if (op == Operator.Submit)
             {
-                _activeOp = null;
+                _lastOperation.LastValue = valToUse;
+                _formulaOutput = $"{_currentCalculatedValue} {optToUse.Value.GetDisplayText()}";
             }
             else
             {
-                _prevOp = op;
+                _lastOperation.Operator = optToUse.Value;
             }
-        }
-        catch (Exception ex)
-        {
-            switch (ex)
+
+            // Perform the operation of the stored value with the previous operator and the current input value
+            switch (optToUse)
             {
-                case DivideByZeroException:
-                    _formulaOutput = "#Div/0!";
+                case Operator.Add:
+                    _currentCalculatedValue += valToUse;
                     break;
-                default:
-                    throw;
+                case Operator.Subtract:
+                    _currentCalculatedValue -= valToUse;
+                    break;
+                case Operator.Multiply:
+                    _currentCalculatedValue *= valToUse;
+                    break;
+                case Operator.Divide:
+                    if (valToUse == 0)
+                    {
+                        calcError = true;
+                        _formulaOutput = $"{_formulaOutput} {valToUse} = #DIV/0!";
+                        _currentCalculatedValue = 0;
+                        HandleClearClicked();
+                    }
+                    else
+                    {
+                        _currentCalculatedValue /= valToUse;
+                    }
+                    break;
+            }
+
+            if (!calcError)
+            {
+                _formulaOutput = $"{_formulaOutput} {valToUse} = ";
+                DisplayedInputNum = _currentCalculatedValue ?? 0m;
             }
         }
 
         if (op != Operator.Submit)
         {
+            _activeOp = op;
+            _currentCalculatedValue = DisplayedInputNum;
+            _lastOperation.LastValue = _currentCalculatedValue ?? 0;
+            _lastOperation.Operator = op;
+            _formulaOutput = $"{_currentCalculatedValue} {op.GetDisplayText()}";
             HandleClearClicked();
+            DisplayedInputNum = 0m;
+        }
+        else
+        {
+            _inputDirty = false;
+        }
+
+        _prevOp = op;
+    }
+
+    private async Task HandleDismissClicked()
+    {
+        await HandleShowChanged(false);
+        if (OnDismissed.HasDelegate)
+        {
+            await OnDismissed.InvokeAsync();
         }
     }
 
+    private async Task HandleContainerClicked()
+    {
+        if (_focusButtonRef.Context is not null)
+        {
+            await _focusButtonRef.FocusAsync();
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private Task HandleMouseDown()
+    {
+        _active = true;
+        return MyIsolatedModule.CapturePointerEvents(_focusButtonRef).AsTask();
+    }
+
+    private Task HandleMouseUp()
+    {
+        _active = false;
+        return MyIsolatedModule.ReleasePointerEvents(_focusButtonRef).AsTask();
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        var key = e.Key.ToLower();
+        if (!_allowedKeys.IsMatch(key))
+        {
+            return;
+        }
+
+        switch (key)
+        {
+            case "escape":
+                HandleClearAllClicked();
+                break;
+            case "delete":
+                HandleClearClicked();
+                break;
+            case "backspace":
+                HandleRemove();
+                break;
+            case "enter":
+                HandleOperatorClicked(Operator.Submit);
+                break;
+            case "c":
+                if (!e.CtrlKey) { return; }
+                SuperDukaSoftInterop.CopyTextToClipboard(JsRuntime, DisplayedInputNum.ToString());
+                break;
+            case "n":
+                HandleNegateClicked();
+                break;
+            case "+":
+                HandleOperatorClicked(Operator.Add);
+                break;
+            case "-":
+                HandleOperatorClicked(Operator.Subtract);
+                break;
+            case "*":
+                HandleOperatorClicked(Operator.Multiply);
+                break;
+            case "/":
+                HandleOperatorClicked(Operator.Divide);
+                break;
+            case "=":
+                HandleOperatorClicked(Operator.Submit);
+                break;
+            case ".":
+            case ",":
+                HandleDecimalClicked();
+                break;
+            default:
+                if (key.StartsWith("arrow"))
+                {
+                    switch (key.Replace("arrow", string.Empty))
+                    {
+                        // TODO: Implement Arrow Keys moving around the calculator buttons
+                        case "up":
+#if DEBUG                            
+                            Console.WriteLine("Moving on up");
+#endif
+                            break;
+                        case "down":
+#if DEBUG                            
+                            Console.WriteLine("Moving on down");
+#endif
+                            break;
+                        case "left":
+#if DEBUG                            
+                            Console.WriteLine("Moving on left");
+#endif
+                            break;
+                        case "right":
+#if DEBUG                            
+                            Console.WriteLine("Moving on right");
+#endif
+                            break;
+                    }
+                    break;
+                }
+                if (int.TryParse(e.Key, out var num))
+                {
+                    HandleNumberClicked(num);
+                }
+                break;
+        }
+    }
+    #endregion Handlers
+
+    #region Helpers
     private enum Operator
     {
         [Display(Name = "+")]
@@ -157,10 +385,78 @@ public partial class Calculator
         Subtract,
         [Display(Name = "*")]
         Multiply,
-        [Display(Name = "/")]
+        [Display(Name = "&div;")]
         Divide,
         [Display(Name = "=")]
         Submit
     }
 
+    private struct PreviousOperator
+    {
+        public Operator Operator { get; set; }
+        public decimal LastValue { get; set; }
+    }
+
+    [GeneratedRegex(@"^([0-9\.,\+\-\*\/\=]|escape|delete|enter|backspace|c|n|arrow.+)$")]
+    private static partial Regex AllowedKeysRegEx();
+
+    private bool ClearIfDirty()
+    {
+        switch (_inputDirty, _prevOp)
+        {
+            case (false, Operator.Submit):
+                HandleClearAllClicked();
+                break;
+            case (false, _):
+                HandleClearClicked();
+                break;
+        }
+
+        return _inputDirty;
+    }
+    #endregion Helpers
+
+    public void Dispose()
+    {
+        if (DraggableContainer is not null)
+        {
+            DraggableContainer.OnDragEnd -= HandleContainerClicked;
+        }
+    }
 }
+
+/*
+Calculator logic
+- We have:
+  - Input
+  - Active Operator
+  - Previous Operator
+  - Current Calculated Value
+  - Formula Output
+  - Dirty Input Flag
+  - Decimal Active Flag
+- Various states:
+  - Initial State - The component has just rendered or Clear All is selected:
+    - The input is dirty
+    - The active operator is null
+    - The previous operator is null
+    - The current calculated value is null
+    - The formula output is empty
+    - The decimal active flag is false
+  - A number is selected after initial state:
+    - The input is dirty
+    - The active operator is null
+    - The previous operator is null
+    - The current calculated value is null
+    - The formula output is empty
+    - The decimal active flag is false
+  - An operator is selected after initial state:
+    - The input is dirty
+    - The active operator is the selected operator
+    - The previous operator is null
+    - The current calculated value is null
+    - The formula output is empty
+    - The decimal active flag is false
+  - A number is selected after an operator is selected:
+    - The input is dirty
+ */

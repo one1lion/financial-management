@@ -1,6 +1,6 @@
-﻿@using FinanMan.BlazorUi.JsInterop;
+﻿@using FinanMan.BlazorUi.JsInterop
 @using FinanMan.BlazorUi.SharedComponents.FlyoutComponents
-@using System.Diagnostics;
+@using System.Diagnostics
 @using FinanMan.BlazorUi.Components.CalculatorComponents
 
 @inherits LayoutComponentBase
@@ -13,7 +13,11 @@
     <main class="content">
         @Body
     </main>
+
 </div>
 
-<Flyout Show=UiState.FlyoutVisible ChildContent=UiState.FlyoutContent ShowChanged=HandleFlyoutShowChanged/>
-    
+<MessageDialog @bind-Show=UiState.MessageDialogVisible
+               HeaderContent=@UiState.MessageDialogParameters.Title
+               BodyContent=@UiState.MessageDialogParameters.Message
+               OkButtonContent=@UiState.MessageDialogParameters.OkButtonText />
+<Flyout Show=UiState.FlyoutVisible ChildContent=UiState.FlyoutContent ShowChanged=HandleFlyoutShowChanged />

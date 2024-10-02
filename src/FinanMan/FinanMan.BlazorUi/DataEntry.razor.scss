@@ -1,4 +1,6 @@
-﻿#dataEntryPage {
+﻿@import './Sass/BreakPointVariables';
+
+#dataEntryPage {
     display: grid;
     // TODO: Use grid-template-areas for ease of media queries
     grid-template-columns: auto 1fr;
@@ -81,4 +83,16 @@
         display: grid;
         grid-template-columns: var(--col1-width) var(--col2-width) var(--col3-width);
     }
+}
+
+@media (max-width: #{$bp-smoll-max}) {
+}
+
+@media (min-width: #{$bp-medium-min}) {
+}
+
+@media (min-width: #{$bp-large-min}) {
+}
+
+@media (min-width: #{$bp-medium-min}) {
 }

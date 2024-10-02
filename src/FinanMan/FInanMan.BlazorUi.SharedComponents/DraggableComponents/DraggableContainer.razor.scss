@@ -1,0 +1,30 @@
+.drag-area-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    .draggable-container {
+        position: relative;
+        background-color: var(--draggable-container-background-color);
+
+        .draggable-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            cursor: move !important;
+            padding: .2rem .4rem;
+
+            hr {
+                margin: .2rem 0;
+                opacity: .1;
+            }
+
+            &:active {
+                cursor: grabbing;
+            }
+        }
+    }
+}

@@ -142,7 +142,9 @@ public class LookupItemService : ILookupListService
     private static async Task UpdateSortOrderAsync<TLookupItemViewModel>(ResponseModelBase<int> retResp, FinanManContext context, IQueryable<TLookupItemViewModel>? lookupList, CancellationToken ct) where TLookupItemViewModel : class, ILookupItemViewModel, IHasLookupListType, new()
     {
         // Remove gaps in the sort order
-        var ordered = await lookupList.Where(x => !x.Deleted).OrderBy(x => x.SortOrder).ToListAsync(ct);
+        var ordered = lookupList is null ? null : await lookupList.Where(x => !x.Deleted).OrderBy(x => x.SortOrder).ToListAsync(ct);
+
+        if (ordered is null) { return; }
 
         var curItem = 1;
         foreach (var rec in ordered)
@@ -199,7 +201,7 @@ public class LookupItemService : ILookupListService
             await trans.RollbackAsync();
             retResp.AddError($"The request to add the new {typeof(TLookupItemViewModel)} failed. {ex.Message}");
         }
-        
+
         return retResp;
     }
 

@@ -2,7 +2,6 @@ using FinanMan.Database.Models.Tables;
 using FinanMan.Shared.DataEntryModels;
 using FinanMan.Shared.General;
 using FinanMan.Shared.LookupModels;
-using FinanMan.Shared.ServiceInterfaces;
 
 namespace FinanMan.BlazorUi.Components.DataEntryComponents;
 
@@ -20,7 +19,11 @@ public partial class DepositEntry
     private ResponseModelBase<int>? _currentResponse;
     private bool _submitting;
 
-    private InputDate<DateTime?>? _transDateInput;
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable CS0649 // Field 'PaymentEntry._pmtDateInput' is never assigned to, and will always have its default value null
+    private InputDate<DateTime?>? _depDateInputRef;
+#pragma warning restore CS0649 // Field 'PaymentEntry._pmtDateInput' is never assigned to, and will always have its default value null
+#pragma warning restore IDE0044 // Add readonly modifier
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,6 +59,8 @@ public partial class DepositEntry
 
     private async Task HandleDepositSubmitted(EditContext editContext)
     {
+        if (_submitting) { return; }
+
         _currentResponse = default;
         _submitting = true;
         _editDeposit.UpdateAccountName(_accounts ?? new());
@@ -63,9 +68,9 @@ public partial class DepositEntry
         if (!_currentResponse.WasError)
         {
             _editDeposit = new();
-            if (_transDateInput is not null && _transDateInput.Element.HasValue)
+            if (_depDateInputRef is not null && _depDateInputRef.Element.HasValue)
             {
-                await _transDateInput.Element.Value.FocusAsync();
+                await _depDateInputRef.Element.Value.FocusAsync();
             }
             await TransactionsState.RefreshTransactionHistoryAsync();
         }

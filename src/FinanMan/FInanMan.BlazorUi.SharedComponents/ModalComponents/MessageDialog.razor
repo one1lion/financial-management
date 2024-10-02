@@ -1,0 +1,61 @@
+@using FinanMan.BlazorUi.SharedComponents.Card
+
+<Modal @bind-Show=Show @bind-Show:after=HandleShowChanged>
+    <Card>
+        <CardHeader>
+            @if (HeaderContent is not null)
+            {
+                <h3 class="header-text">
+                    @HeaderContent
+                </h3>
+            }
+        </CardHeader>
+        <CardBody>
+            <CardText>
+                @BodyContent
+            </CardText>
+        </CardBody>
+        <CardFooter>
+            <button type="button" class="btn btn-primary" @onclick=HandleOkClicked>
+                @if(OkButtonContent is null)
+                {
+                   <text>OK</text>   
+                }
+                else
+                {
+                    @OkButtonContent
+                }
+            </button>
+        </CardFooter>
+    </Card>
+</Modal>
+
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+
+    [Parameter] public RenderFragment? HeaderContent { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment BodyContent { get; set; }
+    [Parameter] public RenderFragment? OkButtonContent { get; set; }
+
+    private Task HandleOkClicked()
+    {
+        Show = false;
+        return HandleShowChanged();
+    }
+
+    bool _prevShow;
+    private Task HandleShowChanged()
+    {
+        if (_prevShow != Show)
+        {
+            _prevShow = Show;
+
+            if(ShowChanged.HasDelegate)
+            {
+                return ShowChanged.InvokeAsync(Show);
+            }
+        }
+        return Task.CompletedTask;
+    }
+}

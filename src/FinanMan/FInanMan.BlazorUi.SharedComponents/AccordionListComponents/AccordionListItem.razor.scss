@@ -1,0 +1,11 @@
+li {
+    &:not(.expanded) {
+        .body {
+            display: none;
+        }
+
+        .footer {
+            display: none;
+        }
+    }
+}

@@ -1,4 +1,5 @@
 <TemplatedQuestionDialog @bind-Show=Show
+                         @bind-Show:after=HandleShowChanged
                          ConfirmButtonCssClasses="btn btn-primary"
                          ConfirmButtonText=@SharedLocalizerService.Add
                          ConfirmButtonDisabled=@(_submitting || _accountCreated)

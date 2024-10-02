@@ -14,5 +14,17 @@
   {
     "outputFile": "ProgressComponents/ProgressBar.razor.css",
     "inputFile": "ProgressComponents/ProgressBar.razor.scss"
+  },
+  {
+    "outputFile": "DraggableComponents/DraggableContainer.razor.css",
+    "inputFile": "DraggableComponents/DraggableContainer.razor.scss"
+  },
+  {
+    "outputFile": "AccordionListComponents/AccordionList.razor.css",
+    "inputFile": "AccordionListComponents/AccordionList.razor.scss"
+  },
+  {
+    "outputFile": "AccordionListComponents/AccordionListItem.razor.css",
+    "inputFile": "AccordionListComponents/AccordionListItem.razor.scss"
   }
 ]
