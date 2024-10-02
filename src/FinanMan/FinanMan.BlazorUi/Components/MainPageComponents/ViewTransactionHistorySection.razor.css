@@ -1,17 +1,28 @@
-﻿#secViewTransactionHist .preview-image-wrapper {
-  --picture-top-offset: 5rem;
-  --picture-left-offset: 10rem;
+﻿#secViewTransactionHist {
+  --max-image-width: 980px;
+}
+#secViewTransactionHist .preview-image-wrapper {
+  --picture-top-offset: 3rem;
+  --picture-left-offset: 6rem;
   position: relative;
   padding-bottom: var(--picture-top-offset);
+  width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
+  max-width: 980px;
+  margin: 0 auto;
 }
 #secViewTransactionHist .preview-image-wrapper img {
   width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
+  max-width: 980px;
+}
+#secViewTransactionHist .preview-image-wrapper img:first-of-type {
+  margin: 0 auto;
+  transform: translateX(calc(-1 * var(--picture-left-offset) / 2));
 }
 #secViewTransactionHist .preview-image-wrapper img:last-of-type {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: var(--picture-top-offset);
-  transform: translateX(var(--picture-left-offset));
+  transform: translateX(calc(-50% + var(--picture-left-offset) / 2));
 }
 
 @media (max-width: 480px) {
@@ -40,5 +51,9 @@
   }
   #secViewTransactionHist .preview-image-wrapper img:last-of-type {
     top: var(--picture-top-offset);
+  }
+  #secViewTransactionHist .preview-image-wrapper {
+    --picture-top-offset: 3rem;
+    --picture-left-offset: 3rem;
   }
 }

@@ -1,20 +1,31 @@
 @import '../../Sass/BreakPointVariables';
 
 #secViewTransactionHist {
+    --max-image-width: 980px;
+
     .preview-image-wrapper {
-        --picture-top-offset: 5rem;
-        --picture-left-offset: 10rem;
+        --picture-top-offset: 3rem;
+        --picture-left-offset: 6rem;
         position: relative;
         padding-bottom: var(--picture-top-offset);
+        width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
+        max-width: 980px;
+        margin: 0 auto;
 
         img {
             width: calc(100vw - var(--default-padding) * 2 - var(--picture-left-offset));
+            max-width: 980px;
+
+            &:first-of-type {
+                margin: 0 auto;
+                transform: translateX(calc(-1 * var(--picture-left-offset) / 2))
+            }
 
             &:last-of-type {
                 position: absolute;
-                left: 0;
+                left: 50%;
                 top: var(--picture-top-offset);
-                transform: translateX(var(--picture-left-offset));
+                transform: translateX(calc(-50% + var(--picture-left-offset) / 2));
             }
         }
     }
@@ -48,4 +59,11 @@
 
 @media (min-width: #{$bp-medium-min}) and (max-width: #{$bp-medium-max}) {
     @include narrow-section;
+
+    #secViewTransactionHist {
+        .preview-image-wrapper {
+            --picture-top-offset: 3rem;
+            --picture-left-offset: 3rem;
+        }
+    }
 }
