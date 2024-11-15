@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -17,9 +17,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HtmlSanitizer" Version="8.0.692" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
-		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.2.2">
+		<PackageReference Include="HtmlSanitizer" Version="8.1.870" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.6.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -39,13 +39,13 @@
 		<TypeScriptCompile Include="JsInterop\**\*.ts" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
 	  <Compile Remove="wwwroot\DraggableComponents\**" />
 	  <Content Remove="wwwroot\DraggableComponents\**" />
 	  <EmbeddedResource Remove="wwwroot\DraggableComponents\**" />
 	  <None Remove="wwwroot\DraggableComponents\**" />
 	  <TypeScriptCompile Remove="wwwroot\DraggableComponents\**" />
-	</ItemGroup>
+	</ItemGroup>-->
 
 	<ItemGroup>
 		<ProjectReference Include="..\ThindalSourceGenFunStuff\ThindalSourceGenFunStuff.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
