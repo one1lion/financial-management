@@ -4,6 +4,4 @@ namespace FinanMan.BlazorUi.Shared;
 public partial class TopBar
 {
     [Inject, AllowNull] private IUiState UiState { get; set; }
-
-    private bool _showCalc;
 }

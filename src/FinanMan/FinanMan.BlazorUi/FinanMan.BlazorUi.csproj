@@ -1,12 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <TypeScriptTarget>ES6</TypeScriptTarget>
+	  <Configurations>Debug;Release;WebProjectsOnly</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WebProjectsOnly|AnyCPU'" Label="Configuration">
+	  <TypeScriptTarget>ES6</TypeScriptTarget>
+	  <Configurations>Debug;Release;WebProjectsOnly</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <TypeScriptTarget>ES6</TypeScriptTarget>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
@@ -26,9 +31,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
-		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.2.2">
+		<PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.6.2">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

@@ -8,13 +8,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\FInanMan.BlazorUi.SharedComponents\FinanMan.BlazorUi.SharedComponents.csproj" />
-		<ProjectReference Include="..\FinanMan.BlazorUi\FinanMan.BlazorUi.csproj" />
-		<ProjectReference Include="..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
+		<ProjectReference Include="..\..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
+		<ProjectReference Include="..\FinanMan.App.Client\FinanMan.App.Client.csproj" />
 	</ItemGroup>
 
 </Project>

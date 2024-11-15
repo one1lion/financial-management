@@ -1,0 +1,9 @@
+﻿@FinanMan.Server_HostAddress = https://localhost:7176
+@FinanMan.Server_ApiToken = ejyOIHFBoiwp9jbijo
+
+@FinanMan.Server_ApiToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEb2N0b3IiLCJqdGkiOiIyMjIyMjIiLCJpYXQiOjE1NjY4NjY0NzMsImV4cCI6M
+
+GET {{FinanMan.Server_HostAddress}}/api/accounts
+Authorization bearer {{FinanMan.Server_ApiToken}}
+
+###

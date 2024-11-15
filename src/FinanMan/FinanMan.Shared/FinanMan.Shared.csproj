@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentValidation" Version="11.4.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.2" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="7.0.2" />
+		<PackageReference Include="FluentValidation" Version="11.10.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
