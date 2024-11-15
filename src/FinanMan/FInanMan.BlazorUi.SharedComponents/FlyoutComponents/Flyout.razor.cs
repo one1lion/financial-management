@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace FinanMan.BlazorUi.SharedComponents.FlyoutComponents;
 
+/// <summary>
+/// A flyout component that can be shown or hidden
+/// </summary>
 public partial class Flyout
 {
     /// <summary>

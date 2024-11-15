@@ -33,7 +33,7 @@ public abstract class ClassContext<T> where T : class
 
             if (parameters.Length > 0)
             {
-                mock = new Mock<TE>(parameters.Select(t => GetDefault(t.ParameterType)).ToArray());
+                mock = new Mock<TE>(parameters?.Select(t => GetDefault(t.ParameterType)).OfType<object>().ToArray() ?? []);
             }
         }
 

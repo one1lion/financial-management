@@ -12,12 +12,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
-		<ProjectReference Include="..\FinanMan.App.Client\FinanMan.App.Client.csproj" />
+		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\" />
+		<ProjectReference Include="..\..\FinanMan.SharedServer\FinanMan.SharedServer.csproj" />
+		<ProjectReference Include="..\FinanMan.App.Client\FinanMan.App.Client.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FinanMan.BlazorUi.SharedComponents.Extensions;
 
+/// <summary>
+/// Extension methods for the service collection
+/// </summary>
 public static class ServiceExtensions
 {
     /// <summary>

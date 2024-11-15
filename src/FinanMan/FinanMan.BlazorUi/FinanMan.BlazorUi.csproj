@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <TypeScriptTarget>ES6</TypeScriptTarget>
+	  <Configurations>Debug;Release;WebProjectsOnly</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WebProjectsOnly|AnyCPU'" Label="Configuration">
+	  <TypeScriptTarget>ES6</TypeScriptTarget>
+	  <Configurations>Debug;Release;WebProjectsOnly</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <TypeScriptTarget>ES6</TypeScriptTarget>
