@@ -39,13 +39,13 @@
 		<TypeScriptCompile Include="JsInterop\**\*.ts" />
 	</ItemGroup>
 
-	<!--<ItemGroup>
+	<ItemGroup>
 	  <Compile Remove="wwwroot\DraggableComponents\**" />
 	  <Content Remove="wwwroot\DraggableComponents\**" />
 	  <EmbeddedResource Remove="wwwroot\DraggableComponents\**" />
 	  <None Remove="wwwroot\DraggableComponents\**" />
 	  <TypeScriptCompile Remove="wwwroot\DraggableComponents\**" />
-	</ItemGroup>-->
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\ThindalSourceGenFunStuff\ThindalSourceGenFunStuff.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
