@@ -21,9 +21,10 @@ The solution follows a layered architecture with separation of concerns between 
 - **FinanMan.SharedClient** - Client-side implementations of services
 
 ### Presentation Layer
-- **FinanMan.WebApp** - Blazor Server WebApp (main host application)
-  - Contains UI components previously in FinanMan.BlazorUi
-  - Includes shared components from FinanMan.BlazorUi.SharedComponents
+- **FinanMan.BlazorUi** - Blazor UI components library
+- **FinanMan.BlazorUi.SharedComponents** - Reusable UI components library
+- **FinanMan.App** - Blazor WebApp (main host application)
+  - References the component libraries
   - Serves as the primary entry point for users
 
 ## Key Concepts

@@ -81,6 +81,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.App.Client", "Fina
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanMan.App", "FinanMan.App\FinanMan.App\FinanMan.App.csproj", "{314838B8-22CD-4648-A9BF-30E94EAB15C4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Docs\FinanMan API Usage Guide.md = ..\..\Docs\FinanMan API Usage Guide.md
+		..\..\Docs\FinanMan Architecture Overview.mermaid = ..\..\Docs\FinanMan Architecture Overview.mermaid
+		..\..\Docs\FinanMan Core Library Documentation.md = ..\..\Docs\FinanMan Core Library Documentation.md
+		..\..\Docs\FinanMan Component Library Integration.md = ..\..\Docs\FinanMan Component Library Integration.md
+		..\..\Docs\FinanMan Data Model Relationships.mermaid = ..\..\Docs\FinanMan Data Model Relationships.mermaid
+		..\..\Docs\FinanMan Solution Structure.md = ..\..\Docs\FinanMan Solution Structure.md
+		..\..\Docs\FinanMan State Management Guide.md = ..\..\Docs\FinanMan State Management Guide.md
+		..\..\Docs\FinanMan UI Components Guide.md = ..\..\Docs\FinanMan UI Components Guide.md
+		..\..\Docs\FinanMan UI Styling Guide.md = ..\..\Docs\FinanMan UI Styling Guide.md
+		..\..\Docs\Transaction Processing Flow.mermaid = ..\..\Docs\Transaction Processing Flow.mermaid
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -512,6 +526,7 @@ Global
 		{696590FC-5034-423E-AB93-A28A7F0EA463} = {DDA12A56-D2D9-402F-A472-BBE141119242}
 		{FA273084-201E-46A2-9D7E-372EA3520B9A} = {696590FC-5034-423E-AB93-A28A7F0EA463}
 		{314838B8-22CD-4648-A9BF-30E94EAB15C4} = {696590FC-5034-423E-AB93-A28A7F0EA463}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {35649808-BB6D-4176-9B95-BA66F5D6A0FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BC5E62D-A8CB-4DD4-B4A6-0F41B8EB1C16}
