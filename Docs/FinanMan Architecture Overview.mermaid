@@ -1,0 +1,69 @@
+flowchart TB
+    subgraph "Presentation Layer"
+        UI["Blazor UI Components"]
+        Pages["Blazor Pages"]
+        StateManagement["UI State Management"]
+    end
+    
+    subgraph "Service Layer"
+        ClientServices["Client Services"]
+        ServerServices["Server Services"]
+        Validation["Validation"]
+        Localization["Localization"]
+    end
+    
+    subgraph "Data Layer"
+        DbContext["EF Core DbContext"]
+        Entities["Entity Models"]
+        ModelConfig["Model Configuration"]
+        Migrations["Database Migrations"]
+    end
+    
+    subgraph "Database"
+        SqlServer[(SQL Server)]
+    end
+    
+    %% Connections between layers
+    UI --> Pages
+    Pages --> StateManagement
+    Pages --> ClientServices
+    
+    StateManagement -.-> ClientServices
+    ClientServices --> ServerServices
+    
+    ServerServices --> Validation
+    ServerServices --> DbContext
+    
+    UI --> Localization
+    Pages --> Localization
+    
+    DbContext --> Entities
+    DbContext --> ModelConfig
+    DbContext --> SqlServer
+    
+    ModelConfig --> Migrations
+    Migrations --> SqlServer
+    
+    %% Project mappings
+    classDef blazorUI fill:#f9f,stroke:#333,stroke-width:2px
+    classDef shared fill:#bbf,stroke:#333,stroke-width:2px
+    classDef server fill:#bfb,stroke:#333,stroke-width:2px
+    classDef database fill:#fbb,stroke:#333,stroke-width:2px
+    
+    class UI,Pages blazorUI
+    class StateManagement,ClientServices,Localization shared
+    class ServerServices,Validation,DbContext server
+    class Entities,ModelConfig,Migrations,SqlServer database
+    
+    %% Legend
+    subgraph "Legend"
+        BlazorUIProj["FinanMan.BlazorUI"]
+        SharedProj["FinanMan.Shared/SharedClient"]
+        ServerProj["FinanMan.SharedServer"]
+        DbProj["FinanMan.Database"]
+    end
+    
+    class BlazorUIProj blazorUI
+    class SharedProj shared
+    class ServerProj server
+    class DbProj database

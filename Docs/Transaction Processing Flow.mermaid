@@ -1,0 +1,54 @@
+flowchart TD
+    subgraph "User Interface"
+        UIForm["Transaction Entry Form"]
+        ValidationUI["Client-side Validation"]
+        ResponseUI["Response Processing"]
+    end
+    
+    subgraph "Client Services"
+        ClientService["TransactionEntryService<T>"]
+        HttpClient["HTTP Client"]
+    end
+    
+    subgraph "Server API"
+        APIController["API Controller"]
+        ServerService["TransactionEntryService<T>"]
+        ServerValidation["FluentValidation"]
+    end
+    
+    subgraph "Data Layer"
+        DbContext["FinanManContext"]
+        DbTransaction["EF Transaction"]
+        Database[(SQL Server)]
+    end
+    
+    %% UI to Client flow
+    UIForm -->|"Submit transaction"| ValidationUI
+    ValidationUI -->|"Valid"| ClientService
+    ValidationUI -->|"Invalid"| ResponseUI
+    
+    %% Client to Server flow
+    ClientService -->|"POST/PUT/DELETE"| HttpClient
+    HttpClient -->|"HTTP Request"| APIController
+    
+    %% Server processing
+    APIController -->|"Process request"| ServerService
+    ServerService -->|"Validate model"| ServerValidation
+    ServerValidation -->|"Valid"| DbContext
+    ServerValidation -->|"Invalid"| ServerService
+    
+    %% Database operations
+    DbContext -->|"Begin transaction"| DbTransaction
+    DbTransaction -->|"Execute SQL"| Database
+    DbTransaction -->|"Commit/Rollback"| ServerService
+    
+    %% Response flow
+    ServerService -->|"Return ResponseModel"| APIController
+    APIController -->|"HTTP Response"| HttpClient
+    HttpClient -->|"Deserialize response"| ClientService
+    ClientService -->|"Return ResponseModel"| ResponseUI
+    
+    %% Error flows
+    Database -->|"DB Error"| DbTransaction
+    DbTransaction -->|"Exception"| ServerService
+    ServerService -->|"Add error to ResponseModel"| APIController

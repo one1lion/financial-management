@@ -1,0 +1,115 @@
+classDiagram
+    class Transaction {
+        +int Id
+        +int AccountId
+        +DateTime DateEntered
+        +DateTime TransactionDate
+        +DateTime? PostingDate
+        +string? Memo
+        +DateTime? PurgeDate
+        +TransactionType TransactionType
+        +decimal Total
+    }
+    
+    class Account {
+        +int Id
+        +string Name
+        +int AccountTypeId
+        +DateTime? ClosedDate
+        +int SortOrder
+        +DateTime LastUpdated
+        +bool Deleted
+    }
+    
+    class Deposit {
+        +int Id
+        +int TransactionId
+        +int DepositReasonId
+        +decimal Amount
+    }
+    
+    class Payment {
+        +int Id
+        +int TransactionId
+        +int PayeeId
+        +decimal Total
+    }
+    
+    class PaymentDetail {
+        +int Id
+        +int PaymentId
+        +int LineItemTypeId
+        +string? Detail
+        +decimal Amount
+    }
+    
+    class Transfer {
+        +int Id
+        +int TransactionId
+        +int TargetAccountId
+        +decimal Amount
+    }
+    
+    class Payee {
+        +int Id
+        +string Name
+        +int SortOrder
+        +DateTime LastUpdated
+        +bool Deleted
+    }
+    
+    class LookupItemBase {
+        +int Id
+        +string Name
+        +int SortOrder
+        +DateTime LastUpdated
+        +bool Deleted
+        +LookupListType ListType
+    }
+    
+    class LuAccountType {
+        +bool IncreaseOnPayment
+    }
+    
+    class LuCategory
+    class LuDepositReason
+    class LuLineItemType
+    class LuRecurrenceType {
+        +string DisplayText
+    }
+    
+    class ScheduledTransaction {
+        +int Id
+        +RecurrenceType RecurrenceTypeId
+        +int DayNum
+        +int AccountId
+        +int PayeeId
+        +string Memo
+    }
+    
+    %% Inheritance relationships
+    LookupItemBase <|-- Account
+    LookupItemBase <|-- Payee
+    LookupItemBase <|-- LuAccountType
+    LookupItemBase <|-- LuCategory
+    LookupItemBase <|-- LuDepositReason
+    LookupItemBase <|-- LuLineItemType
+    LookupItemBase <|-- LuRecurrenceType
+    
+    %% Associations
+    Transaction "1" *-- "0..1" Deposit
+    Transaction "1" *-- "0..1" Payment
+    Transaction "1" *-- "0..1" Transfer
+    Payment "1" *-- "*" PaymentDetail
+    
+    Transaction "*" --o "1" Account : belongs to
+    Transfer "*" --o "1" Account : target
+    Deposit "*" --o "1" LuDepositReason
+    Payment "*" --o "1" Payee
+    PaymentDetail "*" --o "1" LuLineItemType
+    Account "*" --o "1" LuAccountType
+    ScheduledTransaction "*" --o "1" LuRecurrenceType
+    ScheduledTransaction "*" --o "1" Account
+    ScheduledTransaction "*" --o "1" Payee
+    
+    Payee "*" --o "*" LuCategory
