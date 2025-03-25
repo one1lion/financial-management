@@ -12,7 +12,6 @@ Both client and server applications need to register the appropriate services:
 // Program.cs
 builder.Services
     .SetupDbContext(config)                  // Registers DbContext
-    .AddFinanManLocalization()               // Adds localization support
     .AddServerServices()                     // Registers server-side service implementations
     .AddFluentValidation();                  // Registers validators
 ```
@@ -23,8 +22,8 @@ builder.Services
 // Program.cs for WASM or similar
 builder.Services
     .AddClientServices()                     // Registers client-side service implementations
-    .AddFinanManLocalization()               // Adds localization support
-    .AddFluentValidation();                  // Registers validators
+    .AddFluentValidation()                   // Registers validators
+    .AddJavaScriptModules();                 // Registers JavaScript modules for client-side functionality
 ```
 
 ## Working with Transactions

@@ -2,17 +2,23 @@
 
 ## Overview
 
-This guide outlines how to effectively use and maintain the FinanMan component libraries within a Blazor WebApp project. Rather than migrating components into the WebApp, this approach uses the WebApp to reference and host the component libraries.
+This guide outlines how to effectively use and maintain the FinanMan component libraries within a Blazor WebApp project.
 
 ## Project Structure
+
+The FinanMan solution consists of several projects, each serving a specific purpose. Below is the directory structure for the component libraries and the Blazor WebApp. Note that the WebApp project's App.razor file serves as the entry point for the component libraries. It also serves as the API host for the Blazor WebApp. However, the API simply forwards requests to the Server-side service library.
+
+The FinanMan.App.Client project was scaffolded during the initial project creation process and primarily handles the client-side setup within its Program.cs file. It references the FinanMan.BlazorUi library but does not include any other component libraries.
 
 ```
 FinanMan.App/ (Blazor WebApp)
 ├── Components/
-│   └── App.razor
-├── Program.cs
-├── appsettings.json
-└── _Imports.razor
+│   └── App.razor - Points to FinanMan.BlazorUi.Routes
+├── Controllers/ - The API controllers for the WebApp
+└── Program.cs - Entry point for the Blazor WebApp
+
+FinanMan.Client/ (Standard Client UI Library)
+└── Program.cs - Entry point for the client-side application
 
 FinanMan.BlazorUi/ (Component Library)
 ├── Components/
@@ -179,11 +185,3 @@ Components from libraries not found or not routing correctly.
 
 **Solution:**
 Verify that component library assemblies are properly registered with AddAdditionalAssemblies.
-
-## Best Practices
-
-1. **Consistent versions** - Keep component libraries and WebApp on the same .NET version
-2. **Document dependencies** - Note any service dependencies for each component library
-3. **Update libraries together** - When updating one library, update related libraries
-4. **Maintain clear boundaries** - Keep component responsibilities clear between libraries
-5. **Share styles carefully** - Coordinate styling between libraries and the host app
