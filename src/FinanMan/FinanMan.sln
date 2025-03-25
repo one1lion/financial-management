@@ -85,13 +85,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{02EA681E-C
 	ProjectSection(SolutionItems) = preProject
 		..\..\Docs\FinanMan API Usage Guide.md = ..\..\Docs\FinanMan API Usage Guide.md
 		..\..\Docs\FinanMan Architecture Overview.mermaid = ..\..\Docs\FinanMan Architecture Overview.mermaid
-		..\..\Docs\FinanMan Core Library Documentation.md = ..\..\Docs\FinanMan Core Library Documentation.md
 		..\..\Docs\FinanMan Component Library Integration.md = ..\..\Docs\FinanMan Component Library Integration.md
 		..\..\Docs\FinanMan Data Model Relationships.mermaid = ..\..\Docs\FinanMan Data Model Relationships.mermaid
 		..\..\Docs\FinanMan Solution Structure.md = ..\..\Docs\FinanMan Solution Structure.md
 		..\..\Docs\FinanMan State Management Guide.md = ..\..\Docs\FinanMan State Management Guide.md
 		..\..\Docs\FinanMan UI Components Guide.md = ..\..\Docs\FinanMan UI Components Guide.md
 		..\..\Docs\FinanMan UI Styling Guide.md = ..\..\Docs\FinanMan UI Styling Guide.md
+		..\..\README.md = ..\..\README.md
 		..\..\Docs\Transaction Processing Flow.mermaid = ..\..\Docs\Transaction Processing Flow.mermaid
 	EndProjectSection
 EndProject

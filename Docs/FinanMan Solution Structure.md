@@ -1,10 +1,7 @@
 # FinanMan Solution Structure
 
 ## Project Overview
-FinanMan is a personal financial management application designed to track transactions across multiple accounts including:
-- Deposits (money coming in)
-- Payments (money going out)
-- Transfers (money moving between accounts)
+FinanMan is a personal financial management application designed to track transactions across multiple accounts including Deposits, Payments, and Transfer. The app is intentionally designed to have transactions entered manually. The primary reason is that the user should have control over the data they enter, and it allows for better tracking of financial events without relying on external integrations.
 
 The solution follows a layered architecture with separation of concerns between data models, business logic, and presentation.
 
@@ -21,7 +18,7 @@ The solution follows a layered architecture with separation of concerns between 
 - **FinanMan.SharedClient** - Client-side implementations of services
 
 ### Presentation Layer
-- **FinanMan.BlazorUi** - Blazor UI components library
+- **FinanMan.BlazorUi** - Blazor UI components library and routable pages for the app
 - **FinanMan.BlazorUi.SharedComponents** - Reusable UI components library
 - **FinanMan.App** - Blazor WebApp (main host application)
   - References the component libraries
@@ -31,9 +28,9 @@ The solution follows a layered architecture with separation of concerns between 
 
 ### Transaction Types
 The application handles three main transaction types:
-- **Deposits** - Money coming into an account (external → account)
-- **Payments** - Money going out of an account (account → external)
-- **Transfers** - Money moving between accounts (account → account)
+- **Deposits** - Money coming into an account (external → tracked account)
+- **Payments** - Money going out of an account (tracked account → external)
+- **Transfers** - Money moving between accounts (tracked account → tracked account)
 
 ### Data Models
 - **Transaction** - Base entity for all financial transactions
@@ -48,7 +45,7 @@ The application uses state services to manage:
 
 ## Technology Stack
 - **.NET 9.0** - Target framework
-- **Blazor Server** - UI framework
+- **Blazor** - UI framework
 - **Entity Framework Core** - Data access
 - **SQL Server** - Database
 - **FluentValidation** - Model validation
