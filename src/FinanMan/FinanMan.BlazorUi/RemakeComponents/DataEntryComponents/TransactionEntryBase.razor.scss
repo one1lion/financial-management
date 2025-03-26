@@ -7,12 +7,13 @@
     padding: var(--spacing-lg);
 
     .transaction-tabs {
-        display: flex;
+        display: inline-flex;
         gap: var(--spacing-xs);
         margin-bottom: var(--spacing-lg);
+        background-color: var(--panel-bg-color);
+        border-radius: var(--border-radius-pill);
 
         ::deep {
-
             .tab-item {
                 display: flex;
                 align-items: center;

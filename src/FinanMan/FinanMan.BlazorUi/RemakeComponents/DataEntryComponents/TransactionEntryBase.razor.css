@@ -5,9 +5,11 @@
   padding: var(--spacing-lg);
 }
 .transaction-entry-wrapper .transaction-tabs {
-  display: flex;
+  display: inline-flex;
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-lg);
+  background-color: var(--panel-bg-color);
+  border-radius: var(--border-radius-pill);
 }
 .transaction-entry-wrapper .transaction-tabs ::deep .tab-item {
   display: flex;
