@@ -1,0 +1,165 @@
+@import '../../Sass/UIRemake/Variables';
+
+.transaction-preview-panel {
+    .preview-content {
+        min-height: 200px;
+    }
+}
+
+// Common elements for all preview types
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: var(--spacing-md) 0;
+}
+
+// Box styling for account/payee/source
+.account-box, .payee-box, .source-box {
+    width: 270px;
+    height: 50px;
+    background-color: var(--detail-bg-color);
+    border-radius: var(--border-radius-small);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .account-name, .payee-name, .source-name {
+        color: var(--text-primary-color);
+        font-size: var(--font-size-small);
+        text-align: center;
+    }
+}
+
+// Arrow styling for vertical flows
+.flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: var(--spacing-sm) 0;
+    position: relative;
+
+    .arrow-line {
+        width: 3px;
+        height: 40px;
+        background-color: var(--accent-color);
+    }
+
+    .arrow-head {
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+
+    .amount-label {
+        position: absolute;
+        right: -80px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-primary-color);
+        font-weight: bold;
+        font-size: var(--font-size-large);
+    }
+
+    &.flow-up {
+        .arrow-head {
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent var(--accent-color) transparent;
+        }
+    }
+
+    &.flow-down {
+        .arrow-head {
+            border-width: 10px 10px 0 10px;
+            border-color: var(--accent-color) transparent transparent transparent;
+        }
+    }
+
+    &.flow-right {
+        flex-direction: row;
+        margin: 0 var(--spacing-sm);
+
+        .arrow-line {
+            width: 80px;
+            height: 4px;
+        }
+
+        .arrow-head {
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--accent-color);
+        }
+    }
+}
+
+// Specific styles for payment preview
+.payment-preview-panel {
+    .preview-container {
+        flex-direction: column-reverse;
+    }
+}
+
+// Specific styles for transfer preview
+.transfer-preview-panel {
+    .preview-container {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: var(--spacing-lg) 0;
+    }
+
+    .account-circle {
+        width: 100px;
+        height: 100px;
+        background-color: var(--detail-bg-color);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .account-name {
+            color: var(--text-primary-color);
+            font-size: var(--font-size-small);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .account-change {
+            font-size: var(--font-size-small);
+
+            &.positive {
+                color: var(--positive-color);
+            }
+
+            &.negative {
+                color: var(--negative-color);
+            }
+        }
+    }
+
+    .result-summary {
+        text-align: center;
+        color: var(--text-primary-color);
+        font-size: var(--font-size-small);
+        margin-top: var(--spacing-sm);
+    }
+}
+
+// Responsive design
+@media (max-width: #{$breakpoint-mobile}) {
+    .transfer-preview-panel {
+        .preview-container {
+            flex-direction: column;
+
+            .flow-arrow.flow-right {
+                transform: rotate(90deg);
+                margin: var(--spacing-sm) 0;
+
+                .arrow-line {
+                    width: 60px;
+                }
+            }
+        }
+    }
+}

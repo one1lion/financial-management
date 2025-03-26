@@ -1,0 +1,38 @@
+<div class="receipt-drop-zone @(IsDragging ? "dragging" : "")" 
+     @ondragenter="HandleDragEnter" 
+     @ondragleave="HandleDragLeave" 
+     @ondragover:preventDefault 
+     @ondrop="HandleDrop"
+     @onclick="BrowseFiles">
+    
+    @if (UploadedFile != null)
+    {
+        <div class="receipt-preview">
+            @if (IsImage(UploadedFile.ContentType))
+            {
+                <img src="@UploadedFileUrl" alt="Receipt preview" />
+            }
+            else
+            {
+                <div class="file-icon">
+                    <i class="file-document"></i>
+                </div>
+            }
+            <div class="file-info">
+                <div class="file-name">@UploadedFile.Name</div>
+                <div class="file-size">@FormatFileSize(UploadedFile.Size)</div>
+            </div>
+            <button type="button" class="remove-file" @onclick:stopPropagation="true" @onclick="RemoveFile">×</button>
+        </div>
+    }
+    else
+    {
+        <div class="drop-zone-content">
+            <div class="drop-zone-prompt">Drag and drop receipt image here</div>
+            <div class="drop-zone-optional">(Optional)</div>
+            <div class="drop-zone-browse">or click to browse files</div>
+        </div>
+    }
+    
+    <InputFile id="fileInput" OnChange="LoadFiles" hidden />
+</div>

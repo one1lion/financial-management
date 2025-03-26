@@ -1,0 +1,29 @@
+@inherits TransactionPreviewPanel
+
+<div class="transfer-preview-panel">
+    <div class="preview-container">
+        <!-- From account (left circle) -->
+        <div class="account-circle from-account">
+            <div class="account-name">@FromAccountName</div>
+            <div class="account-change negative">-@($"{Amount:C}")</div>
+        </div>
+
+        <!-- Arrow pointing right -->
+        <div class="flow-arrow flow-right">
+            <div class="arrow-line"></div>
+            <div class="arrow-head"></div>
+        </div>
+
+        <!-- To account (right circle) -->
+        <div class="account-circle to-account">
+            <div class="account-name">@ToAccountName</div>
+            <div class="account-change positive">+@($"{Amount:C}")</div>
+        </div>
+    </div>
+
+    <hr class="panel-divider" />
+
+    <div class="result-summary">
+        After: @FromAccountName @FromBalance.ToString("C") | @ToAccountName @ToBalance.ToString("C")
+    </div>
+</div>

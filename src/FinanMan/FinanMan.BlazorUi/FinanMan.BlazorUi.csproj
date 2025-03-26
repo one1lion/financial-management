@@ -18,12 +18,14 @@
 
 	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
+		<Content Remove="TransactionPreviewPanel.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="compilerconfig.json" />
 		<None Include="Components\ListManagementComponents\AddAccountForm.razor" />
 		<None Include="Components\LogoComponents\Logo.razor" />
+		<None Include="RemakeComponents\PanelComponents\TransactionPreviewPanel.razor" />
 	</ItemGroup>
 
 	<ItemGroup>

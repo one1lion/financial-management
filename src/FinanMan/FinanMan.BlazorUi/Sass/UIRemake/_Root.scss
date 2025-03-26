@@ -1,0 +1,46 @@
+@import 'Variables';
+
+:root {
+    // Basic colors
+    --primary-bg-color: #{$deep-purple-bg};
+    --content-bg-color: #{$content-bg};
+    --panel-bg-color: #{$panel-bg};
+    --detail-bg-color: #{$detail-bg};
+    --accent-color: #{$accent-purple};
+    --highlight-color: #{$highlight-pink};
+    // Text colors
+    --text-primary-color: #{$text-primary};
+    --text-secondary-color: #{$text-secondary};
+    --text-tertiary-color: #{$text-tertiary};
+    --text-accent-color: #{$text-accent};
+    // Status colors
+    --positive-color: #{$positive};
+    --negative-color: #{$negative};
+    // Input colors
+    --input-bg-color: #{$input-bg};
+    --input-text-color: #{$text-primary};
+    --input-placeholder-color: #{$text-tertiary};
+    // Borders and radii
+    --border-radius-small: #{$border-radius-small};
+    --border-radius-medium: #{$border-radius-medium};
+    --border-radius-pill: #{$border-radius-pill};
+    // Typography
+    --font-family: #{$font-family-primary};
+    --font-size-base: #{$font-size-base};
+    --font-size-small: #{$font-size-small};
+    --font-size-large: #{$font-size-large};
+    --font-size-xlarge: #{$font-size-xlarge};
+    --font-size-xxlarge: #{$font-size-xxlarge};
+    // Spacing
+    --spacing-xs: #{$spacing-xs};
+    --spacing-sm: #{$spacing-sm};
+    --spacing-md: #{$spacing-md};
+    --spacing-lg: #{$spacing-lg};
+    --spacing-xl: #{$spacing-xl};
+    // Component dimensions
+    --input-height: #{$input-height};
+    --button-height: #{$button-height};
+    // Table
+    --table-header-background-color: #{$panel-bg};
+    --table-footer-background-color: #{$panel-bg};
+}

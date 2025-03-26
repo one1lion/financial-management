@@ -1,0 +1,76 @@
+.account-overview-panel {
+    height: 100%;
+
+    .account-header {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr 1fr;
+        gap: var(--spacing-sm);
+        font-size: var(--font-size-small);
+        color: var(--text-primary-color);
+        margin-bottom: var(--spacing-xs);
+
+        .account-name {
+            text-align: left;
+        }
+
+        .account-balance {
+            text-align: left;
+        }
+
+        .account-adjusted {
+            text-align: right;
+        }
+    }
+
+    .accounts-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+
+        .no-accounts {
+            text-align: center;
+            color: var(--text-tertiary-color);
+            padding: var(--spacing-md) 0;
+        }
+
+        .account-item {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-xs) 0;
+
+            &.selected {
+                background-color: rgba(var(--accent-color), 0.2);
+                border-radius: var(--border-radius-small);
+                padding: var(--spacing-xs) var(--spacing-sm);
+            }
+
+            .account-name {
+                color: var(--text-primary-color);
+                font-weight: 500;
+            }
+
+            .account-balance {
+                color: var(--text-primary-color);
+
+                &.positive {
+                    color: var(--positive-color);
+                }
+
+                &.negative {
+                    color: var(--negative-color);
+                }
+
+                .balance-change {
+                    margin-left: var(--spacing-xs);
+                    font-size: var(--font-size-small);
+                }
+            }
+
+            .account-adjusted {
+                color: var(--text-primary-color);
+                text-align: right;
+            }
+        }
+    }
+}

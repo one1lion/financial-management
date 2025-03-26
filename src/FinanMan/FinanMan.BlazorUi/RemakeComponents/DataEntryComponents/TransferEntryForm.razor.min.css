@@ -1,0 +1,1 @@
+﻿.transfer-entry-form{display:flex;flex-direction:column;gap:var(--spacing-md);}.transfer-entry-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-md);}.transfer-entry-form .form-actions{display:flex;gap:var(--spacing-md);margin-top:var(--spacing-sm);}@media(max-width:768px){.transfer-entry-form .form-row{grid-template-columns:1fr;}}

@@ -1,0 +1,47 @@
+<div class="transaction-entry-wrapper">
+    <div class="transaction-tabs">
+        <NavLink href="remake-deposit" class="tab-item" ActiveClass="active" Match="NavLinkMatch.Prefix">
+            Deposits
+        </NavLink>
+        <NavLink href="remake-payment" class="tab-item" ActiveClass="active" Match="NavLinkMatch.Prefix">
+            Payments
+        </NavLink>
+        <NavLink href="remake-transfer" class="tab-item" ActiveClass="active" Match="NavLinkMatch.Prefix">
+            Transfers
+        </NavLink>
+    </div>
+
+    <div class="transaction-title">
+        <h1>@Title</h1>
+    </div>
+
+    <div class="transaction-content">
+        <div class="transaction-form-container">
+            @FormContent
+        </div>
+
+        <div class="transaction-panels-container">
+            @if (ShowAccountOverview && AccountOverviewContent is not null)
+            {
+                <div class="panel-container">
+                    @AccountOverviewContent
+                </div>
+            }
+
+            @if (ShowTransactionPreview && TransactionPreviewContent is not null)
+            {
+                <div class="panel-container">
+                    @TransactionPreviewContent
+                </div>
+            }
+
+            @if (ShowReceiptUpload && ReceiptUploadContent is not null)
+            {
+                <div class="panel-container">
+                    @ReceiptUploadContent
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

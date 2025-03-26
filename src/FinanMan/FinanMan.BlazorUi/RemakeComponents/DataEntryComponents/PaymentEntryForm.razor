@@ -1,0 +1,172 @@
+@layout MainLayout_Remake
+@page "/remake-payment"
+
+<TransactionEntryBase Title="Enter Payment Details"
+                      FormContent=PaymentFormContent
+                      AccountOverviewContent=AccountOverviewContent
+                      TransactionPreviewContent=TransactionPreviewContent
+                      ReceiptUploadContent=ReceiptUploadContent>
+</TransactionEntryBase>
+
+@code {
+    private RenderFragment PaymentFormContent => __builder =>
+    {
+        <EditForm Model=_payment OnValidSubmit=HandlePaymentSubmitted class="payment-entry-form">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-field" id="transDateGroup">
+                    <label for="transDate">Transaction Date</label>
+                    <InputDate id="transDate" @bind-Value=_payment.TransactionDate />
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _payment.TransactionDate)" />
+                    </div>
+                </div>
+
+                <div class="form-field" id="payeeGroup">
+                    <label for="payee">Pay To</label>
+                    <InputSelect id="payee" @bind-Value=_payment.PayeeValueText>
+                        <option value="">--Select Payee--</option>
+                        @foreach (var payee in _payees)
+                        {
+                            <option value="@payee.ValueText">@payee.DisplayText</option>
+                        }
+                    </InputSelect>
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _payment.PayeeValueText)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field" id="memoGroup">
+                <label for="memo">Memo</label>
+                <InputText id="memo" @bind-Value=_payment.Memo />
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _payment.Memo)" />
+                </div>
+            </div>
+
+            <div class="line-items-section">
+                <div class="line-items-header">
+                    <h3>Line Items</h3>
+                </div>
+
+                <div class="line-item-entry-row">
+                    <div class="form-field" id="lineItemTypeGroup">
+                        <label for="lineItemType">Line Item Type</label>
+                        <InputSelect id="lineItemType" @bind-Value=_newLineItem.LineItemTypeValueText>
+                            <option value="">--Select Type--</option>
+                            @foreach (var type in _lineItemTypes)
+                            {
+                                <option value="@type.ValueText">@type.DisplayText</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="form-field" id="lineItemDetailGroup">
+                        <label for="lineItemDetail">Detail</label>
+                        <InputText id="lineItemDetail" @bind-Value=_newLineItem.Detail />
+                    </div>
+
+                    <div class="form-field" id="lineItemAmountGroup">
+                        <label for="lineItemAmount">Amount</label>
+                        <InputNumber id="lineItemAmount" @bind-Value=_newLineItem.Amount />
+                    </div>
+
+                    <div class="form-field" id="addLineItemButton">
+                        <label>&nbsp;</label>
+                        <button type="button" class="primary" @onclick="HandleAddLineItem">Add</button>
+                    </div>
+                </div>
+
+                <div class="line-items-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Detail</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_payment.LineItems == null || _payment.LineItems.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="4" class="no-items">No items added</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in _payment.LineItems)
+                                {
+                                    <tr>
+                                        <td>@(_lineItemTypes.FirstOrDefault(t => t.ValueText == item.LineItemTypeValueText)?.DisplayText ?? "")</td>
+                                        <td>@item.Detail</td>
+                                        <td class="amount">@($"{item.Amount:C}")</td>
+                                        <td>
+                                            <button type="button" class="remove-item" @onclick="() => HandleRemoveLineItem(item)">×</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="total-label">Total</td>
+                                <td class="total-amount">@($"{TotalAmount:C}")</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field" id="postedDateGroup">
+                    <label for="postedDate">Posted Date</label>
+                    <InputDate id="postedDate" @bind-Value=_payment.PostedDate />
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _payment.PostedDate)" />
+                    </div>
+                </div>
+
+                <div class="form-field" id="accountGroup">
+                    <label for="account">Account</label>
+                    <InputSelect id="account" @bind-Value=_payment.AccountValueText>
+                        <option value="">--Select Account--</option>
+                        @foreach (var account in _accounts)
+                        {
+                            <option value="@account.ValueText">@account.DisplayText</option>
+                        }
+                    </InputSelect>
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _payment.AccountValueText)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="primary">Save</button>
+                <button type="button" class="secondary">Cancel</button>
+            </div>
+        </EditForm>
+    };
+
+    private RenderFragment AccountOverviewContent => __builder =>
+    {
+        <AccountOverviewPanel Accounts=_accountOverviews />
+    };
+
+    private RenderFragment TransactionPreviewContent => __builder =>
+    {
+        <PaymentPreviewPanel AccountName="@(_accounts.FirstOrDefault(a => a.ValueText == _payment.AccountValueText)?.DisplayText ?? "Checking Account")"
+                             PayeeName="@(_payees.FirstOrDefault(p => p.ValueText == _payment.PayeeValueText)?.DisplayText ?? "Vendor/Payee")"
+                             Amount=TotalAmount />
+    };
+
+    private RenderFragment ReceiptUploadContent => __builder =>
+    {
+        <ReceiptDropZone OnFileUploaded="@((file) => Console.WriteLine($"File uploaded: {file.Name}"))" />
+    };
+}

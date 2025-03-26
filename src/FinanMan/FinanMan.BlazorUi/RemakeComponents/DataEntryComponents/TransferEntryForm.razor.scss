@@ -1,0 +1,28 @@
+@import '../../Sass/UIRemake/Variables';
+
+.transfer-entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .form-actions {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-sm);
+    }
+}
+
+// Responsive design
+@media (max-width: #{$breakpoint-tablet}) {
+    .transfer-entry-form {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+}

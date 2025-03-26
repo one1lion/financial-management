@@ -1,0 +1,103 @@
+@layout MainLayout_Remake
+@page "/remake-transfer"
+
+<TransactionEntryBase Title="Enter Transfer Details"
+                      FormContent=TransferFormContent
+                      AccountOverviewContent=AccountOverviewContent
+                      TransactionPreviewContent=TransactionPreviewContent
+                      ReceiptUploadContent=ReceiptUploadContent />
+
+@code {
+    private RenderFragment TransferFormContent => __builder =>
+    {
+        <EditForm Model=_transfer OnValidSubmit=HandleTransferSubmitted class="transfer-entry-form">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-field" id="transDateGroup">
+                    <label for="transDate">Transaction Date</label>
+                    <InputDate id="transDate" @bind-Value=_transfer.TransactionDate />
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _transfer.TransactionDate)" />
+                    </div>
+                </div>
+
+                <div class="form-field" id="amountGroup">
+                    <label for="amount">Amount</label>
+                    <InputNumber id="amount" @bind-Value=_transfer.Amount />
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _transfer.Amount)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field" id="fromAccountGroup">
+                <label for="fromAccount">From Account</label>
+                <InputSelect id="fromAccount" @bind-Value=_transfer.SourceAccountValueText>
+                    <option value="">--Select Account--</option>
+                    @foreach (var account in _accounts)
+                    {
+                        <option value="@account.ValueText">@account.DisplayText</option>
+                    }
+                </InputSelect>
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _transfer.SourceAccountValueText)" />
+                </div>
+            </div>
+
+            <div class="form-field" id="toAccountGroup">
+                <label for="toAccount">To Account</label>
+                <InputSelect id="toAccount" @bind-Value=_transfer.TargetAccountValueText>
+                    <option value="">--Select Account--</option>
+                    @foreach (var account in _accounts.Where(a => a.ValueText != _transfer.SourceAccountValueText))
+                    {
+                        <option value="@account.ValueText">@account.DisplayText</option>
+                    }
+                </InputSelect>
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _transfer.TargetAccountValueText)" />
+                </div>
+            </div>
+
+            <div class="form-field" id="memoGroup">
+                <label for="memo">Memo</label>
+                <InputText id="memo" @bind-Value=_transfer.Memo />
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _transfer.Memo)" />
+                </div>
+            </div>
+
+            <div class="form-field" id="postedDateGroup">
+                <label for="postedDate">Posted Date</label>
+                <InputDate id="postedDate" @bind-Value=_transfer.PostedDate />
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _transfer.PostedDate)" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="primary">Save</button>
+                <button type="button" class="secondary">Cancel</button>
+            </div>
+        </EditForm>
+    };
+
+    private RenderFragment AccountOverviewContent => __builder =>
+    {
+        <AccountOverviewPanel Accounts="_accountOverviews" />
+    };
+
+    private RenderFragment TransactionPreviewContent => __builder =>
+    {
+        <TransferPreviewPanel FromAccountName="@(_accounts.FirstOrDefault(a => a.ValueText == _transfer.SourceAccountValueText)?.DisplayText?.Split(' ').LastOrDefault() ?? "Checking")"
+                              ToAccountName="@(_accounts.FirstOrDefault(a => a.ValueText == _transfer.TargetAccountValueText)?.DisplayText?.Split(' ').LastOrDefault() ?? "Savings")"
+                              Amount="@_transfer.Amount"
+                              FromBalance="9760"
+                              ToBalance="10240" />
+    };
+
+    private RenderFragment ReceiptUploadContent => __builder =>
+    {
+        <ReceiptDropZone OnFileUploaded="@((file) => Console.WriteLine($"File uploaded: {file.Name}"))" />
+    };
+}

@@ -1,0 +1,147 @@
+// Global styles
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--text-primary-color);
+    background-color: var(--primary-bg-color);
+    margin: 0;
+    padding: 0;
+}
+
+// Common form styles
+.data-entry-wrapper {
+    margin: var(--spacing-md);
+    background-color: var(--content-bg-color);
+    border-radius: var(--border-radius-medium);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-md);
+}
+
+.data-entry-form {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.form-group, .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-md);
+
+    label {
+        color: var(--text-primary-color);
+        margin-bottom: var(--spacing-xs);
+        font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+        height: var(--input-height);
+        background-color: var(--input-bg-color);
+        border: none;
+        border-radius: var(--border-radius-small);
+        color: var(--text-primary-color);
+        padding: 0 var(--spacing-sm);
+        font-size: var(--font-size-base);
+        width: 100%;
+        box-sizing: border-box;
+
+        &::placeholder {
+            color: var(--text-tertiary-color);
+        }
+
+        &:focus {
+            outline: 2px solid var(--accent-color);
+        }
+    }
+
+    textarea {
+        height: auto;
+        padding: var(--spacing-sm);
+        resize: vertical;
+        min-height: calc(var(--input-height) * 2);
+    }
+
+    input[type="number"] {
+        text-align: right;
+        padding-right: var(--spacing-lg);
+    }
+
+    .select-wrapper {
+        position: relative;
+
+        select {
+            appearance: none;
+            padding-right: var(--spacing-xl);
+            cursor: pointer;
+        }
+
+        .dropdown-arrow {
+            position: absolute;
+            right: var(--spacing-sm);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-primary-color);
+            pointer-events: none;
+        }
+    }
+
+    .validation-message {
+        color: var(--negative-color);
+        font-size: var(--font-size-small);
+        margin-top: var(--spacing-xs);
+        min-height: 1.2em;
+    }
+
+    // Date input specific styling
+    input[type="date"] {
+        font-family: var(--font-family);
+
+        &::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+    }
+}
+
+// Button styles
+button {
+    height: var(--button-height);
+    border-radius: calc(var(--button-height) / 2);
+    border: none;
+    padding: 0 var(--spacing-lg);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+
+    &.primary {
+        background-color: var(--accent-color);
+        color: var(--text-primary-color);
+    }
+
+    &.secondary {
+        background-color: var(--panel-bg-color);
+        color: var(--text-primary-color);
+        border: 2px solid var(--accent-color);
+    }
+}
+
+// Common panel styles
+.panel {
+    background-color: var(--panel-bg-color);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-md);
+
+    .panel-title {
+        font-size: var(--font-size-xlarge);
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .panel-divider {
+        border: none;
+        border-top: 1px solid var(--detail-bg-color);
+        margin: var(--spacing-sm) 0;
+    }
+}

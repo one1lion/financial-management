@@ -1,0 +1,22 @@
+@inherits TransactionPreviewPanel
+
+<div class="deposit-preview-panel">
+    <div class="preview-container">
+        <!-- Source box (top) -->
+        <div class="source-box">
+            <div class="source-name">External Source: @SourceName</div>
+        </div>
+
+        <!-- Arrow pointing down -->
+        <div class="flow-arrow flow-down">
+            <div class="arrow-line"></div>
+            <div class="arrow-head"></div>
+            <div class="amount-label">@($"{Amount:C}")</div>
+        </div>
+
+        <!-- Account box (bottom) -->
+        <div class="account-box">
+            <div class="account-name">@AccountName</div>
+        </div>
+    </div>
+</div>

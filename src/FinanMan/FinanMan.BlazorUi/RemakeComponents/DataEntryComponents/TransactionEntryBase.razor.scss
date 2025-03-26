@@ -1,0 +1,99 @@
+@import '../../Sass/UIRemake/Variables';
+
+.transaction-entry-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+
+    .transaction-tabs {
+        display: flex;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-lg);
+
+        ::deep {
+
+            .tab-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 100px;
+                height: var(--input-height);
+                background-color: var(--panel-bg-color);
+                color: var(--text-secondary-color);
+                text-decoration: none;
+                border-radius: var(--border-radius-pill);
+                font-weight: 500;
+                transition: background-color 0.2s, color 0.2s;
+
+                &:hover {
+                    background-color: rgba(var(--panel-bg-color), 0.8);
+                    color: var(--text-primary-color);
+                }
+
+                &.active {
+                    background-color: var(--accent-color);
+                    color: var(--text-primary-color);
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .transaction-title {
+        margin-bottom: var(--spacing-md);
+
+        h1 {
+            font-size: var(--font-size-xxlarge);
+            font-weight: bold;
+            color: var(--text-primary-color);
+            margin: 0;
+        }
+    }
+
+    .transaction-content {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        gap: var(--spacing-lg);
+
+        .transaction-form-container {
+            background-color: var(--content-bg-color);
+            border-radius: var(--border-radius-medium);
+            padding: var(--spacing-md);
+        }
+
+        .transaction-panels-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+
+            .panel-container {
+                background-color: var(--panel-bg-color);
+                border-radius: var(--border-radius-medium);
+                padding: var(--spacing-md);
+            }
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: #{$breakpoint-tablet}) {
+    .transaction-content {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: #{$breakpoint-mobile}) {
+    .transaction-tabs {
+        .tab-item {
+            min-width: 80px;
+            font-size: var(--font-size-small);
+        }
+    }
+
+    .transaction-title {
+        h1 {
+            font-size: var(--font-size-xlarge);
+        }
+    }
+}

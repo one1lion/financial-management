@@ -1,0 +1,22 @@
+@inherits TransactionPreviewPanel
+
+<div class="payment-preview-panel">
+    <div class="preview-container">
+        <!-- Account box (bottom) -->
+        <div class="account-box">
+            <div class="account-name">@AccountName</div>
+        </div>
+
+        <!-- Arrow pointing up -->
+        <div class="flow-arrow flow-up">
+            <div class="arrow-line"></div>
+            <div class="arrow-head"></div>
+            <div class="amount-label">@Amount.ToString("C")</div>
+        </div>
+
+        <!-- Payee box (top) -->
+        <div class="payee-box">
+            <div class="payee-name">@PayeeName</div>
+        </div>
+    </div>
+</div>

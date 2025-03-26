@@ -1,0 +1,59 @@
+// FinanMan Color Variables
+$deep-purple-bg: #1A0830;
+$content-bg: #230143;
+$panel-bg: #34005C;
+$detail-bg: #200D29;
+$accent-purple: #7900B8;
+$highlight-pink: #FF9AFF;
+$input-bg: #34005C;
+
+// Neutral Colors
+$jet-black: #03060A;
+$off-white: #F6F5F5;
+$graphite-gray: #44494E;
+$white: #FFFFFF;
+$white-smoke: #F3F3F3;
+$dim-gray: #6D6D6D;
+
+// Text Colors
+$text-primary: $white;
+$text-secondary: #CCCCCC;
+$text-tertiary: #AAAAAA;
+$text-accent: $highlight-pink;
+
+// Status Colors
+$positive: #4CAF50;
+$negative: #FF6B6B;
+
+// Border Radii
+$border-radius-small: 5px;
+$border-radius-medium: 10px;
+$border-radius-pill: 25px;
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+
+// Typography
+$font-family-primary: "Segoe UI", Arial, sans-serif;
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-large: 18px;
+$font-size-xlarge: 22px;
+$font-size-xxlarge: 28px;
+
+// Input Elements
+$input-height: 50px;
+$button-height: 45px;
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// Z-index layers
+$z-dropdown: 100;
+$z-modal: 1000;

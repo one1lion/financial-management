@@ -4,6 +4,8 @@ global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.Routing;
 global using Microsoft.Extensions.Localization;
 global using Microsoft.JSInterop;
+global using System.Diagnostics.CodeAnalysis;
+
 global using FinanMan.BlazorUi.Components.TransactionHistoryComponents;
 global using FinanMan.BlazorUi.Shared;
 global using FinanMan.BlazorUi.SharedComponents.Card;

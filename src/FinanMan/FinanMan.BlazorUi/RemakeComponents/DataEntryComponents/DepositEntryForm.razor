@@ -1,0 +1,103 @@
+@layout MainLayout_Remake
+@page "/remake-deposit"
+
+<TransactionEntryBase Title="Enter Deposit Details"
+                      FormContent=DepositFormContent
+                      AccountOverviewContent=AccountOverviewContent
+                      TransactionPreviewContent=TransactionPreviewContent
+                      ReceiptUploadContent=ReceiptUploadContent />
+
+@code {
+    private RenderFragment DepositFormContent => __builder =>
+    {
+        <EditForm Model=_deposit OnValidSubmit=HandleDepositSubmitted class="deposit-entry-form">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-field" id="transDateGroup">
+                    <label for="transDate">Transaction Date</label>
+                    <InputDate id="transDate" @bind-Value=_deposit.TransactionDate />
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _deposit.TransactionDate)" />
+                    </div>
+                </div>
+
+                <div class="form-field" id="accountGroup">
+                    <label for="account">Account</label>
+                    <InputSelect id="account" @bind-Value=_deposit.TargetAccountValueText>
+                        <option value="">--Select Account--</option>
+                        @foreach (var account in _accounts)
+                        {
+                            <option value="@account.ValueText">@account.DisplayText</option>
+                        }
+                    </InputSelect>
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _deposit.TargetAccountValueText)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field" id="depositReasonGroup">
+                    <label for="depositReason">Deposit Type</label>
+                    <InputSelect id="depositReason" @bind-Value=_deposit.DepositReasonValueText>
+                        <option value="">--Select Deposit Type--</option>
+                        @foreach (var reason in _depositReasons)
+                        {
+                            <option value="@reason.ValueText">@reason.DisplayText</option>
+                        }
+                    </InputSelect>
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _deposit.DepositReasonValueText)" />
+                    </div>
+                </div>
+
+                <div class="form-field" id="amountGroup">
+                    <label for="amount">Amount</label>
+                    <InputNumber id="amount" @bind-Value=_deposit.Amount />
+                    <div class="validation-message">
+                        <ValidationMessage For="@(() => _deposit.Amount)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field" id="memoGroup">
+                <label for="memo">Memo</label>
+                <InputText id="memo" @bind-Value=_deposit.Memo />
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _deposit.Memo)" />
+                </div>
+            </div>
+
+            <div class="form-field" id="postedDateGroup">
+                <label for="postedDate">Posted Date</label>
+                <InputDate id="postedDate" @bind-Value=_deposit.PostedDate />
+                <div class="validation-message">
+                    <ValidationMessage For="@(() => _deposit.PostedDate)" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="primary">Save</button>
+                <button type="button" class="secondary">Cancel</button>
+            </div>
+        </EditForm>
+    };
+
+    private RenderFragment AccountOverviewContent => __builder =>
+    {
+        <AccountOverviewPanel Accounts=_accountOverviews />
+    };
+
+    private RenderFragment TransactionPreviewContent => __builder =>
+    {
+        <DepositPreviewPanel AccountName="@(_accounts.FirstOrDefault(a => a.ValueText == _deposit.TargetAccountValueText)?.DisplayText ?? "Checking Account")"
+                             SourceName="@(_depositReasons.FirstOrDefault(r => r.ValueText == _deposit.DepositReasonValueText)?.DisplayText ?? "Salary")"
+                             Amount="@_deposit.Amount" />
+    };
+
+    private RenderFragment ReceiptUploadContent => __builder =>
+    {
+        <ReceiptDropZone OnFileUploaded="@((file) => Console.WriteLine($"File uploaded: {file.Name}"))" />
+    };
+}

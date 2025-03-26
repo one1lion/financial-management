@@ -1,0 +1,146 @@
+@import '../../Sass/UIRemake/Variables';
+
+.payment-entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .line-items-section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+
+        .line-items-header {
+            h3 {
+                color: var(--highlight-color);
+                margin: 0;
+                font-size: var(--font-size-large);
+            }
+        }
+
+        .line-item-entry-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr 0.5fr;
+            gap: var(--spacing-md);
+            align-items: flex-end;
+
+            #addLineItemButton {
+                button {
+                    width: 100%;
+                }
+            }
+        }
+
+        .line-items-table {
+            background-color: var(--detail-bg-color);
+            border-radius: var(--border-radius-medium);
+            overflow: hidden;
+            margin-top: var(--spacing-sm);
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+
+                th, td {
+                    padding: var(--spacing-sm);
+                    text-align: left;
+                }
+
+                th {
+                    background-color: rgba(var(--panel-bg-color), 0.5);
+                    font-weight: 500;
+                }
+
+                td {
+                    border-bottom: 1px solid rgba(var(--panel-bg-color), 0.3);
+
+                    &.amount, &.total-amount {
+                        text-align: right;
+                        font-weight: 500;
+                    }
+
+                    &.total-label {
+                        text-align: right;
+                        font-weight: bold;
+                    }
+
+                    &.no-items {
+                        text-align: center;
+                        color: var(--text-tertiary-color);
+                        padding: var(--spacing-lg);
+                    }
+                }
+
+                tfoot tr {
+                    td {
+                        border-bottom: none;
+                        background-color: rgba(var(--panel-bg-color), 0.3);
+                        font-size: var(--font-size-large);
+                    }
+                }
+
+                button.remove-item {
+                    width: 24px;
+                    height: 24px;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    background-color: rgba(var(--negative-color), 0.2);
+                    color: var(--negative-color);
+
+                    &:hover {
+                        background-color: rgba(var(--negative-color), 0.3);
+                    }
+                }
+            }
+        }
+    }
+
+    .form-actions {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-sm);
+    }
+}
+
+// Responsive design
+@media (max-width: #{$breakpoint-tablet}) {
+    .payment-entry-form {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .line-item-entry-row {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+
+            #lineItemType, #lineItemDetail {
+                grid-column: span 1;
+            }
+
+            #lineItemAmount, #addLineItemButton {
+                grid-column: span 1;
+            }
+        }
+    }
+}
+
+@media (max-width: #{$breakpoint-mobile}) {
+    .payment-entry-form {
+        .line-item-entry-row {
+            grid-template-columns: 1fr;
+
+            #lineItemType, #lineItemDetail, #lineItemAmount, #addLineItemButton {
+                grid-column: span 1;
+            }
+        }
+    }
+}

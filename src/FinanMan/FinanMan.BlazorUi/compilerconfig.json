@@ -106,5 +106,41 @@
   {
     "outputFile": "Components/LogoComponents/Logo.razor.css",
     "inputFile": "Components/LogoComponents/Logo.razor.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/remake-styles.css",
+    "inputFile": "Sass/UIRemake/App.scss"
+  },
+  {
+    "outputFile": "Shared/MainLayout_Remake.razor.css",
+    "inputFile": "Shared/MainLayout_Remake.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/PanelComponents/AccountOverviewPanel.razor.css",
+    "inputFile": "RemakeComponents/PanelComponents/AccountOverviewPanel.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/PanelComponents/ReceiptDropZone.razor.css",
+    "inputFile": "RemakeComponents/PanelComponents/ReceiptDropZone.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/PanelComponents/TransactionPreviewPanel.razor.css",
+    "inputFile": "RemakeComponents/PanelComponents/TransactionPreviewPanel.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/DataEntryComponents/TransferEntryForm.razor.css",
+    "inputFile": "RemakeComponents/DataEntryComponents/TransferEntryForm.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/DataEntryComponents/TransactionEntryBase.razor.css",
+    "inputFile": "RemakeComponents/DataEntryComponents/TransactionEntryBase.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/DataEntryComponents/PaymentEntryForm.razor.css",
+    "inputFile": "RemakeComponents/DataEntryComponents/PaymentEntryForm.razor.scss"
+  },
+  {
+    "outputFile": "RemakeComponents/DataEntryComponents/DepositEntryForm.razor.css",
+    "inputFile": "RemakeComponents/DataEntryComponents/DepositEntryForm.razor.scss"
   }
 ]

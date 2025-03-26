@@ -1,0 +1,36 @@
+<div class="account-overview-panel panel">
+    <h2 class="panel-title">Account Overview</h2>
+    <hr class="panel-divider" />
+
+    <div class="account-header">
+        <div class="account-name">Name</div>
+        <div class="account-balance">Current Balance</div>
+        <div class="account-adjusted">Adjusted Balance</div>
+    </div>
+
+    <hr class="panel-divider" />
+
+    <div class="accounts-list">
+        @if (Accounts == null || Accounts.Count == 0)
+        {
+            <div class="no-accounts">No accounts available</div>
+        }
+        else
+        {
+            @foreach (var account in Accounts)
+            {
+                <div class="account-item @(account.IsSelected ? "selected" : "")">
+                    <div class="account-name">@account.Name</div>
+                    <div class="account-balance @(account.BalanceChange < 0 ? "negative" : (account.BalanceChange > 0 ? "positive" : ""))">
+                        @account.CurrentBalance.ToString("C")
+                        @if (account.BalanceChange != 0)
+                        {
+                            <span class="balance-change">(@(account.BalanceChange > 0 ? "+" : "")@account.BalanceChange.ToString("C"))</span>
+                        }
+                    </div>
+                    <div class="account-adjusted">@account.AdjustedBalance.ToString("C")</div>
+                </div>
+            }
+        }
+    </div>
+</div>
