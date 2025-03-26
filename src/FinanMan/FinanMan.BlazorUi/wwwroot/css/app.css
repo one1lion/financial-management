@@ -65,7 +65,7 @@
   --font-size-h5: 1.44em;
   --font-size-h6: 1.2em;
   --font-size-body: 1rem;
-  --font-size-small: 0.833em;
+  --font-size-small: 14px;
   --font-size-caption: 0.694em;
   /* Default z-index */
   --flyout-z-index: 2;
@@ -82,6 +82,46 @@
   --border-gradient: linear-gradient(45deg, #34005C 0%, #7900B8 50%, #34005C 100%);
   /* Other Sizing */
   --footer-content-width: 930px;
+}
+
+.remake {
+  --primary-bg-color: #1A0830;
+  --content-bg-color: #230143;
+  --panel-bg-color: #34005C;
+  --detail-bg-color: #200D29;
+  --accent-color: #7900B8;
+  --highlight-color: #FF9AFF;
+  --accent-color-rgb: 121, 0, 184;
+  --panel-bg-rgb: 52, 0, 92;
+  --positive-color-rgb: 76, 175, 80;
+  --negative-color-rgb: 255, 107, 107;
+  --text-primary-color: #FFFFFF;
+  --text-secondary-color: #CCCCCC;
+  --text-tertiary-color: #AAAAAA;
+  --text-accent-color: #FF9AFF;
+  --positive-color: #4CAF50;
+  --negative-color: #FF6B6B;
+  --input-bg-color: #34005C;
+  --input-text-color: #FFFFFF;
+  --input-placeholder-color: #AAAAAA;
+  --border-radius-small: 5px;
+  --border-radius-medium: 10px;
+  --border-radius-pill: 25px;
+  --font-family: Segoe UI, Arial, sans-serif;
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+  --font-size-large: 18px;
+  --font-size-xlarge: 22px;
+  --font-size-xxlarge: 28px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --input-height: 50px;
+  --button-height: 45px;
+  --table-header-background-color: #34005C;
+  --table-footer-background-color: #34005C;
 }
 
 @media (max-width: 480px) {
@@ -285,4 +325,133 @@ i.icon {
     --base-font-size: 24px;
     font-size: var(--base-font-size);
   }
+}
+.remake .data-entry-wrapper {
+  margin: var(--spacing-md);
+  background-color: var(--content-bg-color);
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-md);
+}
+.remake .data-entry-form {
+  display: grid;
+  gap: var(--spacing-md);
+}
+.remake .form-group, .remake .form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-md);
+}
+.remake .form-group label, .remake .form-field label {
+  color: var(--text-primary-color);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+.remake .form-group input,
+.remake .form-group select,
+.remake .form-group textarea, .remake .form-field input,
+.remake .form-field select,
+.remake .form-field textarea {
+  height: var(--input-height);
+  background-color: var(--panel-bg-color);
+  border: none;
+  border-radius: var(--border-radius-small);
+  color: var(--text-primary-color);
+  padding: 0 var(--spacing-sm);
+  font-size: var(--font-size-base);
+  width: 100%;
+  box-sizing: border-box;
+}
+.remake .form-group input::placeholder,
+.remake .form-group select::placeholder,
+.remake .form-group textarea::placeholder, .remake .form-field input::placeholder,
+.remake .form-field select::placeholder,
+.remake .form-field textarea::placeholder {
+  color: var(--text-tertiary-color);
+}
+.remake .form-group input:focus,
+.remake .form-group select:focus,
+.remake .form-group textarea:focus, .remake .form-field input:focus,
+.remake .form-field select:focus,
+.remake .form-field textarea:focus {
+  outline: 2px solid var(--accent-color);
+}
+.remake .form-group textarea, .remake .form-field textarea {
+  height: auto;
+  padding: var(--spacing-sm);
+  resize: vertical;
+  min-height: calc(var(--input-height) * 2);
+}
+.remake .form-group input[type=number], .remake .form-field input[type=number] {
+  text-align: right;
+  padding-right: var(--spacing-lg);
+}
+.remake .form-group input[type=date], .remake .form-field input[type=date] {
+  font-family: var(--font-family);
+  position: relative;
+}
+.remake .form-group input[type=date]::-webkit-calendar-picker-indicator, .remake .form-field input[type=date]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.7;
+  cursor: pointer;
+  position: absolute;
+  right: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.remake .form-group select, .remake .form-field select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  padding-right: var(--spacing-xl);
+  cursor: pointer;
+}
+.remake .form-group .validation-message, .remake .form-field .validation-message {
+  color: var(--negative-color);
+  font-size: var(--font-size-small);
+  margin-top: var(--spacing-xs);
+  min-height: 1.2em;
+}
+.remake button {
+  height: var(--button-height);
+  border-radius: calc(var(--button-height) / 2);
+  border: none;
+  padding: 0 var(--spacing-lg);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  min-width: 120px;
+}
+.remake button.primary {
+  background-color: var(--accent-color);
+  color: var(--text-primary-color);
+}
+.remake button.secondary {
+  background-color: transparent;
+  color: var(--text-primary-color);
+  border: 2px solid var(--accent-color);
+}
+.remake .form-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+.remake .panel {
+  background-color: var(--panel-bg-color);
+  border-radius: var(--border-radius-medium);
+  padding: var(--spacing-md);
+}
+.remake .panel .panel-title {
+  font-size: var(--font-size-xlarge);
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+}
+.remake .panel .panel-divider {
+  border: none;
+  border-top: 1px solid var(--detail-bg-color);
+  margin: var(--spacing-sm) 0;
 }

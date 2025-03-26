@@ -22,7 +22,7 @@
 }
 .account-box .account-name, .account-box .payee-name, .account-box .source-name, .payee-box .account-name, .payee-box .payee-name, .payee-box .source-name, .source-box .account-name, .source-box .payee-name, .source-box .source-name {
   color: var(--text-primary-color);
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-base);
   text-align: center;
 }
 
@@ -30,7 +30,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var(--spacing-sm) 0;
+  margin: var(--spacing-md) 0;
   position: relative;
 }
 .flow-arrow .arrow-line {
@@ -45,7 +45,7 @@
 }
 .flow-arrow .amount-label {
   position: absolute;
-  right: -80px;
+  right: -100px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-primary-color);
@@ -62,7 +62,7 @@
 }
 .flow-arrow.flow-right {
   flex-direction: row;
-  margin: 0 var(--spacing-sm);
+  margin: 0 var(--spacing-md);
 }
 .flow-arrow.flow-right .arrow-line {
   width: 80px;
@@ -75,6 +75,11 @@
 
 .payment-preview-panel .preview-container {
   flex-direction: column-reverse;
+}
+
+.deposit-preview-panel .preview-container {
+  justify-content: space-between;
+  padding: var(--spacing-lg) 0;
 }
 
 .transfer-preview-panel .preview-container {

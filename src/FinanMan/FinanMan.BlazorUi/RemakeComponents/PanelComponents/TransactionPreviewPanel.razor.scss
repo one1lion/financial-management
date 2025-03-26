@@ -28,7 +28,7 @@
 
     .account-name, .payee-name, .source-name {
         color: var(--text-primary-color);
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-base);
         text-align: center;
     }
 }
@@ -38,7 +38,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: var(--spacing-sm) 0;
+    margin: var(--spacing-md) 0;
     position: relative;
 
     .arrow-line {
@@ -55,7 +55,7 @@
 
     .amount-label {
         position: absolute;
-        right: -80px;
+        right: -100px;
         top: 50%;
         transform: translateY(-50%);
         color: var(--text-primary-color);
@@ -79,7 +79,7 @@
 
     &.flow-right {
         flex-direction: row;
-        margin: 0 var(--spacing-sm);
+        margin: 0 var(--spacing-md);
 
         .arrow-line {
             width: 80px;
@@ -97,6 +97,14 @@
 .payment-preview-panel {
     .preview-container {
         flex-direction: column-reverse;
+    }
+}
+
+// Specific styles for deposit preview
+.deposit-preview-panel {
+    .preview-container {
+        justify-content: space-between;
+        padding: var(--spacing-lg) 0;
     }
 }
 

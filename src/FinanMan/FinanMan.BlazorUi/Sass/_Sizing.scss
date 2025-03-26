@@ -6,3 +6,31 @@ $md-max: 991px;
 $lg-min: 992px;
 $lg-max: 1199px;
 $xl-min: 1200px;
+
+
+// Remake sizing
+// Border Radii
+$border-radius-small: 5px;
+$border-radius-medium: 10px;
+$border-radius-pill: 25px;
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+
+// Input Elements
+$input-height: 50px;
+$button-height: 45px;
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// Z-index layers
+$z-dropdown: 100;
+$z-modal: 1000;
+

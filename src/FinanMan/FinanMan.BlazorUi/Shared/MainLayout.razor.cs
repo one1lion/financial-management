@@ -1,12 +1,16 @@
 using FinanMan.BlazorUi.JsInterop;
+
 using Timr = System.Timers.Timer;
 
 namespace FinanMan.BlazorUi.Shared;
 
-public partial class MainLayout
+public partial class MainLayout : IDisposable
 {
-    [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-    [Inject] private IUiState UiState { get; set; } = default!;
+    [Inject, AllowNull] private IJSRuntime JsRuntime { get; set; }
+    [Inject, AllowNull] private IUiState UiState { get; set; }
+    [Inject, AllowNull] private NavigationManager NavigationManager { get; set; }
+
+    private bool _remakeStyles;
 
     private bool _moving;
     private readonly Timr _collapseDebounce = new()
@@ -21,6 +25,18 @@ public partial class MainLayout
         UiState.PropertyChanged += HandleUiPropertyChanged;
         UiState.CollapseSelectLists += HandleCollapseSelectLists;
         var hold = UiState.SomeNum;
+        NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+        _remakeStyles = NavigationManager.Uri.StartsWith($"{NavigationManager.BaseUri}remake-", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(e.Location) && e.Location != NavigationManager.Uri)
+        {
+            // Only change if we are on a page that starts with "remake-"
+            _remakeStyles = e.Location.StartsWith($"{NavigationManager.BaseUri}remake-", StringComparison.OrdinalIgnoreCase);
+            StateHasChanged();
+        }
     }
 
     private void HandleDebounceTimeout(object? sender, System.Timers.ElapsedEventArgs e)
@@ -66,5 +82,6 @@ public partial class MainLayout
         _collapseDebounce.Dispose();
         UiState.PropertyChanged -= HandleUiPropertyChanged;
         UiState.CollapseSelectLists -= HandleCollapseSelectLists;
+        NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
     }
 }

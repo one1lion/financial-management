@@ -40,7 +40,7 @@
             padding: var(--spacing-xs) 0;
 
             &.selected {
-                background-color: rgba(var(--accent-color), 0.2);
+                background-color: rgba(var(--accent-color-rgb), 0.2);
                 border-radius: var(--border-radius-small);
                 padding: var(--spacing-xs) var(--spacing-sm);
             }
@@ -64,12 +64,14 @@
                 .balance-change {
                     margin-left: var(--spacing-xs);
                     font-size: var(--font-size-small);
+                    font-weight: normal;
                 }
             }
 
             .account-adjusted {
                 color: var(--text-primary-color);
                 text-align: right;
+                font-weight: 500;
             }
         }
     }

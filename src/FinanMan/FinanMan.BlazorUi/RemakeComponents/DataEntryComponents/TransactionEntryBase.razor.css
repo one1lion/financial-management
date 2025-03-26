@@ -6,10 +6,11 @@
 }
 .transaction-entry-wrapper .transaction-tabs {
   display: inline-flex;
-  gap: var(--spacing-xs);
+  gap: 0;
   margin-bottom: var(--spacing-lg);
   background-color: var(--panel-bg-color);
   border-radius: var(--border-radius-pill);
+  overflow: hidden;
 }
 .transaction-entry-wrapper .transaction-tabs ::deep .tab-item {
   display: flex;
@@ -20,12 +21,13 @@
   background-color: var(--panel-bg-color);
   color: var(--text-secondary-color);
   text-decoration: none;
-  border-radius: var(--border-radius-pill);
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
+  padding: 0 var(--spacing-md);
+  border-radius: 0;
 }
 .transaction-entry-wrapper .transaction-tabs ::deep .tab-item:hover {
-  background-color: rgba(var(--panel-bg-color), 0.8);
+  background-color: rgba(var(--accent-color-rgb), 0.5);
   color: var(--text-primary-color);
 }
 .transaction-entry-wrapper .transaction-tabs ::deep .tab-item.active {
@@ -64,16 +66,16 @@
 }
 
 @media (max-width: 768px) {
-  .transaction-content {
+  .transaction-entry-wrapper .transaction-content {
     grid-template-columns: 1fr !important;
   }
 }
 @media (max-width: 480px) {
-  .transaction-tabs .tab-item {
+  .transaction-entry-wrapper .transaction-tabs .tab-item {
     min-width: 80px;
     font-size: var(--font-size-small);
   }
-  .transaction-title h1 {
+  .transaction-entry-wrapper .transaction-title h1 {
     font-size: var(--font-size-xlarge);
   }
 }

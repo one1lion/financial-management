@@ -11,11 +11,12 @@
     transition: all 0.2s ease;
 
     &:hover {
-        background-color: rgba(var(--panel-bg-color), 0.9);
+        background-color: rgba(var(--panel-bg-rgb), 0.9);
+        border-color: var(--highlight-color);
     }
 
     &.dragging {
-        background-color: rgba(var(--panel-bg-color), 0.8);
+        background-color: rgba(var(--panel-bg-rgb), 0.8);
         border-color: var(--highlight-color);
     }
 
@@ -41,6 +42,7 @@
         .drop-zone-browse {
             color: var(--accent-color);
             font-size: var(--font-size-small);
+            text-decoration: underline;
         }
     }
 
