@@ -36,7 +36,7 @@ public static class HttpExtensions
             }
 
             var forRet = await resp.Content.ReadFromJsonAsync<TResponse>(cancellationToken: ct).ConfigureAwait(false);
-            return retResp ?? new() { ErrorMessages = ["Failed to receive a response."] };
+            return forRet ?? new() { ErrorMessages = ["Failed to receive a response."] };
         }
         catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
