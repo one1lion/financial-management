@@ -1,13 +1,23 @@
-﻿using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
+﻿using FinanMan.Shared.General;
 
-using FinanMan.Shared.General;
+using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 
 namespace FinanMan.SharedClient.Extensions;
 
 public static class HttpExtensions
 {
-    /// <inheritdoc />
+    /// <summary>
+    /// Executes an HTTP request and returns a response model.
+    /// </summary>
+    /// <typeparam name="TResponse">The type of the response model, which must implement IResponseModel.</typeparam>
+    /// <param name="httpClient">The HttpClient instance to use for the request.</param>
+    /// <param name="httpMethod">The HTTP method to use (GET, POST, PUT, DELETE).</param>
+    /// <param name="requestUrl">The URL to which the request is sent.</param>
+    /// <param name="ct">Cancellation token to cancel the request.</param>
+    /// <param name="payload">The payload to send with the request, if applicable (for POST or PUT).</param>
+    /// <param name="methodName">The name of the method being called, used for logging and error messages.</param>
+    /// <returns>The response model containing the result of the request.</returns>
     public static async Task<TResponse> ExecuteRequestAsync<TResponse>(this HttpClient httpClient, HttpMethod httpMethod, string requestUrl, CancellationToken ct,
             object? payload = null, [CallerMemberName] string methodName = "")
         where TResponse : IResponseModel, new()

@@ -1,4 +1,5 @@
 using FinanMan.Database;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<FinanManContext>(
     options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        builder.Configuration.GetConnectionString("DbConnection"),
         b => b.MigrationsAssembly("FinanMan.Database.Migrations")));
 
 await builder.Build().RunAsync();
